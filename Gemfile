@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
-
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
@@ -30,7 +30,7 @@ gem 'pg'
 gem 'devise'
 
 # roles and permissions
-gem "pundit"
+gem 'pundit'
 
 # for api
 gem 'jsonapi-resources'
@@ -53,16 +53,16 @@ group :development, :test do
   gem 'byebug'
 
   # Code coverage analysis
-  gem "codeclimate-test-reporter", require: false
-  gem "simplecov", require: false
+  gem 'codeclimate-test-reporter', require: false
+  gem 'simplecov', require: false
 
   # code style
-  gem "rubocop"
+  gem 'rubocop'
 
   # looks for obvious wrongness
-  gem "brakeman"  
+  gem 'brakeman'
 
-  gem "rspec-core"
+  gem 'rspec-core'
 end
 
 group :development do
@@ -72,4 +72,3 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-

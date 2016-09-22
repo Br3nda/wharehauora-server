@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.routes.draw do
   devise_for :users
   root 'welcome#index'
@@ -11,5 +12,4 @@ Rails.application.routes.draw do
     jsonapi_resources :rooms
     jsonapi_resources :sensors
   end
-
 end
