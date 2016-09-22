@@ -61,6 +61,8 @@ group :development, :test do
 
   # looks for obvious wrongness
   gem "brakeman"  
+
+  gem "rspec-core"
 end
 
 group :development do
