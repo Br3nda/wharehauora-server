@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Sensor < ActiveRecord::Base
-	belongs_to :room
+  belongs_to :room
 end
