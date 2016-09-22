@@ -1,0 +1,15 @@
+{
+  "name": "wharehauora-server",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
