@@ -35,6 +35,10 @@ gem "pundit"
 # for api
 gem 'jsonapi-resources'
 
+# templating
+gem 'haml-rails'
+gem 'purecss-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
