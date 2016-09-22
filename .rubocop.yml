@@ -15,6 +15,9 @@ Metrics/ModuleLength:
 Style/RaiseArgs:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
 Style/SingleLineBlockParams:
   Enabled: false
 
