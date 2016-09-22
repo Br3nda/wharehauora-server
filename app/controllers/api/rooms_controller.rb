@@ -1,2 +1,2 @@
-class Api::RoomsController < ApplicationController
+class Api::RoomsController < JSONAPI::ResourceController
 end

@@ -1,2 +1,2 @@
-class Api::HomesController < ApplicationController
+class Api::HomesController < JSONAPI::ResourceController
 end

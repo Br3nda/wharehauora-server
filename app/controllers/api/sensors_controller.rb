@@ -1,2 +1,2 @@
-class Api::SensorsController < ApplicationController
+class Api::SensorsController < JSONAPI::ResourceController
 end
