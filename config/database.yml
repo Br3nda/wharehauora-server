@@ -16,6 +16,10 @@ test:
   <<: *default
   database: wh_test
 
+staging:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
+
 production:
   <<: *default
-  database: wh_production
+  url: <%= ENV["DATABASE_URL"] %>
