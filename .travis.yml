@@ -4,11 +4,10 @@ sudo: false
 cache: bundler
 rvm:
 - 2.3.1
+before_script:
+- RAILS_ENV=test bundle exec rake db:create db:schema:load
 script:
-- bundle exec rake db:create
-- bundle exec rake db:migrate --trace
 - bundle exec rubocop
-# - brakeman --run-all-checks --exit-on-warn .
 - bundle exec bundle-audit update
 - bundle exec bundle-audit
 - bundle exec rspec spec
