@@ -61,6 +61,10 @@ group :development, :test do
   # looks for obvious wrongness
   gem 'brakeman'
 
+  # check for outdated/insecure gems
+  gem 'bundler-audit'
+
+  # test runber
   gem 'rspec-core'
 end
 
