@@ -1,17 +1,21 @@
-== Whare Hauora Server
+Whare Hauora Server
+===================
 
 Serves a REST api for the Whare Hauora Android application
 
 Host user sign up, and password resets for end users
 
 
-== Status
+Status
+------
 [![Build Status](https://travis-ci.org/WhareHauora/wharehauora-server.svg?branch=master)](https://travis-ci.org/WhareHauora/wharehauora-server)
 
 
-== Installation
+Installation
+============
 
-=== To set up a development environment
+To set up a development environment
+-----------------------------------
 
 1. make your own fork, and clone
 
@@ -24,11 +28,13 @@ Host user sign up, and password resets for end users
 4. `bundle exec rails s`
 
 
-== How to run the test suite
+How to run the test suite
+-------------------------
 
 `bundle exec rspec`
 
-== Deployment
+Deployment
+==========
 
 This app is hosted on heroku. 
 
