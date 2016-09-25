@@ -9,6 +9,7 @@ class HomesController < WebController
   def show
     @home = Home.find(params[:id])
     authorize @home
+    @rooms = @home.rooms
   end
 
   def new

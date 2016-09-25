@@ -7,7 +7,8 @@ class RoomPolicy < ApplicationPolicy
 
   private
 
-  def owned_by_current_user
-    record.home.owner_id == user.id
+  def owned_by_current_user?
+    home = Home.find(record.home_id)
+    home.owner_id == user.id
   end
 end

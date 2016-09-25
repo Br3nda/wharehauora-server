@@ -1,0 +1,16 @@
+%table.pure-table
+  %thead
+    %tr
+      %th.sortable
+        Name
+      %th.sortable
+        Sensor
+  %tbody
+    - rooms.each do |room|
+      %tr
+        %td
+          = room.name
+        / = link_to room.name, room_path(room)
+
+        / %td
+        /   = link_to I18n.t("helpers.link.global.delete"), room_path(room), method: :delete

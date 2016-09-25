@@ -1,0 +1,6 @@
+= form_for @room, url: {action: "create"} do |f|
+  %form.pure-form
+    %fieldset
+      %legend Add a room
+      = render "form", f: f
+      %button.pure-button.pure-button-primary{type: "submit"} Create
