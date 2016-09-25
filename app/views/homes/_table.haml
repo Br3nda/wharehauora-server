@@ -9,6 +9,6 @@
     - homes.each do |home|
       %tr
         %td
-          = link_to home.name, edit_home_path(home)
+          = link_to home.name, home_path(home)
         / %td
         /   = link_to I18n.t("helpers.link.global.delete"), home_path(home), method: :delete
