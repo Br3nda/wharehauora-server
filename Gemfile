@@ -38,6 +38,9 @@ gem 'jsonapi-resources'
 gem 'haml-rails'
 gem 'purecss-rails'
 
+# for heroku
+gem 'rails_12factor', group: :production
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
