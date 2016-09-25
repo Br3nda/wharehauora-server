@@ -11,7 +11,7 @@ class ApplicationPolicy
   end
 
   def new?
-    owned_by_current_user
+    user.present?
   end
 
   def edit?
