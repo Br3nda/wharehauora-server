@@ -28,10 +28,10 @@ class HomesController < WebController
   def home_params
     params[:home].permit(permitted_home_params).merge(
       owner_id: current_user.id
-      )
+    )
   end
 
   def permitted_home_params
-    %i( name )
+    %i(name)
   end
 end
