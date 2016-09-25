@@ -1,0 +1,7 @@
+= form_for @home, url: {action: "update"} do |f|
+  %form.pure-form
+    %fieldset
+      %legend Edit home
+      = render "form", f: f
+      %button.pure-button.pure-button-primary Save
+      = link_to "Delete", home_path(@home), method: :delete, class: "pure-button"

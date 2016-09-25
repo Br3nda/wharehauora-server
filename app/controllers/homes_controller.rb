@@ -20,7 +20,33 @@ class HomesController < WebController
     @home = Home.new(home_params)
     authorize @home
     @home.save!
-    redirect_to web_homes_path
+    redirect_to @home
+  end
+
+  def edit
+    @home = Home.find(params[:id])
+    authorize @home
+  rescue ActiveRecord::RecordNotFound
+    skip_authorization
+    redirect_to homes_path
+  end
+
+  def update
+    @home = Home.find(params[:id])
+    authorize @home
+    @home.update(home_params)
+    @home.save!
+    redirect_to @home
+  end
+
+  def destroy
+    @home = Home.find(params[:id])
+    authorize @home
+    @home.destroy!
+    redirect_to homes_path
+  rescue ActiveRecord::RecordNotFound
+    skip_authorization
+    redirect_to homes_path
   end
 
   private
