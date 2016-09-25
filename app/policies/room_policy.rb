@@ -1,5 +1,4 @@
 class RoomPolicy < ApplicationPolicy
-
   class Scope < Scope
     def resolve
       scope.joins(:home).where(homes: { owner: user.id })
