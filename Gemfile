@@ -66,6 +66,8 @@ group :development, :test do
 
   # test runber
   gem 'rspec-rails'
+
+  gem 'factory_girl_rails'
 end
 
 group :development do
