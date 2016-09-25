@@ -10,4 +10,8 @@ class Web::HomesController < WebController
     @home = Home.find(params[:id])
     authorize @home
   end
+
+  def new
+    authorize :home
+  end
 end
