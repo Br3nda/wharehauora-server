@@ -9,13 +9,18 @@
 <body>
 
 <div class="pure-menu pure-menu-horizontal">
-    <a href="#" class="pure-menu-heading pure-menu-link">WHARE HAUORA</a>
+    <%= link_to "WHARE HAUORA", root_path, class:"pure-menu-heading pure-menu-link" %>
     <ul class="pure-menu-list">
+      <% if user_signed_in?%>
         <li class="pure-menu-item"><a href="#" class="pure-menu-link">Account</a></li>
         <li class="pure-menu-item"><%= link_to 'Homes', homes_path, class: "pure-menu-link" %></li>
         <li class="pure-menu-item"><%= link_to 'Rooms', rooms_path, class: "pure-menu-link" %></li>
         <li class="pure-menu-item"><%= link_to 'Sensors', sensors_path, class: "pure-menu-link" %></li>
         <li class="pure-menu-item"><%= link_to 'Readings', readings_path, class: "pure-menu-link" %></li>
+        <li class="pure-menu-item"><%= link_to 'Sign out', destroy_user_session_path, class: " pure-menu-link", method: :delete %></li>
+      <% else %>
+        <li class="pure-menu-item"><%= link_to 'Sign in', new_user_session_path, class: "pure-menu-link" %></li>
+      <% end %>
     </ul>
 </div>
 
