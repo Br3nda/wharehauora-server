@@ -3,8 +3,9 @@ Rails.application.routes.draw do
   devise_for :users
   root 'welcome#index'
 
-  resources :homes
-  resources :rooms
+  resources :homes do
+    resources :rooms
+  end
   resources :sensors
   resources :readings, only: [:index, :show]
 
