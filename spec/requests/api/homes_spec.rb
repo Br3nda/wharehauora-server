@@ -66,7 +66,7 @@ RSpec.describe 'Homes' do
     it 'modifies data with a put' do
       request_body = {
         data: {
-          attributes: {name: 'New Name'},
+          attributes: { name: 'New Name' },
           type: "homes",
           id: home.id
         }
