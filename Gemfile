@@ -66,7 +66,7 @@ group :development, :test do
   gem 'bundler-audit'
 
   # test runber
-  gem 'rspec-core'
+  gem 'rspec-rails'
 end
 
 group :development do
