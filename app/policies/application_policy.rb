@@ -7,7 +7,7 @@ class ApplicationPolicy
   end
 
   def create?
-    owned_by_current_user
+    owned_by_current_user?
   end
 
   def new?
@@ -15,19 +15,19 @@ class ApplicationPolicy
   end
 
   def edit?
-    owned_by_current_user
+    owned_by_current_user?
   end
 
   def show?
-    owned_by_current_user
+    owned_by_current_user?
   end
 
   def update?
-    owned_by_current_user
+    owned_by_current_user?
   end
 
   def destroy?
-    owned_by_current_user
+    owned_by_current_user?
   end
 
   class Scope
@@ -45,7 +45,7 @@ class ApplicationPolicy
 
   private
 
-  def owned_by_current_user
+  def owned_by_current_user?
     record.owner_id == user.id
   end
 end
