@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Web::SensorsController < WebController
+class SensorsController < WebController
   before_action :authenticate_user!
   def index
     @sensors = policy_scope(Sensor)

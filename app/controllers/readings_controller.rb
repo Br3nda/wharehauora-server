@@ -1,4 +1,4 @@
-class Web::ReadingsController < WebController
+class ReadingsController < WebController
   before_action :authenticate_user!
   def index
     @readings = policy_scope(Reading)

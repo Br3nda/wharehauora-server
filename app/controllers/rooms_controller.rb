@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Web::RoomsController < WebController
+class RoomsController < WebController
   before_action :authenticate_user!
 
   def index
