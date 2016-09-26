@@ -8,21 +8,7 @@
 </head>
 <body>
 
-<div class="pure-menu pure-menu-horizontal">
-    <%= link_to "WHARE HAUORA", root_path, class:"pure-menu-heading pure-menu-link" %>
-    <ul class="pure-menu-list">
-      <% if user_signed_in?%>
-        <li class="pure-menu-item"><%= link_to "Account", edit_user_password_path, class: "pure-menu-link" %></li>
-        <li class="pure-menu-item"><%= link_to 'My Whare', homes_path, class: "pure-menu-link" %></li>
-        <li class="pure-menu-item"><%= link_to 'Sensors', sensors_path, class: "pure-menu-link" %></li>
-        <li class="pure-menu-item"><%= link_to 'Readings', readings_path, class: "pure-menu-link" %></li>
-        <li class="pure-menu-item"><%= link_to 'Sign out', destroy_user_session_path, class: " pure-menu-link", method: :delete %></li>
-      <% else %>
-        <li class="pure-menu-item"><%= link_to 'Sign up', new_user_registration_path, class: "pure-menu-link" %></li>
-        <li class="pure-menu-item"><%= link_to 'Sign in', new_user_session_path, class: "pure-menu-link" %></li>
-      <% end %>
-    </ul>
-</div>
+<%= render 'layouts/menu' %>
 
 <%= yield %>
 
