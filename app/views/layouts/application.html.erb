@@ -18,6 +18,7 @@
         <li class="pure-menu-item"><%= link_to 'Readings', readings_path, class: "pure-menu-link" %></li>
         <li class="pure-menu-item"><%= link_to 'Sign out', destroy_user_session_path, class: " pure-menu-link", method: :delete %></li>
       <% else %>
+        <li class="pure-menu-item"><%= link_to 'Sign up', new_user_registration_path, class: "pure-menu-link" %></li>
         <li class="pure-menu-item"><%= link_to 'Sign in', new_user_session_path, class: "pure-menu-link" %></li>
       <% end %>
     </ul>

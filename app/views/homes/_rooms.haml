@@ -9,8 +9,4 @@
     - rooms.each do |room|
       %tr
         %td
-          = room.name
-        / = link_to room.name, room_path(room)
-
-        / %td
-        /   = link_to I18n.t("helpers.link.global.delete"), room_path(room), method: :delete
+          = link_to room.name, home_room_path(room.home, room)
