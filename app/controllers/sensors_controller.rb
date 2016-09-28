@@ -9,7 +9,9 @@ class SensorsController < WebController
     @sensor = Sensor.find(params[:id])
     authorize @sensor
 
-    @readings = @sensor.readings.order(created_at: :desc).paginate(page: params[:page], per_page: 10)
+    @readings = @sensor.readings
+                       .order(created_at: :desc)
+                       .paginate(page: params[:page], per_page: 10)
   end
 
   def edit

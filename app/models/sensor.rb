@@ -4,11 +4,17 @@ class Sensor < ActiveRecord::Base
   has_many :readings
 
   def temperature
-    Reading.find_by(sensor: self, sub_type: V_TEMP).value
+    Reading.where(sensor: self, sub_type: V_TEMP)
+           .order(created_at: :desc)
+           .first()
+           .value
   end
 
   def humidity
-    Reading.find_by(sensor_id: id, sub_type: V_HUM).value
+    Reading.where(sensor_id: id, sub_type: V_HUM)
+           .order(created_at: :desc)
+           .first()
+           .value
   end
 
   V_TEMP = 0
