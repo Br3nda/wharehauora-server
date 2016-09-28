@@ -17,6 +17,14 @@ class SensorsController < WebController
     # redirect_to sensor.room.home
   end
 
+  def update
+    sensor = Sensor.find(params[:id])
+    authorize sensor
+    sensor.update(sensor_params)
+    sensor.save!
+    redirect_to sensor.home
+  end
+
   private
 
   def sensor_params

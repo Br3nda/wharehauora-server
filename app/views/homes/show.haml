@@ -11,4 +11,4 @@
 
 - unless(@unassigned.empty?)
   %h3 Sensors not assigned to rooms:
-  = render "unassigned", sensors: @unassigned
+  = render "unassigned", sensors: @unassigned, rooms: @rooms

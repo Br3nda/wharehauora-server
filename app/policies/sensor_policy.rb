@@ -8,6 +8,6 @@ class SensorPolicy < ApplicationPolicy
   private
 
   def owned_by_current_user?
-    record.room.home.owner_id == user.id
+    record.home.owner_id == user.id
   end
 end
