@@ -8,6 +8,8 @@ class Sensor < ActiveRecord::Base
            .order(created_at: :desc)
            .first
            .value
+  rescue
+    nil
   end
 
   def humidity
@@ -15,6 +17,8 @@ class Sensor < ActiveRecord::Base
            .order(created_at: :desc)
            .first
            .value
+  rescue
+    nil
   end
 
   V_TEMP = 0
