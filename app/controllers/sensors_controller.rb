@@ -10,25 +10,19 @@ class SensorsController < WebController
     authorize @sensor
   end
 
-  def new
-    @room = Room.find(params[:room_id])
-    authorize @room
-    @sensor = Sensor.new(room_id: @room.id)
-  end
-
-  def create
-    room = Room.find(params[:room_id])
-    authorize room
-    sensor = Sensor.new(sensor_params.merge(room_id: room.id))
-    sensor.save!
-    redirect_to room.home
-  end
-
   def destroy
+    # sensor = Sensor.find(params[:id])
+    # authorize sensor
+    # sensor.destroy!
+    # redirect_to sensor.room.home
+  end
+
+  def update
     sensor = Sensor.find(params[:id])
     authorize sensor
-    sensor.destroy!
-    redirect_to sensor.room.home
+    sensor.update(sensor_params)
+    sensor.save!
+    redirect_to sensor.home
   end
 
   private
@@ -39,7 +33,6 @@ class SensorsController < WebController
 
   def permitted_sensor_params
     %i(
-      node_id
       room_id
     )
   end

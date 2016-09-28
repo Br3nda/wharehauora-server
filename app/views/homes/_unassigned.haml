@@ -1,0 +1,22 @@
+%table.pure-table
+  %thead
+    %tr
+      %th.sortable
+        sensor id
+      %th
+        Assign to
+  %tbody
+    - sensors.each do |sensor|
+      %tr
+        %td
+          = sensor.id
+          = sensor.node_id
+        = form_for sensor, :url => sensor_path(sensor), :html => { :action => :update } do |f|
+          %td
+            - rooms.each do |room|
+              = f.radio_button :room_id, room.id
+              = room.name
+          %td
+            %button.pure-button.pure-button-primary{type: "submit"} save
+
+

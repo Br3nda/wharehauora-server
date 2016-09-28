@@ -6,4 +6,9 @@
   = link_to "Add a room", new_home_room_path(@home)
 
 - unless (@rooms.empty?)
+  %h3 Sensors
   = render "rooms", rooms: @rooms
+
+- unless(@unassigned.empty?)
+  %h3 Sensors not assigned to rooms:
+  = render "unassigned", sensors: @unassigned, rooms: @rooms

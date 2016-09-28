@@ -13,5 +13,4 @@
         %td
           - unless room.sensors.empty?
             = render "sensors", sensors: room.sensors
-        %td
-          = link_to "add sensor", new_home_room_sensor_path(@home, room)
+
