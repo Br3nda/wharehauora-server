@@ -1,9 +1,30 @@
 %table.pure-table
-  - readings.each do |reading|
+  %thead
     %tr
-      %td
-        = reading.created_at
-      %td
-        = reading.message_type
-      %td
-        = reading.value
+      %th
+        When
+      %th
+        Message Type
+      %th
+        Child ID
+      %th
+        ack
+      %th
+        sub_type
+      %th
+        Value
+  %tbody
+    - readings.each do |reading|
+      %tr
+        %td
+          = reading.created_at
+        %td
+          = reading.message_type
+        %td
+          = reading.child_sensor_id
+        %td
+          = reading.ack
+        %td
+          = reading.sub_type
+        %td
+          = reading.value

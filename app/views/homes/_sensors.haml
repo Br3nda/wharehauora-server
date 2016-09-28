@@ -4,13 +4,21 @@
       %th.sortable
         Room
       %th.sortable
-        Sensor
+        Sensor ID
+      %th
+        Temperature
+      %th
+        Humidity
   %tbody
     - sensors.each do |sensor|
       %tr
         %td
           = link_to sensor.room_name, sensor_path(sensor)
+          = link_to "edit", edit_home_sensor_path(sensor.home, sensor)
         %td
           = sensor.node_id
         %td
-          = link_to "edit", edit_home_sensor_path(sensor.home, sensor)
+          = sensor.temperature
+        %td
+          = sensor.humidity
+
