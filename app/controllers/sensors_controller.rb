@@ -10,11 +10,9 @@ class SensorsController < WebController
     authorize @sensor
   end
 
-  def destroy
-    # sensor = Sensor.find(params[:id])
-    # authorize sensor
-    # sensor.destroy!
-    # redirect_to sensor.room.home
+  def edit
+    @sensor = Sensor.find(params[:id])
+    authorize @sensor
   end
 
   def update
@@ -33,7 +31,7 @@ class SensorsController < WebController
 
   def permitted_sensor_params
     %i(
-      room_id
+      room_name
     )
   end
 end

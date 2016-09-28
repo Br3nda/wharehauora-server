@@ -14,6 +14,7 @@ class SensorsIngest
     MQTT::Client.connect(connection_options) do |c|
       # The block will be called when you messages arrive to the topic
       c.get('/sensors/#') do |topic, message|
+        puts topic
         decode topic, message
       end
     end
@@ -31,6 +32,7 @@ class SensorsIngest
                           ack: ack,
                           sub_type: sub_type)
     reading.save!
+    puts "home #{sensor.home_id} sensors #{sensor.id} reading #{reading.id}"
   end
 
   def connection_options

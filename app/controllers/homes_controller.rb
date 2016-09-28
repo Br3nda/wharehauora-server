@@ -9,9 +9,7 @@ class HomesController < WebController
   def show
     @home = Home.find(params[:id])
     authorize @home
-    @rooms = @home.rooms
-
-    @unassigned = Sensor.where("room_id IS NULL", home_id: @home.id)
+    @sensors = @home.sensors
   end
 
   def new

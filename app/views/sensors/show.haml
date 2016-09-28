@@ -4,11 +4,11 @@
 
 %p
   Home:
-  = link_to @sensor.room.home.name, @sensor.room.home
+  = link_to @sensor.home.name, @sensor.home
 
 %p
   Room:
-  = @sensor.room.name
+  = @sensor.name
 
 %p
   = link_to "delete", sensor_path(@sensor), method: :delete
