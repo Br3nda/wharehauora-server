@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :readings, only: [:index, :show]
   end
 
+  resources :sensors
+
   namespace :api do
     jsonapi_resources :homes
     jsonapi_resources :rooms
