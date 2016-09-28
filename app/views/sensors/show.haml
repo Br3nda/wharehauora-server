@@ -1,0 +1,13 @@
+%h2
+  Sensor
+  = @sensor.node_id
+
+%p
+  Home:
+  = @sensor.room.home.name
+
+%p
+  Room:
+  = @sensor.room.name
+
+= render "readings", readings: @sensor.readings
