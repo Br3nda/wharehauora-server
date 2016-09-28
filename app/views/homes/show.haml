@@ -3,12 +3,7 @@
   = @home.name
 %p
   = link_to "Edit home name", edit_home_path(@home)
-  = link_to "Add a room", new_home_room_path(@home)
 
-- unless (@rooms.empty?)
+- unless (@sensors.empty?)
   %h3 Sensors
-  = render "rooms", rooms: @rooms
-
-- unless(@unassigned.empty?)
-  %h3 Sensors not assigned to rooms:
-  = render "unassigned", sensors: @unassigned, rooms: @rooms
+  = render "sensors", sensors: @sensors
