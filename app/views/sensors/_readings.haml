@@ -1,9 +1,18 @@
 %table.pure-table
-  - readings.each do |reading|
+  %thead
     %tr
-      %td
-        = reading.created_at
-      %td
-        = reading.message_type
-      %td
-        = reading.value
+      %th
+        When
+      %th
+        Type
+      %th
+        Value
+  %tbody
+    - readings.each do |reading|
+      %tr
+        %td
+          = reading.created_at
+        %td
+          = reading.message_type
+        %td
+          = reading.value
