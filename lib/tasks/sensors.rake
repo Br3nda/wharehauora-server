@@ -1,15 +1,15 @@
 
 namespace :sensors do
   desc "Subscribe to incoming sensor messages"
-  task subscribe: :environment do
-    SensorsSubscriber.new.process
+  task ingest: :environment do
+    SensorsIngest.new.process
   end
 end
 
 require 'mqtt'
 require 'uri'
 
-class SensorsSubscriber
+class SensorsIngest
   def process
     MQTT::Client.connect(connection_options) do |c|
       # The block will be called when you messages arrive to the topic
