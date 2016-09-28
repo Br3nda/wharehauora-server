@@ -44,6 +44,7 @@ gem 'rails_12factor', group: :production
 # listens for incoming sensor readings on mqtt
 gem 'mqtt'
 
+gem 'will_paginate'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

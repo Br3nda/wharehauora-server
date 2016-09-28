@@ -8,6 +8,8 @@ class SensorsController < WebController
   def show
     @sensor = Sensor.find(params[:id])
     authorize @sensor
+
+    @readings = @sensor.readings.paginate(page: params[:page], per_page: 10)
   end
 
   def edit
