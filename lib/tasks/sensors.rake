@@ -17,18 +17,19 @@ class SensorsIngest
         decode topic, message
       end
     end
-   end
+  end
 
   def decode(topic, value)
-    puts topic.to_s
-
-    (home_id, node_id, child_sensor_id, message_type, ack, sub_type, payload) = topic.split("/")[3..-1]
+    (home_id, node_id, child_sensor_id, message_type, ack, sub_type, _payload) = topic.split("/")[3..-1]
 
     sensor = Sensor.find_or_create_by(home_id: home_id, node_id: node_id)
-    puts "Sensor = #{sensor.id}"
-    puts "\t#{value}"
 
-    reading = Reading.new(sensor_id: sensor.id, value: value, message_type: message_type)
+    reading = Reading.new(sensor_id: sensor.id,
+                          value: value,
+                          child_sensor_id: child_sensor_id,
+                          message_type: message_type,
+                          ack: ack,
+                          sub_type: sub_type)
     reading.save!
   end
 
@@ -41,5 +42,5 @@ class SensorsIngest
       username: uri.user,
       password: uri.password
     }
- end
+  end
 end
