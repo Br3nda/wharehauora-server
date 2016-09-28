@@ -1,0 +1,13 @@
+%table.pure-table
+  %thead
+    %tr
+      %th.sortable
+        sensor id
+      %th
+        Assign to
+  %tbody
+    - sensors.each do |sensor|
+      %tr
+        %td
+          = sensor.node_id
+
