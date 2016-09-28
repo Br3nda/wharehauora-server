@@ -25,7 +25,6 @@ class SensorsController < WebController
 
   def permitted_sensor_params
     %i(
-      node_id
       room_id
     )
   end
