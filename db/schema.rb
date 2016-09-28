@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160928030123) do
+ActiveRecord::Schema.define(version: 20160928054744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,9 +27,12 @@ ActiveRecord::Schema.define(version: 20160928030123) do
     t.integer  "sensor_id"
     t.text     "key"
     t.float    "value"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "message_type"
+    t.integer  "child_sensor_id"
+    t.integer  "ack"
+    t.integer  "sub_type"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -46,6 +49,7 @@ ActiveRecord::Schema.define(version: 20160928030123) do
     t.datetime "updated_at", null: false
     t.integer  "node_id"
     t.integer  "home_id"
+    t.string   "room_name"
   end
 
   create_table "users", force: :cascade do |t|
