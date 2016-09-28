@@ -1,0 +1,9 @@
+%table.pure-table
+  - readings.each do |reading|
+    %tr
+      %td
+        = reading.created_at
+      %td
+        = reading.message_type
+      %td
+        = reading.value
