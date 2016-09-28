@@ -6,14 +6,14 @@ class Sensor < ActiveRecord::Base
   def temperature
     Reading.where(sensor: self, sub_type: V_TEMP)
            .order(created_at: :desc)
-           .first()
+           .first
            .value
   end
 
   def humidity
     Reading.where(sensor_id: id, sub_type: V_HUM)
            .order(created_at: :desc)
-           .first()
+           .first
            .value
   end
 
