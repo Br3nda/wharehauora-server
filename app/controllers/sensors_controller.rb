@@ -24,6 +24,13 @@ class SensorsController < WebController
     redirect_to room.home
   end
 
+  def destroy
+    sensor = Sensor.find(params[:id])
+    authorize sensor
+    sensor.destroy!
+    redirect_to sensor.room.home
+  end
+
   private
 
   def sensor_params

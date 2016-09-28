@@ -10,4 +10,7 @@
   Room:
   = @sensor.room.name
 
+%p
+  = link_to "delete", sensor_path(@sensor), method: :delete
+
 = render "readings", readings: @sensor.readings
