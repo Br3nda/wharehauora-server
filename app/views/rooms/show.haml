@@ -1,5 +1,12 @@
 %h2
-	Room:
-	= @room.name
-	in
-	= @room.home.name
+  Room:
+  = @room.name
+
+%p
+  in
+  = @room.home.name
+
+%p
+  = link_to "edit", edit_room_path(@room)
+%p
+  = link_to "delete", room_path(@room), method: :delete

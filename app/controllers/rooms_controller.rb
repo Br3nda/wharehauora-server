@@ -26,6 +26,19 @@ class RoomsController < WebController
     redirect_to home
   end
 
+  def edit
+    @room = Room.find(params[:id])
+    authorize @room
+  end
+
+  def update
+    room = Room.find(params[:id])
+    room.update(room_params)
+    authorize room
+    room.save!
+    redirect_to room.home
+  end
+
   private
 
   def room_params
