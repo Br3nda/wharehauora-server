@@ -10,3 +10,5 @@
       %tr
         %td
           = link_to room.name, home_room_path(room.home, room)
+        %td
+          = link_to "add sensor", new_home_room_sensor_path(@home, room)
