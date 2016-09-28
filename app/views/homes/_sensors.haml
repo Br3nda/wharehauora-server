@@ -1,0 +1,4 @@
+%ul
+  - sensors.each do |sensor|
+    %li
+      = link_to sensor.node_id, sensor_path(sensor)
