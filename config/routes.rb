@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :homes do
-    resources :rooms
+    resources :rooms do
+      resources :sensors
+    end
+    resources :users
+    resources :readings, only: [:index, :show]
   end
-  resources :sensors
-  resources :readings, only: [:index, :show]
 
   namespace :api do
     jsonapi_resources :homes

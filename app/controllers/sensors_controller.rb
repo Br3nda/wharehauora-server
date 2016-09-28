@@ -9,4 +9,10 @@ class SensorsController < WebController
     @sensor = Sensor.find(params[:id])
     authorize @sensor
   end
+
+  def new
+    @room = Room.find(params[:room_id])
+    authorize @room
+    @sensor = Sensor.new(room_id: @room.id)
+  end
 end

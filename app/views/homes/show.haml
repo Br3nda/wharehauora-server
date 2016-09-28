@@ -1,8 +1,9 @@
 %h2
-	My Home:
-	= @home.name
+  My Home:
+  = @home.name
 %p
-	= link_to "Edit home name", edit_home_path(@home)
-	= link_to "Add a room", new_home_room_path(@home)
+  = link_to "Edit home name", edit_home_path(@home)
+  = link_to "Add a room", new_home_room_path(@home)
 
-= render "rooms", rooms: @rooms
+- unless (@rooms.empty?)
+  = render "rooms", rooms: @rooms
