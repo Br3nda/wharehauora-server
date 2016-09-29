@@ -27,7 +27,7 @@ class Sensor < ActiveRecord::Base
            .first
            .created_at
   rescue
-    "none"
+    nil
   end
 
   V_TEMP = 0
