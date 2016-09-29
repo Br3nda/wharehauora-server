@@ -21,12 +21,15 @@ class Sensor < ActiveRecord::Base
     nil
   end
 
+  def last_reading_timestamp
+    last_reading.created_at
+  rescue
+    nil
+  end
+
   def last_reading
     Reading.where(sensor_id: id)
            .order(created_at: :desc)
            .first
-           .created_at
-  rescue
-    nil
   end
 end
