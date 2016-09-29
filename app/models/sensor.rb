@@ -4,7 +4,7 @@ class Sensor < ActiveRecord::Base
   has_many :readings
 
   def temperature
-    Reading.where(sensor: self, sub_type: V_TEMP)
+    Reading.where(sensor: self, sub_type: MySensors::SetReq::V_TEMP)
            .order(created_at: :desc)
            .first
            .value
@@ -13,7 +13,7 @@ class Sensor < ActiveRecord::Base
   end
 
   def humidity
-    Reading.where(sensor_id: id, sub_type: V_HUM)
+    Reading.where(sensor_id: id, sub_type: MySensors::SetReq::V_HUM)
            .order(created_at: :desc)
            .first
            .value
@@ -29,7 +29,4 @@ class Sensor < ActiveRecord::Base
   rescue
     nil
   end
-
-  V_TEMP = 0
-  V_HUM = 1
 end
