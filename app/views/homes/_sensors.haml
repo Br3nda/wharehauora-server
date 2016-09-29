@@ -6,6 +6,8 @@
       %th.sortable
         Sensor ID
       %th
+        When
+      %th
         Temperature
       %th
         Humidity
@@ -17,6 +19,8 @@
           = link_to "edit", edit_home_sensor_path(sensor.home, sensor)
         %td
           = sensor.node_id
+        %td
+          = sensor.last_reading
         %td
           = sensor.temperature
         %td
