@@ -9,7 +9,9 @@ Host user sign up, and password resets for end users
 Status
 ------
 [![Build Status](https://travis-ci.org/WhareHauora/wharehauora-server.svg?branch=master)](https://travis-ci.org/WhareHauora/wharehauora-server)
-
+[![Coverage Status](https://coveralls.io/repos/github/WhareHauora/wharehauora-server/badge.svg?branch=master)](https://coveralls.io/github/WhareHauora/wharehauora-server?branch=master)
+[![Code Climate](https://codeclimate.com/github/WhareHauora/wharehauora-server/badges/gpa.svg)](https://codeclimate.com/github/WhareHauora/wharehauora-server)
+[![Issue Count](https://codeclimate.com/github/WhareHauora/wharehauora-server/badges/issue_count.svg)](https://codeclimate.com/github/WhareHauora/wharehauora-server)
 
 Installation
 ============
