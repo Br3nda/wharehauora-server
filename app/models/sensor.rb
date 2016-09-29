@@ -20,4 +20,13 @@ class Sensor < ActiveRecord::Base
   rescue
     nil
   end
+
+  def last_reading
+    Reading.where(sensor_id: id)
+           .order(created_at: :desc)
+           .first
+           .created_at
+  rescue
+    nil
+  end
 end
