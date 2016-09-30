@@ -16,6 +16,10 @@ class SensorsController < WebController
     @temperature = policy_scope(Reading.temperature)
                    .where(sensor: @sensor)
                    .pluck(:created_at, :value)
+
+    @humidity = policy_scope(Reading.humidity)
+                .where(sensor: @sensor)
+                .pluck(:created_at, :value)
   end
 
   def edit
