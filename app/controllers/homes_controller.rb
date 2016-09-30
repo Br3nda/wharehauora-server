@@ -12,26 +12,13 @@ class HomesController < WebController
 
     @readings = @home.readings.take(10)
 
-    @sensors = @home.sensors
-
     @temperature = []
     @humidity = []
 
-    @sensors.each do |sensor|
+    @home.sensors.each do |sensor|
       name = sensor.room_name ? sensor.room_name : "unnamed"
-      data = Reading.temperature
-                    .where(sensor: sensor)
-                    .where(["created_at >= ?", 1.day.ago])
-                    .pluck(:created_at, :value)
-
-      @temperature << { name: name, data: data }
-
-      data = Reading.humidity
-                    .where(sensor: sensor)
-                    .where(["created_at >= ?", 1.day.ago])
-                    .pluck(:created_at, :value)
-
-      @humidity << { name: name, data: data }
+      @temperature << { name: name, data: temperature_data(sensor) }
+      @humidity << { name: name, data: humidity_data(sensor) }
     end
   end
 
@@ -83,5 +70,19 @@ class HomesController < WebController
 
   def permitted_home_params
     %i(name)
+  end
+
+  def temperature_data(sensor)
+    Reading.temperature
+           .where(sensor: sensor)
+           .where(["created_at >= ?", 1.day.ago])
+           .pluck(:created_at, :value)
+  end
+
+  def humidity_data(sensor)
+    Reading.humidity
+           .where(sensor: sensor)
+           .where(["created_at >= ?", 1.day.ago])
+           .pluck(:created_at, :value)
   end
 end
