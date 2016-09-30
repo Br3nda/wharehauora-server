@@ -9,7 +9,17 @@ class HomesController < WebController
   def show
     @home = Home.find(params[:id])
     authorize @home
-    @sensors = @home.sensors
+
+    @readings = @home.readings.take(10)
+
+    @temperature = []
+    @humidity = []
+
+    @home.sensors.each do |sensor|
+      name = sensor.room_name ? sensor.room_name : "unnamed"
+      @temperature << { name: name, data: temperature_data(sensor) }
+      @humidity << { name: name, data: humidity_data(sensor) }
+    end
   end
 
   def new
@@ -60,5 +70,19 @@ class HomesController < WebController
 
   def permitted_home_params
     %i(name)
+  end
+
+  def temperature_data(sensor)
+    Reading.temperature
+           .where(sensor: sensor)
+           .where(["created_at >= ?", 1.day.ago])
+           .pluck(:created_at, :value)
+  end
+
+  def humidity_data(sensor)
+    Reading.humidity
+           .where(sensor: sensor)
+           .where(["created_at >= ?", 1.day.ago])
+           .pluck(:created_at, :value)
   end
 end
