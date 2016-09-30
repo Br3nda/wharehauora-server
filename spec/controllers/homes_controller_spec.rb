@@ -12,8 +12,17 @@ RSpec.describe HomesController, type: :controller do
     end
 
     describe "GET show" do
-      before { get :show, id: home.id }
-      it { expect(response).to have_http_status(:success) }
+      describe "no sensors" do
+        before { get :show, id: home.id }
+        it { expect(response).to have_http_status(:success) }
+      end
+      describe "lots of sensors" do
+        before do
+          15.times { FactoryGirl.create(:sensor, home: home) }
+          get :show, id: home.id
+        end
+        it { expect(response).to have_http_status(:success) }
+      end
     end
 
     describe "#update" do
