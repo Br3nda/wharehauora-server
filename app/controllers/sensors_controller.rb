@@ -13,13 +13,8 @@ class SensorsController < WebController
                        .order(created_at: :desc)
                        .paginate(page: params[:page], per_page: 10)
 
-    @temperature = policy_scope(Reading.temperature)
-                   .where(sensor: @sensor)
-                   .pluck(:created_at, :value)
-
-    @humidity = policy_scope(Reading.humidity)
-                .where(sensor: @sensor)
-                .pluck(:created_at, :value)
+    @temperature = temperature_data(@sensor)
+    @humidity = humidity_data(@sensor)
   end
 
   def edit
@@ -45,5 +40,19 @@ class SensorsController < WebController
     %i(
       room_name
     )
+  end
+
+  def temperature_data(sensor)
+    Reading.temperature
+           .where(sensor: sensor)
+           .limit(1000)
+           .pluck(:created_at, :value)
+  end
+
+  def humidity_data(sensor)
+    policy_scope(Reading.humidity)
+      .where(sensor: sensor)
+      .limit(1000)
+      .pluck(:created_at, :value)
   end
 end
