@@ -12,6 +12,10 @@ class SensorsController < WebController
     @readings = @sensor.readings
                        .order(created_at: :desc)
                        .paginate(page: params[:page], per_page: 10)
+
+    @temperature = policy_scope(Reading.temperature)
+                   .where(sensor: @sensor)
+                   .pluck(:created_at, :value)
   end
 
   def edit

@@ -11,3 +11,6 @@
   = @sensor.room_name
 
 = render "readings", readings: @readings
+
+%h2 Temperature
+= area_chart(@temperature)
