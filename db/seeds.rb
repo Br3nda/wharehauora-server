@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+RoomType.create!(name: "Living space")
+RoomType.create!(name: "Sleeping/Bedroom")
+RoomType.create!(name: "Kitchen")
