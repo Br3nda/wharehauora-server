@@ -2,7 +2,12 @@
 namespace :sensors do
   desc "Subscribe to incoming sensor messages"
   task ingest: :environment do
-    SensorsIngest.new.process
+    begin
+      SensorsIngest.new.process
+    rescue Exception => e # rubocop:disable Lint/RescueException
+      Raygun.track_exception(e) if Rails.env.production?
+      raise
+    end
   end
 end
 
