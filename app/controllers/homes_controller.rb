@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class HomesController < WebController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :show
 
   def index
     @homes = policy_scope(Home)
@@ -28,7 +28,7 @@ class HomesController < WebController
   end
 
   def create
-    @home = Home.new(home_params)
+    @home = Home.new(home_params.merge(owner_id: current_user.id))
     authorize @home
     @home.save!
     redirect_to @home
@@ -63,13 +63,11 @@ class HomesController < WebController
   private
 
   def home_params
-    params[:home].permit(permitted_home_params).merge(
-      owner_id: current_user.id
-    )
+    params[:home].permit(permitted_home_params)
   end
 
   def permitted_home_params
-    %i(name)
+    %i(name is_public)
   end
 
   def temperature_data(sensor)
