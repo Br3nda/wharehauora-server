@@ -25,6 +25,7 @@ class HomesController < WebController
   def new
     authorize :home
     @home = Home.new
+    @home_types = HomeType.all
   end
 
   def create
@@ -36,6 +37,7 @@ class HomesController < WebController
 
   def edit
     @home = Home.find(params[:id])
+    @home_types = HomeType.all
     authorize @home
   rescue ActiveRecord::RecordNotFound
     skip_authorization
@@ -67,7 +69,11 @@ class HomesController < WebController
   end
 
   def permitted_home_params
-    %i(name is_public)
+    %i(
+      name
+      is_public
+      home_type_id
+    )
   end
 
   def temperature_data(sensor)
