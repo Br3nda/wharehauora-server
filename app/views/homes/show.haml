@@ -1,16 +1,18 @@
 %h2
-  My Home:
   = @home.name
-%p
-  = link_to "Edit home name", edit_home_path(@home)
+
+- if user_signed_in? && @home.owner_id == current_user.id
+  %p
+    = link_to "Edit home name", edit_home_path(@home)
 
 - unless (@home.sensors.empty?)
-  %h2 Temperature
+  %h3 Temperature
   = line_chart(@temperature)
 
-  %h2 Humidity
+  %h3 Humidity
   = line_chart(@humidity)
 
-  %h2 Sensors
-  = render "sensors", sensors: @home.sensors
 
+  - if user_signed_in? && @home.owner_id == current_user.id
+    %h3 Sensors
+    = render "sensors", sensors: @home.sensors

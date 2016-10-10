@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class HomesController < WebController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :show
 
   def index
     @homes = policy_scope(Home)
