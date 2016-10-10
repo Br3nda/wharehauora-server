@@ -19,6 +19,7 @@ class SensorsController < WebController
 
   def edit
     @sensor = Sensor.find(params[:id])
+    @room_types = RoomType.all
     authorize @sensor
   end
 
@@ -39,6 +40,7 @@ class SensorsController < WebController
   def permitted_sensor_params
     %i(
       room_name
+      room_type_id
     )
   end
 
