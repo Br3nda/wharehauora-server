@@ -11,7 +11,7 @@ class SensorsController < WebController
 
     @readings = @sensor.readings
                        .order(created_at: :desc)
-                       .paginate(page: params[:page], per_page: 10)
+                       .paginate(page: params[:page], per_page: 50)
 
     @temperature = temperature_data(@sensor)
     @humidity = humidity_data(@sensor)
