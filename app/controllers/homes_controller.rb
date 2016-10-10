@@ -71,16 +71,16 @@ class HomesController < WebController
   end
 
   def temperature_data(sensor)
-    Reading.temperature
-           .where(sensor: sensor)
-           .where(["created_at >= ?", 1.day.ago])
-           .pluck(:created_at, :value)
+    time_series Reading.temperature, sensor
   end
 
   def humidity_data(sensor)
-    Reading.humidity
-           .where(sensor: sensor)
-           .where(["created_at >= ?", 1.day.ago])
-           .pluck(:created_at, :value)
+    time_series Reading.humidity, sensor
+  end
+
+  def time_series(query, sensor)
+    query.where(sensor: sensor)
+         .where(["created_at >= ?", 1.day.ago])
+         .pluck("date_trunc('minute', created_at)", :value)
   end
 end
