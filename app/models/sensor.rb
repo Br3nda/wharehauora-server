@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Sensor < ActiveRecord::Base
   belongs_to :home
+  belongs_to :room_type
   has_many :readings
 
   def temperature
