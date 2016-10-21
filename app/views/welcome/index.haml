@@ -1,3 +1,4 @@
+image_tag(image("photo-whare.jpeg"))
 - if user_signed_in?
   %p
     Pretty graphs coming soon
@@ -10,8 +11,13 @@
           %span.whare-table-details
             Sign in
             %span existing users
-        %ul.whare-table-list
-          = link_to "Sign in", new_user_session_path, class: "button-choose pure-button"
+        / %ul.whare-table-list
+        /   = link_to "Sign in", new_user_session_path, class: "button-choose pure-button"
+        .sign-in-footer
+          .existing-user-text
+            Existing User
+          .sign-in-link
+            = link_to "Sign in", new_user_session_path, class: "button-choose pure-button"
 
     .pure-u-1.pure-u-md-1-3
       .whare-table.whare-table-signup
