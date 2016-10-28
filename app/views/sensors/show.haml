@@ -1,13 +1,20 @@
 %h2
   Sensor
   = @sensor.node_id
+  in
+  = @sensor.room_name
 
 %p
   Home:
   = link_to @sensor.home.name, @sensor.home
 
-%p
-  Room:
-  = @sensor.room_name
+%h2 Temperature
+= area_chart(@temperature)
 
+%h2 Humidity
+= area_chart(@humidity)
+
+
+%h2 Readings
 = render "readings", readings: @readings
+
