@@ -1,3 +1,23 @@
+= image_tag(image_url("whare-photo.png"))
+- if user_signed_in?
+  %p
+    Pretty graphs coming soon
+- else
+  .l-content
+    .pure-u-1.pure-u-md-1-3
+      .whare-table.whare-table-signin.whare-table-selected
+        .whare-table-header
+          %h2 Existing Users
+          %span.whare-table-details
+            Sign in
+            %span existing users
+        / %ul.whare-table-list
+        /   = link_to "Sign in", new_user_session_path, class: "button-choose pure-button"
+        .sign-in-footer
+          .existing-user-text
+            Existing User
+          .sign-in-link
+            = link_to "Sign in", new_user_session_path, class: "button-choose pure-button"
 
 
 %h1 Public Data

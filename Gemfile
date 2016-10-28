@@ -36,6 +36,7 @@ gem 'jsonapi-resources'
 
 # templating
 gem 'haml-rails'
+
 gem 'purecss-rails'
 
 # for heroku

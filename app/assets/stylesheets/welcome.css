@@ -73,7 +73,7 @@
 }
 
 .whare-table-signup .whare-table-header {
-    background: #519251;    
+    background: #519251;
 }
 
 .whare-table-header {
@@ -110,10 +110,30 @@
     text-align: center;
 }
 
-.whare-table-list li {
-    padding: 0.8em 0;
-    background: #f7f7f7;
-    border-bottom: 1px solid #e7e7e7;
+.sign-in-footer li {
+  background: #f7f7f7;
+  border-bottom: 1px solid #e7e7e7;
+  outline: 1px solid red;
+  padding: .8em 0;
+  text-align: center;
+  width: 100%;
+
+  .existing-user-text {
+    display: block;
+    float: left;
+    outline: 1px solid red;
+    padding: 10px;
+    width: 50%;
+  }
+
+  .sign-in-link {
+    display: block;
+    float: left;
+    outline: 1px solid red;
+    padding: 10px;
+    width: 50%;
+  }
+
 }
 
 .button-choose {
