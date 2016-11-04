@@ -10,8 +10,8 @@ before_script:
 script:
 - bundle exec rubocop
 - bundle exec haml-lint
-- csslint
-- haml-lint
+- csslint .
+- bundle exec haml-lint .
 - bundle exec bundle-audit update
 - bundle exec bundle-audit
 - bundle exec rspec spec
