@@ -38,6 +38,8 @@ PreCommit:
     enabled: true
   CssLint:
     enabled: true
+  HamlLint:
+    enabled: true
 
 PostCheckout:
 #  ALL: # Special hook name that customizes all hooks of this type
