@@ -36,6 +36,7 @@ gem 'jsonapi-resources'
 
 # templating
 gem 'haml-rails'
+
 gem 'purecss-rails'
 
 # for heroku
@@ -57,6 +58,7 @@ group :development, :test do
   # code style
   gem 'rubocop'
   gem 'haml-lint'
+  gem "scss_lint", require: false
 
   # looks for obvious wrongness
   gem 'brakeman'

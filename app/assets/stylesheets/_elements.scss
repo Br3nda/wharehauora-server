@@ -1,0 +1,25 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: "proxima-nova";
+  font-weight: 500;
+  margin: 0;
+}
+
+img {
+  width: 100%;
+}
+
+fieldset {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
