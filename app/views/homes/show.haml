@@ -5,7 +5,7 @@
   %p
     = link_to "Edit home name", edit_home_path(@home)
 
-- unless (@home.sensors.empty?)
+- unless @home.sensors.empty?
   %h3 Temperature
   = line_chart(@temperature)
 
