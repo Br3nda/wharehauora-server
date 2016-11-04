@@ -38,7 +38,7 @@ How to run the test suite
 Deployment
 ==========
 
-This app is hosted on heroku. 
+This app is hosted on heroku.
 
 It wil be automatically deploymed to staging, whenevver the `master` branch changes, and Travis-CI build passes.
 
