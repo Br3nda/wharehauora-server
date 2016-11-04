@@ -56,6 +56,7 @@ group :development, :test do
 
   # code style
   gem 'rubocop'
+  gem 'haml-lint'
 
   # looks for obvious wrongness
   gem 'brakeman'
