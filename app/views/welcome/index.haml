@@ -11,14 +11,12 @@
           %span.whare-table-details
             Sign in
             %span existing users
-        / %ul.whare-table-list
-        /   = link_to "Sign in", new_user_session_path, class: "button-choose pure-button"
         .sign-in-footer
           .existing-user-text
             Existing User
           .sign-in-link
-            = link_to "Sign in", new_user_session_path, class: "button-choose pure-button"
-
+            = link_to "Sign in", new_user_session_path,
+              class: "button-choose pure-button"
 
 %h1 Public Data
 

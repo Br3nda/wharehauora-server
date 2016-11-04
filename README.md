@@ -30,6 +30,15 @@ To set up a development environment
 4. `bundle exec rails s`
 
 
+Code Quality
+-------------
+
+We use rubocop, and overcommit. To check code style before commiting to git,
+install the overcommit get
+
+`gem install overcommit`
+
+
 How to run the test suite
 -------------------------
 
@@ -38,7 +47,7 @@ How to run the test suite
 Deployment
 ==========
 
-This app is hosted on heroku. 
+This app is hosted on heroku.
 
 It wil be automatically deploymed to staging, whenevver the `master` branch changes, and Travis-CI build passes.
 
