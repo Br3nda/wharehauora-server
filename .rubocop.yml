@@ -66,3 +66,8 @@ AllCops:
     - 'bin/**/*'
     - 'doc/**/*'
     - 'db/migrate/**/*'
+
+Style/FileName:
+  Exclude:
+    - Gemfile
+    - Gemfile.lock

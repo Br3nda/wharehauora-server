@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe SensorsController, type: :controller do
   include Devise::Test::ControllerHelpers
 
+  let(:bedroom) { FactoryGirl.create(:room_type, name: "bedroom") }
+
   let(:user) { FactoryGirl.create(:user) }
   let(:home) { FactoryGirl.create(:home, owner_id: user.id) }
-  let(:sensor) { FactoryGirl.create(:sensor, home_id: home.id) }
+  let(:sensor) { FactoryGirl.create(:sensor, home_id: home.id, room_type: bedroom) }
 
   context "Not signed in" do
     describe "GET show" do

@@ -11,14 +11,15 @@ class SensorsController < WebController
 
     @readings = @sensor.readings
                        .order(created_at: :desc)
-                       .paginate(page: params[:page], per_page: 10)
+                       .paginate(page: params[:page], per_page: 50)
 
-    @temperature = temperature_data(@sensor)
-    @humidity = humidity_data(@sensor)
+    @temperature = temperature_data
+    @humidity = humidity_data
   end
 
   def edit
     @sensor = Sensor.find(params[:id])
+    @room_types = RoomType.all
     authorize @sensor
   end
 
@@ -39,20 +40,21 @@ class SensorsController < WebController
   def permitted_sensor_params
     %i(
       room_name
+      room_type_id
     )
   end
 
-  def temperature_data(sensor)
-    Reading.temperature
-           .where(sensor: sensor)
-           .limit(1000)
-           .pluck(:created_at, :value)
+  def temperature_data
+    time_series Reading.temperature
   end
 
-  def humidity_data(sensor)
-    policy_scope(Reading.humidity)
-      .where(sensor: sensor)
-      .limit(1000)
-      .pluck(:created_at, :value)
+  def humidity_data
+    time_series Reading.humidity
+  end
+
+  def time_series(query)
+    policy_scope(query).where(sensor_id: @sensor.id)
+                       .where(["readings.created_at >= ?", 1.day.ago])
+                       .pluck("date_trunc('minute', readings.created_at)", :value)
   end
 end

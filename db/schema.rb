@@ -11,16 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160928054744) do
+ActiveRecord::Schema.define(version: 20161010021309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "homes", force: :cascade do |t|
+  create_table "home_types", force: :cascade do |t|
+    t.text     "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "homes", force: :cascade do |t|
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "name"
     t.integer  "owner_id"
+    t.boolean  "is_public",    default: false
+    t.integer  "home_type_id"
   end
 
   create_table "readings", force: :cascade do |t|
@@ -35,6 +43,12 @@ ActiveRecord::Schema.define(version: 20160928054744) do
     t.integer  "sub_type"
   end
 
+  create_table "room_types", force: :cascade do |t|
+    t.text     "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.integer  "home_id"
     t.text     "name"
@@ -45,11 +59,12 @@ ActiveRecord::Schema.define(version: 20160928054744) do
   create_table "sensors", force: :cascade do |t|
     t.integer  "room_id"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "node_id"
     t.integer  "home_id"
     t.string   "room_name"
+    t.integer  "room_type_id"
   end
 
   create_table "users", force: :cascade do |t|

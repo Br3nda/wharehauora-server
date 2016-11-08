@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class HomesController < WebController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :show
 
   def index
     @homes = policy_scope(Home)
@@ -25,10 +25,11 @@ class HomesController < WebController
   def new
     authorize :home
     @home = Home.new
+    @home_types = HomeType.all
   end
 
   def create
-    @home = Home.new(home_params)
+    @home = Home.new(home_params.merge(owner_id: current_user.id))
     authorize @home
     @home.save!
     redirect_to @home
@@ -36,6 +37,7 @@ class HomesController < WebController
 
   def edit
     @home = Home.find(params[:id])
+    @home_types = HomeType.all
     authorize @home
   rescue ActiveRecord::RecordNotFound
     skip_authorization
@@ -63,26 +65,28 @@ class HomesController < WebController
   private
 
   def home_params
-    params[:home].permit(permitted_home_params).merge(
-      owner_id: current_user.id
-    )
+    params[:home].permit(permitted_home_params)
   end
 
   def permitted_home_params
-    %i(name)
+    %i(
+      name
+      is_public
+      home_type_id
+    )
   end
 
   def temperature_data(sensor)
-    Reading.temperature
-           .where(sensor: sensor)
-           .where(["created_at >= ?", 1.day.ago])
-           .pluck(:created_at, :value)
+    time_series Reading.temperature, sensor
   end
 
   def humidity_data(sensor)
-    Reading.humidity
-           .where(sensor: sensor)
-           .where(["created_at >= ?", 1.day.ago])
-           .pluck(:created_at, :value)
+    time_series Reading.humidity, sensor
+  end
+
+  def time_series(query, sensor)
+    query.where(sensor: sensor)
+         .where(["created_at >= ?", 1.day.ago])
+         .pluck("date_trunc('minute', created_at)", :value)
   end
 end

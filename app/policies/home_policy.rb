@@ -4,6 +4,7 @@ class HomePolicy < ApplicationPolicy
   private
 
   def owned_by_current_user?
-    record.owner_id == user.id
+    return true if record.is_public
+    return record.owner_id == user.id if user
   end
 end

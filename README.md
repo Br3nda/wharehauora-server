@@ -12,6 +12,7 @@ Status
 [![Coverage Status](https://coveralls.io/repos/github/WhareHauora/wharehauora-server/badge.svg?branch=master)](https://coveralls.io/github/WhareHauora/wharehauora-server?branch=master)
 [![Code Climate](https://codeclimate.com/github/WhareHauora/wharehauora-server/badges/gpa.svg)](https://codeclimate.com/github/WhareHauora/wharehauora-server)
 [![Issue Count](https://codeclimate.com/github/WhareHauora/wharehauora-server/badges/issue_count.svg)](https://codeclimate.com/github/WhareHauora/wharehauora-server)
+[![Stories in Ready](https://badge.waffle.io/Br3nda/wharehauora-server.png?label=ready&title=Ready)](https://waffle.io/Br3nda/wharehauora-server)
 
 Installation
 ============
@@ -30,6 +31,15 @@ To set up a development environment
 4. `bundle exec rails s`
 
 
+Code Quality
+-------------
+
+We use rubocop, and overcommit. To check code style before commiting to git,
+install the overcommit get
+
+`gem install overcommit`
+
+
 How to run the test suite
 -------------------------
 
@@ -38,7 +48,7 @@ How to run the test suite
 Deployment
 ==========
 
-This app is hosted on heroku. 
+This app is hosted on heroku.
 
 It wil be automatically deploymed to staging, whenevver the `master` branch changes, and Travis-CI build passes.
 
