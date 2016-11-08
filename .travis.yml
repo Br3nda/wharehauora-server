@@ -9,7 +9,7 @@ before_script:
   - RAILS_ENV=test bundle exec rake db:create db:schema:load
 script:
   - bundle exec rubocop
-  - bundle exec haml-lint  . -e './vendor'
+  - bundle exec haml-lint ./app
   - bundle exec bundle-audit update
   - bundle exec bundle-audit
   - bundle exec rspec spec
