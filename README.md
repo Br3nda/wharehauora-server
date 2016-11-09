@@ -12,7 +12,7 @@ Status
 [![Coverage Status](https://coveralls.io/repos/github/WhareHauora/wharehauora-server/badge.svg?branch=master)](https://coveralls.io/github/WhareHauora/wharehauora-server?branch=master)
 [![Code Climate](https://codeclimate.com/github/WhareHauora/wharehauora-server/badges/gpa.svg)](https://codeclimate.com/github/WhareHauora/wharehauora-server)
 [![Issue Count](https://codeclimate.com/github/WhareHauora/wharehauora-server/badges/issue_count.svg)](https://codeclimate.com/github/WhareHauora/wharehauora-server)
-[![Stories in Ready](https://badge.waffle.io/Br3nda/wharehauora-server.png?label=ready&title=Ready)](https://waffle.io/Br3nda/wharehauora-server)
+[![Stories in Ready](https://badge.waffle.io/WhareHauora/wharehauora-server.png?label=ready&title=Ready)](https://waffle.io/Br3nda/wharehauora-server)
 
 Installation
 ============
