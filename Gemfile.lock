@@ -46,7 +46,7 @@ GEM
     bundler-audit (0.5.0)
       bundler (~> 1.2)
       thor (~> 0.18)
-    byebug (9.0.5)
+    byebug (9.0.6)
     chartkick (2.1.1)
     codeclimate-test-reporter (1.0.2)
     concurrent-ruby (1.0.2)

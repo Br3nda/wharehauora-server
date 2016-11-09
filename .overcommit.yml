@@ -19,6 +19,7 @@
 PreCommit:
   ALL:
     on_warn: fail  # Treat all warnings as failures
+    quiet: false
   RuboCop:
     enabled: true
     command: ['bundle', 'exec', 'rubocop', '-D']
@@ -26,6 +27,8 @@ PreCommit:
     enabled: true
     exclude:
       - '**/db/structure.sql'  # Ignore trailing whitespace in generated files
+  CoffeeLint:
+    enabled: true
   HardTabs:
     enabled: true
   CommitPlease:
@@ -40,20 +43,37 @@ PreCommit:
     enabled: true
   HamlLint:
     enabled: true
+  JsonSyntax:
+    enabled: true
+  BundleOutdated:
+    enabled: true
+    on_warn: warn
+  RailsSchemaUpToDate:
+    enabled: true
 
 PostCheckout:
   ALL:
     quiet: false
   BundleInstall:
     enabled: true
+  RailsSchemaUpToDate:
+    enabled: true
 
 PostMerge:
   BundleInstall:
     enabled: true
+  RailsSchemaUpToDate:
+    enabled: true
 
 PrePush:
+  ALL:
+    on_warn: fail # Treat all warnings as failures
+    quiet: false
   Brakeman:
     enabled: true
+  RSpec:
+    enabled: true
+    command: ['bundle', 'exec', 'rspec']
 #
 #  IndexTags:
 #    enabled: true # Generate a tags file with `ctags` each time HEAD changes
