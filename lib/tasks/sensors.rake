@@ -2,7 +2,7 @@ require 'mqtt'
 require 'uri'
 
 namespace :sensors do
-  desc "Subscribe to incoming sensor messages"
+  desc 'Subscribe to incoming sensor messages'
   task ingest: :environment do
     begin
       SensorsIngest.new.process
@@ -39,7 +39,7 @@ class SensorsIngest
   end
 
   def decode(topic, value)
-    (home_id, node_id, child_sensor_id, message_type, ack, sub_type, _payload) = topic.split("/")[3..-1]
+    (home_id, node_id, child_sensor_id, message_type, ack, sub_type, _payload) = topic.split('/')[3..-1]
 
     sensor = Sensor.find_or_create_by(home_id: home_id, node_id: node_id)
 

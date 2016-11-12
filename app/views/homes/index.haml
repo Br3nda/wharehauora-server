@@ -1,8 +1,8 @@
 %h2 Homes
 
 %p
-  = link_to "Add a home?", new_home_path
+  = link_to 'Add a home?', new_home_path
 
 - unless @homes.empty?
-  = render "table", homes: @homes
+  = render 'table', homes: @homes
 

@@ -54,7 +54,7 @@ class SensorsController < WebController
 
   def time_series(query)
     policy_scope(query).where(sensor_id: @sensor.id)
-                       .where(["readings.created_at >= ?", 1.day.ago])
+                       .where(['readings.created_at >= ?', 1.day.ago])
                        .pluck("date_trunc('minute', readings.created_at)", :value)
   end
 end

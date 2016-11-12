@@ -1,15 +1,15 @@
 .pure-menu.pure-menu-horizontal
-  = link_to "WHARE HAUORA", root_path, class: "pure-menu-heading pure-menu-link"
+  = link_to 'WHARE HAUORA', root_path, class: 'pure-menu-heading pure-menu-link'
   %ul.pure-menu-list
     - if user_signed_in?
       %li.pure-menu-item
-        = link_to "Account", edit_user_password_path, class: "pure-menu-link"
+        = link_to 'Account', edit_user_password_path, class: 'pure-menu-link'
       %li.pure-menu-item
-        = link_to 'My Whare', homes_path, class: "pure-menu-link"
+        = link_to 'My Whare', homes_path, class: 'pure-menu-link'
       %li.pure-menu-item
-        = link_to 'Sign out', destroy_user_session_path, class: " pure-menu-link", method: :delete
+        = link_to 'Sign out', destroy_user_session_path, class: ' pure-menu-link', method: :delete
     - else
       %li.pure-menu-item
-        = link_to 'Sign up', new_user_registration_path, class: "pure-menu-link"
+        = link_to 'Sign up', new_user_registration_path, class: 'pure-menu-link'
       %li.pure-menu-item
-        = link_to 'Sign in', new_user_session_path, class: "pure-menu-link"
+        = link_to 'Sign in', new_user_session_path, class: 'pure-menu-link'

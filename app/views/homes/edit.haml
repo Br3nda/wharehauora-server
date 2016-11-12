@@ -1,8 +1,8 @@
-= form_for @home, url: { action: "update" } do |f|
+= form_for @home, url: { action: 'update' } do |f|
   .pure-form
     %legend Edit home
-    = render "form", f: f, home_types: @home_types
+    = render 'form', f: f, home_types: @home_types
 
     %fieldset
       %button.pure-button.pure-button-primary Save
-      = link_to "Delete", home_path(@home), method: :delete, class: "pure-button"
+      = link_to 'Delete', home_path(@home), method: :delete, class: 'pure-button'
