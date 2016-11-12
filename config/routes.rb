@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users
   root 'welcome#index'
 
@@ -11,6 +12,8 @@ Rails.application.routes.draw do
 
   resources :rooms
   resources :sensors
+
+  use_doorkeeper
 
   get '/api', to: 'api#index'
 
