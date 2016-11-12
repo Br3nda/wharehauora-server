@@ -25,9 +25,6 @@ Style/SingleLineBlockParams:
 Metrics/ParameterLists:
   Max: 6
 
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: single_quotes
 
