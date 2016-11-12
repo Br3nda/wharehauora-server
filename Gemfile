@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
-ruby "2.3.1"
+ruby '2.3.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.7.1'
@@ -58,7 +58,7 @@ group :development, :test do
   # code style
   gem 'rubocop', require: false
   gem 'haml-lint', require: false
-  gem "scss_lint", require: false
+  gem 'scss_lint', require: false
 
   # looks for obvious wrongness
   gem 'brakeman'
@@ -75,7 +75,7 @@ group :development, :test do
 
   # Code coverage analysis
   gem 'coveralls', require: false
-  gem "codeclimate-test-reporter", require: false
+  gem 'codeclimate-test-reporter', require: false
 end
 
 group :development do
