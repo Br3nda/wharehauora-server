@@ -1,12 +1,13 @@
+---
 # Built-in config:
 # https://github.com/bbatsov/rubocop/blob/master/config/default.yml
 
 # We do not typically use/need class documentation
 Documentation:
-    Enabled: false
+  Enabled: false
 
 Metrics/LineLength:
-    Max: 120
+  Max: 120
 
 Metrics/ModuleLength:
   Exclude:
@@ -28,16 +29,12 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
 
 Style/StringLiteralsInInterpolation:
-    EnforcedStyle: single_quotes
+  EnforcedStyle: single_quotes
 
 Style/SingleLineMethods:
   Enabled: false
 
 Style/EmptyLineBetweenDefs:
-  Enabled: false
-
-# Being picky between '' and "" is just not worth the noise.
-Style/StringLiterals:
   Enabled: false
 
 # Not ready for this in our codebase yet
