@@ -16,7 +16,7 @@ class HomesController < WebController
     @humidity = []
 
     @home.sensors.each do |sensor|
-      name = sensor.room_name ? sensor.room_name : "unnamed"
+      name = sensor.room_name ? sensor.room_name : 'unnamed'
       @temperature << { name: name, data: temperature_data(sensor) }
       @humidity << { name: name, data: humidity_data(sensor) }
     end
@@ -86,7 +86,7 @@ class HomesController < WebController
 
   def time_series(query, sensor)
     query.where(sensor: sensor)
-         .where(["created_at >= ?", 1.day.ago])
+         .where(['created_at >= ?', 1.day.ago])
          .pluck("date_trunc('minute', created_at)", :value)
   end
 end
