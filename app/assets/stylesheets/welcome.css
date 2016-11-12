@@ -16,27 +16,24 @@
 
 .banner {
     background: transparent url('http://24.media.tumblr.com/ccb268832580ac12951828a1c179de69/tumblr_mo2xbk8JUK1st5lhmo1_1280.jpg') 0 0 no-repeat fixed;
-    text-align: center;
     background-size: cover;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://24.media.tumblr.com/ccb268832580ac12951828a1c179de69/tumblr_mo2xbk8JUK1st5lhmo1_1280.jpg', sizingMethod='scale');
-
-    height: 200px;
-    width: 100%;
-    margin-bottom: 3em;
     display: table;
+    /*filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://24.media.tumblr.com/ccb268832580ac12951828a1c179de69/tumblr_mo2xbk8JUK1st5lhmo1_1280.jpg', sizingMethod='scale');*/
+    height: 200px;
+    margin-bottom: 3em;
+    text-align: center;
+    width: 100%;
 }
 
     .banner-head {
-        display: table-cell;
-        vertical-align: middle;
-        margin-bottom: 0;
-        font-size: 2em;
         color: white;
+        display: table-cell;
+        /*margin-bottom: 0;*/
+        font-size: 2em;
         font-weight: 500;
         text-shadow: 0 1px 1px black;
+        vertical-align: middle;
     }
-
-
 
 /*
  * -- PRICING TABLE WRAPPER --
@@ -44,8 +41,8 @@
  */
  .whare-tables,
  .information {
-    max-width: 980px;
     margin: 0 auto;
+    max-width: 980px;
  }
 .whare-tables {
     margin-bottom: 3.125em;
@@ -78,27 +75,28 @@
     background: #111;
     color: #fff;
 }
-    .whare-table-header h2 {
-        margin: 0;
-        padding-top: 2em;
-        font-size: 1em;
-        font-weight: normal;
 
-    }
+h2 {
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding-top: 2em;
+
+}
 
 .whare-table-details {
     font-size: 6em;
-    margin: 0.2em 0 0;
     font-weight: 100;
+    margin: 0.2em 0 0;
 }
     .whare-table-details span {
-        display: block;
-        text-transform: uppercase;
-        font-size: 0.2em;
-        padding-bottom: 2em;
-        font-weight: 400;
+        color: #fff;
         color: rgba(255, 255, 255, 0.5);
-        *color: #fff;
+        display: block;
+        font-size: 0.2em;
+        font-weight: 400;
+        padding-bottom: 2em;
+        text-transform: uppercase;
     }
 
 .whare-table-list {
@@ -115,33 +113,33 @@
   padding: .8em 0;
   text-align: center;
   width: 100%;
-
-  .existing-user-text {
-    display: block;
-    float: left;
-    outline: 1px solid red;
-    padding: 10px;
-    width: 50%;
-  }
-
-  .sign-in-link {
-    display: block;
-    float: left;
-    outline: 1px solid red;
-    padding: 10px;
-    width: 50%;
-  }
-
 }
 
+.sign-in-footer .existing-user-text {
+    display: block;
+    float: left;
+    /*outline: 1px solid red;*/
+    /*padding: 10px;*/
+    width: 50%;
+}
+
+.sign-in-footer .sign-in-link {
+    display: block;
+    float: left;
+    /*outline: 1px solid red;*/
+    /*padding: 10px;*/
+    width: 50%;
+}
+
+
 .button-choose {
-    border: 1px solid #ccc;
     background: #fff;
-    color: #333;
+    border: 1px solid #ccc;
     border-radius: 2em;
+    bottom: -1.5em;
+    color: #333;
     font-weight: bold;
     position: relative;
-    bottom: -1.5em;
 }
 
 .information-head {
@@ -158,8 +156,6 @@
         color: #ddd;
     }
 
-
-
 /*
  * -- TABLET MEDIA QUERIES --
  * On tablets, we want to slightly adjust the size of the banner
@@ -173,7 +169,6 @@
     .whare-table {
         margin-bottom: 0;
     }
-
 }
 
 /*
