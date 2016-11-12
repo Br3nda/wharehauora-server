@@ -31,6 +31,19 @@ To set up a development environment
 4. `bundle exec rails s`
 
 
+To populate to your database with some records to work with:
+
+```
+bundle exec rake db:seed
+```
+
+to create a continuous stream of incoming fake sensor readings:
+
+```
+bundle exec rake sensors:fake
+```
+
+
 Code Quality
 -------------
 
