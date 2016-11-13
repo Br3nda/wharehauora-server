@@ -2,7 +2,9 @@
 language: ruby
 bundler_args: "--without development"
 sudo: false
-cache: bundler
+cache:
+  - bundler
+  - pip
 rvm:
   - 2.3.1
 before_script:
@@ -10,6 +12,7 @@ before_script:
 script:
   - bundle exec rubocop
   - bundle exec haml-lint ./app
+  - bundle exec yaml-lint $(git ls-files '*.yaml' '*.yml')
   - bundle exec bundle-audit update
   - bundle exec bundle-audit
   - bundle exec rspec spec

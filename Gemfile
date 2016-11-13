@@ -57,6 +57,7 @@ group :development, :test do
 
   # code style
   gem 'rubocop', require: false
+  gem 'yaml-lint', require: false
   gem 'haml-lint', require: false
   gem 'scss_lint', require: false
 
