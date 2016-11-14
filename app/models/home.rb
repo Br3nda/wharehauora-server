@@ -4,4 +4,7 @@ class Home < ActiveRecord::Base
   has_many :readings, through: :sensors
   belongs_to :owner
   belongs_to :home_type
+
+  has_many :authorizedviewers, dependent: :destroy
+  has_many :users, through: :authorizedviewers
 end

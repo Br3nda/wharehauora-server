@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010021309) do
+ActiveRecord::Schema.define(version: 20161114212417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authorizedviewers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "home_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "home_types", force: :cascade do |t|
     t.text     "name",       null: false
@@ -85,5 +92,7 @@ ActiveRecord::Schema.define(version: 20161010021309) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "authorizedviewers", "homes"
+  add_foreign_key "authorizedviewers", "users"
   add_foreign_key "homes", "users", column: "owner_id"
 end
