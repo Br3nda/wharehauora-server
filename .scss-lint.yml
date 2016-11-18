@@ -1,6 +1,8 @@
 scss_files: "app/assets/stylesheets/"
 
 linters:
+  Comment:
+    exclude: '**/*.css'
   StringQuotes:
     style: double_quotes
   HexLength:
