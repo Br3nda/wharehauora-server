@@ -19,7 +19,7 @@ class ApplicationPolicy
   end
 
   def show?
-    owned_by_current_user?
+    owned_by_current_user? || current_user_authorised_to_view?
   end
 
   def update?
@@ -34,7 +34,7 @@ class ApplicationPolicy
     attr_reader :user, :scope
     def resolve
       # scope.all if user && user.role?("janitor")
-      scope.where(owner_id: user.id)
+    	scope.where(owner_id: user.id)
     end
 
     def initialize(user, scope)
@@ -45,7 +45,7 @@ class ApplicationPolicy
 
   private
 
-  def owned_by_current_user?
-    record.owner_id == user.id
-  end
+  #def owned_by_current_user?
+  #  record.owner_id == user.id
+  #end
 end

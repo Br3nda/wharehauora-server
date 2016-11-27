@@ -9,7 +9,7 @@ class HomePolicy < ApplicationPolicy
   end
 
   def current_user_authorised_to_view?
-    return record.owner_id == user.id if user
+    record.users.include?(user)
   end
 
   def is_public?
