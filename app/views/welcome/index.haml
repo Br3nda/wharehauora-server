@@ -3,20 +3,15 @@
   %p
     Pretty graphs coming soon
 - else
-  .l-content
-    .pure-u-1.pure-u-md-1-3
-      .whare-table.whare-table-signin.whare-table-selected
-        .whare-table-header
-          %h2 Existing Users
-          %span.whare-table-details
-            Sign in
-            %span existing users
-        .sign-in-footer
-          .existing-user-text
-            Existing User
-          .sign-in-link
-            = link_to "Sign in", new_user_session_path,
-              class: "button-choose pure-button"
+  .sign-in-table
+    .existing-user Existing Users
+    .user-image
+      %i.fa.fa-user-circle.fa-5x
+    .sign-here Sign in here
+  .sign-in-link
+    = link_to "Sign in", new_user_session_path,
+      class: "button-choose pure-button button-style"
+
 
 %h1 Public Data
 

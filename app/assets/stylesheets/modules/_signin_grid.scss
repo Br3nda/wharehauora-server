@@ -1,0 +1,35 @@
+.sign-in-table {
+  position: relative;
+  width: 50%;
+  margin-left: 15px;
+  max-height: 500px;
+  text-align: centre;
+  outline: 1px solid gray;
+
+  .existing-user {
+    font-size: 26px;
+    text-align: center;
+    background-color: gray;
+  }
+
+  .user-image {
+    margin: 14% 39%;
+  }
+
+  .sign-here {
+    font-size: 26px;
+    text-align: center;
+    background-color: gray;
+  }
+}
+.sign-in-link {
+  outline: 1px solid gray;
+  padding: 10px;
+  margin-left: 15px;
+  width: 50%;
+  background-color: gray;
+
+  .button-style {
+    margin-left: 40%;
+  }
+}
