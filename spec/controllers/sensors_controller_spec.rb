@@ -39,11 +39,11 @@ RSpec.describe SensorsController, type: :controller do
 
       describe '#show' do
         before { get :show, id: another_sensor.to_param }
-        it { expect(response).to redirect_to(root_path) }
+        it { expect(response).to have_http_status(:not_found) }
       end
       describe '#edit' do
         before { get :show, id: another_sensor.to_param }
-        it { expect(response).to redirect_to(root_path) }
+        it { expect(response).to have_http_status(:not_found) }
       end
     end
   end
