@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 class HomesController < WebController
   before_action :authenticate_user!, except: :show
+  before_action :set_home, only: [:show, :edit, :destroy, :update]
 
   def index
     @homes = policy_scope(Home)
   end
 
   def show
-    @home = Home.find(params[:id])
-    authorize @home
-
     @readings = @home.readings.take(10)
 
     @temperature = []
@@ -36,25 +34,19 @@ class HomesController < WebController
   end
 
   def edit
-    @home = Home.find(params[:id])
     @home_types = HomeType.all
-    authorize @home
   rescue ActiveRecord::RecordNotFound
     skip_authorization
     redirect_to homes_path
   end
 
   def update
-    @home = Home.find(params[:id])
-    authorize @home
     @home.update(home_params)
     @home.save!
     redirect_to @home
   end
 
   def destroy
-    @home = Home.find(params[:id])
-    authorize @home
     @home.destroy!
     redirect_to homes_path
   rescue ActiveRecord::RecordNotFound
@@ -88,5 +80,10 @@ class HomesController < WebController
     query.where(sensor: sensor)
          .where(['created_at >= ?', 1.day.ago])
          .pluck("date_trunc('minute', created_at)", :value)
+  end
+
+  def set_home
+    @home = policy_scope(Home).find(params[:id])
+    authorize @home
   end
 end
