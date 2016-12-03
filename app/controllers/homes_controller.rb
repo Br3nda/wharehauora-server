@@ -40,7 +40,7 @@ class HomesController < WebController
   def update
     @home.update(home_params)
     @home.save!
-    redirect_to home_path(home)
+    redirect_to home_path(@home)
   end
 
   def destroy
