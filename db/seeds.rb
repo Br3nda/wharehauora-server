@@ -11,6 +11,8 @@ HomeType.create!(name: 'Council')
 HomeType.create!(name: 'Rental')
 HomeType.create!(name: 'Owner occupier')
 
+Role.create!(name: 'janitor', friendly_name: 'System janitor')
+
 if %w(development test staging).include? Rails.env
   living_room = RoomType.create!(name: 'Living space')
   bedroom = RoomType.create!(name: 'Sleeping/Bedroom')
