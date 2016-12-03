@@ -35,9 +35,6 @@ class HomesController < WebController
 
   def edit
     @home_types = HomeType.all
-  rescue ActiveRecord::RecordNotFound
-    skip_authorization
-    redirect_to homes_path
   end
 
   def update
