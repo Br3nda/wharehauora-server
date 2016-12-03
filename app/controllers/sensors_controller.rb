@@ -6,7 +6,7 @@ class SensorsController < WebController
   end
 
   def show
-    @sensor = Sensor.find(params[:id])
+    @sensor = policy_scope(Sensor).find(params[:id])
     authorize @sensor
 
     @readings = @sensor.readings
@@ -18,13 +18,13 @@ class SensorsController < WebController
   end
 
   def edit
-    @sensor = Sensor.find(params[:id])
+    @sensor = policy_scope(Sensor).find(params[:id])
     @room_types = RoomType.all
     authorize @sensor
   end
 
   def update
-    sensor = Sensor.find(params[:id])
+    sensor = policy_scope(Sensor).find(params[:id])
     authorize sensor
     sensor.update(sensor_params)
     sensor.save!
