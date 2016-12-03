@@ -30,6 +30,8 @@ class ApplicationPolicy
     owned_by_current_user?
   end
 
+  private
+
   class Scope
     attr_reader :user, :scope
     def resolve
@@ -42,8 +44,6 @@ class ApplicationPolicy
       @scope = scope
     end
   end
-
-  private
 
   def owned_by_current_user?
     record.owner_id == user.id
