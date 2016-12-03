@@ -30,11 +30,14 @@ class ApplicationPolicy
     owned_by_current_user?
   end
 
+  private
+
   class Scope
     attr_reader :user, :scope
     def resolve
+      raise 'Policy Scope not defined'
       # scope.all if user && user.role?("janitor")
-      scope.where(owner_id: user.id)
+      # scope.where(owner_id: user.id)
     end
 
     def initialize(user, scope)
@@ -42,8 +45,6 @@ class ApplicationPolicy
       @scope = scope
     end
   end
-
-  private
 
   def owned_by_current_user?
     record.owner_id == user.id

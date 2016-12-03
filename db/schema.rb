@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010021309) do
+ActiveRecord::Schema.define(version: 20161203031122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 20161010021309) do
     t.integer  "sub_type"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",          null: false
+    t.string   "friendly_name", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
+
   create_table "room_types", force: :cascade do |t|
     t.text     "name",       null: false
     t.datetime "created_at", null: false
@@ -66,6 +75,16 @@ ActiveRecord::Schema.define(version: 20161010021309) do
     t.string   "room_name"
     t.integer  "room_type_id"
   end
+
+  create_table "user_roles", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "role_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_roles", ["role_id"], name: "index_user_roles_on_role_id", using: :btree
+  add_index "user_roles", ["user_id"], name: "index_user_roles_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

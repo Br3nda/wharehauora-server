@@ -8,8 +8,10 @@ rvm:
 before_script:
   - RAILS_ENV=test bundle exec rake db:create db:schema:load
   - bundle-audit update
+  - gem install brakeman
 script:
   - bundle exec rubocop
+  - brakeman --run-all-checks --exit-on-warn --format plain .
   - bundle exec haml-lint ./app
   - bundle-audit
   - bundle exec rspec spec
