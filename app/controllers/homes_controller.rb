@@ -4,7 +4,6 @@ class HomesController < WebController
 
   def index
     @homes = policy_scope(Home)
-    @autherized_to_view = policy_scope(Authorizedviewer)
   end
 
   def show
