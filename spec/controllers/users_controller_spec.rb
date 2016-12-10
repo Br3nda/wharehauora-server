@@ -6,6 +6,14 @@ RSpec.describe UsersController, type: :controller do
       before { get :index }
       it { expect(response).to redirect_to(user_session_path) }
     end
+    describe '#edit' do
+      before { get :edit, id: user.to_param }
+      it { expect(response).to redirect_to(user_session_path) }
+    end
+    describe '#update' do
+      before { patch :update, id: user.to_param, user: valid_params }
+      it { expect(response).to redirect_to(user_session_path) }
+    end
   end
 
   let(:user) { FactoryGirl.create(:user) }
