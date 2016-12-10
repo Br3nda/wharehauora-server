@@ -1,4 +1,8 @@
 class UserPolicy < ApplicationPolicy
+  def index?
+    user.role?('janitor')
+  end
+
   def new?
     user.role?('janitor')
   end
