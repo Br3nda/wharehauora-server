@@ -41,6 +41,9 @@ Style/FrozenStringLiteralComment:
 Rails:
   Enabled: true
 
+Rails/HttpPositionalArguments:
+  Enabled: false
+
 # Run rails specific checks
 # https://github.com/bbatsov/rubocop#rails
 AllCops:

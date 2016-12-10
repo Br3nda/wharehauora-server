@@ -1,5 +1,4 @@
 require 'rails_helper'
-# rubocop:disable Rails/HttpPositionalArguments
 RSpec.describe SensorsController, type: :controller do
   include Devise::Test::ControllerHelpers
 

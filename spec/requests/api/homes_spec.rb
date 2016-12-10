@@ -1,5 +1,4 @@
 require 'rails_helper'
-# rubocop:disable Rails/HttpPositionalArguments
 RSpec.describe 'Homes' do
   include RequestApiSpecHelpers
 
