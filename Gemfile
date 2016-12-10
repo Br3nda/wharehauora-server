@@ -51,13 +51,16 @@ gem 'will_paginate'
 # pretty charts
 gem 'chartkick'
 
+# pagination
+gem 'kaminari'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
   # code style
-  gem 'rubocop', require: false
   gem 'haml-lint', require: false
+  gem 'rubocop', require: false
   gem 'scss_lint', require: false
 
   # looks for obvious wrongness
@@ -74,8 +77,8 @@ group :development, :test do
   gem 'faker'
 
   # Code coverage analysis
-  gem 'coveralls', require: false
   gem 'codeclimate-test-reporter', require: false
+  gem 'coveralls', require: false
 end
 
 group :development do
