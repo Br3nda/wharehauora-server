@@ -25,6 +25,10 @@ RSpec.describe UsersController, type: :controller do
     end
 
     let(:valid_params) { { email: 'bob@example.com' } }
+    describe '#edit' do
+      before { get :edit, id: user.to_param }
+      it { expect(response).to have_http_status(:success) }
+    end
     describe '#update' do
       before { patch :update, id: user.to_param, user: valid_params }
       it { expect(response).to redirect_to(users_path) }
