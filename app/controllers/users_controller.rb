@@ -3,10 +3,12 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :user
     @users = User.page(params[:page])
   end
 
   def new
+    authorize :user
     @user = User.new
     authorize @user
   end
