@@ -1,15 +1,29 @@
 .pure-menu.pure-menu-horizontal
-  = link_to 'WHARE HAUORA', root_path, class: 'pure-menu-heading pure-menu-link'
   %ul.pure-menu-list
+    %li.pure-menu-item.pure-menu-selected
+      = link_to 'WHARE HAUORA', root_path, class: 'pure-menu-heading pure-menu-link'
     - if user_signed_in?
       %li.pure-menu-item
-        = link_to 'Account', edit_user_password_path, class: 'pure-menu-link'
-      %li.pure-menu-item
         = link_to 'My Whare', homes_path, class: 'pure-menu-link'
-      %li.pure-menu-item
-        = link_to 'Sign out', destroy_user_session_path, class: ' pure-menu-link', method: :delete
     - else
       %li.pure-menu-item
         = link_to 'Sign up', new_user_registration_path, class: 'pure-menu-link'
       %li.pure-menu-item
         = link_to 'Sign in', new_user_session_path, class: 'pure-menu-link'
+
+    - if current_user && policy(:user).edit?
+      %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
+        %a.pure-menu-link
+          Admin
+        %ul.pure-menu-children
+          %li.pure-menu-item
+            = link_to 'Users', users_path, class: ' pure-menu-link'
+
+    - if user_signed_in?
+      %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
+        %a.pure-menu-link
+          My Account
+        %ul.pure-menu-children
+          %li.pure-menu-item
+            = link_to 'Sign out', destroy_user_session_path,
+              class: ' pure-menu-link', method: :delete

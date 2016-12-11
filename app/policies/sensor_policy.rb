@@ -1,4 +1,12 @@
 class SensorPolicy < ApplicationPolicy
+  def show?
+    owned_by_current_user?
+  end
+
+  def update?
+    owned_by_current_user?
+  end
+
   private
 
   class Scope < Scope
