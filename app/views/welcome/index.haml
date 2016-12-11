@@ -1,4 +1,4 @@
-= image_tag(image_url("whare-photo.png"))
+= image_tag(image_url('whare-photo.png'))
 - if user_signed_in?
   %p
     Pretty graphs coming soon
@@ -15,8 +15,8 @@
           .existing-user-text
             Existing User
           .sign-in-link
-            = link_to "Sign in", new_user_session_path,
-              class: "button-choose pure-button"
+            = link_to 'Sign in', new_user_session_path,
+              class: 'button-choose pure-button'
 
 %h1 Public Data
 

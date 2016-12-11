@@ -1,5 +1,4 @@
 require 'rails_helper'
-# rubocop:disable Rails/HttpPositionalArguments
 RSpec.describe 'Homes' do
   include RequestApiSpecHelpers
 
@@ -10,7 +9,7 @@ RSpec.describe 'Homes' do
   let(:valid_request_body) do
     {
       data: {
-        type: "homes",
+        type: 'homes',
         attributes: {
           name: home.name
         }
@@ -59,7 +58,7 @@ RSpec.describe 'Homes' do
 
   context 'Update data' do
     it 'creates new home with a post' do
-      post "/api/homes", valid_request_body.to_json, jsonapi_request_headers
+      post '/api/homes', valid_request_body.to_json, jsonapi_request_headers
       expect(response).to have_http_status(:created)
     end
 
@@ -67,7 +66,7 @@ RSpec.describe 'Homes' do
       request_body = {
         data: {
           attributes: { name: 'New Name' },
-          type: "homes",
+          type: 'homes',
           id: home.id
         }
       }

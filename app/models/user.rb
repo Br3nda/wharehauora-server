@@ -5,6 +5,14 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates :email, presence: true
+
+  has_many :user_roles
+  has_many :roles, through: :user_roles
   has_many :authorizedviewers, dependent: :destroy
   has_many :homes, through: :authorizedviewers
+
+  def role?(role)
+    roles.any? { |r| r.name == role }
+  end
 end

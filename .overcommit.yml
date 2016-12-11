@@ -67,7 +67,7 @@ PostMerge:
 
 PrePush:
   ALL:
-    on_warn: fail # Treat all warnings as failures
+    on_warn: fail  # Treat all warnings as failures
     quiet: false
   Brakeman:
     enabled: true

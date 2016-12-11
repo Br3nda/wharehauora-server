@@ -12,5 +12,5 @@
           = link_to room.name, home_room_path(room.home, room)
         %td
           - unless room.sensors.empty?
-            = render "sensors", sensors: room.sensors
+            = render 'sensors', sensors: room.sensors
 

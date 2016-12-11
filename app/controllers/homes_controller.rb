@@ -1,22 +1,20 @@
 # frozen_string_literal: true
 class HomesController < WebController
   before_action :authenticate_user!, except: :show
+  before_action :set_home, only: [:show, :edit, :destroy, :update]
 
   def index
     @homes = policy_scope(Home)
   end
 
   def show
-    @home = Home.find(params[:id])
-    authorize @home
-
     @readings = @home.readings.take(10)
 
     @temperature = []
     @humidity = []
 
     @home.sensors.each do |sensor|
-      name = sensor.room_name ? sensor.room_name : "unnamed"
+      name = sensor.room_name ? sensor.room_name : 'unnamed'
       @temperature << { name: name, data: temperature_data(sensor) }
       @humidity << { name: name, data: humidity_data(sensor) }
     end
@@ -36,25 +34,16 @@ class HomesController < WebController
   end
 
   def edit
-    @home = Home.find(params[:id])
     @home_types = HomeType.all
-    authorize @home
-  rescue ActiveRecord::RecordNotFound
-    skip_authorization
-    redirect_to homes_path
   end
 
   def update
-    @home = Home.find(params[:id])
-    authorize @home
     @home.update(home_params)
     @home.save!
-    redirect_to @home
+    redirect_to home_path(@home)
   end
 
   def destroy
-    @home = Home.find(params[:id])
-    authorize @home
     @home.destroy!
     redirect_to homes_path
   rescue ActiveRecord::RecordNotFound
@@ -86,7 +75,12 @@ class HomesController < WebController
 
   def time_series(query, sensor)
     query.where(sensor: sensor)
-         .where(["created_at >= ?", 1.day.ago])
+         .where(['created_at >= ?', 1.day.ago])
          .pluck("date_trunc('minute', created_at)", :value)
+  end
+
+  def set_home
+    @home = policy_scope(Home).find(params[:id])
+    authorize @home
   end
 end

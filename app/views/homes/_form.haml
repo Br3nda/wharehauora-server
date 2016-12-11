@@ -1,6 +1,6 @@
 / %input{type: "name", placeholder: "Name of home"}
 %fieldset
-  = f.text_field :name, type: "name", placeholder: "Name of home"
+  = f.text_field :name, type: 'name', placeholder: 'Name of home'
 
 %fieldset
   - home_types.each do |ht|
@@ -10,4 +10,4 @@
 
 %fieldset
   = f.label :is_public
-  = f.check_box :is_public, label: "Public?"
+  = f.check_box :is_public, label: 'Public?'
