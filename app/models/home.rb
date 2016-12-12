@@ -7,4 +7,6 @@ class Home < ActiveRecord::Base
 
   has_many :authorizedviewers, dependent: :destroy
   has_many :users, through: :authorizedviewers
+
+  scope :is_public?, -> { where(is_public: true) }
 end

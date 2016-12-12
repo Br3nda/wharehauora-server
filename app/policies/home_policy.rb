@@ -14,7 +14,7 @@ class HomePolicy < ApplicationPolicy
   end
 
   def show?
-    owned_by_current_user?
+    record.is_public? || owned_by_current_user?
   end
 
   def update?
@@ -25,29 +25,21 @@ class HomePolicy < ApplicationPolicy
     owned_by_current_user?
   end
 
-
   private
 
   class Scope < Scope
     def resolve
-      return scope.where('is_public = TRUE') if user.nil?
       return scope.all if user.role? 'janitor'
-      scope.joins('left join authorizedviewers on authorizedviewers.home_id = homes.id').where('authorizedviewers.user_id = ? or homes.owner_id = ?',user.id,user.id)
-      #scope.where('owner_id = ? OR is_public = TRUE', user.id)
+      return scope.joins(:authorizedviewers).where(authorizedviewers: { user_id: user.id }) unless user.nil?
+      scope.is_public?
     end
   end
 
   def owned_by_current_user?
-    return true if record.is_public
-    return record.owner_id == user.id if user
+    record.owner_id == user.id if user
   end
 
   def current_user_authorised_to_view?
     record.users.include?(user)
   end
-
-  def is_public?
-    return true if record.is_public
-  end
-
 end

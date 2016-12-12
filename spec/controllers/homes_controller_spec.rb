@@ -15,7 +15,7 @@ RSpec.describe HomesController, type: :controller do
 
     describe 'GET show for a private home' do
       before { get :show, id: another_home.to_param }
-      it { expect(response).to have_http_status(:not_found) }
+      it { expect(response).to redirect_to(root_path) }
     end
 
     describe 'GET edit for a home' do
@@ -42,11 +42,11 @@ RSpec.describe HomesController, type: :controller do
 
       describe "someone else's home" do
         before { get :show, id: another_home.id }
-        it { expect(response).to have_http_status(:not_found) }
+        it { expect(response).to redirect_to(root_path) }
       end
 
       describe 'public home' do
-        before { get :show, id: public_home.id }
+        before { get :show, id: public_home.to_param }
         it { expect(response).to have_http_status(:success) }
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe HomesController, type: :controller do
 
     describe "GET edit for someone else's home" do
       before { get :edit, id: another_home.to_param }
-      it { expect(response).to have_http_status(:not_found) }
+      it { expect(response).to redirect_to(root_path) }
     end
   end # end signed in
 end
