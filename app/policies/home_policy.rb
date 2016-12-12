@@ -29,9 +29,19 @@ class HomePolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
+      return scope.is_public? if user.nil?
       return scope.all if user.role? 'janitor'
-      return scope.joins(:authorizedviewers).where(authorizedviewers: { user_id: user.id }) unless user.nil?
-      scope.is_public?
+      my_homes_only
+    end
+
+    def my_homes_only
+      homes = my_home_ids
+      return scope.where('is_public=true OR owner_id = ? id in (?)', user.id, homes) if homes.count.positive?
+      scope.where('is_public=true OR owner_id = ? ', user.id)
+    end
+
+    def my_home_ids
+      Authorizedviewer.where(user_id: user.id).pluck(:home_id)
     end
   end
 

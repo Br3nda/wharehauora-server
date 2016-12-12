@@ -80,7 +80,7 @@ class HomesController < WebController
   end
 
   def set_home
-    @home = Home.find(params[:id])
+    @home = policy_scope(Home).find(params[:id])
     authorize @home
   end
 end
