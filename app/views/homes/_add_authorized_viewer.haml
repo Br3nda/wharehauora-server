@@ -1,0 +1,6 @@
+= form_for @new_authorized_viewer, url: { action: 'create' } do |f|
+  %form.pure-form
+    %fieldset
+      %legend New auth view to monitor
+      = f.text_field type: 'text', placeholder: 'Email of Flatmate or friend'
+      = f.submit

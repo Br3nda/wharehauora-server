@@ -6,3 +6,11 @@
     %fieldset
       %button.pure-button.pure-button-primary Save
       = link_to 'Delete', home_path(@home), method: :delete, class: 'pure-button'
+
+  - @authorized_viewers.each do |av|
+    %p
+      = render 'authorized_viewer', av: av
+
+= form_for @new_authorized_viewer, url: { action: 'add_authorized_viewer' } do |f|
+  = f.text_field :email, type: 'text', placeholder: 'Email of Flatmate or friend'
+  = f.submit

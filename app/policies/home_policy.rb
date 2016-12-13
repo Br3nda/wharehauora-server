@@ -36,7 +36,7 @@ class HomePolicy < ApplicationPolicy
 
     def my_homes_only
       homes = my_home_ids
-      return scope.where('is_public=true OR owner_id = ? id in (?)', user.id, homes) if homes.count.positive?
+      return scope.where('is_public=true OR owner_id = ? or id in (?)', user.id, homes) if homes.count.positive?
       scope.where('is_public=true OR owner_id = ? ', user.id)
     end
 

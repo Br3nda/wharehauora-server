@@ -1,16 +1,19 @@
-/ %input{type: "name", placeholder: "Name of home"}
-%fieldset
-  = f.text_field :name, type: 'text', placeholder: 'Name of home'
+= form_for av, url: { action: 'update' } do |u|
 
-%fieldset
-  - home_types.each do |ht|
+  %fieldset
     %p
-      = f.radio_button :home_type_id, ht.id
-      = f.label :home_type_id, ht.name
+    = u.submit 'Remove'
+    = u.label :email, av.email
 
-%fieldset
-  = f.label :is_public
-  = f.check_box :is_public, label: 'Public?'
+
+
+
+
+
+/ g
+/ = link_to 'Remove', home_path(@home), method: :remove_authorized_viewer, class: 'pure-button'
+/ = submit_tag 'Remove'
+/  = f.text_field :name, type: 'text', placeholder: 'Name of home'
 
 / fieldset
 /   - @authorized_viewers.each do |av|
