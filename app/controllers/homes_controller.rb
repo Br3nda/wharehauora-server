@@ -47,20 +47,11 @@ class HomesController < WebController
   end
 
   def add_authorized_viewer
-    Rails.logger.debug(@home)
-    Rails.logger.debug(params)
     @new_authorized_viewer.home_id = params[:id]
-
     u = User.find_by(email: params[:authorizedviewer][:email])
-
     @new_authorized_viewer.user_id = u.id
-    Rails.logger.debug(@new_authorized_viewer)
     @new_authorized_viewer.save!
-
-
-  #  # @home.update(home_params)
-  #  # @home.save!
-    redirect_to @home
+    redirect_to home_path(@home)
   end
 
   def destroy
