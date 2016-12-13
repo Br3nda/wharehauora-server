@@ -14,7 +14,21 @@ RSpec.describe HomesController, type: :controller do
     pending 'GET new'
     pending 'PUT create'
     pending 'PUT add_authorized_viewer'
-    pending 'DELETE destroy'
+    describe 'DELETE destroy' do
+      describe 'my home' do
+        before { delete :destroy, id: home.id }
+        it { expect(response).to redirect_to(new_user_session_path) }
+      end
+      describe "someone else's home" do
+        before { delete :destroy, id: another_home.id }
+        it { expect(response).to redirect_to(new_user_session_path) }
+      end
+      describe 'public home' do
+        before { delete :destroy, id: another_home.id }
+        it { expect(response).to redirect_to(new_user_session_path) }
+      end
+    end
+
     describe 'GET show for a public home' do
       before { get :show, id: public_home.to_param }
       it { expect(response).to have_http_status(:success) }
@@ -37,7 +51,20 @@ RSpec.describe HomesController, type: :controller do
     pending 'GET new'
     pending 'PUT create'
     pending 'PUT add_authorized_viewer'
-    pending 'DELETE destroy'
+    describe 'DELETE destroy' do
+      describe 'my home' do
+        before { delete :destroy, id: home.id }
+        it { expect(response).to redirect_to(homes_path) }
+      end
+      describe "someone else's home" do
+        before { delete :destroy, id: another_home.id }
+        it { expect(response).to have_http_status(:not_found) }
+      end
+      describe 'public home' do
+        before { delete :destroy, id: another_home.id }
+        it { expect(response).to have_http_status(:not_found) }
+      end
+    end
     describe 'GET show' do
       describe 'no sensors' do
         before { get :show, id: home.id }
@@ -77,7 +104,20 @@ RSpec.describe HomesController, type: :controller do
     pending 'GET new'
     pending 'PUT create'
     pending 'PUT add_authorized_viewer'
-    pending 'DELETE destroy'
+    describe 'DELETE destroy' do
+      describe 'my home' do
+        before { delete :destroy, id: home.id }
+        it { expect(response).to redirect_to(homes_path) }
+      end
+      describe "someone else's home" do
+        before { delete :destroy, id: another_home.id }
+        it { expect(response).to redirect_to(homes_path) }
+      end
+      describe 'public home' do
+        before { delete :destroy, id: another_home.id }
+        it { expect(response).to redirect_to(homes_path) }
+      end
+    end
     describe 'GET show' do
       describe 'my home no sensors' do
         before { get :show, id: home.id }
