@@ -57,9 +57,6 @@ class HomesController < WebController
   def destroy
     @home.destroy!
     redirect_to homes_path
-  rescue ActiveRecord::RecordNotFound
-    skip_authorization
-    redirect_to homes_path
   end
 
   private
