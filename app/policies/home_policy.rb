@@ -2,26 +2,32 @@ class HomePolicy < ApplicationPolicy
   attr_reader :user, :home
 
   def create?
+    return true if admin?
     owned_by_current_user?
   end
 
   def new?
-    user.present?
+    return true if admin?
+    user.present? && owned_by_current_user?
   end
 
   def edit?
+    return true if admin?
     owned_by_current_user?
   end
 
   def show?
+    return true if admin?
     record.is_public? || owned_by_current_user?
   end
 
   def update?
+    return true if admin?
     owned_by_current_user?
   end
 
   def destroy?
+    return true if admin?
     owned_by_current_user?
   end
 
@@ -30,7 +36,7 @@ class HomePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       return scope.is_public? if user.nil?
-      return scope.all if user.role? 'janitor'
+      return scope.all if user.present? && user.role?('janitor')
       my_homes_only
     end
 
@@ -46,7 +52,7 @@ class HomePolicy < ApplicationPolicy
   end
 
   def owned_by_current_user?
-    record.owner_id == user.id if user
+    record.owner_id == user.id if user.present?
   end
 
   def current_user_authorised_to_view?

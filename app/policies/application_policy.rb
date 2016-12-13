@@ -47,4 +47,8 @@ class ApplicationPolicy
   def owned_by_current_user?
     record.owner_id == user.id
   end
+
+  def admin?
+    user.present? && user.role?('janitor')
+  end
 end
