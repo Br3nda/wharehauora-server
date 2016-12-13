@@ -49,7 +49,7 @@ class HomesController < WebController
   def add_authorized_viewer
     user = User.find_by!(email: params[:authorizedviewer][:email])
     Authorizedviewer.new(home_id: params[:id], user_id: user.id).save!
-    redirect_to @home
+    redirect_to home_path(@home)
   end
 
   def destroy
