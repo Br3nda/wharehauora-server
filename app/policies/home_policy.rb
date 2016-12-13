@@ -18,7 +18,7 @@ class HomePolicy < ApplicationPolicy
 
   def show?
     return true if admin?
-    record.is_public? || owned_by_current_user?
+    record.is_public? || owned_by_current_user? || current_user_authorised_to_view?
   end
 
   def update?
