@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class HomesController < WebController
   before_action :authenticate_user!, except: :show
-  before_action :set_home, only: [:show, :edit, :destroy, :update]
+  before_action :set_home, only: [:show, :edit, :destroy, :update, :add_authorized_viewer]
 
   def index
     @homes = policy_scope(Home)
@@ -47,11 +47,9 @@ class HomesController < WebController
   end
 
   def add_authorized_viewer
-    @new_authorized_viewer.home_id = params[:id]
-    u = User.find_by!(email: params[:authorizedviewer][:email])
-    @new_authorized_viewer.user_id = u.id
-    @new_authorized_viewer.save!
-    redirect_to home_path(@home)
+    user = User.find_by!(email: params[:authorizedviewer][:email])
+    Authorizedviewer.new(home_id: params[:id], user_id: user.id).save!
+    redirect_to @home
   end
 
   def destroy
