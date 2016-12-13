@@ -5,9 +5,9 @@ RSpec.describe HomesController, type: :controller do
   let(:user) { FactoryGirl.create(:user) }
   let(:admin_role) { FactoryGirl.create(:role, name: 'janitor') }
   let(:admin_user) { FactoryGirl.create(:user, roles: [admin_role]) }
-  let(:home) { FactoryGirl.create(:home, owner_id: user.id) }
-  let(:another_home) { FactoryGirl.create(:home, name: "someone else's home") }
-  let(:public_home)  { FactoryGirl.create(:home, name: 'public home', is_public: true) }
+  let!(:home) { FactoryGirl.create(:home, owner_id: user.id) }
+  let!(:another_home) { FactoryGirl.create(:home, name: "someone else's home") }
+  let!(:public_home)  { FactoryGirl.create(:home, name: 'public home', is_public: true) }
 
   context 'not signed in ' do
     pending 'GET index'
@@ -25,7 +25,7 @@ RSpec.describe HomesController, type: :controller do
         it { expect(response).to redirect_to(new_user_session_path) }
       end
       describe 'public home' do
-        before { delete :destroy, id: another_home.id }
+        before { delete :destroy, id: public_home.id }
         it { expect(response).to redirect_to(new_user_session_path) }
       end
     end
@@ -62,8 +62,8 @@ RSpec.describe HomesController, type: :controller do
         it { expect(response).to have_http_status(:not_found) }
       end
       describe 'public home' do
-        before { delete :destroy, id: another_home.id }
-        it { expect(response).to have_http_status(:not_found) }
+        before { delete :destroy, id: public_home.id }
+        it { expect(response).to redirect_to(root_path) }
       end
     end
     describe 'GET show' do
@@ -87,6 +87,7 @@ RSpec.describe HomesController, type: :controller do
       describe 'public home' do
         before { get :show, id: public_home.to_param }
         it { expect(response).to have_http_status(:success) }
+        it { expect(assigns(:home).id).to eq public_home.id }
       end
     end
     describe '#update' do
@@ -99,9 +100,15 @@ RSpec.describe HomesController, type: :controller do
       it { expect(response).to have_http_status(:not_found) }
     end
   end # end signed in
+
   context 'signed in as admin/janitor' do
     before { sign_in admin_user }
-    pending 'GET index'
+    describe 'GET index' do
+      before { get :index }
+      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to render_template('index') }
+    end
+
     pending 'GET new'
     pending 'PUT create'
     pending 'POST add_authorized_viewer'
@@ -110,14 +117,17 @@ RSpec.describe HomesController, type: :controller do
       describe 'my home' do
         before { delete :destroy, id: home.id }
         it { expect(response).to redirect_to(homes_path) }
+        it { expect(assigns(:home).id).to eq home.id }
       end
       describe "someone else's home" do
         before { delete :destroy, id: another_home.id }
         it { expect(response).to redirect_to(homes_path) }
+        it { expect(assigns(:home).id).to eq another_home.id }
       end
       describe 'public home' do
-        before { delete :destroy, id: another_home.id }
+        before { delete :destroy, id: public_home.id }
         it { expect(response).to redirect_to(homes_path) }
+        it { expect(assigns(:home).id).to eq public_home.id }
       end
     end
 
@@ -142,6 +152,7 @@ RSpec.describe HomesController, type: :controller do
       describe 'public home' do
         before { get :show, id: public_home.to_param }
         it { expect(response).to have_http_status(:success) }
+        it { expect(assigns(:home).id).to eq public_home.id }
       end
     end
 
