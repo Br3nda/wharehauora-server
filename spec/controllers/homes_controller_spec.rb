@@ -13,7 +13,8 @@ RSpec.describe HomesController, type: :controller do
     pending 'GET index'
     pending 'GET new'
     pending 'PUT create'
-    pending 'PUT add_authorized_viewer'
+    pending 'POST add_authorized_viewer'
+
     describe 'DELETE destroy' do
       describe 'my home' do
         before { delete :destroy, id: home.id }
@@ -50,7 +51,7 @@ RSpec.describe HomesController, type: :controller do
     pending 'GET index'
     pending 'GET new'
     pending 'PUT create'
-    pending 'PUT add_authorized_viewer'
+    pending 'POST add_authorized_viewer'
     describe 'DELETE destroy' do
       describe 'my home' do
         before { delete :destroy, id: home.id }
@@ -103,7 +104,8 @@ RSpec.describe HomesController, type: :controller do
     pending 'GET index'
     pending 'GET new'
     pending 'PUT create'
-    pending 'PUT add_authorized_viewer'
+    pending 'POST add_authorized_viewer'
+
     describe 'DELETE destroy' do
       describe 'my home' do
         before { delete :destroy, id: home.id }
@@ -118,6 +120,7 @@ RSpec.describe HomesController, type: :controller do
         it { expect(response).to redirect_to(homes_path) }
       end
     end
+
     describe 'GET show' do
       describe 'my home no sensors' do
         before { get :show, id: home.id }
@@ -141,6 +144,7 @@ RSpec.describe HomesController, type: :controller do
         it { expect(response).to have_http_status(:success) }
       end
     end
+
     describe '#update' do
       before { patch :update, id: home.to_param, home: { name: 'New home name' } }
       it { expect(response).to redirect_to(home) }
