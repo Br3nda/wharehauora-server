@@ -3,26 +3,22 @@
   %p
     Pretty graphs coming soon
 - else
-  .sign-in-table
-    .existing-user Existing Users
-    .user-image
-      %i.fa.fa-user-circle.fa-5x
-    .sign-here Sign in here
-  .sign-in-link
-    = link_to "Sign in", new_user_session_path,
-      class: "button-choose pure-button button-style"
+  .user-table
+    .sign-in-table
+      .existing-user Existing Users
+      .user-image
+        %i.fa.fa-user-circle.fa-5x
+      .sign-in-link
+        = link_to "Sign in", new_user_session_path,
+          class: "button-choose pure-button button-style"
 
-
-%h1 Public Data
-
-.public-homes
-  %table.pure-table
-    %thead
-      %tr
-        %th.sortable
-          Name
-    %tbody
-      - @public_homes.each do |home|
-        %tr
-          %td
-            = link_to home.name, home_path(home)
+    .public-data
+      .public-title Public Data
+      .public-image
+        %i.fa.fa-user-circle.fa-5x
+      .public-name Name
+      %tbody
+        - @public_homes.each do |home|
+          %tr
+            %td
+              = link_to home.name, home_path(home)

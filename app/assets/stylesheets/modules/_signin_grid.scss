@@ -1,35 +1,59 @@
-.sign-in-table {
+.user-table {
   position: relative;
-  width: 50%;
-  margin-left: 15px;
-  max-height: 500px;
-  text-align: centre;
-  outline: 1px solid gray;
+  float: left;
+  outline: 1px solid red;
+  width: 100%;
+  overflow: hidden;
 
-  .existing-user {
-    font-size: 26px;
-    text-align: center;
-    background-color: gray;
+  .sign-in-table {
+    // position: relative;
+    // float: left;
+    display: inline-block;
+    width: 40%;
+    margin-left: 15px;
+    max-height: 500px;
+    text-align: centre;
+    outline: 1px solid $grey;
+
+    .existing-user {
+      font-size: 26px;
+      text-align: center;
+      background-color: $grey;
+    }
+
+    .user-image {
+      margin: 14% 39%;
+    }
+
+    .sign-in-link {
+      outline: 1px solid $grey;
+      text-align: center;
+      background-color: $grey;
+    }
   }
 
-  .user-image {
-    margin: 14% 39%;
-  }
+  .public-data {
+    margin-right: 15px;
+    max-height: 500px;
+    text-align: centre;
+    width: 40%;
+    float: right;
+    outline: 1px solid blue;
 
-  .sign-here {
-    font-size: 26px;
-    text-align: center;
-    background-color: gray;
-  }
-}
-.sign-in-link {
-  outline: 1px solid gray;
-  padding: 10px;
-  margin-left: 15px;
-  width: 50%;
-  background-color: gray;
+    .public-title {
+      font-size: 26px;
+      text-align: center;
+      background-color: $grey;
+    }
 
-  .button-style {
-    margin-left: 40%;
+    .public-image {
+      margin: 14% 39%;
+    }
+
+    .public-name {
+      font-size: 26px;
+      text-align: center;
+      background-color: $grey;
+    }
   }
 }
