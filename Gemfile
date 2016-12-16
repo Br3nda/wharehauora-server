@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
-ruby "2.3.1"
+ruby '2.3.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.7.1'
@@ -55,14 +55,20 @@ gem 'will_paginate'
 # pretty charts
 gem 'chartkick'
 
+# pagination
+gem 'kaminari'
+
+# email
+gem 'sendgrid-ruby'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
   # code style
-  gem 'rubocop'
-  gem 'haml-lint'
-  gem "scss_lint", require: false
+  gem 'haml-lint', require: false
+  gem 'rubocop', require: false
+  gem 'scss_lint', require: false
 
   # looks for obvious wrongness
   gem 'brakeman'
@@ -78,8 +84,8 @@ group :development, :test do
   gem 'faker'
 
   # Code coverage analysis
+  gem 'codeclimate-test-reporter', require: false
   gem 'coveralls', require: false
-  gem "codeclimate-test-reporter", require: false
 end
 
 group :development do

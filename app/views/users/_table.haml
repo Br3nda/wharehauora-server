@@ -1,0 +1,12 @@
+%table.pure-table
+  %thead
+    %tr
+      %th.sortable Email
+      %th.sortable Roles
+  %tbody
+    - users.each do |user|
+      %tr
+        %td
+          = link_to user.email, edit_user_path(user)
+        %td
+          = user.roles.map(&:friendly_name)

@@ -36,10 +36,14 @@
   text-shadow: 0 1px 1px $black;
 }
 
-.whare-tables,
-.information {
-  max-width: 980px;
-  margin: 0 auto;
+/*
+ * -- PRICING TABLE WRAPPER --
+ * This element wraps up all the table elements
+ */
+ .whare-tables,
+ .information {
+    margin: 0 auto;
+    max-width: 980px;
  }
 
 .whare-tables {
@@ -73,44 +77,23 @@
   color: #fff;
 }
 
-.whare-table-header h2 {
-  margin: 0;
-  padding-top: 2em;
-  font-size: 1em;
-  font-weight: normal;
 
-}
-
-.whare-table-details {
-    font-size: 6em;
-    margin: 0.2em 0 0;
-    font-weight: 100;
-}
-    .whare-table-details span {
-        display: block;
-        text-transform: uppercase;
-        font-size: 0.2em;
-        padding-bottom: 2em;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 0.5);
-        *color: #fff;
-    }
-
-.whare-table-list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    text-align: center;
+.sign-in-link {
+    display: block;
+    float: left;
+    /*outline: 1px solid red;*/
+    /*padding: 10px;*/
+    width: 50%;
 }
 
 .button-choose {
-    border: 1px solid #ccc;
     background: #fff;
-    color: #333;
+    border: 1px solid #ccc;
     border-radius: 2em;
+    bottom: -1.5em;
+    color: #333;
     font-weight: bold;
     position: relative;
-    bottom: -1.5em;
 }
 
 .information-head {
@@ -127,8 +110,6 @@
         color: #ddd;
     }
 
-
-
 /*
  * -- TABLET MEDIA QUERIES --
  * On tablets, we want to slightly adjust the size of the banner
@@ -142,7 +123,6 @@
     .whare-table {
         margin-bottom: 0;
     }
-
 }
 
 /*

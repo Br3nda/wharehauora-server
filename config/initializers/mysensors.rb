@@ -1,14 +1,13 @@
 # coding: UTF-8
-# rubocop:disable Lint/UselessAssignment
 # MySensors constants for version 1.5 of MySensors.
 module MySensors
   # MySensors message types.
   module MessageType
-    presentation = 0 # sent by a node when presenting attached sensors
-    set = 1                 # sent from/to sensor when value should be updated
-    req = 2                 # requests a variable value
-    internal = 3            # internal message
-    stream = 4              # OTA firmware updates
+    PRESENTATION = 0 # sent by a node when presenting attached sensors
+    SET = 1                 # sent from/to sensor when value should be updated
+    REQ = 2                 # requests a variable value
+    INTERNAL = 3            # internal message
+    STREAM = 4              # OTA firmware updates
   end
 
   # MySensors presentation sub-types.

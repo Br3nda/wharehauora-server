@@ -1,3 +1,4 @@
+---
 # Use this file to configure the Overcommit hooks you wish to use. This will
 # extend the default configuration defined in:
 # https://github.com/brigade/overcommit/blob/master/config/default.yml
@@ -17,15 +18,17 @@
 
 PreCommit:
   ALL:
-    on_warn: fail # Treat all warnings as failures
+    on_warn: fail  # Treat all warnings as failures
+    quiet: false
   RuboCop:
     enabled: true
-    on_warn: fail # Treat all warnings as failures
     command: ['bundle', 'exec', 'rubocop', '-D']
   TrailingWhitespace:
     enabled: true
     exclude:
-    - '**/db/structure.sql' # Ignore trailing whitespace in generated files
+      - '**/db/structure.sql'  # Ignore trailing whitespace in generated files
+  CoffeeLint:
+    enabled: true
   HardTabs:
     enabled: true
   CommitPlease:
@@ -34,26 +37,43 @@ PreCommit:
     enabled: true
   AuthorName:
     enabled: true
-  YamlLinl:
+  YamlLint:
     enabled: true
   CssLint:
     enabled: true
   HamlLint:
     enabled: true
+  JsonSyntax:
+    enabled: true
+  BundleOutdated:
+    enabled: true
+    on_warn: warn
+  RailsSchemaUpToDate:
+    enabled: true
 
 PostCheckout:
-#  ALL: # Special hook name that customizes all hooks of this type
-#    quiet: true # Change all post-checkout hooks to only display output on failure
+  ALL:
+    quiet: false
   BundleInstall:
+    enabled: true
+  RailsSchemaUpToDate:
     enabled: true
 
 PostMerge:
   BundleInstall:
     enabled: true
+  RailsSchemaUpToDate:
+    enabled: true
 
 PrePush:
+  ALL:
+    on_warn: fail  # Treat all warnings as failures
+    quiet: false
   Brakeman:
     enabled: true
+  RSpec:
+    enabled: true
+    command: ['bundle', 'exec', 'rspec']
 #
 #  IndexTags:
 #    enabled: true # Generate a tags file with `ctags` each time HEAD changes

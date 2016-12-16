@@ -12,6 +12,7 @@ Status
 [![Coverage Status](https://coveralls.io/repos/github/WhareHauora/wharehauora-server/badge.svg?branch=master)](https://coveralls.io/github/WhareHauora/wharehauora-server?branch=master)
 [![Code Climate](https://codeclimate.com/github/WhareHauora/wharehauora-server/badges/gpa.svg)](https://codeclimate.com/github/WhareHauora/wharehauora-server)
 [![Issue Count](https://codeclimate.com/github/WhareHauora/wharehauora-server/badges/issue_count.svg)](https://codeclimate.com/github/WhareHauora/wharehauora-server)
+[![Stories in Ready](https://badge.waffle.io/WhareHauora/wharehauora-server.png?label=ready&title=Ready)](https://waffle.io/WhareHauora/wharehauora-server)
 
 Installation
 ============
@@ -28,6 +29,19 @@ To set up a development environment
 3. `rake db:create db:migrate`
 
 4. `bundle exec rails s`
+
+
+To populate to your database with some records to work with:
+
+```
+bundle exec rake db:seed
+```
+
+to create a continuous stream of incoming fake sensor readings:
+
+```
+bundle exec rake sensors:fake
+```
 
 
 Code Quality
