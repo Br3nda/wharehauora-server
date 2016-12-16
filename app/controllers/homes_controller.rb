@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class HomesController < WebController
+class HomesController < ApplicationController
   before_action :authenticate_user!, except: :show
   before_action :set_home, only: [:show, :edit, :destroy, :update, :add_authorized_viewer]
 
