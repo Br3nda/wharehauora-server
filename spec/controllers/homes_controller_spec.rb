@@ -52,16 +52,6 @@ RSpec.describe HomesController, type: :controller do
     pending 'GET new'
     pending 'PUT create'
 
-    describe 'POST add_authorized_viewer' do
-      describe 'user already exists' do
-        before do
-          FactoryGirl.create(:user, email: 'bob@example.com')
-          post :add_authorized_viewer, id: home.to_param, authorizedviewer: { email: 'bob@example.com' }
-        end
-        it { expect(response).to redirect_to(home) }
-      end
-    end
-
     describe 'DELETE destroy' do
       describe 'my home' do
         before { delete :destroy, id: home.id }
