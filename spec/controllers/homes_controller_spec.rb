@@ -55,6 +55,7 @@ RSpec.describe HomesController, type: :controller do
       it { expect(response).to render_template(:new) }
       it { expect(assigns(:home)).to be_a_new(Home) }
     end
+
     pending 'PUT create'
 
     describe 'DELETE destroy' do
