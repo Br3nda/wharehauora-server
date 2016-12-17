@@ -50,7 +50,11 @@ Code Quality
 We use rubocop, and overcommit. To check code style before commiting to git,
 install the overcommit get
 
-`gem install overcommit`
+``
+gem install overcommit
+overcommit --install
+overcommit --sign
+``
 
 
 How to run the test suite
