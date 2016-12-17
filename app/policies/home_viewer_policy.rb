@@ -1,31 +1,35 @@
-class ViewerPolicy < ApplicationPolicy
+class HomeViewerPolicy < ApplicationPolicy
   def index?
-    user.role?('janitor')
+    home_owner? || user.role?('janitor')
   end
 
   def new?
-    user.role?('janitor')
+    home_owner? || user.role?('janitor')
   end
 
   def edit?
-    user.role?('janitor')
+    home_owner? || user.role?('janitor')
   end
 
   def show?
-    user.role?('janitor')
+    home_owner? || user.role?('janitor')
   end
 
   def update?
-    user.role?('janitor')
+    home_owner? || user.role?('janitor')
   end
 
   def destroy?
-    user.role?('janitor')
+    home_owner? || user.role?('janitor')
   end
 
   class Scope < Scope
     def resolve
-      scope.all if user && user.role?('janitor')
+      scope.all if user
     end
+  end
+
+  def home_owner?
+    record.owner_id == user.owner_id
   end
 end
