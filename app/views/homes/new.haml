@@ -1,6 +1,8 @@
-= form_for @home, url: { action: 'create' } do |f|
-  %form.pure-form
-    %fieldset
-      %legend New Home to monitor
-      = render 'form', f: f, home_types: @home_types
-      %button.pure-button.pure-button-primary{ type: 'submit' } Create
+%h2 New whare to monitor
+.pure-g
+  .pure-u-1-2
+    = form_for @home, url: { action: 'create' } do |f|
+      %form.pure-form
+        %fieldset
+          = render 'form', f: f, home_types: @home_types
+          %button.pure-button.pure-button-primary{ type: 'submit' } Create

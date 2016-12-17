@@ -20,11 +20,15 @@
       - sensors.each do |sensor|
         %tr
           %td
-            = link_to sensor.room_name, sensor_path(sensor)
+            - if sensor.room_name.present?
+              = sensor.room_name
+            - else
+              = sensor_path(sensor)
             - if policy(sensor).edit?
               = link_to 'edit', edit_home_sensor_path(sensor.home, sensor)
           %td
-            = sensor.room_type.name
+            - if sensor.room_type.present?
+              = sensor.room_type.name
           %td
             = sensor.node_id
           %td
