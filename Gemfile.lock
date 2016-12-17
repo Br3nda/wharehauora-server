@@ -20,6 +20,8 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    active_median (0.1.4)
+      activerecord
     activejob (4.2.7.1)
       activesupport (= 4.2.7.1)
       globalid (>= 0.3.0)
@@ -264,6 +266,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_median
   brakeman
   bundler-audit
   byebug
