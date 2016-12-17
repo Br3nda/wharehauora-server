@@ -49,7 +49,12 @@ RSpec.describe HomesController, type: :controller do
   context 'user is signed in' do
     before { sign_in user }
     pending 'GET index'
-    pending 'GET new'
+    describe 'GET new' do
+      before { get :new }
+      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to render_template(:new) }
+      it { expect(assigns(:home)).to be_a_new(Home) }
+    end
     pending 'PUT create'
 
     describe 'DELETE destroy' do
@@ -110,7 +115,12 @@ RSpec.describe HomesController, type: :controller do
       it { expect(response).to render_template('index') }
     end
 
-    pending 'GET new'
+    describe 'GET new' do
+      before { get :new }
+      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to render_template(:new) }
+    end
+
     pending 'PUT create'
     pending 'POST add_authorized_viewer'
 
