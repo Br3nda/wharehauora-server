@@ -1,4 +1,3 @@
-
 .pure-g
   .pure-u-1-2
     %h3 My Whare
@@ -9,13 +8,3 @@
         %fieldset
           %button.pure-button.pure-button-primary Save
           = link_to 'Delete', home_path(@home), method: :delete, class: 'pure-button'
-
-
-  .pure-u-1-2
-    %h3 Flatmates, family, whanau
-    / - @viewers.each do |av|
-    / = render 'viwer', av: av
-
-/ = form_for @new_authorized_viewer, url: { action: 'add_authorized_viewer' } do |f|
-/   = f.text_field :email, type: 'text', placeholder: 'Email of Flatmate or friend'
-/   = f.submit
