@@ -35,8 +35,15 @@ RSpec.describe HomeViewersController, type: :controller do
       before { get :index, home_id: home.to_param }
       it { expect(response).to have_http_status(:success) }
     end
-    pending 'GET new'
-    pending 'PUT create'
+    describe 'GET new' do
+      before { get :new, home_id: home.to_param }
+      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to render_template(:new) }
+    end
+    describe 'PUT create' do
+      before { put :create, home_id: home.to_param, home_viewer: { user: my_friend.email } }
+      it { expect(response).to redirect_to(home_home_viewers_path(home)) }
+    end
     pending 'DELETE'
     # describe 'POST add_authorized_viewer' do
     #   describe 'user already exists' do
