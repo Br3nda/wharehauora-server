@@ -23,6 +23,7 @@ class WelcomeController < ApplicationController
 
   def median(home_type, room_type)
     Reading.joins(:sensor, sensor: :home)
+           .where('readings.created_at >= ?', 1.hour.ago)
            .where('homes.home_type_id': home_type.id, 'sensors.room_type_id': room_type.id)
            .temperature.median(:value)
   end
