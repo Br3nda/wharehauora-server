@@ -1,2 +1,7 @@
 %h3 Flatmates, Whanau, and other authorized people
 %p These people can view this whare's readings
+
+= link_to 'add someone', new_home_home_viewer_path(home)
+- home.users.each do |v|
+  = v.name
+  = v.email

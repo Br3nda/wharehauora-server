@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :sensors
+  resources :home_viewers
 
   get '/api', to: 'api#index'
 

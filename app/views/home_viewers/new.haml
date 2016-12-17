@@ -1,0 +1,12 @@
+%h2 Add flatmates, whanau or someone else to your whare
+
+%h2
+  = @home.name
+
+= form_for @new_viewer, url: { action: 'create' } do |f|
+  %form.pure-form
+    %fieldset
+      = f.label :user, 'Email'
+      = f.text_field :user
+    %fieldset
+      %button.pure-button.pure-button-primary{ type: 'submit' } Add
