@@ -1,22 +1,22 @@
-class HomeViewerController < ApplicationController
+class HomeViewersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
     authorize :user
-    @vieiwers = Viewer.page(params[:page])
+    @viewers = Viewer.page(params[:page])
   end
 
   def new
     authorize :user
-    @vieiwer = Viewer.new
+    @viewer = Viewer.new
   end
 
   def create
-    @viewer = User.find_by!(email: params[:vieiwer][:email])
     @home = Home.find!(id: params[:home_id])
     authorize @home
-    @viewer = Viewer.new(home_id: @home.id, user_id: @viewer.id).save!
+    @user = User.find_by!(email: params[:vieiwer][:email])
+    @viewer = Viewer.new(home_id: @home.id, user_id: @user.id).save!
     redirect_to home_path(@home)
   end
 
