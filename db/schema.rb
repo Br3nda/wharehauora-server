@@ -22,12 +22,14 @@ ActiveRecord::Schema.define(version: 20161214712417) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "home_viewers", id: false, force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "home_id",    null: false
+  create_table "home_viewers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "home_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "home_viewers", ["user_id", "home_id"], name: "index_home_viewers_on_user_id_and_home_id", unique: true, using: :btree
 
   create_table "homes", force: :cascade do |t|
     t.datetime "created_at",                   null: false

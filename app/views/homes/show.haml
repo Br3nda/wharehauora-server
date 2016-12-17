@@ -2,9 +2,12 @@
   = @home.name
 
 - if policy(@home).edit?
-  %p
-    = link_to 'edit name', edit_home_path(@home)
-    = link_to 'settings', home_home_viewers_path(@home)
+  .pure-menu.pure-menu-horizontal
+    %ul.pure-menu-list
+      %li.pure-menu-item
+        = link_to 'edit home', edit_home_path(@home), class: 'pure-menu-link'
+      %li.pure-menu-item
+        = link_to 'edit users', home_home_viewers_path(@home), class: 'pure-menu-link'
 
 .pure-g
   .pure-u-2-3

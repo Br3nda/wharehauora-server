@@ -1,6 +1,5 @@
 class HomeViewersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @home = Home.find(params[:home_id])
@@ -18,8 +17,18 @@ class HomeViewersController < ApplicationController
   def create
     @home = Home.find(params[:home_id])
     authorize @home, :edit?
-    @user = User.find_by(email: params[:home_viewer][:user])
-    @viewer = HomeViewer.new(home_id: @home.id, user_id: @user.id).save! if @user
+    @user = User.find_or_create_by(email: params[:home_viewer][:user])
+    @viewer = HomeViewer.find_or_create_by(home_id: @home.id, user_id: @user.id).save! if @user
+    redirect_to home_home_viewers_path(@home)
+  end
+
+  def destroy
+    @home = Home.find(params[:home_id])
+    authorize @home, :edit?
+    @user = User.find(params[:id])
+    viewer = HomeViewer.find_by(home_id: @home.id, user_id: @user.id)
+    viewer.destroy
+  ensure
     redirect_to home_home_viewers_path(@home)
   end
 
