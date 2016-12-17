@@ -35,20 +35,11 @@ class HomesController < ApplicationController
 
   def edit
     @home_types = HomeType.all
-    @authorized_viewers = @home.users
-
-    @new_authorized_viewer = Authorizedviewer.new
   end
 
   def update
     @home.update(home_params)
     @home.save!
-    redirect_to home_path(@home)
-  end
-
-  def add_authorized_viewer
-    user = User.find_by!(email: params[:authorizedviewer][:email])
-    Authorizedviewer.new(home_id: params[:id], user_id: user.id).save!
     redirect_to home_path(@home)
   end
 

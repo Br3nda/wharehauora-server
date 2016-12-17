@@ -1,15 +1,20 @@
-= form_for @home, url: { action: 'update' } do |f|
-  .pure-form
-    %legend Edit home
-    = render 'form', f: f, home_types: @home_types
 
-    %fieldset
-      %button.pure-button.pure-button-primary Save
-      = link_to 'Delete', home_path(@home), method: :delete, class: 'pure-button'
+.pure-g
+  .pure-u-1-2
+    %h3 My Whare
+    .pure-form
+      = form_for @home, url: { action: 'update' } do |f|
+        %legend Home name
+        = render 'form', f: f, home_types: @home_types
+        %fieldset
+          %button.pure-button.pure-button-primary Save
+          = link_to 'Delete', home_path(@home), method: :delete, class: 'pure-button'
 
-  - @authorized_viewers.each do |av|
-    %p
-      = render 'authorized_viewer', av: av
+
+  .pure-u-1-2
+    %h3 Flatmates, family, whanau
+    / - @viewers.each do |av|
+    / = render 'viwer', av: av
 
 / = form_for @new_authorized_viewer, url: { action: 'add_authorized_viewer' } do |f|
 /   = f.text_field :email, type: 'text', placeholder: 'Email of Flatmate or friend'

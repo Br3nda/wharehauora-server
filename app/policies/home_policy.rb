@@ -1,6 +1,10 @@
 class HomePolicy < ApplicationPolicy
   attr_reader :user, :home
 
+  def index?
+    true
+  end
+
   def create?
     return true if admin?
     owned_by_current_user?
@@ -8,7 +12,7 @@ class HomePolicy < ApplicationPolicy
 
   def new?
     return true if admin?
-    user.present? && owned_by_current_user?
+    user.present?
   end
 
   def edit?
@@ -51,7 +55,7 @@ class HomePolicy < ApplicationPolicy
     end
 
     def my_home_ids
-      Authorizedviewer.where(user_id: user.id).pluck(:home_id)
+      HomeViewer.where(user_id: user.id).pluck(:home_id)
     end
   end
 

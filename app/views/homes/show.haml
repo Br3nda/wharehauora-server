@@ -1,17 +1,24 @@
 %h2
   = @home.name
 
-- if user_signed_in? && @home.owner_id == current_user.id
+- if policy(@home).edit?
   %p
     = link_to 'Edit home name', edit_home_path(@home)
 
-- unless @home.sensors.empty?
-  %h3 Temperature
-  = line_chart(@temperature)
-
-  %h3 Humidity
-  = line_chart(@humidity)
-
-  - if user_signed_in? && @home.owner_id == current_user.id
-    %h3 Sensors
+.pure-g
+  .pure-u-2-3
     = render 'sensors', sensors: @home.sensors
+  .pure-u-1-3
+    = render 'viewers', viewers: @home.users
+
+
+- unless @home.sensors.empty?
+  %h3 Readings
+  .pure-g
+    .pure-u-1-2
+      %h3 Temperature
+      = line_chart(@temperature)
+    .pure-u-1-2
+      %h3 Humidity
+      = line_chart(@humidity)
+

@@ -5,8 +5,8 @@ class Home < ActiveRecord::Base
   belongs_to :owner
   belongs_to :home_type
 
-  has_many :authorizedviewers, dependent: :destroy
-  has_many :users, through: :authorizedviewers
+  has_many :home_viewers
+  has_many :users, through: :home_viewers
 
   scope :is_public?, -> { where(is_public: true) }
 end
