@@ -3,8 +3,15 @@
     %li.pure-menu-item.pure-menu-selected
       = link_to 'WHARE HAUORA', root_path, class: 'pure-menu-heading pure-menu-link'
     - if user_signed_in?
-      %li.pure-menu-item
-        = link_to 'My Whare', homes_path, class: 'pure-menu-link'
+      %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
+        %a.pure-menu-link
+          My Whare
+        %ul.pure-menu-children
+          - @my_homes.each do |home|
+            %li.pure-menu-item
+              = link_to home.name, home_path(home), class: 'pure-menu-link'
+          %li.pure-menu-item
+            = link_to 'new whare', new_home_path, class: 'pure-menu-link'
     - else
       %li.pure-menu-item
         = link_to 'Sign up', new_user_registration_path, class: 'pure-menu-link'

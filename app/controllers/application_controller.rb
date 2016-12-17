@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class ApplicationController < ActionController::Base
   include Pundit
-
+  before_action :set_my_homes
   after_action :verify_authorized, except: :index, unless: :devise_controller?
   after_action :verify_policy_scoped, only: :index
 
@@ -21,5 +21,10 @@ class ApplicationController < ActionController::Base
 
   def not_found
     render file: 'public/404', status: :not_found, layout: false
+  end
+
+  def set_my_homes
+    return unless current_user
+    @my_homes = Home.where(owner_id: current_user.id)
   end
 end
