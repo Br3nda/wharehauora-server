@@ -1,4 +1,19 @@
 %h3 Viewers
 %h2
   = @home.name
-= link_to 'add', new_home_home_viewer_path(@home)
+= link_to 'back to whare', home_path(@home)
+
+= link_to 'add someone to whare', new_home_home_viewer_path(@home)
+
+
+- if @home.users
+  %table.pure-table
+    %thead
+      %tr
+        %th.sortable
+          Email
+    %tbody
+      - @home.users.each do |v|
+        %tr
+          %td
+            = v.email
