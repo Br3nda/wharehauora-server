@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class HomesController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :set_home, only: [:show, :edit, :destroy, :update, :add_authorized_viewer]
+  before_action :set_home, only: [:show, :edit, :destroy, :update]
 
   def index
     @homes = policy_scope(Home)

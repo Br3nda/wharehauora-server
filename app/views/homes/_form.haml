@@ -11,14 +11,3 @@
 %fieldset
   = f.label :is_public
   = f.check_box :is_public, label: 'Public?'
-
-/ fieldset
-/   - @authorized_viewers.each do |av|
-/     %p
-/       = link_to 'Remove', home_path(@home), method: :remove_authorized_viewer,
-/  class: 'pure-button'
-/       = f.label :id, av.email
-/
-/   = f.text_field :add_authorized_viewer, type: 'text', placeholder: 'Email of Flatmate or friend'
-/   = f.submit
-/   / = link_to 'Add', home_path(@home), method: :add_authorized_viewer, class: 'pure-button'

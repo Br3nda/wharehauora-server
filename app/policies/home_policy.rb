@@ -35,10 +35,6 @@ class HomePolicy < ApplicationPolicy
     owned_by_current_user?
   end
 
-  def add_authorized_viewer?
-    owned_by_current_user?
-  end
-
   private
 
   class Scope < Scope

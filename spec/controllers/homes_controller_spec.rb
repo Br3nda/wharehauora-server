@@ -13,7 +13,6 @@ RSpec.describe HomesController, type: :controller do
     pending 'GET index'
     pending 'GET new'
     pending 'PUT create'
-    pending 'POST add_authorized_viewer'
 
     describe 'DELETE destroy' do
       describe 'my home' do
@@ -123,7 +122,6 @@ RSpec.describe HomesController, type: :controller do
     end
 
     pending 'PUT create'
-    pending 'POST add_authorized_viewer'
 
     describe 'DELETE destroy' do
       describe 'my home' do
