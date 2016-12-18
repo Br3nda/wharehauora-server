@@ -1,24 +1,30 @@
 = image_tag(image_url('whare-photo.png'))
-- if user_signed_in?
-  %p
-    Pretty graphs coming soon
-- else
-  .user-table
-    .sign-in-table
-      .existing-user Existing Users
-      .user-image
-        %i.fa.fa-user-circle.fa-5x
-      .sign-in-link
-        = link_to 'Sign in', new_user_session_path,
-          class: 'button-choose pure-button button-style'
+.pure-g
+  .pure-u-2-3
+    %h2 Aggregate Public Data
 
-    .public-data
-      .public-title Public Data
-      .public-image
-        %i.fa.fa-user-circle.fa-5x
-      .public-name Name
-      %tbody
-        - @public_homes.each do |home|
-          %tr
+    %p Median Temperatures right now
+
+    %table.public_matrix.pure-table.pure-table-bordered
+      %tr
+        %th
+          = image_tag(image_url('logo.png'))
+        - @home_types.each do |home_type|
+          %th
+            = home_type.name
+      - @room_types.each do |room_type|
+        %tr
+          %th
+            = room_type.name
+          - @home_types.each do |home_type|
             %td
-              = link_to home.name, home_path(home)
+              = @medians[home_type.id][room_type.id]
+
+  - unless user_signed_in?
+    .pure-u-1-3
+      .whare-table.whare-table-signin.whare-table-selected
+        .whare-table-header
+          %h2 Existing Users
+          .sign-in-link
+            = link_to 'Sign in', new_user_session_path,
+              class: 'button-choose pure-button'
