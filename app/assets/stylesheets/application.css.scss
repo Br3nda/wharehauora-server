@@ -20,37 +20,6 @@
 */
 
 @import "elements";
-
-body {
-    color: #526066;
-    margin: 0 150px 150px 150px;
-}
-
-h2, h3 {
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    font-weight: 600;
-}
-
-p {
-    line-height: 1.6em;
-}
-
-/*
- * -- Layout Styles --
- */
-.l-content {
-    margin: 0 auto;
-}
-
-.l-box {
-    padding: 0.5em 2em;
-}
-
-/*
- * -- MENU STYLES --
- * Make the menu have a very faint box-shadow.
- */
-.pure-menu {
-    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
-}
+@import "variables";
+@import "modules/signin_grid";
+@import "font-awesome";

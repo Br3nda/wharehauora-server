@@ -39,6 +39,9 @@ gem 'haml-rails'
 
 gem 'purecss-rails'
 
+# icons
+gem 'font-awesome-rails'
+
 # for heroku
 gem 'rails_12factor', group: :production
 gem 'raygun4ruby', group: :production
