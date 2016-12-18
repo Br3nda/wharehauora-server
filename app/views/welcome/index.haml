@@ -1,11 +1,9 @@
-
-%h2 Aggregate Public Data
-
 %p Median Temperatures right now
 
-%table.pure-table.pure-table-bordered
+%table.public_matrix.pure-table.pure-table-bordered
   %tr
     %th
+      = image_tag(image_url('logo.png'))
     - @home_types.each do |home_type|
       %th
         = home_type.name
