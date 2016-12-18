@@ -1,25 +1,35 @@
 = image_tag(image_url('whare-photo.png'))
+.pure-g
+  .pure-u-2-3
+    %h2 Aggregate Public Data
 
-%h2 Aggregate Public Data
+    %p Median Temperatures right now
 
-%p Median Temperatures right now
+    %table.public_matrix.pure-table.pure-table-bordered
+      %tr
+        %th
+          = image_tag(image_url('logo.png'))
+        - @home_types.each do |home_type|
+          %th
+            = home_type.name
+      - @room_types.each do |room_type|
+        %tr
+          %th
+            = room_type.name
+          - @home_types.each do |home_type|
+            %td
+              - if @temperature[home_type.id][room_type.id].present?
+                = @temperature[home_type.id][room_type.id]
+                C
+              - if @humidity[home_type.id][room_type.id].present?
+                = @humidity[home_type.id][room_type.id]
+                = '%'
 
-%table.public_matrix.pure-table.pure-table-bordered
-  %tr
-    %th
-      = image_tag(image_url('logo.png'))
-    - @home_types.each do |home_type|
-      %th
-        = home_type.name
-  - @room_types.each do |room_type|
-    %tr
-      %th
-        = room_type.name
-      - @home_types.each do |home_type|
-        %td
-          - if @temperature[home_type.id][room_type.id].present?
-            = @temperature[home_type.id][room_type.id]
-            C
-          - if @humidity[home_type.id][room_type.id].present?
-            = @humidity[home_type.id][room_type.id]
-            = '%'
+  - unless user_signed_in?
+    .pure-u-1-3
+      .whare-table.whare-table-signin.whare-table-selected
+        .whare-table-header
+          %h2 Existing Users
+          .sign-in-link
+            = link_to 'Sign in', new_user_session_path,
+              class: 'button-choose pure-button'
