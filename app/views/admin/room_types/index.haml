@@ -1,0 +1,15 @@
+%h2 Room types
+
+%table.pure-table-bordered
+  %thead
+    %tr
+      %th Name
+      %th action
+  - @home_types.each do |ht|
+    %tr
+      %td
+        = ht.name
+      %td
+        = link_to 'edit', edit_admin_room_type_path(ht)
+      %td
+        = link_to 'delete', admin_room_type_path(ht), method: :delete

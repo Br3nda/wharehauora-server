@@ -1,0 +1,15 @@
+%h2 Home types
+
+= link_to 'new', new_admin_home_type_path
+
+%table.pure-table-bordered
+  %thead
+    %tr
+      %th Name
+      %th action
+  - @home_types.each do |ht|
+    %tr
+      %td
+        = ht.name
+      %td
+        = link_to 'edit', edit_admin_home_type_path(ht)
