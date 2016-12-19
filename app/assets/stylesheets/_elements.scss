@@ -23,3 +23,18 @@ fieldset {
   border: 0;
   padding: 0;
 }
+
+.container {
+  height: 100%
+}
+.content {
+  padding: 0;
+  margin-left: 25%;
+}
+
+.left-side {
+  background-color: #abcc76;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+}

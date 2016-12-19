@@ -8,5 +8,10 @@
   = csrf_meta_tags
 
 %body
-  = render 'layouts/menu'
-  = yield
+.pure-g.container
+  .pure-u-1-6.left-side
+    = image_tag(image_url('logo.png'))
+  .pure-u-5-6
+    .content
+      = render 'layouts/menu'
+      = yield
