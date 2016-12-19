@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161217062517) do
+ActiveRecord::Schema.define(version: 20161217212517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 20161217062517) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "home_viewers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "home_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "home_viewers", ["user_id", "home_id"], name: "index_home_viewers_on_user_id_and_home_id", unique: true, using: :btree
 
   create_table "homes", force: :cascade do |t|
     t.datetime "created_at",                   null: false
@@ -104,5 +113,7 @@ ActiveRecord::Schema.define(version: 20161217062517) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "home_viewers", "homes"
+  add_foreign_key "home_viewers", "users"
   add_foreign_key "homes", "users", column: "owner_id"
 end

@@ -8,15 +8,16 @@ class ApplicationPolicy
 
   class Scope
     attr_reader :user, :scope
-    def resolve
-      raise 'Policy Scope not defined'
-      # scope.all if user && user.role?("janitor")
-      # scope.where(owner_id: user.id)
-    end
 
     def initialize(user, scope)
       @user = user
       @scope = scope
     end
+  end
+
+  private
+
+  def admin?
+    user.present? && user.role?('janitor')
   end
 end

@@ -4,14 +4,15 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :homes do
+    resources :home_viewers
     resources :sensors
     resources :users
     resources :readings, only: [:index, :show]
   end
 
   resources :users
-  resources :rooms
   resources :sensors
+  resources :home_viewers
 
   get '/api', to: 'api#index'
 

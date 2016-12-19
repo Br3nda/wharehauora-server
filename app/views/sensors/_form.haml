@@ -4,6 +4,7 @@
   = f.text_field :room_name, type: 'name', placeholder: 'room name'
 
 %fieldset
+  = f.label :room_type
   - room_types.each do |rt|
     %p
       = f.radio_button :room_type_id, rt.id

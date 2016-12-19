@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class HomesController < WebController
+class HomesController < ApplicationController
   before_action :authenticate_user!, except: :show
   before_action :set_home, only: [:show, :edit, :destroy, :update]
 
@@ -45,9 +45,6 @@ class HomesController < WebController
 
   def destroy
     @home.destroy!
-    redirect_to homes_path
-  rescue ActiveRecord::RecordNotFound
-    skip_authorization
     redirect_to homes_path
   end
 

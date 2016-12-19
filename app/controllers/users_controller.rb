@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def index
     authorize :user
-    @users = User.page(params[:page])
+    @users = policy_scope(User).page(params[:page])
   end
 
   def new
