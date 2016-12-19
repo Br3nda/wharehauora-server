@@ -13,9 +13,9 @@
         = room_type.name
       - @home_types.each do |home_type|
         %td
-          - if @temperature[home_type.id][room_type.id].present?
-            = @temperature[home_type.id][room_type.id]
+          - if @temperature[[home_type.id, room_type.id]].present?
+            = @temperature[[home_type.id, room_type.id]]
             C
-          - if @humidity[home_type.id][room_type.id].present?
-            = @humidity[home_type.id][room_type.id]
+          - if @humidity[[home_type.id, room_type.id]].present?
+            = @humidity[[home_type.id, room_type.id]]
             = '%'
