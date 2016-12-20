@@ -4,6 +4,7 @@ class HomesController < ApplicationController
   before_action :set_home, only: [:show, :edit, :destroy, :update]
 
   def index
+    authorize :home
     @homes = policy_scope(Home)
   end
 

@@ -2,7 +2,7 @@
 class ApplicationController < ActionController::Base
   include Pundit
   before_action :set_my_homes
-  after_action :verify_authorized, except: :index, unless: :devise_controller?
+  after_action :verify_authorized, unless: :devise_controller?
   after_action :verify_policy_scoped, only: :index
 
   # Prevent CSRF attacks by raising an exception.
