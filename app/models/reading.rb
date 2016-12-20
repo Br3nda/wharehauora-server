@@ -6,6 +6,7 @@ class Reading < ActiveRecord::Base
 
   def self.readings_by_home_and_room(created_after)
     Reading.joins(:sensor, sensor: :home)
+           .where('home_type_id IS NOT NULL AND room_type_id IS NOT NULL')
            .where('readings.created_at >= ?', created_after)
            .group('home_type_id', 'room_type_id')
   end
