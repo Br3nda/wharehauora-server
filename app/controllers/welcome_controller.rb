@@ -2,6 +2,7 @@
 class WelcomeController < ApplicationController
   def index
     skip_policy_scope
+    skip_authorization
     @home_types = HomeType.all.order(:name)
     @room_types = RoomType.all.order(:name)
 

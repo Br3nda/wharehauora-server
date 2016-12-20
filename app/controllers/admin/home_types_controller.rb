@@ -3,6 +3,7 @@ class Admin::HomeTypesController < ApplicationController
   before_action :set_home_type, only: [:show, :edit, :update, :destroy]
 
   def index
+    authorize :home_type
     @home_types = policy_scope(HomeType)
   end
 
