@@ -1,11 +1,13 @@
 %h2 Room types
 
+= link_to 'new', new_admin_room_type_path
+
 %table.pure-table-bordered
   %thead
     %tr
       %th Name
       %th action
-  - @home_types.each do |ht|
+  - @room_types.each do |ht|
     %tr
       %td
         = ht.name
