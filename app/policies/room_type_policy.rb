@@ -7,6 +7,10 @@ class RoomTypePolicy < ApplicationPolicy
     user.role?('janitor')
   end
 
+  def create?
+    user.role?('janitor')
+  end
+
   def edit?
     user.role?('janitor')
   end

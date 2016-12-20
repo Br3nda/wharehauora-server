@@ -1,0 +1,10 @@
+.pure-g
+  .pure-u-1-2
+    %h3 Edit Room Type
+    .pure-form
+      = form_for @room_type, url: { action: 'update' } do |f|
+        = render 'form', f: f, room_type: @room_type
+        %fieldset
+          %button.pure-button.pure-button-primary Save
+          = link_to 'Delete', admin_room_type_path(@room_type),
+            method: :delete, class: 'pure-button'
