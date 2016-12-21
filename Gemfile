@@ -27,6 +27,7 @@ gem 'pg'
 
 # for logins
 gem 'devise'
+gem 'devise_invitable'
 
 # roles and permissions
 gem 'pundit'
