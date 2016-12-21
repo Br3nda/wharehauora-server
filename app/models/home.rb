@@ -2,7 +2,7 @@
 class Home < ActiveRecord::Base
   has_many :sensors
   has_many :readings, through: :sensors
-  belongs_to :owner
+  belongs_to :owner, class_name: 'User'
   belongs_to :home_type
 
   has_many :home_viewers
