@@ -8,12 +8,12 @@
   Home:
   = link_to @sensor.home.name, @sensor.home
 
-%h2 Temperature since #{@since.day.ago.to_formatted_s(:short)}
+%h2 Temperature since #{@daysago.to_formatted_s(:short)}
 = area_chart(@temperature)
 
-%h2 Humidity since #{@since.day.ago.to_formatted_s(:short)}
+%h2 Humidity since #{@daysago.to_formatted_s(:short)}
 = area_chart(@humidity)
 
 
-%h2 Readings since #{@since.day.ago.to_formatted_s(:short)}
+%h2 Readings since #{@daysago.to_formatted_s(:short)}
 = render 'readings', readings: @readings

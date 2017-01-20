@@ -9,16 +9,15 @@ class HomesController < ApplicationController
   end
 
   def show
-    @since = params[:since].blank? ? 1 : params[:since].to_i
-    daysago = @since.day.ago
+    @daysago = params[:since].to_i.day.ago
 
     @temperature = []
     @humidity = []
 
     @home.sensors.each do |sensor|
       name = sensor.room_name ? sensor.room_name : 'unnamed'
-      @temperature << { name: name, data: temperature_data(sensor, daysago) }
-      @humidity << { name: name, data: humidity_data(sensor, daysago) }
+      @temperature << { name: name, data: temperature_data(sensor, @daysago) }
+      @humidity << { name: name, data: humidity_data(sensor, @daysago) }
     end
   end
 

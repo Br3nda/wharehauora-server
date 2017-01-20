@@ -10,16 +10,11 @@ class SensorsController < ApplicationController
     @sensor = policy_scope(Sensor).find(params[:id])
     authorize @sensor
 
-    @since = params[:since].blank? ? 1 : params[:since].to_i
-    daysago = @since.day.ago
+    @daysago = params[:since].to_i.day.ago
 
-    @readings = @sensor.readings
-                       .where(['created_at >= ?', daysago])
-                       .order(created_at: :desc)
-                       .paginate(page: params[:page], per_page: 50)
-
-    @temperature = temperature_data daysago
-    @humidity = humidity_data daysago
+    @readings = getreadings @daysago
+    @temperature = temperature_data @daysago
+    @humidity = humidity_data @daysago
   end
 
   def edit
@@ -55,6 +50,13 @@ class SensorsController < ApplicationController
 
   def humidity_data(daysago)
     time_series Reading.humidity, daysago
+  end
+
+  def getreadings(daysago)
+    @sensor.readings
+           .where(['created_at >= ?', daysago])
+           .order(created_at: :desc)
+           .paginate(page: params[:page], per_page: 50)
   end
 
   def time_series(query, daysago = 1.day.ago)

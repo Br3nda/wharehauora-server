@@ -14,7 +14,7 @@
     = render 'sensors', sensors: @home.sensors
 
 - unless @home.sensors.empty?
-  %h3 Readings since #{@since.day.ago.to_formatted_s(:short)}
+  %h3 Readings since #{@daysago.to_formatted_s(:short)}
   .pure-g
     .pure-u-1-2
       %h3 Temperature
