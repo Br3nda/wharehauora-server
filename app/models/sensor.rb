@@ -30,4 +30,6 @@ class Sensor < ActiveRecord::Base
   rescue
     nil
   end
+
+  def rating; end
 end
