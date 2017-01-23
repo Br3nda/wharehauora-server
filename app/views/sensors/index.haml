@@ -1,0 +1,38 @@
+%h2
+  = @home.name
+
+= render 'homes/nav', home: @home
+
+
+- if @sensors.present?
+  %table.pure-table
+    %thead
+      %tr
+        %th.sortable
+          Room
+          ( Room type )
+        %th
+          Reading
+        %th
+          Rating
+    %tbody
+      - @sensors.each do |sensor|
+        %tr
+          %td
+            - if sensor.room_name.present?
+              = sensor.room_name
+            - else
+              = sensor_path(sensor)
+            - if policy(sensor).edit?
+              = link_to 'edit', edit_home_sensor_path(sensor.home, sensor)
+            - if sensor.room_type.present?
+              = "(#{sensor.room_type.name})"
+          %td
+            = format('%d°C', sensor.temperature)
+            /
+            = format('%d%%', sensor.humidity)
+          %td
+            = sensor.rating
+
+- else
+  %p No sensors detected in this whare.
