@@ -1,0 +1,10 @@
+
+.pure-menu.pure-menu-horizontal
+  %ul.pure-menu-list
+    %li.pure-menu-item
+      = link_to 'rooms', home_sensors_path(home), class: 'pure-menu-link'
+    - if policy(home).edit?
+      %li.pure-menu-item
+        = link_to 'edit home', edit_home_path(home), class: 'pure-menu-link'
+    %li.pure-menu-item
+      = link_to 'edit users', home_home_viewers_path(home), class: 'pure-menu-link'
