@@ -1,16 +1,22 @@
 # frozen_string_literal: true
 class SensorsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_sensor, only: [:show, :edit, :destroy, :update]
 
   def index
-    @sensors = policy_scope(Sensor)
+    @home = policy_scope(Home).find(params[:home_id])
+    authorize @home
+    @sensors = policy_scope(@home.sensors)
   end
 
   def show
-    @sensor = policy_scope(Sensor).find(params[:id])
     authorize @sensor
 
     @daysago = params[:since].to_i.day.ago
+
+    @readings = @sensor.readings
+                       .order(created_at: :desc)
+                       .paginate(page: params[:page], per_page: 50)
 
     @readings = getreadings @daysago
     @temperature = temperature_data @daysago
@@ -18,7 +24,7 @@ class SensorsController < ApplicationController
   end
 
   def edit
-    @sensor = policy_scope(Sensor).find(params[:id])
+    authorize @sensor
     @room_types = RoomType.all
     authorize @sensor
   end
@@ -32,6 +38,10 @@ class SensorsController < ApplicationController
   end
 
   private
+
+  def set_sensor
+    @sensor = policy_scope(Sensor).find(params[:id])
+  end
 
   def sensor_params
     params[:sensor].permit(permitted_sensor_params)
