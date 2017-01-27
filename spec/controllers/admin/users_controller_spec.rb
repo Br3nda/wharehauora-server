@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe Admin::UsersController, type: :controller do
   context 'Not signed in' do
     describe 'GET index' do
       before { get :index }
@@ -48,7 +48,7 @@ RSpec.describe UsersController, type: :controller do
     end
     describe '#update' do
       before { patch :update, id: user.to_param, user: valid_params }
-      it { expect(response).to redirect_to(users_path) }
+      it { expect(response).to redirect_to(admin_users_path) }
     end
   end
 end
