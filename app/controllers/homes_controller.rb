@@ -11,10 +11,12 @@ class HomesController < ApplicationController
   def show
     @daysago = params[:since].to_i.day.ago
 
+    @readings = @home.readings.take(10)
+    @sensors = policy_scope(Sensor).where(home_id: @home.id)
     @temperature = []
     @humidity = []
 
-    @home.sensors.each do |sensor|
+    @sensors.each do |sensor|
       name = sensor.room_name ? sensor.room_name : 'unnamed'
       @temperature << { name: name, data: temperature_data(sensor, @daysago) }
       @humidity << { name: name, data: humidity_data(sensor, @daysago) }
