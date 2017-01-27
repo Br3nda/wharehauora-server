@@ -89,8 +89,9 @@ group :development, :test do
   # Code coverage analysis
   gem 'codeclimate-test-reporter', require: false
   gem 'coveralls', require: false
-
+ 
   gem 'pry'
+  gem 'capybara'
 end
 
 group :development do

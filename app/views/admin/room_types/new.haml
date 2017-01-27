@@ -1,6 +1,6 @@
 .pure-g
   .pure-u-1-2
-    %h3 New Room Type
+    %h3 Create new room type
     .pure-form
       = form_for @room_type, url: { action: 'create' } do |f|
         = render 'form', f: f, room_type: @room_type

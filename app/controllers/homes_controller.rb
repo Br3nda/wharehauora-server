@@ -17,13 +17,16 @@ class HomesController < ApplicationController
     @datesince = 1.day.ago if @datesince.blank?
     @dateto = Date.current if @dateto.blank?
 
+    @readings = @home.readings.take(10)
+    @sensors = policy_scope(Sensor).where(home_id: @home.id)
+
     @temperature = []
     @humidity = []
 
-    @home.sensors.each do |sensor|
+    @sensors.each do |sensor|
       name = sensor.room_name ? sensor.room_name : 'unnamed'
-      @temperature << { name: name, data: temperature_data(sensor, @datesince, @dateto) }
-      @humidity << { name: name, data: humidity_data(sensor, @datesince, @dateto) }
+      @temperature << { name: name, data: temperature_data(sensor, @daysago) }
+      @humidity << { name: name, data: humidity_data(sensor, @daysago) }
     end
   end
 
