@@ -4,7 +4,19 @@
 = render 'nav', home: @home
 
 - unless @home.sensors.empty?
-  %h3 Readings since #{@daysago.to_formatted_s(:short)}
+  %h3 Readings since #{@datesince}
+
+  = form_tag({}, {:method => :get}) do
+    = label_tag 'Days Since'
+    = number_field_tag :since, '', {onkeyup: "todayMinusDays()", onchange: "todayMinusDays()", }
+
+    = label_tag 'Date Since'
+    = date_field_tag :datesince, @datesince
+    = label_tag 'Date To'
+    = date_field_tag :dateto, @dateto
+
+    = submit_tag "Search"
+
   .pure-g
     .pure-u-1-2
       %h3 Temperature
