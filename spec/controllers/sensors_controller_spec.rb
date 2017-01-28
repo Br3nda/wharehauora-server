@@ -25,7 +25,7 @@ RSpec.describe SensorsController, type: :controller do
 
     describe '#update' do
       before { patch :update, id: sensor.to_param, sensor: { room_name: 'Living room' } }
-      it { expect(response).to redirect_to(home) }
+      it { expect(response).to redirect_to home_sensors_path(home) }
     end
   end
 
