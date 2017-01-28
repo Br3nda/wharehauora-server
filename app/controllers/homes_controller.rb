@@ -74,6 +74,8 @@ class HomesController < ApplicationController
   def time_series(query, sensor)
     query.where(sensor: sensor)
          .where(['created_at >= ?', 1.day.ago])
+         .where('value < 120') # temp hack to filter the bogus readings
+         .where('value > 0') # temp hack to filter the bogus readings
          .pluck("date_trunc('minute', created_at)", :value)
   end
 
