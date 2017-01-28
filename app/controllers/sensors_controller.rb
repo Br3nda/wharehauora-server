@@ -34,7 +34,7 @@ class SensorsController < ApplicationController
     authorize sensor
     sensor.update(sensor_params)
     sensor.save!
-    redirect_to sensor.home
+    redirect_to home_sensors_path(sensor.home)
   end
 
   private

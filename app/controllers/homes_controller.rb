@@ -84,6 +84,8 @@ class HomesController < ApplicationController
     query.where(sensor: sensor)
          .where(['created_at >= ?', datesince])
          .where(['created_at <= ?', dateto])
+         .where('value < 120') # temp hack to filter the bogus readings
+         .where('value > 0') # temp hack to filter the bogus readings
          .pluck("date_trunc('minute', created_at)", :value)
   end
 
