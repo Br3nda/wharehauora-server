@@ -1,6 +1,6 @@
 %h2 User
 .pure-form.pure-form-aligned
-  = form_for(@user) do |f|
+  = form_for @user, url: { action: 'update' } do |f|
     %fieldset
       = f.label :email
       = f.text_field :email
@@ -11,6 +11,6 @@
           %label
             = check_box_tag 'user[role_ids][]', r.id, f.object.roles.include?(r)
             = r.friendly_name
-    .actions.pull-right
-      = link_to 'cancel', users_path, class: 'btn btn-default'
+    .actions
+      = link_to 'cancel', admin_users_path, class: 'btn btn-default'
       = f.submit 'update', class: 'btn btn-primary'

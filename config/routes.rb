@@ -10,11 +10,11 @@ Rails.application.routes.draw do
     resources :readings, only: [:index, :show]
   end
 
-  resources :users
   resources :sensors
   resources :home_viewers
 
   namespace :admin do
+    resources :users
     resources :home_types
     resources :room_types
   end

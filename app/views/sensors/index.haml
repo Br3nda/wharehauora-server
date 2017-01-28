@@ -28,9 +28,15 @@
             - if sensor.room_type.present?
               = "(#{sensor.room_type.name})"
           %td
-            = format('%d°C', sensor.temperature)
+            - if sensor.temperature
+              = format('%d°C', sensor.temperature)
+            - else
+              Err
             /
-            = format('%d%%', sensor.humidity)
+            - if sensor.humidity
+              = format('%d%%', sensor.humidity)
+            - else
+              Err
           %td
             = sensor.rating
 
