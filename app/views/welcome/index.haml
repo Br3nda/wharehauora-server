@@ -20,3 +20,8 @@
           - if @humidity[[home_type.id, room_type.id]].present?
             = @humidity[[home_type.id, room_type.id]]
             = '%'
+
+%p
+  Based on data from
+  = @sensor_count
+  installations in Wellington
