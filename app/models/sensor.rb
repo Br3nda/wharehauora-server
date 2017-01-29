@@ -3,6 +3,7 @@ class Sensor < ActiveRecord::Base
   belongs_to :home
   belongs_to :room_type
   has_many :readings
+  has_many :metrics
 
   def temperature
     Reading.where(sensor: self, sub_type: MySensors::SetReq::V_TEMP)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120101920) do
+ActiveRecord::Schema.define(version: 20170129084314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,18 @@ ActiveRecord::Schema.define(version: 20170120101920) do
     t.integer  "owner_id"
     t.boolean  "is_public",    default: false
     t.integer  "home_type_id"
+    t.integer  "suburb_id"
+  end
+
+  create_table "metrics", force: :cascade do |t|
+    t.integer  "sensor_id"
+    t.float    "indoor_temperature"
+    t.float    "outdoor_temperature"
+    t.float    "indoor_humidity"
+    t.float    "dewpoint"
+    t.float    "mold_indicator"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "readings", force: :cascade do |t|
@@ -84,6 +96,11 @@ ActiveRecord::Schema.define(version: 20170120101920) do
     t.integer  "room_type_id"
   end
 
+  create_table "suburbs", force: :cascade do |t|
+    t.text "name"
+    t.text "weather_station"
+  end
+
   create_table "user_roles", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "role_id",    null: false
@@ -112,7 +129,18 @@ ActiveRecord::Schema.define(version: 20170120101920) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "weather_condition", force: :cascade do |t|
+    t.integer  "suburb_id"
+    t.float    "outdoor_temperature"
+    t.float    "outdoor_humidity"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
   add_foreign_key "home_viewers", "homes"
   add_foreign_key "home_viewers", "users"
+  add_foreign_key "homes", "suburbs"
   add_foreign_key "homes", "users", column: "owner_id"
+  add_foreign_key "metrics", "sensors"
+  add_foreign_key "weather_condition", "suburbs"
 end
