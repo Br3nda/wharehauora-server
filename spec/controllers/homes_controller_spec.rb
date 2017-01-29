@@ -10,8 +10,14 @@ RSpec.describe HomesController, type: :controller do
   let!(:public_home)  { FactoryGirl.create(:home, name: 'public home', is_public: true) }
 
   context 'not signed in ' do
-    pending 'GET index'
-    pending 'GET new'
+    describe 'GET index' do
+      before { get :index }
+      it { expect(response).to redirect_to(new_user_session_path) }
+    end
+    describe 'GET new' do
+      before { get :new }
+      it { expect(response).to redirect_to(new_user_session_path) }
+    end
     pending 'PUT create'
 
     describe 'DELETE destroy' do
