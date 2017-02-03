@@ -25,6 +25,6 @@ class ApplicationController < ActionController::Base
 
   def set_my_homes
     return unless current_user
-    @my_homes = Home.where(owner_id: current_user.id)
+    @my_homes = Home.where(owner_id: current_user.id) + current_user.homes
   end
 end
