@@ -1,0 +1,9 @@
+Advice from Laurie
+
+re-instate the room model/table
+type 2 database
+do joins across id AND the date range
+
+
+PK is start or end
+update previous record to current-1 sec and insert new one.

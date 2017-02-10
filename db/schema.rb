@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120101920) do
+ActiveRecord::Schema.define(version: 20170210020642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "home_types", force: :cascade do |t|
     t.text     "name",       null: false
@@ -38,6 +39,14 @@ ActiveRecord::Schema.define(version: 20170120101920) do
     t.integer  "owner_id"
     t.boolean  "is_public",    default: false
     t.integer  "home_type_id"
+  end
+
+  create_table "metrics", force: :cascade do |t|
+    t.integer  "room_id",    null: false
+    t.text     "key"
+    t.float    "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "readings", force: :cascade do |t|
@@ -70,18 +79,16 @@ ActiveRecord::Schema.define(version: 20170120101920) do
   create_table "rooms", force: :cascade do |t|
     t.integer  "home_id"
     t.text     "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "room_type_id"
   end
 
   create_table "sensors", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "node_id"
-    t.integer  "home_id"
-    t.string   "room_name"
-    t.integer  "room_type_id"
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -115,4 +122,7 @@ ActiveRecord::Schema.define(version: 20170120101920) do
   add_foreign_key "home_viewers", "homes"
   add_foreign_key "home_viewers", "users"
   add_foreign_key "homes", "users", column: "owner_id"
+  add_foreign_key "metrics", "rooms"
+  add_foreign_key "rooms", "room_types"
+  add_foreign_key "sensors", "rooms"
 end

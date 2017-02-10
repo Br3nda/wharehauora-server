@@ -41,7 +41,12 @@ class SensorsIngest
   def decode(topic, value)
     (home_id, node_id, child_sensor_id, message_type, ack, sub_type, _payload) = topic.split('/')[3..-1]
 
-    sensor = Sensor.find_or_create_by(home_id: home_id, node_id: node_id)
+    # TODO: home is via room table
+    sensor = Sensor.find(home_id: home_id, node_id: node_id)
+    unless sensor
+      room = Room.create!(home_id: home_id, name: 'New room detected')
+      sensor = Sensor.create!(room: room, node_id: node_id)
+    end
 
     reading = Reading.new(sensor_id: sensor.id,
                           value: value,

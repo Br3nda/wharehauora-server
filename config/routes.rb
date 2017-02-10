@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :homes do
+    resources :rooms
     resources :home_viewers
     resources :sensors
     resources :users
