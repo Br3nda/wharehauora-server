@@ -11,9 +11,9 @@
     = number_field_tag :since, '', {onkeyup: "todayMinusDays()", onchange: "todayMinusDays()", }
 
     = label_tag 'Date Since'
-    = date_field_tag :datesince, @datesince
+    = date_field_tag :datesince, @datesince, {onkeyup: "clearSince()", onchange: "clearSince()", }
     = label_tag 'Date To'
-    = date_field_tag :dateto, @dateto
+    = date_field_tag :dateto, @dateto, {onkeyup: "clearSince()", onchange: "clearSince()", }
 
     = submit_tag "Search"
 
