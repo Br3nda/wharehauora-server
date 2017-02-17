@@ -9,13 +9,7 @@ class HomesController < ApplicationController
   end
 
   def show
-    @daysago = params[:since].to_i.day.ago
-
-    @datesince = params[:datesince]
-    @dateto = params[:dateto]
-
-    @datesince = 1.day.ago if @datesince.blank?
-    @dateto = Date.current if @dateto.blank?
+    parse_dates
 
     @readings = @home.readings.take(10)
     @sensors = policy_scope(Sensor).where(home_id: @home.id)
@@ -25,8 +19,8 @@ class HomesController < ApplicationController
 
     @sensors.each do |sensor|
       name = sensor.room_name ? sensor.room_name : 'unnamed'
-      @temperature << { name: name, data: temperature_data(sensor, @daysago) }
-      @humidity << { name: name, data: humidity_data(sensor, @daysago) }
+      @temperature << { name: name, data: temperature_data(sensor, @datesince, @dateto) }
+      @humidity << { name: name, data: humidity_data(sensor, @datesince, @dateto) }
     end
   end
 
@@ -59,6 +53,14 @@ class HomesController < ApplicationController
   end
 
   private
+
+  def parse_dates
+    @datesince = params[:datesince]
+    @dateto = params[:dateto]
+
+    @datesince = 1.day.ago if @datesince.blank?
+    @dateto = Date.current if @dateto.blank?
+  end
 
   def home_params
     params[:home].permit(permitted_home_params)
