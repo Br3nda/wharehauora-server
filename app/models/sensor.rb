@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 class Sensor < ActiveRecord::Base
-  delegate :home, to: :room
-  belongs_to :room_type
+  belongs_to :room
   has_many :readings
+
+  delegate :room_type, to: :room
+  delegate :home, to: :room
+  delegate :home_type, to: :room
 
   def temperature
     Reading.where(sensor: self, sub_type: MySensors::SetReq::V_TEMP)
