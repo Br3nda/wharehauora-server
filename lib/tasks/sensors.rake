@@ -39,26 +39,34 @@ class SensorsIngest
   end
 
   def decode(topic, value)
-    (home_id, node_id, child_sensor_id, message_type, ack, sub_type, _payload) = topic.split('/')[3..-1]
+    (home_id, node_id, child_sensor_id, message_type, ack, sub_type, payload) = topic.split('/')[3..-1]
 
-    # TODO: home is via room table
-    sensor = Sensor.find(home_id: home_id, node_id: node_id)
-    unless sensor
-      room = Room.create!(home_id: home_id, name: 'New room detected')
-      sensor = Sensor.create!(room: room, node_id: node_id)
-    end
+    sensor = find_or_create_sensor(home_id, node_id)
 
-    reading = Reading.new(sensor_id: sensor.id,
-                          value: value,
-                          child_sensor_id: child_sensor_id,
-                          message_type: message_type,
-                          ack: ack,
-                          sub_type: sub_type)
-    reading.save!
-    puts "home #{sensor.home_id} sensors #{sensor.id} reading #{reading.id}"
+    reading = Reading.create!(sensor_id: sensor.id,
+                              value: value,
+                              child_sensor_id: child_sensor_id,
+                              message_type: message_type,
+                              ack: ack,
+                              sub_type: sub_type)
+    puts "home id:#{home_id} sensor id:#{sensor.id} reading id:#{reading.id}"
+    puts "message_type #{message_type}, ack #{ack}, sub_type #{sub_type}, payload #{payload}"
   end
 
   private
+
+  def find_or_create_sensor(home_id, node_id)
+    sensor = Sensor
+             .where('room_id in (SELECT room_id FROM rooms WHERE home_id=?)', home_id)
+             .find_by(node_id: node_id)
+    unless sensor
+      home = Home.find(home_id)
+      room = Room.create!(name: 'New sensor detected', home: home)
+      sensor = Sensor.create!(node_id: node_id, room: room)
+    end
+
+    sensor
+  end
 
   def connection_options
     # Create a hash with the connection parameters from the URL
