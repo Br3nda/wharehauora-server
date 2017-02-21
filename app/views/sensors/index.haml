@@ -1,0 +1,45 @@
+= render('layouts/breadcrumbs', sensor: sensor, room: sensor.room, home: sensor.home.room)
+
+%h2
+  = @home.name
+
+= render 'homes/nav', home: @home
+
+- if @sensors.present?
+  %table.pure-table
+    %thead
+      %tr
+        %th.sortable
+          Room
+          ( Room type )
+        %th
+          Reading
+        %th
+          Rating
+    %tbody
+      - @rooms.each do |room|
+        %tr
+          %td
+            - if room.name.present?
+              = room.name
+            - else
+              = room_path(room)
+            - if policy(room).edit?
+              = link_to 'edit', edit_home_room_path(room.home, room)
+            - if room.room_type.present?
+              = "(#{room.room_type.name})"
+          / %td
+          /   - if room.temperature
+          /     = format('%d°C', room.temperature)
+          /   - else
+          /     Err
+          /   /
+          /   - if room.humidity
+          /     = format('%d%%', room.humidity)
+          /   - else
+          /     Err
+          / %td
+          /   = room.rating
+
+- else
+  %p No rooms detected in this whare.
