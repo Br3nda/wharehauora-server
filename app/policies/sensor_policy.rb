@@ -15,8 +15,7 @@ class SensorPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      query = scope.joins('INNER JOIN rooms ON sensors.room_id = rooms.id')
-                   .joins('INNER JOIN homes ON rooms.home_id = homes.id')
+      query = scope.joins_home
       if user
         query.where('owner_id = ? OR is_public = true')
       else
