@@ -7,13 +7,13 @@ class Sensor < ActiveRecord::Base
   delegate :home, to: :room
   delegate :home_type, to: :room
 
+  scope :joins_home, -> { joins(:room, room: :home) }
+
   def temperature
     Reading.where(sensor: self, sub_type: MySensors::SetReq::V_TEMP)
            .order(created_at: :desc)
            .first
            .value
-  rescue
-    nil
   end
 
   def humidity
@@ -21,8 +21,6 @@ class Sensor < ActiveRecord::Base
            .order(created_at: :desc)
            .first
            .value
-  rescue
-    nil
   end
 
   def last_reading
