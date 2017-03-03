@@ -16,8 +16,13 @@ ActiveRecord::Base.transaction do
   roles.each do |r|
     Role.create!(name: r[:name], friendly_name: r[:friendly_name]) unless Role.find_by(name: r[:name])
   end
+end
 
-  if %w(development test staging).include? Rails.env
+# rubocop:disable BlockLength
+# rubocop:disable LineLength
+if %w(development test staging).include? Rails.env
+  ActiveRecord::Base.transaction do
+    num_mock_readings = 100
     roomtypes = ['Living space', 'Sleeping/Bedroom']
     roomtypes.each do |rt|
       RoomType.create!(name: rt) unless RoomType.find_by(name: rt)
@@ -29,6 +34,7 @@ ActiveRecord::Base.transaction do
     bedroom = RoomType.find_by(name: 'Sleeping/Bedroom')
 
     User.create!(id: 1, email: 'rabid@example.com', password: 'password', password_confirmation: 'password') unless User.find_by(email: 'rabid@example.com')
+
     user = User.find_by(email: 'rabid@example.com')
 
     Home.create!(name: 'Example home 1', home_type: state_house, owner_id: user.id) unless Home.find_by(name: 'Example home 1')
@@ -40,11 +46,9 @@ ActiveRecord::Base.transaction do
                { id: 4, name: 'XR56Z', room_name: "youngest child's room", home: home, room_type_id: bedroom.id }]
 
     sensors.each do |s|
-      Sensor.create!(s) unless Sensor.find_by(s)
-    end
+      next if Sensor.find_by(s)
 
-    num_mock_readings = 100
-    sensors.each do |s|
+      Sensor.create!(s)
       x = 1
 
       while x <= num_mock_readings
