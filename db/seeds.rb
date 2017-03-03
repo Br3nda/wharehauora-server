@@ -45,15 +45,17 @@ if %w(development test staging).include? Rails.env
                { id: 3, name: 'Jimmy Sensor the Third', room_name: "eldest child's room", home: home, room_type_id: bedroom.id },
                { id: 4, name: 'XR56Z', room_name: "youngest child's room", home: home, room_type_id: bedroom.id }]
 
+    modifier = 1
     sensors.each do |s|
+      modifier += 0.125
       next if Sensor.find_by(s)
 
       Sensor.create!(s)
       x = 1
 
       while x <= num_mock_readings
-        Reading.create!(sensor_id: s[:id], key: 'foo', value: Math.sin(x) * 10, sub_type: MySensors::SetReq::V_TEMP, created_at: x.hour.ago)
-        Reading.create!(sensor_id: s[:id], key: 'foo', value: Math.tan(x) * 10, sub_type: MySensors::SetReq::V_HUM, created_at: x.hour.ago)
+        Reading.create!(sensor_id: s[:id], key: 'foo', value: Math.sin(x) * 10 * modifier, sub_type: MySensors::SetReq::V_TEMP, created_at: x.hour.ago)
+        Reading.create!(sensor_id: s[:id], key: 'foo', value: Math.tan(x) * 10 * modifier, sub_type: MySensors::SetReq::V_HUM, created_at: x.hour.ago)
         x += 1
       end
     end
