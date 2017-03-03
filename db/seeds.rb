@@ -34,9 +34,24 @@ ActiveRecord::Base.transaction do
     Home.create!(name: 'Example home 1', home_type: state_house, owner_id: user.id) unless Home.find_by(name: 'Example home 1')
     home = Home.find_by(name: 'Example home 1')
 
-    Sensor.create!(name: 'living room', home: home, room_type_id: living_room.id)
-    Sensor.create!(name: "parent's room", home: home, room_type_id: bedroom.id)
-    Sensor.create!(name: "eldest child's room", home: home, room_type_id: bedroom.id)
-    Sensor.create!(name: "youngest child's room", home: home, room_type_id: bedroom.id)
+    sensors = [{ id: 1, name: 'My new sensor', room_name: 'living room', home: home, room_type_id: living_room.id },
+               { id: 2, name: 'Old loaned sensor', room_name: "parent's room", home: home, room_type_id: bedroom.id },
+               { id: 3, name: 'Jimmy Sensor the Third', room_name: "eldest child's room", home: home, room_type_id: bedroom.id },
+               { id: 4, name: 'XR56Z', room_name: "youngest child's room", home: home, room_type_id: bedroom.id }]
+
+    sensors.each do |s|
+      Sensor.create!(s) unless Sensor.find_by(s)
+    end
+
+    num_mock_readings = 100
+    sensors.each do |s|
+      x = 1
+
+      while x <= num_mock_readings
+        Reading.create!(sensor_id: s[:id], key: 'foo', value: Math.sin(x) * 10, sub_type: MySensors::SetReq::V_TEMP, created_at: x.hour.ago)
+        Reading.create!(sensor_id: s[:id], key: 'foo', value: Math.tan(x) * 10, sub_type: MySensors::SetReq::V_HUM, created_at: x.hour.ago)
+        x += 1
+      end
+    end
   end
 end
