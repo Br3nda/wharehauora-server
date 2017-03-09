@@ -9,18 +9,9 @@ class HomesController < ApplicationController
   end
 
   def show
-    @temperature = []
-    @humidity = []
-
-    @home.rooms.each do |room|
-      name = room.name ? room.name : 'unnamed'
-
-      data = { name: name, data: temperature_data(room) }
-      @temperature << data unless data.empty?
-
-      data = { name: name, data: humidity_data(room) }
-      @humidity << data unless data.empty?
-    end
+    parse_dates
+    set_sensors
+    set_temp_and_humidity_data
   end
 
   def new
@@ -53,6 +44,14 @@ class HomesController < ApplicationController
 
   private
 
+  def parse_dates
+    @datesince = params[:datesince]
+    @dateto = params[:dateto]
+
+    @datesince = 1.day.ago if @datesince.blank?
+    @dateto = Date.current if @dateto.blank?
+  end
+
   def home_params
     params[:home].permit(permitted_home_params)
   end
@@ -65,22 +64,40 @@ class HomesController < ApplicationController
     )
   end
 
-  def temperature_data(room)
-    time_series Metric.temperature, room
+  def temperature_data(room, datesince, dateto)
+    time_series Metric.temperature, room, datesince, dateto
   end
 
-  def humidity_data(room)
-    time_series Metric.humidity, room
+  def humidity_data(room, datesince, dateto)
+    time_series Metric.humidity, room, datesince, dateto
   end
 
-  def time_series(query, room)
+  def time_series(query, room, datesince, dateto)
     query.where(room: room)
-         .where(['created_at >= ?', 1.day.ago])
+         .where(['created_at >= ?', datesince])
+         .where(['created_at <= ?', dateto])
+         .where('value < 120') # temp hack to filter the bogus readings
+         .where('value > 0') # temp hack to filter the bogus readings
          .pluck("date_trunc('minute', created_at)", :value)
+  end
+
+  def set_sensors
+    @sensors = policy_scope(Sensor).where(home_id: @home.id)
   end
 
   def set_home
     @home = policy_scope(Home).find(params[:id])
     authorize @home
+  end
+
+  def set_temp_and_humidity_data
+    @temperature = []
+    @humidity = []
+
+    @home.rooms.each do |room|
+      name = sensor.room_name ? sensor.room_name : 'unnamed'
+      @temperature << { name: name, data: temperature_data(room, @datesince, @dateto) }
+      @humidity << { name: name, data: humidity_data(sensor, @datesince, @dateto) }
+    end
   end
 end
