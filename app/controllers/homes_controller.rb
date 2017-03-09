@@ -9,15 +9,18 @@ class HomesController < ApplicationController
   end
 
   def show
+    parse_dates
+
     @readings = @home.readings.take(10)
     @sensors = policy_scope(Sensor).where(home_id: @home.id)
+
     @temperature = []
     @humidity = []
 
     @sensors.each do |sensor|
       name = sensor.room_name ? sensor.room_name : 'unnamed'
-      @temperature << { name: name, data: temperature_data(sensor) }
-      @humidity << { name: name, data: humidity_data(sensor) }
+      @temperature << { name: name, data: temperature_data(sensor, @datesince, @dateto) }
+      @humidity << { name: name, data: humidity_data(sensor, @datesince, @dateto) }
     end
   end
 
@@ -51,6 +54,14 @@ class HomesController < ApplicationController
 
   private
 
+  def parse_dates
+    @datesince = params[:datesince]
+    @dateto = params[:dateto]
+
+    @datesince = 1.day.ago if @datesince.blank?
+    @dateto = Date.current if @dateto.blank?
+  end
+
   def home_params
     params[:home].permit(permitted_home_params)
   end
@@ -63,17 +74,18 @@ class HomesController < ApplicationController
     )
   end
 
-  def temperature_data(sensor)
-    time_series Reading.temperature, sensor
+  def temperature_data(sensor, datesince, dateto)
+    time_series Reading.temperature, sensor, datesince, dateto
   end
 
-  def humidity_data(sensor)
-    time_series Reading.humidity, sensor
+  def humidity_data(sensor, datesince, dateto)
+    time_series Reading.humidity, sensor, datesince, dateto
   end
 
-  def time_series(query, sensor)
+  def time_series(query, sensor, datesince, dateto)
     query.where(sensor: sensor)
-         .where(['created_at >= ?', 1.day.ago])
+         .where(['created_at >= ?', datesince])
+         .where(['created_at <= ?', dateto])
          .where('value < 120') # temp hack to filter the bogus readings
          .where('value > 0') # temp hack to filter the bogus readings
          .pluck("date_trunc('minute', created_at)", :value)
