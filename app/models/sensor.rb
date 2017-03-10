@@ -10,13 +10,4 @@ class Sensor < ActiveRecord::Base
   validates :room, presence: true
 
   scope :joins_home, -> { joins(:room, room: :home) }
-
-  def last_message
-    Message.where(sensor_id: id)
-           .order(created_at: :desc)
-           .first
-           .created_at
-  rescue
-    nil
-  end
 end
