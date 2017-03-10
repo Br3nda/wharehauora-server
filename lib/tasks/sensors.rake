@@ -42,7 +42,7 @@ class SensorsIngest
     end
   end
 
-  def decode(topic, value)
+  def decode(topic, _value)
     (home_id, node_id, child_sensor_id, message_type, ack, sub_type, payload) = topic.split('/')[3..-1]
     home = Home.find(home_id)
     sensor = home.find_or_create_sensor(node_id)
@@ -50,6 +50,16 @@ class SensorsIngest
                               child_sensor_id: child_sensor_id,
                               message_type: message_type,
                               ack: ack, sub_type: sub_type)
+    metric = Metric.new(room: sensor.room, reading: reading)
+    metric.key = case message_type
+                 when MySensors::SetReq::V_TEMP
+                   'temperature'
+                 when MySensors::SetReq::V_HUM
+                   'humidity'
+                 end
+    metric.value = value
+    metric.save!
+
     puts "home id:#{home_id} sensor id:#{sensor.id} reading id:#{reading.id}"
     puts "message_type #{message_type}, ack #{ack}, sub_type #{sub_type}, payload #{payload}"
   end

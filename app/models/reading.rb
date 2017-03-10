@@ -4,5 +4,5 @@ class Reading < ActiveRecord::Base
   scope :temperature, -> { where(sub_type: MySensors::SetReq::V_TEMP) }
   scope :humidity, -> { where(sub_type: MySensors::SetReq::V_HUM) }
 
-  validate :key, :value, :sensor, presence: true
+  validates :key, :value, :sensor, presence: true
 end
