@@ -18,8 +18,8 @@ if %w(development test staging).include? Rails.env
   bedroom = RoomType.create!(name: 'Sleeping/Bedroom')
 
   home = Home.create!(name: 'Example home 1', home_type: state_house)
-  Sensor.create!(name: 'living room', home: home, room_type_id: living_room.id)
-  Sensor.create!(name: "parent's room", home: home, room_type_id: bedroom.id)
-  Sensor.create!(name: "eldest child's room", home: home, room_type_id: bedroom.id)
-  Sensor.create!(name: "youngest child's room", home: home, room_type_id: bedroom.id)
+  Room.create!(name: 'living room', home: home, room_type_id: living_room.id)
+  Room.create!(name: "parent's room", home: home, room_type_id: bedroom.id)
+  Room.create!(name: "eldest child's room", home: home, room_type_id: bedroom.id)
+  Room.create!(name: "youngest child's room", home: home, room_type_id: bedroom.id)
 end

@@ -1,4 +1,52 @@
 require 'rails_helper'
 
 RSpec.describe RoomsController, type: :controller do
+  include Devise::Test::ControllerHelpers
+
+  let(:bedroom) { FactoryGirl.create(:room_type, name: 'bedroom') }
+
+  let(:user) { FactoryGirl.create(:user) }
+  let(:home) { FactoryGirl.create(:home, owner_id: user.id) }
+  let(:room) { FactoryGirl.create(:room, home: home, room_type: bedroom) }
+  let(:sensor) { FactoryGirl.create(:sensor, room: room, node_id: '1100') }
+
+  context 'Not signed in' do
+    describe 'GET show' do
+      before { get :show, id: room.id }
+      it { expect(response).to redirect_to(new_user_session_path) }
+    end
+  end
+
+  context 'user is signed in' do
+    before { sign_in user }
+
+    describe 'GET show' do
+      before { get :show, id: room.id }
+      it { expect(response).to have_http_status(:success) }
+    end
+
+    describe '#update' do
+      before { patch :update, id: room.to_param, sensor: { room_name: 'Living room' } }
+      it { expect(response).to redirect_to home_sensors_path(home) }
+    end
+  end
+
+  context "Trying to access another users's data" do
+    before { sign_in user }
+    describe "GET edit for someone else's home" do
+      let(:another_user) { FactoryGirl.create(:user) }
+      let(:another_home) { FactoryGirl.create(:home, owner: another_user) }
+      let(:another_room) { FactoryGirl.create(:room, home: another_home) }
+      let(:another_sensor) { FactoryGirl.create(:sensor, room: another_room) }
+
+      describe '#show' do
+        before { get :show, id: another_room.to_param }
+        it { expect(response).to have_http_status(:not_found) }
+      end
+      describe '#edit' do
+        before { get :show, id: another_room.to_param }
+        it { expect(response).to have_http_status(:not_found) }
+      end
+    end
+  end
 end

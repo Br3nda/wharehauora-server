@@ -15,8 +15,13 @@ class SensorPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      return scope.joins(:home).where(homes: { owner_id: user.id }) if user
-      scope.joins(:home).where(homes: { is_public: true })
+      query = scope.joins_home
+      if user
+        query.where('owner_id = ? OR is_public = true')
+      else
+        query.where(is_public: true)
+      end
+      query
     end
   end
 

@@ -1,0 +1,19 @@
+%h2
+  = @home.name
+
+= render 'homes/nav', home: @home
+
+- if @sensors.present?
+  %table.pure-table
+    %thead
+      %tr
+        %th.sortable
+          Sensor
+    %tbody
+      - @sensors.each do |sensor|
+        %tr
+          %td
+            = sensor.node_id
+
+- else
+  %p No sensors detected in this whare.

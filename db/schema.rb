@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20170210020642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "home_types", force: :cascade do |t|
     t.text     "name",       null: false
@@ -124,5 +123,4 @@ ActiveRecord::Schema.define(version: 20170210020642) do
   add_foreign_key "homes", "users", column: "owner_id"
   add_foreign_key "metrics", "rooms"
   add_foreign_key "rooms", "room_types"
-  add_foreign_key "sensors", "rooms"
 end

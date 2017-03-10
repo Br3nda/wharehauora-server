@@ -6,7 +6,7 @@ class SensorsController < ApplicationController
   def index
     @home = policy_scope(Home).find(params[:home_id])
     authorize @home
-    @sensors = policy_scope(@home.sensors)
+    @sensors = policy_scope(Sensor).joins_home.where('home_id =?', @home.id)
   end
 
   def show
@@ -23,24 +23,22 @@ class SensorsController < ApplicationController
     @humidity = humidity_data @daysago
   end
 
-  def edit
-    authorize @sensor
-    @room_types = RoomType.all
-    authorize @sensor
-  end
+  # def edit
+  #   @room_types = RoomType.all
+  #   authorize @sensor
+  # end
 
-  def update
-    sensor = policy_scope(Sensor).find(params[:id])
-    authorize sensor
-    sensor.update(sensor_params)
-    sensor.save!
-    redirect_to home_sensors_path(sensor.home)
-  end
+  # def update
+  #   @sensor.update(sensor_params)
+  #   @sensor.save!
+  #   redirect_to home_sensors_path(@sensor.home)
+  # end
 
   private
 
   def set_sensor
     @sensor = policy_scope(Sensor).find(params[:id])
+    authorize @sensor
   end
 
   def sensor_params
