@@ -5,7 +5,8 @@ RSpec.describe WelcomeController, type: :controller do
   let(:user) { FactoryGirl.create(:user) }
   let(:home_type) { FactoryGirl.create(:home_type) }
   let(:home) { FactoryGirl.create(:home, home_type: home_type) }
-  let(:sensor) { FactoryGirl.create(:sensor, home: home) }
+  let(:room) { FactoryGirl.create(:room, home: home) }
+
   context 'user is not sign in' do
     describe 'GET index' do
       context 'no sensor data' do
@@ -15,11 +16,11 @@ RSpec.describe WelcomeController, type: :controller do
       context 'lots of sensor data' do
         let!(:readings) do
           [
-            FactoryGirl.create(:reading, sensor: sensor),
-            FactoryGirl.create(:reading, sensor: sensor),
-            FactoryGirl.create(:reading, sensor: sensor),
-            FactoryGirl.create(:reading, sensor: sensor),
-            FactoryGirl.create(:reading, sensor: sensor)
+            FactoryGirl.create(:reading, room: room),
+            FactoryGirl.create(:reading, room: room),
+            FactoryGirl.create(:reading, room: room),
+            FactoryGirl.create(:reading, room: room),
+            FactoryGirl.create(:reading, room: room)
           ]
         end
         before { get :index }
