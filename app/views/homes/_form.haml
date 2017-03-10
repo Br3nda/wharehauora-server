@@ -3,7 +3,7 @@
   = f.text_field :name, type: 'text', placeholder: 'Name of home'
 
 %fieldset
-  - home_types.each do |ht|
+  - HomeType.all.each do |ht|
     %p
       = f.radio_button :home_type_id, ht.id
       = f.label :home_type_id, ht.name

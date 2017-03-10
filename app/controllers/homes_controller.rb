@@ -2,44 +2,48 @@
 class HomesController < ApplicationController
   before_action :authenticate_user!, except: :show
   before_action :set_home, only: [:show, :edit, :destroy, :update]
+  respond_to :html
 
   def index
     authorize :home
     @homes = policy_scope(Home)
+    respond_with(@homes)
   end
 
   def show
     parse_dates
     set_sensors
     set_temp_and_humidity_data
+    respond_with(@home)
   end
 
   def new
     authorize :home
     @home = Home.new
-    @home_types = HomeType.all
+    respond_with(@home)
   end
 
   def create
     @home = Home.new(home_params.merge(owner_id: current_user.id))
     authorize @home
-    @home.save!
-    redirect_to @home
+    @home.save
+    respond_with(@home)
   end
 
   def edit
     @home_types = HomeType.all
+    respond_with(@home)
   end
 
   def update
     @home.update(home_params)
     @home.save!
-    redirect_to home_path(@home)
+    respond_with(@home)
   end
 
   def destroy
-    @home.destroy!
-    redirect_to homes_path
+    @home.destroy
+    respond_with(@home)
   end
 
   private
