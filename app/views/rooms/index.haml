@@ -11,10 +11,14 @@
         %th.sortable
           Room
           ( Room type )
+        -# %th
+        -#   Sensors
         %th
-          Sensors
+          Temperature
         %th
-          Reading
+          Humidity
+        %th
+          Mould
         %th
           Rating
     %tbody
@@ -29,10 +33,18 @@
               = link_to 'edit', edit_home_room_path(room.home, room)
             - if room.room_type.present?
               = "(#{room.room_type.name})"
+          -# %td
+          -#   - room.sensors.each do |sensor|
+          -#     %li
+          -#       = sensor.node_id
           %td
-            - room.sensors.each do |sensor|
-              %li
-                = link_to(sensor.node_id, home_sensors_path(sensor.id))
+            = room.temperature
+          %td
+            = room.humidity
+          %td
+            = room.mould
+          %td
+            = room.rating
 
 - else
   %p No rooms detected in this whare.

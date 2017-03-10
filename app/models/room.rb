@@ -16,6 +16,8 @@ class Room < ActiveRecord::Base
            .order(created_at: :desc)
            .first
            .value
+  rescue
+    nil
   end
 
   def humidity
@@ -24,14 +26,30 @@ class Room < ActiveRecord::Base
            .order(created_at: :desc)
            .first
            .value
+  rescue
+    nil
   end
 
-  def last_reading
+  def last_reading_timestamp
     Reading.where(room_id: id)
            .order(created_at: :desc)
            .first
            .created_at
   rescue
     nil
+  end
+
+  def mould
+    Reading.where(room_id: id)
+           .mould
+           .order(created_at: :desc)
+           .first
+           .value
+  rescue
+    nil
+  end
+
+  def rating
+    'TODO'
   end
 end
