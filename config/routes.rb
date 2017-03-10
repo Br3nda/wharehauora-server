@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :homes do
     resources :rooms
     resources :home_viewers
-    resources :sensors
+    get 'sensors' => 'sensors#index'
     resources :users
     resources :readings, only: [:index, :show]
   end

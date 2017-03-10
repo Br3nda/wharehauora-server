@@ -9,24 +9,10 @@ class SensorsController < ApplicationController
     @sensors = policy_scope(Sensor).joins_home.where('home_id =?', @home.id)
   end
 
-  def show
-    authorize @sensor
-  end
-
   private
 
   def set_sensor
     @sensor = policy_scope(Sensor).find(params[:id])
     authorize @sensor
-  end
-
-  def sensor_params
-    params[:sensor].permit(permitted_sensor_params)
-  end
-
-  def permitted_sensor_params
-    %i(
-      room_id
-    )
   end
 end
