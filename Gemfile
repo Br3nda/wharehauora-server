@@ -31,9 +31,6 @@ gem 'devise'
 # roles and permissions
 gem 'pundit'
 
-# for api
-gem 'jsonapi-resources'
-
 # templating
 gem 'haml-rails'
 

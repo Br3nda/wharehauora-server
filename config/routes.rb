@@ -19,11 +19,4 @@ Rails.application.routes.draw do
     resources :home_types
     resources :room_types
   end
-
-  get '/api', to: 'api#index'
-  namespace :api do
-    jsonapi_resources :homes do
-      jsonapi_resources :sensors
-    end
-  end
 end
