@@ -14,6 +14,6 @@ class ReadingPolicy < ApplicationPolicy
   private
 
   def owned_by_current_user?
-    record.sensor.home.owner_id == user.id
+    record.room.home.owner_id == user.id
   end
 end
