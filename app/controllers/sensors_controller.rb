@@ -11,9 +11,6 @@ class SensorsController < ApplicationController
 
   def show
     authorize @sensor
-    @messages = Message.where(sensor: @sensor)
-                       .order(created_at: :desc)
-                       .paginate(page: params[:page], per_page: 50)
   end
 
   private

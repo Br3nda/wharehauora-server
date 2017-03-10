@@ -13,10 +13,6 @@ class RoomsController < ApplicationController
 
   def show
     authorize @room
-    @readings = Reading.where(room: @room)
-                       .order(created_at: :desc)
-                       .paginate(page: params[:page], per_page: 50)
-
     @temperature = temperature_data
     @humidity = humidity_data
   end
