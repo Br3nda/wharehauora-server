@@ -1,13 +1,12 @@
 class Reading < ActiveRecord::Base
-  belongs_to :sensor
+  belongs_to :room
+
   delegate :home, :home_id, to: :room, allow_nil: false
-  # scope :temperature, -> { where(sub_type: MySensors::SetReq::V_TEMP) }
-  # scope :humidity, -> { where(sub_type: MySensors::SetReq::V_HUM) }
+
   scope :joins_home, -> { joins(:room, room: :home) }
 
   validates :key, :value, :room, presence: true
 
-  belongs_to :room
   scope :temperature, -> { where(key: 'temperature') }
   scope :humidity, -> { where(key: 'humidity') }
   scope :mould, -> { where(key: 'mould') }

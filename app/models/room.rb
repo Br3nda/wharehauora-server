@@ -9,4 +9,29 @@ class Room < ActiveRecord::Base
   has_one :owner, through: :home
 
   validates :home, presence: true
+
+  def temperature
+    Reading.where(room_id: id)
+           .temperature
+           .order(created_at: :desc)
+           .first
+           .value
+  end
+
+  def humidity
+    Reading.where(room_id: id)
+           .humidity
+           .order(created_at: :desc)
+           .first
+           .value
+  end
+
+  def last_reading
+    Reading.where(room_id: id)
+           .order(created_at: :desc)
+           .first
+           .created_at
+  rescue
+    nil
+  end
 end
