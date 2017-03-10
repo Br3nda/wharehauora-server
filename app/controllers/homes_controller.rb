@@ -95,9 +95,9 @@ class HomesController < ApplicationController
     @humidity = []
 
     @home.rooms.each do |room|
-      name = sensor.room_name ? sensor.room_name : 'unnamed'
+      name = room.name ? room.name : 'unnamed'
       @temperature << { name: name, data: temperature_data(room, @datesince, @dateto) }
-      @humidity << { name: name, data: humidity_data(sensor, @datesince, @dateto) }
+      @humidity << { name: name, data: humidity_data(room, @datesince, @dateto) }
     end
   end
 end
