@@ -1,11 +1,14 @@
 class RoomsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_room, only: [:show, :edit, :destroy, :update]
+  before_action :set_home, only: [:index, :edit, :update]
+
+  respond_to :html
 
   def index
-    @home = policy_scope(Home).find(params[:home_id])
     authorize @home
     @rooms = policy_scope(@home.rooms)
+    respond_with(@rooms)
   end
 
   def show
@@ -20,22 +23,22 @@ class RoomsController < ApplicationController
 
   def edit
     authorize @room
-    @room_types = RoomType.all
-    authorize @room
   end
 
   def update
-    room = policy_scope(Sensor).find(params[:id])
-    authorize room
-    room.update(room_params)
-    room.save!
-    redirect_to home_rooms_path(room.home)
+    authorize @room
+    @room.update(room_params)
+    redirect_to home_rooms_path(@home)
   end
 
   private
 
+  def set_home
+    @home = policy_scope(Home).find(params[:home_id])
+  end
+
   def set_room
-    @room = policy_scope(Sensor).find(params[:id])
+    @room = policy_scope(Room).find(params[:id])
   end
 
   def room_params
@@ -44,7 +47,7 @@ class RoomsController < ApplicationController
 
   def permitted_room_params
     %i(
-      room_name
+      name
       room_type_id
     )
   end

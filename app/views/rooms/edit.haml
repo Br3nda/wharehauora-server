@@ -1,5 +1,17 @@
-%h2 Sensor
-.pure-form
-  = form_for(@sensor) do |f|
-    = render 'form', f: f, room_types: @room_types
-    %button.pure-button.pure-button-primary Save
+%h2 Room
+
+= form_for(@room, url: home_room_path(@home, @room,
+                  html: { class: 'pure-form pure-form-aligned' })) do |f|
+  %fieldset
+    = @home.name
+  %fieldset
+    = f.label :name
+    = f.text_field :name, type: 'name', placeholder: 'room name'
+
+  %fieldset
+    = f.label :room_type
+    - RoomType.all.each do |rt|
+      %p
+        = f.radio_button :room_type_id, rt.id
+        = f.label :room_type_id, rt.name
+  %button.pure-button.pure-button-primary Save

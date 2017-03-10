@@ -12,6 +12,8 @@
           Room
           ( Room type )
         %th
+          Sensors
+        %th
           Reading
         %th
           Rating
@@ -27,18 +29,10 @@
               = link_to 'edit', edit_home_room_path(room.home, room)
             - if room.room_type.present?
               = "(#{room.room_type.name})"
-          / %td
-          /   - if room.temperature
-          /     = format('%d°C', room.temperature)
-          /   - else
-          /     Err
-          /   /
-          /   - if room.humidity
-          /     = format('%d%%', room.humidity)
-          /   - else
-          /     Err
-          / %td
-          /   = room.rating
+          %td
+            - room.sensors.each do |sensor|
+              %li
+                = link_to(sensor.node_id, home_sensors_path(sensor.id))
 
 - else
   %p No rooms detected in this whare.
