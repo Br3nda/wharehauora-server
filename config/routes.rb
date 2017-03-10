@@ -7,7 +7,6 @@ Rails.application.routes.draw do
     resources :rooms
     resources :home_viewers
     get 'sensors' => 'sensors#index'
-    resources :users
     resources :readings, only: [:index, :show]
   end
 
