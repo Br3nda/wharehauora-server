@@ -24,7 +24,7 @@
             - if room.name.present?
               = room.name
             - else
-              = room_path(room)
+              = home_room_path(@home, room)
             - if policy(room).edit?
               = link_to 'edit', edit_home_room_path(room.home, room)
             - if room.room_type.present?
