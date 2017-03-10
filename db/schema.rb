@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210020642) do
+ActiveRecord::Schema.define(version: 20170310020006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,18 @@ ActiveRecord::Schema.define(version: 20170210020642) do
     t.integer  "home_type_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.integer  "node_id"
+    t.string   "message_type"
+    t.integer  "child_sensor_id"
+    t.integer  "ack"
+    t.integer  "sub_type"
+    t.text     "payload"
+    t.integer  "sensor_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "metrics", force: :cascade do |t|
     t.integer  "room_id",    null: false
     t.text     "key"
@@ -48,7 +60,7 @@ ActiveRecord::Schema.define(version: 20170210020642) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "readings", force: :cascade do |t|
+  create_table "old_readings", force: :cascade do |t|
     t.integer  "sensor_id"
     t.text     "key"
     t.float    "value"
@@ -58,6 +70,14 @@ ActiveRecord::Schema.define(version: 20170210020642) do
     t.integer  "child_sensor_id"
     t.integer  "ack"
     t.integer  "sub_type"
+  end
+
+  create_table "readings", force: :cascade do |t|
+    t.integer  "room_id",    null: false
+    t.text     "key"
+    t.float    "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -122,5 +142,6 @@ ActiveRecord::Schema.define(version: 20170210020642) do
   add_foreign_key "home_viewers", "users"
   add_foreign_key "homes", "users", column: "owner_id"
   add_foreign_key "metrics", "rooms"
+  add_foreign_key "readings", "rooms"
   add_foreign_key "rooms", "room_types"
 end

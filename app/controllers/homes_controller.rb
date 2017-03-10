@@ -65,11 +65,11 @@ class HomesController < ApplicationController
   end
 
   def temperature_data(room, datesince, dateto)
-    time_series Metric.temperature, room, datesince, dateto
+    time_series Reading.temperature, room, datesince, dateto
   end
 
   def humidity_data(room, datesince, dateto)
-    time_series Metric.humidity, room, datesince, dateto
+    time_series Reading.humidity, room, datesince, dateto
   end
 
   def time_series(query, room, datesince, dateto)

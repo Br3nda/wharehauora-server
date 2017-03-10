@@ -22,7 +22,7 @@ class SensorsIngest
       # The block will be called when you messages arrive to the topic
       c.get('/sensors/#') do |topic, message|
         begin
-          decode topic, message
+          Message.decode(topic, message).save!
         rescue ActiveRecord::RecordNotFound => e
           puts "#{topic} #{message}"
           puts e
@@ -40,28 +40,6 @@ class SensorsIngest
       end
       sleep(10)
     end
-  end
-
-  def decode(topic, _value)
-    (home_id, node_id, child_sensor_id, message_type, ack, sub_type, payload) = topic.split('/')[3..-1]
-    home = Home.find(home_id)
-    sensor = home.find_or_create_sensor(node_id)
-    reading = Reading.create!(sensor_id: sensor.id, value: value,
-                              child_sensor_id: child_sensor_id,
-                              message_type: message_type,
-                              ack: ack, sub_type: sub_type)
-    metric = Metric.new(room: sensor.room, reading: reading)
-    metric.key = case message_type
-                 when MySensors::SetReq::V_TEMP
-                   'temperature'
-                 when MySensors::SetReq::V_HUM
-                   'humidity'
-                 end
-    metric.value = value
-    metric.save!
-
-    puts "home id:#{home_id} sensor id:#{sensor.id} reading id:#{reading.id}"
-    puts "message_type #{message_type}, ack #{ack}, sub_type #{sub_type}, payload #{payload}"
   end
 
   private
