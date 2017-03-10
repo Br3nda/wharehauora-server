@@ -45,7 +45,7 @@ RSpec.describe RoomsController, type: :controller do
         it { expect(response).to have_http_status(:not_found) }
       end
       describe '#edit' do
-        before { get :show, id: room.to_param }
+        before { get :edit, home_id: home.id, id: room.to_param }
         it { expect(response).to have_http_status(:not_found) }
       end
     end
