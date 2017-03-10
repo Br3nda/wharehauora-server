@@ -21,8 +21,12 @@ class SensorsIngest
     MQTT::Client.connect(connection_options) do |c|
       # The block will be called when you messages arrive to the topic
       c.get('/sensors/#') do |topic, message|
-        puts topic
-        decode topic, message
+        begin
+          decode topic, message
+        rescue ActiveRecord::RecordNotFound => e
+          puts "#{topic} #{message}"
+          puts e
+        end
       end
     end
   end
@@ -40,33 +44,17 @@ class SensorsIngest
 
   def decode(topic, value)
     (home_id, node_id, child_sensor_id, message_type, ack, sub_type, payload) = topic.split('/')[3..-1]
-
-    sensor = find_or_create_sensor(home_id, node_id)
-
-    reading = Reading.create!(sensor_id: sensor.id,
-                              value: value,
+    home = Home.find(home_id)
+    sensor = home.find_or_create_sensor(node_id)
+    reading = Reading.create!(sensor_id: sensor.id, value: value,
                               child_sensor_id: child_sensor_id,
                               message_type: message_type,
-                              ack: ack,
-                              sub_type: sub_type)
+                              ack: ack, sub_type: sub_type)
     puts "home id:#{home_id} sensor id:#{sensor.id} reading id:#{reading.id}"
     puts "message_type #{message_type}, ack #{ack}, sub_type #{sub_type}, payload #{payload}"
   end
 
   private
-
-  def find_or_create_sensor(home_id, node_id)
-    sensor = Sensor
-             .where('room_id in (SELECT room_id FROM rooms WHERE home_id=?)', home_id)
-             .find_by(node_id: node_id)
-    unless sensor
-      home = Home.find(home_id)
-      room = Room.create!(name: 'New sensor detected', home: home)
-      sensor = Sensor.create!(node_id: node_id, room: room)
-    end
-
-    sensor
-  end
 
   def connection_options
     # Create a hash with the connection parameters from the URL
