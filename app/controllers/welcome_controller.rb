@@ -6,16 +6,16 @@ class WelcomeController < ApplicationController
     @home_types = HomeType.all.order(:name)
     @room_types = RoomType.all.order(:name)
 
-    @temperature = readings.temperature.median(:value)
-    @humidity = readings.humidity.median(:value)
+    @temperature = metrics.temperature.median(:value)
+    @humidity = metrics.humidity.median(:value)
     @sensor_count = Sensor.count
   end
 
   def time_frame
-    1.hour.ago
+    3.hours.ago
   end
 
-  def readings
-    Reading.readings_by_home_and_room(time_frame)
+  def metrics
+    Metric.metrics_by_home_and_room(time_frame)
   end
 end
