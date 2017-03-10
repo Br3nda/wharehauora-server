@@ -4,7 +4,7 @@ class Metric < ActiveRecord::Base
   scope :humidity, -> { where(key: 'humidity') }
   scope :mould, -> { where(key: 'mould') }
 
-  validates :key, :value, presence: true
+  validates :key, :value, :room, presence: true
 
   def self.metrics_by_home_and_room(created_after)
     # byebug

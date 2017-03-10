@@ -7,4 +7,6 @@ class Room < ActiveRecord::Base
   has_many :readings, through: :sensors
   has_one :home_type, through: :home
   has_one :owner, through: :home
+
+  validates :home, presence: true
 end
