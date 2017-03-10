@@ -21,10 +21,10 @@ class SensorsIngest
     MQTT::Client.connect(connection_options) do |c|
       # The block will be called when you messages arrive to the topic
       c.get('/sensors/#') do |topic, message|
+        puts "#{topic} #{message}"
         begin
-          Message.decode(topic, message).save!
+          Message.decode(topic, message)
         rescue ActiveRecord::RecordNotFound => e
-          puts "#{topic} #{message}"
           puts e
         end
       end
@@ -35,8 +35,8 @@ class SensorsIngest
     @previous_values = {}
     loop do
       Sensor.all.each do |sensor|
-        save_reading(sensor, MySensors::SetReq::V_TEMP, fake_temperature(sensor.id))
-        save_reading(sensor, MySensors::SetReq::V_HUM, fake_humidity(sensor.id))
+        save_message(sensor, MySensors::SetReq::V_TEMP, fake_temperature(sensor.id))
+        save_message(sensor, MySensors::SetReq::V_HUM, fake_humidity(sensor.id))
       end
       sleep(10)
     end
@@ -55,13 +55,12 @@ class SensorsIngest
     }
   end
 
-  def save_reading(sensor, sub_type, value)
-    reading = Reading.new(sensor_id: sensor.id,
+  def save_message(sensor, message_type, value)
+    message = Message.new(sensor_id: sensor.id,
                           value: value,
-                          child_sensor_id: (sub_type == MySensors::SetReq::V_HUM ? 0 : 1),
-                          message_type: MySensors::MessageType::SET,
-                          sub_type: sub_type)
-    reading.save!
+                          child_sensor_id: (message_type == MySensors::SetReq::V_HUM ? 0 : 1),
+                          message_type: message_type)
+    message.save!
     puts "home #{sensor.home_id} sensors #{sensor.id} reading #{reading.id} value: #{value}"
   end
 
