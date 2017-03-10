@@ -28,9 +28,9 @@ class Message < ActiveRecord::Base
   def key
     case child_sensor_id.to_i
     when 0
-      'temperature'
-    when 1
       'humidity'
+    when 1
+      'temperature'
     else
       'unknown'
     end
