@@ -12,7 +12,7 @@ RSpec.describe RoomsController, type: :controller do
 
   context 'Not signed in' do
     describe 'GET show' do
-      before { get :show, id: room.id }
+      before { get :show, home_id: room.home.id, id: room.id }
       it { expect(response).to redirect_to(new_user_session_path) }
     end
   end
@@ -21,30 +21,31 @@ RSpec.describe RoomsController, type: :controller do
     before { sign_in user }
 
     describe 'GET show' do
-      before { get :show, id: room.id }
+      before { get :show, home_id: room.home.id, id: room.id }
       it { expect(response).to have_http_status(:success) }
     end
 
     describe '#update' do
-      before { patch :update, id: room.to_param, sensor: { room_name: 'Living room' } }
-      it { expect(response).to redirect_to home_sensors_path(home) }
+      before do
+        patch :update, home_id: room.home.id, id: room.to_param,
+                       room: { name: 'Living room' }
+      end
+      it { expect(response).to redirect_to home_rooms_path(home) }
     end
   end
 
   context "Trying to access another users's data" do
     before { sign_in user }
     describe "GET edit for someone else's home" do
-      let(:another_user) { FactoryGirl.create(:user) }
-      let(:another_home) { FactoryGirl.create(:home, owner: another_user) }
-      let(:another_room) { FactoryGirl.create(:room, home: another_home) }
-      let(:another_sensor) { FactoryGirl.create(:sensor, room: another_room) }
+      let(:home) { FactoryGirl.create(:home) }
+      let(:room) { FactoryGirl.create(:room, home: home) }
 
       describe '#show' do
-        before { get :show, id: another_room.to_param }
+        before { get :show, home_id: home.id, id: room.to_param }
         it { expect(response).to have_http_status(:not_found) }
       end
       describe '#edit' do
-        before { get :show, id: another_room.to_param }
+        before { get :show, id: room.to_param }
         it { expect(response).to have_http_status(:not_found) }
       end
     end
