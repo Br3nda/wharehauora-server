@@ -7,7 +7,7 @@ class Sensor < ActiveRecord::Base
   delegate :home, to: :room
   delegate :home_type, to: :hoom
 
-  validate :room, presence: true
+  validates :room, presence: true
 
   scope :joins_home, -> { joins(:room, room: :home) }
 
