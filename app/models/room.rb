@@ -11,45 +11,34 @@ class Room < ActiveRecord::Base
   validates :home, presence: true
 
   def temperature
-    Reading.where(room_id: id)
-           .temperature
-           .order(created_at: :desc)
-           .first
-           .value
-  rescue
-    nil
+    single_current_metric 'temperature'
   end
 
   def humidity
-    Reading.where(room_id: id)
-           .humidity
-           .order(created_at: :desc)
-           .first
-           .value
-  rescue
-    nil
-  end
-
-  def last_reading_timestamp
-    Reading.where(room_id: id)
-           .order(created_at: :desc)
-           .first
-           .created_at
-  rescue
-    nil
+    single_current_metric 'humidity'
   end
 
   def mould
-    Reading.where(room_id: id)
-           .mould
-           .order(created_at: :desc)
-           .first
-           .value
+    single_current_metric 'mould'
+  end
+
+  def last_reading_timestamp
+    readings.order(created_at: :desc)
+            .first
+            .created_at
   rescue
     nil
   end
 
   def rating
     'TODO'
+  end
+
+  private
+
+  def single_current_metric(key)
+    Reading.where(room_id: id, key: key).last.value
+  rescue
+    nil
   end
 end
