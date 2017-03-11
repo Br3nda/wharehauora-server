@@ -31,7 +31,7 @@ class Room < ActiveRecord::Base
   end
 
   def rating
-    'TODO'
+    'not calculated yet'
   end
 
   private
