@@ -15,6 +15,7 @@ script:
   - bundle exec haml-lint ./app
   - bundle-audit
   - bundle exec rspec spec
+  - bundle exec codeclimate-test-reporter
 notifications:
   slack:
     # yamllint disable rule:line-length
