@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class Home < ActiveRecord::Base
-  belongs_to :owner
+  has_many :sensors
+  has_many :readings, through: :sensors
+  belongs_to :owner, class_name: 'User'
   belongs_to :home_type
 
   has_many :rooms
