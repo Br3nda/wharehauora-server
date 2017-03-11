@@ -1,13 +1,5 @@
 class SensorPolicy < ApplicationPolicy
-  def edit?
-    owned_by_current_user?
-  end
-
   def show?
-    owned_by_current_user?
-  end
-
-  def update?
     owned_by_current_user?
   end
 
