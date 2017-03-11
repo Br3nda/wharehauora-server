@@ -52,14 +52,6 @@ ActiveRecord::Schema.define(version: 20170310020006) do
     t.datetime "updated_at",      null: false
   end
 
-  create_table "metrics", force: :cascade do |t|
-    t.integer  "room_id",    null: false
-    t.text     "key"
-    t.float    "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "old_readings", force: :cascade do |t|
     t.integer  "sensor_id"
     t.text     "key"
@@ -141,7 +133,6 @@ ActiveRecord::Schema.define(version: 20170310020006) do
   add_foreign_key "home_viewers", "homes"
   add_foreign_key "home_viewers", "users"
   add_foreign_key "homes", "users", column: "owner_id"
-  add_foreign_key "metrics", "rooms"
   add_foreign_key "readings", "rooms"
   add_foreign_key "rooms", "room_types"
 end
