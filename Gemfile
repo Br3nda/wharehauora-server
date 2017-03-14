@@ -31,9 +31,6 @@ gem 'devise'
 # roles and permissions
 gem 'pundit'
 
-# for api
-gem 'jsonapi-resources'
-
 # templating
 gem 'haml-rails'
 
@@ -89,9 +86,9 @@ group :development, :test do
   # Code coverage analysis
   gem 'codeclimate-test-reporter', require: false
   gem 'coveralls', require: false
- 
-  gem 'pry'
+
   gem 'capybara'
+  gem 'pry'
 end
 
 group :development do

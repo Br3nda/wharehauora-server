@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :homes do
+    resources :rooms
     resources :home_viewers
-    resources :sensors
-    resources :users
+    get 'sensors' => 'sensors#index'
     resources :readings, only: [:index, :show]
   end
 
@@ -17,12 +17,5 @@ Rails.application.routes.draw do
     resources :users
     resources :home_types
     resources :room_types
-  end
-
-  get '/api', to: 'api#index'
-  namespace :api do
-    jsonapi_resources :homes do
-      jsonapi_resources :sensors
-    end
   end
 end

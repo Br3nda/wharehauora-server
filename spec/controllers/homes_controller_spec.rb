@@ -6,6 +6,7 @@ RSpec.describe HomesController, type: :controller do
   let(:admin_role) { FactoryGirl.create(:role, name: 'janitor') }
   let(:admin_user) { FactoryGirl.create(:user, roles: [admin_role]) }
   let!(:home) { FactoryGirl.create(:home, owner_id: user.id) }
+  let!(:room) { FactoryGirl.create(:room, home: home) }
   let!(:another_home) { FactoryGirl.create(:home, name: "someone else's home") }
   let!(:public_home)  { FactoryGirl.create(:home, name: 'public home', is_public: true) }
 
@@ -85,7 +86,7 @@ RSpec.describe HomesController, type: :controller do
       end
       describe 'lots of sensors' do
         before do
-          15.times { FactoryGirl.create(:sensor, home: home) }
+          15.times { FactoryGirl.create(:sensor, room: room) }
           get :show, id: home.id
         end
         it { expect(response).to have_http_status(:success) }
@@ -154,7 +155,7 @@ RSpec.describe HomesController, type: :controller do
       end
       describe 'my home lots of sensors' do
         before do
-          15.times { FactoryGirl.create(:sensor, home: home) }
+          15.times { FactoryGirl.create(:sensor, room: room) }
           get :show, id: home.id
         end
         it { expect(response).to have_http_status(:success) }

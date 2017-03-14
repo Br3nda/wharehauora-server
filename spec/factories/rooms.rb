@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :sensor do
-    room
+  factory :room do
+    home
   end
 end

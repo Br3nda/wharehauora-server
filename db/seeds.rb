@@ -19,7 +19,6 @@ ActiveRecord::Base.transaction do
 end
 
 # rubocop:disable BlockLength
-# rubocop:disable LineLength
 if %w(development test staging).include? Rails.env
   ActiveRecord::Base.transaction do
     num_mock_readings = 100
@@ -33,29 +32,50 @@ if %w(development test staging).include? Rails.env
     living_room = RoomType.find_by(name: 'Living space')
     bedroom = RoomType.find_by(name: 'Sleeping/Bedroom')
 
-    User.create!(id: 1, email: 'rabid@example.com', password: 'password', password_confirmation: 'password') unless User.find_by(email: 'rabid@example.com')
+    unless User.find_by(email: 'rabid@example.com')
+      User.create!(email: 'rabid@example.com',
+                   password: 'password', password_confirmation: 'password')
+    end
 
     user = User.find_by(email: 'rabid@example.com')
 
-    Home.create!(name: 'Example home 1', home_type: state_house, owner_id: user.id) unless Home.find_by(name: 'Example home 1')
+    unless Home.find_by(name: 'Example home 1')
+      Home.create!(name: 'Example home 1',
+                   home_type: state_house, owner_id: user.id)
+    end
+
     home = Home.find_by(name: 'Example home 1')
 
-    sensors = [{ id: 1, name: 'My new sensor', room_name: 'living room', home: home, room_type_id: living_room.id },
-               { id: 2, name: 'Old loaned sensor', room_name: "parent's room", home: home, room_type_id: bedroom.id },
-               { id: 3, name: 'Jimmy Sensor the Third', room_name: "eldest child's room", home: home, room_type_id: bedroom.id },
-               { id: 4, name: 'XR56Z', room_name: "youngest child's room", home: home, room_type_id: bedroom.id }]
+    sensors = [{ node_id: 100, room: Room.create(name: 'living room', home: home, room_type_id: living_room.id) },
+               { node_id: 101, room: Room.create(name: "parent's room", home: home, room_type_id: bedroom.id) },
+               { node_id: 102, room: Room.create(name: "eldest child's room", home: home, room_type_id: bedroom.id) },
+               { node_id: 103, room: Room.create(name: "youngest child's room", home: home, room_type_id: bedroom.id) }]
 
     modifier = 1
     sensors.each do |s|
       modifier += 0.125
       next if Sensor.find_by(s)
 
-      Sensor.create!(s)
+      sensor = Sensor.create!(s)
       x = 1
 
       while x <= num_mock_readings
-        Reading.create!(sensor_id: s[:id], key: 'foo', value: Math.sin(x) * 10 * modifier, sub_type: MySensors::SetReq::V_TEMP, created_at: x.hour.ago)
-        Reading.create!(sensor_id: s[:id], key: 'foo', value: Math.tan(x) * 10 * modifier, sub_type: MySensors::SetReq::V_HUM, created_at: x.hour.ago)
+        Message.create!(sensor: sensor,
+                        payload: Math.sin(x) * 10 * modifier,
+                        message_type: MySensors::SetReq::V_TEMP,
+                        child_sensor_id: 1,
+                        node_id: sensor.node_id,
+                        ack: 0,
+                        sub_type: 1,
+                        created_at: x.hour.ago)
+        Message.create!(sensor: sensor,
+                        payload: Math.tan(x) * 10 * modifier,
+                        message_type: MySensors::SetReq::V_HUM,
+                        child_sensor_id: 0,
+                        ack: 0,
+                        sub_type: 1,
+                        node_id: sensor.node_id,
+                        created_at: x.hour.ago)
         x += 1
       end
     end

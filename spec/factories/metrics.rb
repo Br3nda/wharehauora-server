@@ -1,5 +1,4 @@
 FactoryGirl.define do
-  factory :sensor do
-    room
+  factory :metric do
   end
 end

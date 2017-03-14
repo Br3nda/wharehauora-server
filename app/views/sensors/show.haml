@@ -2,18 +2,19 @@
   Sensor
   = @sensor.node_id
   in
-  = @sensor.room_name
+  = @sensor.room.name
 
 %p
   Home:
-  = link_to @sensor.home.name, @sensor.home
+  = link_to @sensor.room.home.name, @sensor.room.home
 
-%h2 Temperature since #{@daysago.to_formatted_s(:short)}
+%h2 Temperature
 = area_chart(@temperature)
 
-%h2 Humidity since #{@daysago.to_formatted_s(:short)}
+%h2 Humidity
 = area_chart(@humidity)
 
 
-%h2 Readings since #{@daysago.to_formatted_s(:short)}
+%h2 Readings
 = render 'readings', readings: @readings
+

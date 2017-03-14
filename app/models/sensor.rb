@@ -1,35 +1,13 @@
 # frozen_string_literal: true
 class Sensor < ActiveRecord::Base
-  belongs_to :home
-  belongs_to :room_type
-  has_many :readings
+  belongs_to :room
+  has_many :messages
 
-  def temperature
-    Reading.where(sensor: self, sub_type: MySensors::SetReq::V_TEMP)
-           .order(created_at: :desc)
-           .first
-           .value
-  rescue
-    nil
-  end
+  delegate :room_type, to: :room
+  delegate :home, to: :room
+  delegate :home_type, to: :hoom
 
-  def humidity
-    Reading.where(sensor_id: id, sub_type: MySensors::SetReq::V_HUM)
-           .order(created_at: :desc)
-           .first
-           .value
-  rescue
-    nil
-  end
+  validates :room, presence: true
 
-  def last_reading
-    Reading.where(sensor_id: id)
-           .order(created_at: :desc)
-           .first
-           .created_at
-  rescue
-    nil
-  end
-
-  def rating; end
+  scope :joins_home, -> { joins(:room, room: :home) }
 end

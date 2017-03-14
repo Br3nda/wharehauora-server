@@ -12,10 +12,10 @@ class WelcomeController < ApplicationController
   end
 
   def time_frame
-    1.hour.ago
+    3.hours.ago
   end
 
   def readings
-    Reading.readings_by_home_and_room(time_frame)
+    Reading.metrics_by_home_and_room(time_frame)
   end
 end

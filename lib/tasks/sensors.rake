@@ -21,8 +21,12 @@ class SensorsIngest
     MQTT::Client.connect(connection_options) do |c|
       # The block will be called when you messages arrive to the topic
       c.get('/sensors/#') do |topic, message|
-        puts topic
-        decode topic, message
+        puts "#{topic} #{message}"
+        begin
+          Message.decode(topic, message)
+        rescue ActiveRecord::RecordNotFound => e
+          puts e
+        end
       end
     end
   end
@@ -31,26 +35,11 @@ class SensorsIngest
     @previous_values = {}
     loop do
       Sensor.all.each do |sensor|
-        save_reading(sensor, MySensors::SetReq::V_TEMP, fake_temperature(sensor.id))
-        save_reading(sensor, MySensors::SetReq::V_HUM, fake_humidity(sensor.id))
+        save_message(sensor, MySensors::SetReq::V_TEMP, fake_temperature(sensor.id))
+        save_message(sensor, MySensors::SetReq::V_HUM, fake_humidity(sensor.id))
       end
       sleep(10)
     end
-  end
-
-  def decode(topic, value)
-    (home_id, node_id, child_sensor_id, message_type, ack, sub_type, _payload) = topic.split('/')[3..-1]
-
-    sensor = Sensor.find_or_create_by(home_id: home_id, node_id: node_id)
-
-    reading = Reading.new(sensor_id: sensor.id,
-                          value: value,
-                          child_sensor_id: child_sensor_id,
-                          message_type: message_type,
-                          ack: ack,
-                          sub_type: sub_type)
-    reading.save!
-    puts "home #{sensor.home_id} sensors #{sensor.id} reading #{reading.id}"
   end
 
   private
@@ -66,13 +55,12 @@ class SensorsIngest
     }
   end
 
-  def save_reading(sensor, sub_type, value)
-    reading = Reading.new(sensor_id: sensor.id,
+  def save_message(sensor, message_type, value)
+    message = Message.new(sensor_id: sensor.id,
                           value: value,
-                          child_sensor_id: (sub_type == MySensors::SetReq::V_HUM ? 0 : 1),
-                          message_type: MySensors::MessageType::SET,
-                          sub_type: sub_type)
-    reading.save!
+                          child_sensor_id: (message_type == MySensors::SetReq::V_HUM ? 0 : 1),
+                          message_type: message_type)
+    message.save!
     puts "home #{sensor.home_id} sensors #{sensor.id} reading #{reading.id} value: #{value}"
   end
 
