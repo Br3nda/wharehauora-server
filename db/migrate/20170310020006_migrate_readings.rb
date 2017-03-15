@@ -1,26 +1,9 @@
 class MigrateReadings < ActiveRecord::Migration
   def up
+    Sensor.where('home_id > ?', Home.all.order(:id).last.id).delete_all
     add_column :rooms, :room_type_id, :integer
     add_foreign_key :rooms, :room_types
-
-    # Migrate existing data
-    Sensor.all.each do |sensor|
-
-      room_name = if sensor.room_name
-                    sensor.room_name
-                  else
-                    "new room"
-                  end
-
-      room = Room.new
-      room.home_id = sensor.home_id
-      room.name = room_name
-      room.room_type_id = sensor.room_type_id
-      room.save!
-
-      sensor.room = room
-      sensor.save!
-    end
+    migrate_sensor_records
 
     rename_table :readings, :old_readings
 
@@ -30,27 +13,56 @@ class MigrateReadings < ActiveRecord::Migration
       t.float :value
       t.timestamps null: false
     end
+
     add_foreign_key :readings, :rooms
 
 
-    OldReading.all.each do |old_reading|
-      reading = Reading.new
-      reading.room = old_reading.sensor.room
-      reading.value = old_reading.value
-      reading.key = case old_reading.sub_type
-                    when MySensors::SetReq::V_TEMP
-                      "temperature"
-                    when MySensors::SetReq::V_HUM
-                      "humidity"
-                    else
-                      "unknown"
-                    end
-      reading.save!
-    end
+    migrate_reading_records
     remove_column :sensors, :room_type_id
     remove_column :sensors, :home_id
     remove_column :sensors, :room_name
     remove_column :sensors, :name
+  end
+
+  def migrate_sensor_records
+    # Migrate existing data
+    Sensor.all.each do |sensor|
+      room_name = sensor.room_name ? sensor.room_name : "new room"
+      room = Room.new
+      room.home_id = sensor.home_id
+      room.name = room_name
+      room.room_type_id = sensor.room_type_id
+      room.save!
+
+      sensor.room = room
+      sensor.save!
+    end
+  end
+
+  def migrate_reading_records
+    count = OldReading.count
+    num_per_batch = 500
+    batches = count / num_per_batch
+
+    for batch in 0..batches
+      say "Converting readings, batch #{batch} of #{batches}"
+      OldReading.limit(num_per_batch).offset(batch).each do |old_reading|
+        reading = Reading.new
+        reading.room = old_reading.sensor.room
+        reading.value = old_reading.value
+        reading.key = case old_reading.sub_type
+                      when MySensors::SetReq::V_TEMP
+                        "temperature"
+                      when MySensors::SetReq::V_HUM
+                        "humidity"
+                      else
+                        "unknown"
+                      end
+        # say reading
+        reading.save!
+      end
+    end
+    OldReading.delete_all
   end
 
   def down
