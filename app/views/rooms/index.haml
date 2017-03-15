@@ -11,8 +11,6 @@
         %th.sortable
           Room
           ( Room type )
-        -# %th
-        -#   Sensors
         %th
           Temperature
         %th
@@ -33,10 +31,6 @@
               = link_to 'edit', edit_home_room_path(room.home, room)
             - if room.room_type.present?
               = "(#{room.room_type.name})"
-          -# %td
-          -#   - room.sensors.each do |sensor|
-          -#     %li
-          -#       = sensor.node_id
           %td
             = room.temperature
           %td
