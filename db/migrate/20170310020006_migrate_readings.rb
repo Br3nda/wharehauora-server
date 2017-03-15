@@ -31,6 +31,10 @@ class MigrateReadings < ActiveRecord::Migration
   end
 
   def migrate_sensor_records
+    orphaned_query = "home_id IS NULL OR home_id NOT IN (SELECT id FROM homes)"
+    Sensor.where(orphaned_query).delete_all
+    Room.where(orphaned_query).delete_all
+
     # Migrate existing data
     Sensor.all.each do |sensor|
       room_name = sensor.room_name ? sensor.room_name : 'new room'
@@ -46,12 +50,14 @@ class MigrateReadings < ActiveRecord::Migration
   end
 
   def migrate_reading_records
+    OldReading.where("sensor_id IS NULL OR sensor_id NOT IN (SELECT id FROM sensors)").delete_all
     count = OldReading.count
     num_per_batch = 500
     batches = count / num_per_batch
 
     for batch in 0..batches
       say "Converting readings, batch #{batch} of #{batches}"
+      OldReading.where('value IS NULL').delete_all
       OldReading.limit(num_per_batch).offset(batch).each do |old_reading|
         reading = Reading.new
         reading.room = old_reading.sensor.room
