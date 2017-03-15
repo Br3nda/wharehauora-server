@@ -1,7 +1,6 @@
 class MigrateReadings < ActiveRecord::Migration
   def up
-    sensors = Sensor.where('home_id > ?', Home.all.order(:id).last.id)
-    sensors.delete_all if sensors.count
+    remove_orphaned_sensor_records
     add_column :rooms, :room_type_id, :integer
     add_foreign_key :rooms, :room_types
     migrate_sensor_records
@@ -17,7 +16,6 @@ class MigrateReadings < ActiveRecord::Migration
 
     add_foreign_key :readings, :rooms
 
-
     migrate_reading_records
     remove_column :sensors, :room_type_id
     remove_column :sensors, :home_id
@@ -25,10 +23,17 @@ class MigrateReadings < ActiveRecord::Migration
     remove_column :sensors, :name
   end
 
+  def remove_orphaned_sensor_records
+    newest_home = Home.all.order(:id).last
+    return unless newest_home
+    sensors = Sensor.where('home_id > ?', newest_home.id)
+    sensors.delete_all if sensors.count
+  end
+
   def migrate_sensor_records
     # Migrate existing data
     Sensor.all.each do |sensor|
-      room_name = sensor.room_name ? sensor.room_name : "new room"
+      room_name = sensor.room_name ? sensor.room_name : 'new room'
       room = Room.new
       room.home_id = sensor.home_id
       room.name = room_name
@@ -53,11 +58,11 @@ class MigrateReadings < ActiveRecord::Migration
         reading.value = old_reading.value
         reading.key = case old_reading.sub_type
                       when MySensors::SetReq::V_TEMP
-                        "temperature"
+                        'temperature'
                       when MySensors::SetReq::V_HUM
-                        "humidity"
+                        'humidity'
                       else
-                        "unknown"
+                        'unknown'
                       end
         # say reading
         reading.save!
@@ -78,7 +83,6 @@ class MigrateReadings < ActiveRecord::Migration
     Sensor.all do |s|
       Sensor.update!(home: s.room.home, room_name: s.room.name, room_type: s.room.room_type)
     end
-
   end
 
   class OldReading < ActiveRecord::Base
