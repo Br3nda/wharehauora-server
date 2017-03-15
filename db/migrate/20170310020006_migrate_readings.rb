@@ -1,6 +1,7 @@
 class MigrateReadings < ActiveRecord::Migration
   def up
-    Sensor.where('home_id > ?', Home.all.order(:id).last.id).delete_all
+    sensors = Sensor.where('home_id > ?', Home.all.order(:id).last.id)
+    sensors.delete_all if sensors.count
     add_column :rooms, :room_type_id, :integer
     add_foreign_key :rooms, :room_types
     migrate_sensor_records
