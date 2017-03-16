@@ -17,5 +17,6 @@ Rails.application.routes.draw do
     resources :users
     resources :home_types
     resources :room_types
+    resources :mqtt_users
   end
 end

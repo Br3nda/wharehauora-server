@@ -1,0 +1,37 @@
+
+%h2 MQTT Provisioning
+
+%p
+  Sensors send readings to use over MQTT. This is an overview of provision
+  of accounts and credentials to the Mqtt Server
+
+%table.pure-table
+  %thead
+    %tr
+      %th.sortable Email
+      %th Passcode
+      %th Provisioned
+      %th Homes
+      %th Actions
+  %tbody
+    - @mqtt_users.each do |mqtt_user|
+      %tr
+        %td
+          - if mqtt_user.user
+            = link_to mqtt_user.username, edit_admin_user_path(mqtt_user.user)
+          - else
+            = mqtt_user.username
+            (Error, No user linked)
+        %td
+          - mqtt_user&.user&.homes do |home|
+            %li
+              = home.name
+        %td
+          = '*****'
+        %td
+          = mqtt_user.provisioned_at
+        %td
+          %button.pure-button
+            Provision
+
+= paginate @mqtt_users
