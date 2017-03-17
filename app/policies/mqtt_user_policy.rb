@@ -35,6 +35,6 @@ class MqttUserPolicy < ApplicationPolicy
   end
 
   def janitor?
-    user.role?('janitor')
+    user && user.role?('janitor')
   end
 end
