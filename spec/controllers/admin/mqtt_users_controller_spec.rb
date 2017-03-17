@@ -9,6 +9,7 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
   let(:valid_params) { { name: Faker.name } }
   let(:faraday_double) { double(Faraday, basic_auth: nil, post: '') }
   before do
+    ENV['CLOUDMQTT_URL'] = 'mqtt://bob:bobpassword@qwerty.mqttsomewhere.nz:12345/hey'
     allow(Faraday).to receive(:new).and_return faraday_double
   end
 
