@@ -1,13 +1,8 @@
 class Mqtt
   def self.fetch_mqtt_user_list
-    creds = mqtt_api_creds
-    response = Requests.get("#{url}/user", auth: [creds.user, creds.password])
-    response.json
-
     response = faraday_conn.get do |req|
       req.url 'user'
       req.headers['Content-Type'] = 'application/json'
-      # req.body = { username: username, password: password }.to_json
     end
 
     JSON.parse(response.body)
@@ -40,8 +35,7 @@ class Mqtt
   end
 
   def self.mqtt_api_creds
-    mqtt_admin_credentials = ENV['CLOUDMQTT_URL']
-    URI.parse(mqtt_admin_credentials)
+    URI.parse(ENV['CLOUDMQTT_URL'])
   end
 
   def self.faraday_conn
