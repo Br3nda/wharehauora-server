@@ -7,6 +7,11 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
   let(:admin_role) { FactoryGirl.create(:role, name: 'janitor') }
   let(:admin_user) { FactoryGirl.create(:user, roles: [admin_role]) }
   let(:valid_params) { { name: Faker.name } }
+  let(:faraday_double) { double(Faraday, basic_auth: nil, post: '') }
+  before do
+    allow(Faraday).to receive(:new).and_return faraday_double
+  end
+
   context 'not signed in ' do
     describe 'GET index' do
       before { get :index }
