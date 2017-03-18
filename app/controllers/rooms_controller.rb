@@ -7,7 +7,7 @@ class RoomsController < ApplicationController
 
   def index
     authorize @home
-    @rooms = policy_scope(@home.rooms).order(:name)
+    @rooms = policy_scope(@home.rooms).page(params[:page]).order(:name)
     respond_with(@rooms)
   end
 
