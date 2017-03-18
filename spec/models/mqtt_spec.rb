@@ -12,26 +12,32 @@ RSpec.describe Mqtt, type: :model do
   it { expect(Mqtt.url).to eq('https://api.cloudmqtt.com') }
 
   context 'With faraday_double' do
-    let(:faraday_double) do
-      double(Faraday,
-             post: '',
-             basic_auth: nil,
-             get: response_double)
-    end
+    let(:faraday_double) { double(Faraday, basic_auth: nil) }
     let(:response_double) do
       double('response_body',
-             body: '[{"username": "hiria", "password": "supersecretpassword"}]')
+             body: '[{"username": "hiria@hiria.nz", "password": "supersecretpassword"}]')
     end
-    before do
-      allow(Faraday).to receive(:new).and_return(faraday_double)
-    end
+
+    before { allow(Faraday).to receive(:new).and_return(faraday_double) }
 
     it 'fetch_mqtt_user_list' do
-      expect(Mqtt.fetch_mqtt_user_list).to eq([{ 'username' => 'hiria', 'password' => 'supersecretpassword' }])
+      expect(faraday_double).to receive(:get).and_return(response_double)
+      expect(Mqtt.fetch_mqtt_user_list).to eq([{ 'username' => 'hiria@hiria.nz', 'password' => 'supersecretpassword' }])
     end
 
-    pending 'sync_mqtt_users'
+    it "sync_mqtt_users when user doesn't exist" do
+      expect(faraday_double).to receive(:get).and_return(response_double)
+      expect { Mqtt.sync_mqtt_users }.to change { MqttUser.count }.by(1)
+    end
+    it 'sync mqtt user when user does exit' do
+      FactoryGirl.create :user, email: 'hiria@hiria.nz'
+      expect(faraday_double).to receive(:get).and_return(response_double)
+      expect { Mqtt.sync_mqtt_users }.to change { MqttUser.count }.by(1)
+    end
 
-    it 'provision_mqtt_user(username, password)'
+    it 'provision_mqtt_user(username, password)' do
+      expect(faraday_double).to receive(:post).and_return ''
+      Mqtt.provision_mqtt_user('bob', 'bob')
+    end
   end
 end
