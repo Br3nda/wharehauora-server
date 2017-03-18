@@ -3,27 +3,7 @@ class MqttUserPolicy < ApplicationPolicy
     janitor?
   end
 
-  def new?
-    janitor?
-  end
-
   def create?
-    janitor?
-  end
-
-  def edit?
-    janitor?
-  end
-
-  def show?
-    janitor?
-  end
-
-  def update?
-    janitor?
-  end
-
-  def destroy?
     janitor?
   end
 
