@@ -1,4 +1,3 @@
-require 'json'
 class Admin::MqttUsersController < ApplicationController
   def index
     authorize :mqtt_user
