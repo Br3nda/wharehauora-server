@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310020006) do
+ActiveRecord::Schema.define(version: 20170318072229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "home_types", force: :cascade do |t|
     t.text     "name",       null: false
@@ -34,9 +35,9 @@ ActiveRecord::Schema.define(version: 20170310020006) do
   create_table "homes", force: :cascade do |t|
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.string   "name"
-    t.integer  "owner_id"
-    t.boolean  "is_public",    default: false
+    t.text     "name",                         null: false
+    t.integer  "owner_id",                     null: false
+    t.boolean  "is_public",    default: false, null: false
     t.integer  "home_type_id"
   end
 
@@ -66,8 +67,8 @@ ActiveRecord::Schema.define(version: 20170310020006) do
 
   create_table "readings", force: :cascade do |t|
     t.integer  "room_id",    null: false
-    t.text     "key"
-    t.float    "value"
+    t.text     "key",        null: false
+    t.float    "value",      null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -88,7 +89,7 @@ ActiveRecord::Schema.define(version: 20170310020006) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.integer  "home_id"
+    t.integer  "home_id",      null: false
     t.text     "name"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -96,10 +97,10 @@ ActiveRecord::Schema.define(version: 20170310020006) do
   end
 
   create_table "sensors", force: :cascade do |t|
-    t.integer  "room_id"
+    t.integer  "room_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "node_id"
+    t.integer  "node_id",    null: false
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -132,7 +133,10 @@ ActiveRecord::Schema.define(version: 20170310020006) do
 
   add_foreign_key "home_viewers", "homes"
   add_foreign_key "home_viewers", "users"
+  add_foreign_key "homes", "home_types"
   add_foreign_key "homes", "users", column: "owner_id"
+  add_foreign_key "messages", "sensors"
   add_foreign_key "readings", "rooms"
   add_foreign_key "rooms", "room_types"
+  add_foreign_key "sensors", "rooms"
 end
