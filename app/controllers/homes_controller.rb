@@ -12,7 +12,7 @@ class HomesController < ApplicationController
 
   def show
     parse_dates
-    set_sensors
+    set_rooms
     set_temp_and_humidity_data
     respond_with(@home)
   end
@@ -85,8 +85,8 @@ class HomesController < ApplicationController
          .pluck("date_trunc('minute', created_at)", :value)
   end
 
-  def set_sensors
-    @sensors = policy_scope(Sensor).where(home_id: @home.id)
+  def set_rooms
+    @rooms = policy_scope(Room).where(home_id: @home.id).limit(10)
   end
 
   def set_home
@@ -98,7 +98,7 @@ class HomesController < ApplicationController
     @temperature = []
     @humidity = []
 
-    @home.rooms.each do |room|
+    @rooms.each do |room|
       name = room.name ? room.name : 'unnamed'
       @temperature << { name: name, data: temperature_data(room, @datesince, @dateto) }
       @humidity << { name: name, data: humidity_data(room, @datesince, @dateto) }

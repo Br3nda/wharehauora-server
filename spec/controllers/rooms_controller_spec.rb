@@ -17,7 +17,7 @@ RSpec.describe RoomsController, type: :controller do
     end
   end
 
-  context 'user is signed in' do
+  context 'user is signed in as owner' do
     before { sign_in user }
 
     describe 'GET show' do
@@ -31,6 +31,28 @@ RSpec.describe RoomsController, type: :controller do
                        room: { name: 'Living room' }
       end
       it { expect(response).to redirect_to home_rooms_path(home) }
+    end
+  end
+
+  context 'user is signed in as whānau' do
+    let(:whanau) { FactoryGirl.create :user }
+
+    before do
+      home.users << whanau
+      sign_in whanau
+    end
+
+    describe 'GET show' do
+      before { get :show, home_id: room.home.id, id: room.id }
+      it { expect(response).to have_http_status(:success) }
+    end
+
+    describe '#update' do
+      before do
+        patch :update, home_id: room.home.id, id: room.to_param,
+                       room: { name: 'Living room' }
+      end
+      it { expect(response).to have_http_status(:redirect) }
     end
   end
 
