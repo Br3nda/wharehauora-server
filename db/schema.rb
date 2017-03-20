@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170310020006) do
+ActiveRecord::Schema.define(version: 20170316212835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(version: 20170310020006) do
     t.integer  "sensor_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "mqtt_users", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "username"
+    t.string   "password"
+    t.datetime "provisioned_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "old_readings", force: :cascade do |t|
@@ -133,6 +142,7 @@ ActiveRecord::Schema.define(version: 20170310020006) do
   add_foreign_key "home_viewers", "homes"
   add_foreign_key "home_viewers", "users"
   add_foreign_key "homes", "users", column: "owner_id"
+  add_foreign_key "mqtt_users", "users"
   add_foreign_key "readings", "rooms"
   add_foreign_key "rooms", "room_types"
 end
