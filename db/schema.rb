@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170318072229) do
+ActiveRecord::Schema.define(version: 20170323214453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,9 @@ ActiveRecord::Schema.define(version: 20170318072229) do
     t.integer  "home_type_id"
   end
 
+  add_index "homes", ["name"], name: "index_homes_on_name", using: :btree
+  add_index "homes", ["owner_id"], name: "index_homes_on_owner_id", using: :btree
+
   create_table "messages", force: :cascade do |t|
     t.integer  "node_id"
     t.string   "message_type"
@@ -52,6 +55,8 @@ ActiveRecord::Schema.define(version: 20170318072229) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
+
+  add_index "messages", ["sensor_id"], name: "index_messages_on_sensor_id", using: :btree
 
   create_table "mqtt_users", force: :cascade do |t|
     t.integer  "user_id"
@@ -82,6 +87,8 @@ ActiveRecord::Schema.define(version: 20170318072229) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "readings", ["room_id"], name: "index_readings_on_room_id", using: :btree
+
   create_table "roles", force: :cascade do |t|
     t.string   "name",          null: false
     t.string   "friendly_name", null: false
@@ -105,12 +112,17 @@ ActiveRecord::Schema.define(version: 20170318072229) do
     t.integer  "room_type_id"
   end
 
+  add_index "rooms", ["home_id"], name: "index_rooms_on_home_id", using: :btree
+  add_index "rooms", ["name"], name: "index_rooms_on_name", using: :btree
+
   create_table "sensors", force: :cascade do |t|
     t.integer  "room_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "node_id",    null: false
   end
+
+  add_index "sensors", ["node_id"], name: "index_sensors_on_node_id", using: :btree
 
   create_table "user_roles", force: :cascade do |t|
     t.integer  "user_id",    null: false
