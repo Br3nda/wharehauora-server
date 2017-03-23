@@ -4,16 +4,25 @@
 = render 'homes/nav', home: @home
 
 - if @sensors.present?
+  = paginate(@sensors)
   %table.pure-table
     %thead
       %tr
-        %th.sortable
-          Sensor
+        %th.sortable Sensor
+        %td Last message
+        %th
     %tbody
       - @sensors.each do |sensor|
         %tr
           %td
             = sensor.node_id
+          %td
+            = sensor.messages.last&.updated_at
+          %td
+            - if current_user.role? 'janitor'
+              = link_to 'delete', "/sensors/#{sensor.id}",
+                method: :delete, data: { confirm: 'delete this sensor?' }
 
+  = paginate(@sensors)
 - else
   %p No sensors detected in this whare.

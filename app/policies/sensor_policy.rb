@@ -2,6 +2,9 @@ class SensorPolicy < ApplicationPolicy
   def show?
     owned_by_current_user?
   end
+  def destroy?
+    owned_by_current_user? || user.role?('janitor')
+  end
 
   private
 
