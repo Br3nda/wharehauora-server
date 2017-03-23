@@ -11,6 +11,10 @@ class RoomPolicy < ApplicationPolicy
     owner?
   end
 
+  def destroy?
+    owner? || janitor?
+  end
+
   private
 
   class Scope < Scope
@@ -30,5 +34,9 @@ class RoomPolicy < ApplicationPolicy
 
   def whanau?
     record.home.users.include? user
+  end
+
+  def janitor?
+    user.role? 'janitor'
   end
 end

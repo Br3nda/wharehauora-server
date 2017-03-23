@@ -12,11 +12,11 @@ class SensorsController < ApplicationController
   end
 
   def destroy
-    @sensor = policy_scope(Sensor).find(params[:id])
-    authorize @sensor
     @sensor.destroy!
     redirect_to home_sensors_path(@sensor.home)
   end
+
+  def show; end
 
   private
 

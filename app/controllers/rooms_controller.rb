@@ -27,6 +27,12 @@ class RoomsController < ApplicationController
     redirect_to home_rooms_path(@home)
   end
 
+  def destroy
+    authorize @room
+    @room.destroy
+    respond_with(@room)
+  end
+
   private
 
   def set_home

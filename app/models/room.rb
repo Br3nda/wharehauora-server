@@ -4,7 +4,7 @@ class Room < ActiveRecord::Base
   has_many :readings
   has_many :sensors
 
-  has_many :readings, through: :sensors
+  has_many :readings
   has_one :home_type, through: :home
   has_one :owner, through: :home
 

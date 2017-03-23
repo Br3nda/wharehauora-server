@@ -6,15 +6,17 @@
 
 %p
   Home:
-  = link_to @sensor.room.home.name, @sensor.room.home
+  = link_to @sensor.home.name, home_path(@sensor.home)
+%p
+  Room:
+  - if @sensor.room
+    = link_to @sensor.room.name ? @sensor.room.name : 'un-named room',
+      home_room_path(@sensor.home, @sensor.room)
+  - else
+    Not assigned to a room
 
 %h2 Temperature
 = area_chart(@temperature)
 
 %h2 Humidity
 = area_chart(@humidity)
-
-
-%h2 Readings
-= render 'readings', readings: @readings
-

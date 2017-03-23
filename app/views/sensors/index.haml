@@ -9,7 +9,10 @@
     %thead
       %tr
         %th.sortable Sensor
+        %th Room
+        %td First message
         %td Last message
+        %th Message count
         %th
     %tbody
       - @sensors.each do |sensor|
@@ -17,7 +20,13 @@
           %td
             = sensor.node_id
           %td
+            = sensor.room&.name
+          %td
+            = sensor.messages.first&.updated_at
+          %td
             = sensor.messages.last&.updated_at
+          %td
+            = link_to sensors.messages.count, messages_path(sensor.id)
           %td
             - if current_user.role? 'janitor'
               = link_to 'delete', "/sensors/#{sensor.id}",
