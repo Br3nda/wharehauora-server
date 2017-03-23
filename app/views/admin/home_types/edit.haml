@@ -1,6 +1,7 @@
 .pure-g
   .pure-u-1-2
     %h3 Edit Home Type
+    %p There are #{@homes_count} homes of this type
     .pure-form
       = form_for @home_type, url: { action: 'update' } do |f|
         = render 'form', f: f, home_type: @home_type

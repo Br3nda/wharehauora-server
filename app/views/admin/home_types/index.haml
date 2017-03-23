@@ -6,10 +6,15 @@
   %thead
     %tr
       %th Name
+      %th Whare
       %th action
   - @home_types.each do |ht|
     %tr
       %td
         = ht.name
       %td
+        = ht.homes.count
+      %td
         = link_to 'edit', edit_admin_home_type_path(ht)
+        = link_to 'delete', admin_home_type_path(ht),
+          method: :delete, data: { confirm: 'delete this home type?' }

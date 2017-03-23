@@ -4,10 +4,12 @@ class Admin::HomeTypesController < ApplicationController
 
   def index
     authorize :home_type
-    @home_types = policy_scope(HomeType)
+    @home_types = policy_scope(HomeType).order(:name)
   end
 
-  def edit; end
+  def edit
+    @homes_count = @home_type.homes.count
+  end
 
   def update
     @home_type.update!(home_type_params)
