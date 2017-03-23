@@ -1,12 +1,33 @@
+
+= paginate homes
 %table.pure-table
   %thead
     %tr
       %th.sortable
         Name
-      %th.sortable
+      %th
+        Type
+      %th
+        Owner
+      %td
         Rooms
+      %td
+        Sensors
   %tbody
     - homes.each do |home|
       %tr
         %td
-          = link_to home.name, home_path(home)
+          = link_to home.name.present? ? home.name : 'unnamed home', home_path(home)
+        %td
+          = home.home_type.name
+        %td
+          = home.owner.email
+        %td
+          = home.rooms.count
+        %td
+          = home.sensors.count
+        %td
+          - if policy(:home).destroy?
+            = link_to 'delete', home_path(home),
+              method: :delete, data: { confirm: 'delete this home?' }
+= paginate homes
