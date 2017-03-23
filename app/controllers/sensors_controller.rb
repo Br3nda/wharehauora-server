@@ -12,7 +12,7 @@ class SensorsController < ApplicationController
   end
 
   def destroy
-    @sensor = Sensor.find(params[:id])
+    @sensor = policy_scope(Sensor).find(params[:id])
     authorize @sensor
     @sensor.destroy!
     redirect_to home_sensors_path(@sensor.home)
