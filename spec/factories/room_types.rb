@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :room_type do
-    name { Faker::Space.planet }
+    name { Faker::Name.unique.name }
   end
 end

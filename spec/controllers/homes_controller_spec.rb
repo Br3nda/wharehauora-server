@@ -86,7 +86,7 @@ RSpec.describe HomesController, type: :controller do
       end
       describe 'lots of sensors' do
         before do
-          15.times { FactoryGirl.create(:sensor, room: room) }
+          15.times { FactoryGirl.create(:room, home: home) }
           get :show, id: home.id
         end
         it { expect(response).to have_http_status(:success) }
@@ -149,13 +149,13 @@ RSpec.describe HomesController, type: :controller do
     end
 
     describe 'GET show' do
-      describe 'my home no sensors' do
+      describe 'my home no rooms' do
         before { get :show, id: home.id }
         it { expect(response).to have_http_status(:success) }
       end
-      describe 'my home lots of sensors' do
+      describe 'my home lots of rooms' do
         before do
-          15.times { FactoryGirl.create(:sensor, room: room) }
+          15.times { FactoryGirl.create(:room, home: home) }
           get :show, id: home.id
         end
         it { expect(response).to have_http_status(:success) }
