@@ -53,6 +53,15 @@ ActiveRecord::Schema.define(version: 20170318072229) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "mqtt_users", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "username"
+    t.string   "password"
+    t.datetime "provisioned_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "old_readings", force: :cascade do |t|
     t.integer  "sensor_id"
     t.text     "key"
@@ -136,6 +145,7 @@ ActiveRecord::Schema.define(version: 20170318072229) do
   add_foreign_key "homes", "home_types"
   add_foreign_key "homes", "users", column: "owner_id"
   add_foreign_key "messages", "sensors"
+  add_foreign_key "mqtt_users", "users"
   add_foreign_key "readings", "rooms"
   add_foreign_key "rooms", "room_types"
   add_foreign_key "sensors", "rooms"

@@ -1,0 +1,46 @@
+body {
+  font-family: "proxima-nova";
+  font-weight: 500;
+  margin: 0;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  height: 100%;
+}
+
+.content {
+  margin: 10px;
+}
+
+.header {
+  background-color: #abcc76;
+  height: 150px;
+  left: 0;
+  top: 0;
+
+}
+.header img {
+  height: 100%;
+}
+
+/*
+ * -- TABLET MEDIA QUERIES --
+ * On tablets, we want to slightly adjust the size of the banner
+ * text and add some vertical space between the various tables
+ */
+@media(min-width: 767px) {
+
+}
+
+/*
+ * -- PHONE MEDIA QUERIES --
+ * On phones, we want to reduce the height and font-size of the banner further
+ */
+@media (min-width: 480px) {
+}
