@@ -6,13 +6,13 @@ Rails.application.routes.draw do
   resources :homes do
     resources :rooms
     resources :home_viewers
-    resources :sensors do
-      resources :messages, only: [:index]
-    end
-    resources :readings, only: [:index, :show]
+    resources :sensors
   end
 
+  resources :rooms
   resources :sensors
+  resources :messages
+  resources :readings
   resources :home_viewers
 
   namespace :admin do

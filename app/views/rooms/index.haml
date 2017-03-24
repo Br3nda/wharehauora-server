@@ -51,7 +51,8 @@
           %td
             - if policy(room).destroy?
               = link_to 'delete', home_room_path(room.home, room),
-                method: :delete, data: { confirm: 'Delete room?' }
+                method: :delete, data: { confirm: 'Delete room?' },
+                class: 'pure-button'
   %p= paginate(@rooms)
 - else
   %p No rooms detected in this whare.

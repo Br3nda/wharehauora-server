@@ -2,21 +2,25 @@
   Sensor
   = @sensor.node_id
   in
-  = @sensor.room.name
+  = @sensor.room&.name
 
-%p
-  Home:
-  = link_to @sensor.home.name, home_path(@sensor.home)
-%p
-  Room:
-  - if @sensor.room
-    = link_to @sensor.room.name ? @sensor.room.name : 'un-named room',
-      home_room_path(@sensor.home, @sensor.room)
-  - else
-    Not assigned to a room
+.pure-g
+  .pure-u-1-3
+    %p
+      Home:
+      = link_to @sensor.home.name, home_path(@sensor.home)
 
-%h2 Temperature
-= area_chart(@temperature)
+    %p
+      Room:
+      - if @sensor.room
+        = link_to(@sensor.room.name.empty? ? 'un-named room' : @sensor.room.name,
+          home_room_path(@sensor.home, @sensor.room))
+      - else
+        Not assigned to a room
 
-%h2 Humidity
-= area_chart(@humidity)
+    = link_to 'delete', sensor_path(@sensor), method: :delete,
+      data: { confirm: 'Delete this sensor?' }, class: 'pure-button'
+  .pure-u-1-3
+    %p
+      Messages:
+      = @sensor.messages.count
