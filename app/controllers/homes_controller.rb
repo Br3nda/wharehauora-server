@@ -6,7 +6,10 @@ class HomesController < ApplicationController
 
   def index
     authorize :home
-    @homes = policy_scope(Home).order(:name).paginate(page: params[:page])
+    @homes = policy_scope(Home)
+             .includes(:home_type, :owner)
+             .order(:name)
+             .paginate(page: params[:page])
     respond_with(@homes)
   end
 

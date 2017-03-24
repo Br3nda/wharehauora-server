@@ -7,7 +7,11 @@ class RoomsController < ApplicationController
 
   def index
     authorize @home
-    @rooms = policy_scope(@home.rooms).order(:name).paginate(page: params[:page])
+    @rooms = policy_scope(Room)
+             .where(home_id: @home.id)
+             .includes(:home, :sensors, :room_type)
+             .order(:name)
+             .paginate(page: params[:page])
     respond_with(@rooms)
   end
 
