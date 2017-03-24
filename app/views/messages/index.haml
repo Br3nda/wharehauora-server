@@ -1,0 +1,26 @@
+%h2 Messages
+
+
+%p= paginate(@messages)
+%table.pure-table
+  %tr
+    %th Timestamp
+    %th node_id
+    %th message_type
+    %th child_sensor
+    %th ack
+    %th sub_type
+    %th payload
+    %th sensor
+
+  - @messages.each do |message|
+    %tr
+      %td= message.created_at
+      %td= message.node_id
+      %td= message.message_type
+      %td= message.child_sensor_id
+      %td= message.ack
+      %td= message.sub_type
+      %td= message.payload
+      %td= link_to message.sensor.id, sensor_path(message.sensor)
+      %td= link_to message.sensor.home.name, home_path(message.sensor.home)

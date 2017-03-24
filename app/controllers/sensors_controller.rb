@@ -6,7 +6,10 @@ class SensorsController < ApplicationController
   def index
     @home = policy_scope(Home).find(params[:home_id])
     authorize @home
-    @sensors = @home.sensors.order(:node_id).paginate(page: params[:page])
+    @sensors = @home.sensors
+                    .includes(:room)
+                    .order(:node_id)
+                    .paginate(page: params[:page])
   end
 
   def destroy
