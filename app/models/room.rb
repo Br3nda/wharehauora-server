@@ -10,6 +10,9 @@ class Room < ActiveRecord::Base
 
   validates :home, presence: true
 
+  scope :without_readings, -> { includes(:readings).where(readings: { id: nil }) }
+  scope :without_sensors, -> { includes(:sensors).where(sensors: { id: nil }) }
+
   def temperature
     single_current_metric 'temperature'
   end

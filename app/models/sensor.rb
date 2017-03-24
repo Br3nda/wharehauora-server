@@ -10,4 +10,6 @@ class Sensor < ActiveRecord::Base
   validates :room, presence: true
 
   scope :joins_home, -> { joins(:room, room: :home) }
+
+  scope :without_messages, -> { includes(:messages).where(messages: { id: nil }) }
 end
