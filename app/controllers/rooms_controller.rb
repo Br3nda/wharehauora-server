@@ -7,7 +7,7 @@ class RoomsController < ApplicationController
 
   def index
     authorize @home
-    @rooms = policy_scope(@home.rooms).page(params[:page]).order(:name)
+    @rooms = policy_scope(@home.rooms).order(:name).paginate(page: params[:page])
     respond_with(@rooms)
   end
 
@@ -30,7 +30,7 @@ class RoomsController < ApplicationController
   def destroy
     authorize @room
     @room.destroy
-    respond_with(@room)
+    redirect_to home_rooms_path(@room.home)
   end
 
   private
