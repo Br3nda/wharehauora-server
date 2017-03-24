@@ -18,13 +18,8 @@ class Home < ActiveRecord::Base
   validates :owner, presence: true
 
   def find_or_create_sensor(node_id)
-    sensor = Sensor
-             .where('room_id in (SELECT room_id FROM rooms WHERE home_id=?)', id)
-             .find_by(node_id: node_id)
-    unless sensor
-      room = Room.create!(name: 'New sensor detected', home: self)
-      sensor = Sensor.create!(node_id: node_id, room: room)
-    end
+    sensor = sensors.find_by(node_id: node_id)
+    sensor = Sensor.create!(node_id: node_id) unless sensor
     sensor
   end
 end

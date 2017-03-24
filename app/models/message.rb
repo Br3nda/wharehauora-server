@@ -22,7 +22,7 @@ class Message < ActiveRecord::Base
   private
 
   def save_reading
-    Reading.create!(room: sensor.room, value: payload.to_f, key: key)
+    Reading.create!(room: sensor.room, value: payload.to_f, key: key) if sensors.room
   end
 
   def key
