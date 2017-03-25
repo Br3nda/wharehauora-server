@@ -37,7 +37,7 @@ class ReadingsController < ApplicationController
   def readings
     Reading
       .joins(:room)
-      .where('readings.created_at::date >= ? AND readings.created_at::date <= ?', params[:day], params[:day])
+      .where('readings.created_at::date = ?', params[:day])
       .where("rooms.home_id": @home.id)
       .where(key: params[:key])
       .order('readings.created_at')
