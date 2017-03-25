@@ -1,6 +1,6 @@
 class MessagePolicy < ApplicationPolicy
   def index?
-    true
+    signed_in?
   end
 
   private
