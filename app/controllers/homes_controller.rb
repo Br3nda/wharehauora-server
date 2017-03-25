@@ -15,8 +15,9 @@ class HomesController < ApplicationController
 
   def show
     parse_dates
-    set_rooms
-    set_temp_and_humidity_data
+    @keys = %w(temperature humidity)
+    # set_rooms
+    # set_temp_and_humidity_data
     respond_with(@home)
   end
 
@@ -52,11 +53,8 @@ class HomesController < ApplicationController
   private
 
   def parse_dates
-    @datesince = params[:datesince]
-    @dateto = params[:dateto]
-
-    @datesince = 1.day.ago if @datesince.blank?
-    @dateto = Date.current if @dateto.blank?
+    @day = params[:day]
+    @day = Date.yesterday if @day.blank?
   end
 
   def home_params
@@ -71,23 +69,6 @@ class HomesController < ApplicationController
     )
   end
 
-  def temperature_data(room, datesince, dateto)
-    time_series Reading.temperature, room, datesince, dateto
-  end
-
-  def humidity_data(room, datesince, dateto)
-    time_series Reading.humidity, room, datesince, dateto
-  end
-
-  def time_series(query, room, datesince, dateto)
-    query.where(room: room)
-         .where(['created_at >= ?', datesince])
-         .where(['created_at <= ?', dateto])
-         .where('value < 120') # temp hack to filter the bogus readings
-         .where('value > 0') # temp hack to filter the bogus readings
-         .pluck("date_trunc('minute', created_at)", :value)
-  end
-
   def set_rooms
     @rooms = policy_scope(Room).where(home_id: @home.id).limit(10)
   end
@@ -97,14 +78,21 @@ class HomesController < ApplicationController
     authorize @home
   end
 
-  def set_temp_and_humidity_data
-    @temperature = []
-    @humidity = []
+  # def set_temp_and_humidity_data
+  #   @data = {}
+  #   Reading
+  #     .joins(:room)
+  #     .where('readings.created_at::date >= ? AND readings.created_at::date <= ?', @day, @day)
+  #     .where("rooms.home_id": @home.id)
+  #     .where("key IS NOT NULL")
+  #     .order("readings.created_at")
+  #     .pluck("date_trunc('minute', readings.created_at)", "rooms.name", :key, :value).each do |reading|
 
-    @rooms.each do |room|
-      name = room.name ? room.name : 'unnamed'
-      @temperature << { name: name, data: temperature_data(room, @datesince, @dateto) }
-      @humidity << { name: name, data: humidity_data(room, @datesince, @dateto) }
-    end
-  end
+  #     created_at, room_name, reading_type, reading_value = reading
+  #     @data[reading_type] = {} unless @data[reading_type]
+  #     @data[reading_type][room_name] = [] unless @data[reading_type][room_name]
+  #     @data[reading_type][room_name] << [created_at, reading_value]
+  #   end
+  #   puts @data
+  # end
 end

@@ -9,7 +9,7 @@
         %ul.pure-menu-children
           - @my_homes.each do |home|
             %li.pure-menu-item
-              = link_to home.name, home_rooms_path(home), class: 'pure-menu-link'
+              = link_to home.name, home_path(home), class: 'pure-menu-link'
           %li.pure-menu-item
             = link_to 'new whare', new_home_path, class: 'pure-menu-link'
     - else

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :rooms
     resources :home_viewers
     resources :sensors
+    resources :readings
   end
 
   resources :rooms

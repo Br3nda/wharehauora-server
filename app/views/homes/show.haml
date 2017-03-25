@@ -4,19 +4,16 @@
 = render 'nav', home: @home
 
 - unless @home.rooms.empty?
-  %h3 Readings since #{@datesince}
-  = form_tag({}, method: :get) do
-    = label_tag 'Days Since'
-    = number_field_tag :since, '', onkeyup: 'todayMinusDays()', onchange: 'todayMinusDays()'
-    = label_tag 'Date Since'
-    = date_field_tag :datesince, @datesince, onkeyup: 'clearSince()', onchange: 'clearSince()'
-    = label_tag 'Date To'
-    = date_field_tag :dateto, @dateto, onkeyup: 'clearSince()', onchange: 'clearSince()'
-    = submit_tag 'Search'
-  .pure-g
-    .pure-u-1-2
-      %h3 Temperature
-      = line_chart(@temperature)
-    .pure-u-1-2
-      %h3 Humidity
-      = line_chart(@humidity)
+  %h3 #{@day} Readings
+
+  %form.pure-form
+    %label
+      Day
+      = date_field_tag :day, @day
+    %button.pure-button.pure-button-primary
+      Search
+
+  - @keys.each do |key|
+    %h3= key
+    = line_chart readings_path(home_id: @home.id, day: @day, key: key),
+      title: "#{@day} #{key}", min: 0, max: 100
