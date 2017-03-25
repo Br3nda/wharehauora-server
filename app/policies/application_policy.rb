@@ -13,11 +13,27 @@ class ApplicationPolicy
       @user = user
       @scope = scope
     end
+
+    def janitor?
+      user.role? 'janitor'
+    end
   end
 
   private
 
-  def admin?
-    user.present? && user.role?('janitor')
+  def owner?
+    record.joins_home.home.owner_id == user.id
+  end
+
+  def whanau?
+    record.joins_home.home.users.include? user
+  end
+
+  def janitor?
+    user && user.role?('janitor')
+  end
+
+  def signed_in?
+    user.present?
   end
 end

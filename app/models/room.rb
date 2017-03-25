@@ -4,11 +4,14 @@ class Room < ActiveRecord::Base
   has_many :readings
   has_many :sensors
 
-  has_many :readings, through: :sensors
+  has_many :readings
   has_one :home_type, through: :home
   has_one :owner, through: :home
 
   validates :home, presence: true
+
+  scope :without_readings, -> { includes(:readings).where(readings: { id: nil }) }
+  scope :without_sensors, -> { includes(:sensors).where(sensors: { id: nil }) }
 
   def temperature
     single_current_metric 'temperature'

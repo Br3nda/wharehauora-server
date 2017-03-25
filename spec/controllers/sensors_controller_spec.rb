@@ -7,7 +7,7 @@ RSpec.describe SensorsController, type: :controller do
   let(:user) { FactoryGirl.create(:user) }
   let(:home) { FactoryGirl.create(:home, owner_id: user.id) }
   let(:room) { FactoryGirl.create(:room, home: home, room_type: bedroom) }
-  let(:sensor) { FactoryGirl.create(:sensor, room: room, node_id: '1100') }
+  let(:sensor) { FactoryGirl.create(:sensor, home: home, room: room, node_id: '1100') }
 
   context 'Not signed in' do
     describe 'GET show' do

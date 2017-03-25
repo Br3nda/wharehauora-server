@@ -4,25 +4,38 @@
 = render 'homes/nav', home: @home
 
 - if @sensors.present?
-  = paginate(@sensors)
+  %%p= paginate(@sensors)
   %table.pure-table
     %thead
       %tr
         %th.sortable Sensor
+        %th Room
+        %td First message
         %td Last message
+        %th Message count
         %th
     %tbody
       - @sensors.each do |sensor|
         %tr
           %td
-            = sensor.node_id
+            = link_to(sensor.node_id, sensor_path(sensor))
+          %td
+            = sensor.room&.name
+          %td
+            = sensor.messages.first&.updated_at
           %td
             = sensor.messages.last&.updated_at
           %td
+            - if sensor.messages.count.positive?
+              = link_to(sensor.messages.count, messages_path(sensor_id: sensor.id))
+            - else
+              0
+          %td
             - if current_user.role? 'janitor'
-              = link_to 'delete', "/sensors/#{sensor.id}",
-                method: :delete, data: { confirm: 'delete this sensor?' }
+              = link_to 'delete', sensor_path(sensor),
+                method: :delete, data: { confirm: 'delete this sensor?' },
+                class: 'pure-button'
 
-  = paginate(@sensors)
+  %%p= paginate(@sensors)
 - else
   %p No sensors detected in this whare.

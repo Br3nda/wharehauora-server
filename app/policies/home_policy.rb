@@ -6,33 +6,29 @@ class HomePolicy < ApplicationPolicy
   end
 
   def create?
-    return true if admin?
-    owned_by_current_user?
+    owner? ||  janitor?
   end
 
   def new?
-    return true if admin?
-    user.present?
+    signed_in? || janitor?
   end
 
   def edit?
-    return true if admin?
-    owned_by_current_user?
+    owner? || janitor?
   end
 
   def show?
-    return true if admin?
-    record.is_public? || owned_by_current_user? || current_user_authorised_to_view?
+    record.is_public? || owner? || whanau? || janitor?
   end
 
   def update?
-    return true if admin?
-    owned_by_current_user?
+    return true if janitor?
+    owner?
   end
 
   def destroy?
-    return true if admin?
-    owned_by_current_user?
+    return true if janitor?
+    owner?
   end
 
   private
@@ -55,11 +51,11 @@ class HomePolicy < ApplicationPolicy
     end
   end
 
-  def owned_by_current_user?
+  def owner?
     record.owner_id == user.id if user.present?
   end
 
-  def current_user_authorised_to_view?
+  def whanau?
     record.users.include?(user)
   end
 end

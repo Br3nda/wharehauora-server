@@ -11,6 +11,10 @@ class RoomPolicy < ApplicationPolicy
     owner?
   end
 
+  def destroy?
+    owner? || janitor?
+  end
+
   private
 
   class Scope < Scope

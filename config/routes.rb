@@ -6,14 +6,20 @@ Rails.application.routes.draw do
   resources :homes do
     resources :rooms
     resources :home_viewers
-    get 'sensors' => 'sensors#index'
-    resources :readings, only: [:index, :show]
+    resources :sensors
+    resources :readings
   end
 
+  resources :rooms
   resources :sensors
+  resources :messages
+  resources :readings
   resources :home_viewers
 
   namespace :admin do
+    get 'cleaner', to: 'cleaner#index'
+    delete 'cleaner/rooms', to: 'cleaner#rooms'
+    delete 'cleaner/sensors', to: 'cleaner#sensors'
     resources :users
     resources :home_types
     resources :room_types

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323214453) do
+ActiveRecord::Schema.define(version: 20170324011548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,10 +116,11 @@ ActiveRecord::Schema.define(version: 20170323214453) do
   add_index "rooms", ["name"], name: "index_rooms_on_name", using: :btree
 
   create_table "sensors", force: :cascade do |t|
-    t.integer  "room_id",    null: false
+    t.integer  "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "node_id",    null: false
+    t.integer  "home_id",    null: false
   end
 
   add_index "sensors", ["node_id"], name: "index_sensors_on_node_id", using: :btree
@@ -160,5 +161,6 @@ ActiveRecord::Schema.define(version: 20170323214453) do
   add_foreign_key "mqtt_users", "users"
   add_foreign_key "readings", "rooms"
   add_foreign_key "rooms", "room_types"
+  add_foreign_key "sensors", "homes"
   add_foreign_key "sensors", "rooms"
 end

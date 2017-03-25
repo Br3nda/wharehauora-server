@@ -23,11 +23,15 @@
         %td
           = home.owner.email
         %td
-          = home.rooms.count
+          - if home.rooms.count.positive?
+            = link_to("#{home.rooms.count} rooms", home_rooms_path(home))
         %td
-          = home.sensors.count
+          - if home.sensors.count.positive?
+            = link_to("#{home.sensors.count} sensors", home_sensors_path(home))
         %td
-          - if policy(:home).destroy?
+          - if policy(home).edit?
+            = link_to 'edit', edit_home_path(home)
+          - if policy(home).destroy?
             = link_to 'delete', home_path(home),
               method: :delete, data: { confirm: 'delete this home?' }
 = paginate homes

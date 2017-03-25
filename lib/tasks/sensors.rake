@@ -57,11 +57,14 @@ class SensorsIngest
 
   def save_message(sensor, message_type, value)
     message = Message.new(sensor_id: sensor.id,
-                          value: value,
+                          payload: value,
+                          node_id: sensor.node_id,
+                          ack: 1,
+                          sub_type: 1,
                           child_sensor_id: (message_type == MySensors::SetReq::V_HUM ? 0 : 1),
                           message_type: message_type)
     message.save!
-    puts "home #{sensor.home_id} sensors #{sensor.id} reading #{reading.id} value: #{value}"
+    puts "home #{sensor.home_id} sensors #{sensor.id} value: #{value}"
   end
 
   def fake_temperature(sensor_id)

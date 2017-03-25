@@ -1,5 +1,4 @@
-%h2
-  = @home.name
+%h2 Rooms in #{@home.name}
 
 = render 'homes/nav', home: @home
 
@@ -12,13 +11,7 @@
           Room
           ( Room type )
         %th
-          Temperature
-        %th
-          Humidity
-        %th
-          Mould
-        %th
-          Rating
+          Sensors
     %tbody
       - @rooms.each do |room|
         %tr
@@ -27,18 +20,19 @@
               = room.name
             - else
               = home_room_path(@home, room)
-            - if policy(room).edit?
-              = link_to 'edit', edit_home_room_path(room.home, room)
             - if room.room_type.present?
               = "(#{room.room_type.name})"
           %td
-            = room.temperature
+            - room.sensors.each do |sensor|
+              = link_to(sensor.node_id, sensor_path(sensor))
           %td
-            = room.humidity
+            - if policy(room).edit?
+              = link_to 'edit', edit_home_room_path(room.home, room)
           %td
-            = room.mould
-          %td
-            = room.rating
+            - if policy(room).destroy?
+              = link_to 'delete', home_room_path(room.home, room),
+                method: :delete, data: { confirm: 'Delete room?' },
+                class: 'pure-button'
   %p= paginate(@rooms)
 - else
   %p No rooms detected in this whare.

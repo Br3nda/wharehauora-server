@@ -6,14 +6,18 @@ class HomesController < ApplicationController
 
   def index
     authorize :home
-    @homes = policy_scope(Home).order(:name).paginate(page: params[:page])
+    @homes = policy_scope(Home)
+             .includes(:home_type, :owner)
+             .order(:name)
+             .paginate(page: params[:page])
     respond_with(@homes)
   end
 
   def show
     parse_dates
-    set_rooms
-    set_temp_and_humidity_data
+    @keys = %w(temperature humidity)
+    # set_rooms
+    # set_temp_and_humidity_data
     respond_with(@home)
   end
 
@@ -49,11 +53,8 @@ class HomesController < ApplicationController
   private
 
   def parse_dates
-    @datesince = params[:datesince]
-    @dateto = params[:dateto]
-
-    @datesince = 1.day.ago if @datesince.blank?
-    @dateto = Date.current if @dateto.blank?
+    @day = params[:day]
+    @day = Time.zone.today if @day.blank?
   end
 
   def home_params
@@ -68,23 +69,6 @@ class HomesController < ApplicationController
     )
   end
 
-  def temperature_data(room, datesince, dateto)
-    time_series Reading.temperature, room, datesince, dateto
-  end
-
-  def humidity_data(room, datesince, dateto)
-    time_series Reading.humidity, room, datesince, dateto
-  end
-
-  def time_series(query, room, datesince, dateto)
-    query.where(room: room)
-         .where(['created_at >= ?', datesince])
-         .where(['created_at <= ?', dateto])
-         .where('value < 120') # temp hack to filter the bogus readings
-         .where('value > 0') # temp hack to filter the bogus readings
-         .pluck("date_trunc('minute', created_at)", :value)
-  end
-
   def set_rooms
     @rooms = policy_scope(Room).where(home_id: @home.id).limit(10)
   end
@@ -92,16 +76,5 @@ class HomesController < ApplicationController
   def set_home
     @home = policy_scope(Home).find(params[:id])
     authorize @home
-  end
-
-  def set_temp_and_humidity_data
-    @temperature = []
-    @humidity = []
-
-    @rooms.each do |room|
-      name = room.name ? room.name : 'unnamed'
-      @temperature << { name: name, data: temperature_data(room, @datesince, @dateto) }
-      @humidity << { name: name, data: humidity_data(room, @datesince, @dateto) }
-    end
   end
 end

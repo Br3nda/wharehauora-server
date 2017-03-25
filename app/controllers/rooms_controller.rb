@@ -7,34 +7,45 @@ class RoomsController < ApplicationController
 
   def index
     authorize @home
-    @rooms = policy_scope(@home.rooms).page(params[:page]).order(:name)
+    @rooms = policy_scope(Room)
+             .where(home_id: @home.id)
+             .includes(:home, :sensors, :room_type)
+             .order(:name)
+             .paginate(page: params[:page])
     respond_with(@rooms)
   end
 
   def show
-    authorize @room
-    @temperature = temperature_data
-    @humidity = humidity_data
+    parse_dates
+    @home = @room.home
+    @keys = %w(temperature humdity)
+    respond_with(@room)
   end
 
   def edit
-    authorize @room
+    respond_with(@room)
   end
 
   def update
-    authorize @room
     @room.update(room_params)
     redirect_to home_rooms_path(@home)
+  end
+
+  def destroy
+    @room.destroy
+    redirect_to home_rooms_path(@room.home)
   end
 
   private
 
   def set_home
     @home = policy_scope(Home).find(params[:home_id])
+    authorize @home
   end
 
   def set_room
-    @room = policy_scope(Room).find(params[:id])
+    @room = policy_scope(Room).includes(:home).find(params[:id])
+    authorize @room
   end
 
   def room_params
@@ -48,17 +59,8 @@ class RoomsController < ApplicationController
     )
   end
 
-  def temperature_data
-    time_series Reading.temperature
-  end
-
-  def humidity_data
-    time_series Reading.humidity
-  end
-
-  def time_series(query)
-    policy_scope(query).where(room_id: @room.id)
-                       .where(['readings.created_at >= ?', 1.day.ago])
-                       .pluck("date_trunc('minute', readings.created_at)", :value)
+  def parse_dates
+    @day = params[:day]
+    @day = Date.yesterday if @day.blank?
   end
 end
