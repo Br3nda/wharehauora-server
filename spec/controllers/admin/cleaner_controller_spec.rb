@@ -9,11 +9,27 @@ RSpec.describe Admin::CleanerController, type: :controller do
       before { get :index }
       it { expect(response).to redirect_to(root_path) }
     end
+    describe 'delete rooms' do
+      before { delete :rooms }
+      it { expect(response).to redirect_to(root_path) }
+    end
+    describe 'delete sensors' do
+      before { delete :sensors }
+      it { expect(response).to redirect_to(root_path) }
+    end
   end
   context 'signed in as normal user' do
     before { sign_in user }
     describe 'GET index' do
       before { get :index }
+      it { expect(response).to redirect_to(root_path) }
+    end
+    describe 'delete rooms' do
+      before { delete :rooms }
+      it { expect(response).to redirect_to(root_path) }
+    end
+    describe 'delete sensors' do
+      before { delete :sensors }
       it { expect(response).to redirect_to(root_path) }
     end
   end
@@ -23,6 +39,16 @@ RSpec.describe Admin::CleanerController, type: :controller do
     describe 'GET index' do
       before { get :index }
       it { expect(response).to have_http_status(:success) }
+    end
+
+    describe 'delete rooms' do
+      before { FactoryGirl.create :room }
+      it { expect { delete :rooms }.to change { Room.count }.by(-1) }
+    end
+
+    describe 'delete sensors' do
+      before { FactoryGirl.create :sensor, node_id: 1 }
+      it { expect { delete :sensors }.to change { Sensor.count }.by(-1) }
     end
   end
 end
