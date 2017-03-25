@@ -35,8 +35,4 @@ class RoomPolicy < ApplicationPolicy
   def whanau?
     record.home.users.include? user
   end
-
-  def janitor?
-    user.role? 'janitor'
-  end
 end

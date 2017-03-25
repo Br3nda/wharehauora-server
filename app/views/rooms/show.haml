@@ -1,19 +1,14 @@
 %h2
-  Sensor
-  = @sensor.node_id
-  in
-  = @sensor.room_name
+  Room
+  = @room.name
 
 %p
   Home:
-  = link_to @sensor.home.name, @sensor.home
+  = link_to @room.home.name, @room.home
 
-%h2 Temperature since #{@daysago.to_formatted_s(:short)}
-= area_chart(@temperature)
-
-%h2 Humidity since #{@daysago.to_formatted_s(:short)}
-= area_chart(@humidity)
-
-
-%h2 Readings since #{@daysago.to_formatted_s(:short)}
-= render 'readings', readings: @readings
+- @keys.each do |key|
+  = line_chart readings_path(home_id: @room.home.id,
+                              room_id: @room.id,
+                              key: key,
+                              day: @day),
+    title: "#{@day} #{key}", min: 0, max: 100

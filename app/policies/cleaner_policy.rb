@@ -1,19 +1,19 @@
 class CleanerPolicy < ApplicationPolicy
   def index?
-    user.role?('janitor')
+    janitor?
   end
 
   def rooms?
-    user.role?('janitor')
+    janitor?
   end
 
   def sensors?
-    user.role?('janitor')
+    janitor?
   end
 
-  class Scope < Scope
-    def resolve
-      scope.all if user && user.role?('janitor')
-    end
-  end
+  # class Scope < Scope
+  #   def resolve
+  #     scope.all if user && user.role?('janitor')
+  #   end
+  # end
 end

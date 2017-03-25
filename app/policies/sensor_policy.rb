@@ -28,8 +28,4 @@ class SensorPolicy < ApplicationPolicy
   def whanau?
     record.home.users.include? user
   end
-
-  def janitor?
-    user.role? 'janitor'
-  end
 end

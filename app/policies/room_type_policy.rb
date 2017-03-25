@@ -1,35 +1,35 @@
 class RoomTypePolicy < ApplicationPolicy
   def index?
-    user.role?('janitor')
+    janitor?
   end
 
   def new?
-    user.role?('janitor')
+    janitor?
   end
 
   def create?
-    user.role?('janitor')
+    janitor?
   end
 
   def edit?
-    user.role?('janitor')
+    janitor?
   end
 
   def show?
-    user.role?('janitor')
+    janitor?
   end
 
   def update?
-    user.role?('janitor')
+    janitor?
   end
 
   def destroy?
-    user.role?('janitor')
+    janitor?
   end
 
   class Scope < Scope
     def resolve
-      scope.all if user && user.role?('janitor')
+      scope.all if user && janitor?
     end
   end
 end
