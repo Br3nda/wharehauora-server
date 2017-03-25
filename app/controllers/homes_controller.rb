@@ -77,22 +77,4 @@ class HomesController < ApplicationController
     @home = policy_scope(Home).find(params[:id])
     authorize @home
   end
-
-  # def set_temp_and_humidity_data
-  #   @data = {}
-  #   Reading
-  #     .joins(:room)
-  #     .where('readings.created_at::date >= ? AND readings.created_at::date <= ?', @day, @day)
-  #     .where("rooms.home_id": @home.id)
-  #     .where("key IS NOT NULL")
-  #     .order("readings.created_at")
-  #     .pluck("date_trunc('minute', readings.created_at)", "rooms.name", :key, :value).each do |reading|
-
-  #     created_at, room_name, reading_type, reading_value = reading
-  #     @data[reading_type] = {} unless @data[reading_type]
-  #     @data[reading_type][room_name] = [] unless @data[reading_type][room_name]
-  #     @data[reading_type][room_name] << [created_at, reading_value]
-  #   end
-  #   puts @data
-  # end
 end
