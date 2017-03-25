@@ -19,7 +19,7 @@ class Home < ActiveRecord::Base
 
   def find_or_create_sensor(node_id)
     sensor = sensors.find_by(node_id: node_id)
-    sensor = Sensor.create!(node_id: node_id) unless sensor
+    sensor = Sensor.create!(home_id: id, node_id: node_id) unless sensor
     sensor
   end
 end
