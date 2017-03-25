@@ -17,9 +17,11 @@
   =require purecss/grids-responsive
   =require purecss/menus
   =require purecss/tables
+  =require font-awesome
 */
 
 @import "elements";
 @import "variables";
 @import "modules/signin_grid";
 @import "font-awesome";
+
