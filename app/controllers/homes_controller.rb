@@ -54,7 +54,7 @@ class HomesController < ApplicationController
 
   def parse_dates
     @day = params[:day]
-    @day = Date.yesterday if @day.blank?
+    @day = Time.zone.today if @day.blank?
   end
 
   def home_params
