@@ -1,9 +1,10 @@
 class SensorPolicy < ApplicationPolicy
   def show?
-    owned_by_current_user?
+    owner? || janitor? || whanau?
   end
+
   def destroy?
-    owned_by_current_user? || user.role?('janitor')
+    owner? || user.role?('janitor')
   end
 
   private
@@ -20,7 +21,15 @@ class SensorPolicy < ApplicationPolicy
     end
   end
 
-  def owned_by_current_user?
+  def owner?
     record.home.owner_id == user.id
+  end
+
+  def whanau?
+    record.home.users.include? user
+  end
+
+  def janitor?
+    user.role? 'janitor'
   end
 end

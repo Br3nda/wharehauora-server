@@ -17,7 +17,9 @@ class SensorsController < ApplicationController
     redirect_to home_sensors_path(@sensor.home)
   end
 
-  def show; end
+  def show
+    respond_with(@sensor)
+  end
 
   private
 
