@@ -35,20 +35,12 @@ class ReadingsController < ApplicationController
   end
 
   def readings
-    query = Reading
-            .joins(:room)
-            .day_filter
-            .where("rooms.home_id": @home.id)
-            .where(key: params[:key])
-    query = query.where("rooms.id": @room.id) if @room
-    query.order('readings.created_at').pluck_data
-  end
-
-  def day_filter
-    where('readings.created_at::date >= ? AND readings.created_at::date <= ?', params[:day], params[:day])
-  end
-
-  def pluck_data
-    pluck("date_trunc('minute', readings.created_at)", 'rooms.id as room_id', 'rooms.name', :value)
+    Reading
+      .joins(:room)
+      .where('readings.created_at::date >= ? AND readings.created_at::date <= ?', params[:day], params[:day])
+      .where("rooms.home_id": @home.id)
+      .where(key: params[:key])
+      .order('readings.created_at')
+      .pluck("date_trunc('minute', readings.created_at)", 'rooms.id as room_id', 'rooms.name', :value)
   end
 end
