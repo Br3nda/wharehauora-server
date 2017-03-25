@@ -2,13 +2,22 @@
 .pure-menu.pure-menu-horizontal
   %ul.pure-menu-list
     %li.pure-menu-item
-      = link_to 'charts', home_path(home), class: 'pure-menu-link'
+      = link_to home_path(home), class: 'pure-menu-link' do
+        charts
+        = fa_icon 'line-chart'
     %li.pure-menu-item
       = link_to 'rooms', home_rooms_path(home), class: 'pure-menu-link'
     %li.pure-menu-item
-      = link_to 'sensors', home_sensors_path(home), class: 'pure-menu-link'
+      = link_to home_sensors_path(home), class: 'pure-menu-link' do
+        sensors
+        = fa_icon 'thermometer-full'
     - if policy(home).edit?
       %li.pure-menu-item
-        = link_to 'whānau', home_home_viewers_path(home), class: 'pure-menu-link'
+        = link_to home_home_viewers_path(home), class: 'pure-menu-link' do
+          whānau
+          = fa_icon 'users'
       %li.pure-menu-item
-        = link_to 'edit whare', edit_home_path(home), class: 'pure-menu-link'
+        = link_to edit_home_path(home), class: 'pure-menu-link' do
+          edit
+          = fa_icon 'edit'
+

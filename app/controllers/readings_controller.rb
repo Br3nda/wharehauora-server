@@ -40,6 +40,7 @@ class ReadingsController < ApplicationController
       .where('readings.created_at::date = ?', params[:day])
       .where("rooms.home_id": @home.id)
       .where(key: params[:key])
+      .where('value < 100 AND value > -5')
       .order('readings.created_at')
       .pluck("date_trunc('minute', readings.created_at)", 'rooms.id as room_id', 'rooms.name', :value)
   end
