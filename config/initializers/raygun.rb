@@ -5,6 +5,7 @@ if Rails.env.production?
     if ENV['RAYGUN_APIKEY'].present?
       config.api_key = ENV['RAYGUN_APIKEY']
       config.enable_reporting = true
+      config.affected_user_method = :current_user
     else
       config.enable_reporting = false
     end
