@@ -8,7 +8,7 @@ class WelcomeController < ApplicationController
 
     @temperature = readings('temperature', time_frame).median(:value)
     @humidity = readings('humidity', time_frame).median(:value)
-    @sensor_count = Sensor.count
+    @day = Time.zone.today
   end
 
   def time_frame
