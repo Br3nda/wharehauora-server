@@ -6,8 +6,8 @@ class WelcomeController < ApplicationController
     @home_types = HomeType.all.order(:name)
     @room_types = RoomType.all.order(:name)
 
-    @temperature = readings.temperature.median(:value)
-    @humidity = readings.humidity.median(:value)
+    @temperature = readings('temperature', time_frame).median(:value)
+    @humidity = readings('humidity', time_frame).median(:value)
     @sensor_count = Sensor.count
   end
 
@@ -15,7 +15,11 @@ class WelcomeController < ApplicationController
     3.hours.ago
   end
 
-  def readings
-    Reading.metrics_by_home_and_room(time_frame)
+  def readings(key, created_after)
+    Reading.joins(:room, room: :home)
+           .where('home_type_id IS NOT NULL AND room_type_id IS NOT NULL')
+           .where('readings.created_at >= ?', created_after)
+           .where(key: key)
+           .group('home_type_id', 'room_type_id')
   end
 end

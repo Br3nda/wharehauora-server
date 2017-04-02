@@ -26,11 +26,7 @@ class Room < ActiveRecord::Base
   end
 
   def last_reading_timestamp
-    readings.order(created_at: :desc)
-            .first
-            .created_at
-  rescue
-    nil
+    readings.order(created_at: :desc).first&.created_at
   end
 
   def rating

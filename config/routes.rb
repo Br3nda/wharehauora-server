@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   resources :readings
   resources :home_viewers
 
+  namespace :opendata do
+    resources :readings, only: [:index]
+  end
+
   namespace :admin do
     get 'cleaner', to: 'cleaner#index'
     delete 'cleaner/rooms', to: 'cleaner#rooms'

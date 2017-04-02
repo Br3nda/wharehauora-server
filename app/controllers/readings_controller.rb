@@ -1,47 +1,43 @@
 class ReadingsController < ApplicationController
   respond_to :json
   def index
-    parse_params
-    assemble_readings
-    flatten_readings_for_kickchart
+    @home = policy_scope(Home).find(params[:home_id])
+    authorize @home
+    assemble_readings(@home.id, params[:key], params[:day])
+    render json: @data
   end
 
   private
 
-  def parse_params
-    @home = policy_scope(Home).find(params[:home_id])
-    authorize @home
-    @room = @home.rooms.find(params[:room_id]) if params[:room_id]
-  end
-
-  def assemble_readings
-    # {name: goal.name, data: goal.feats.group_by_week(:created_at).count
-    @rooms = {}
-    readings.each do |reading|
+  def assemble_readings(home_id, key, data)
+    @readings = readings(home_id, key, data)
+    data_by_room = {}
+    @readings.each do |reading|
       created_at, room_id, room_name, reading_value = reading
       room_name = 'un-named room' unless room_name
-      @rooms[room_id] = { 'name' => room_name, 'data' => [] } unless @rooms[room_id]
-      @rooms[room_id]['data'] << [created_at, reading_value]
+      data_by_room[room_id] = { 'name' => room_name, 'data' => [] } unless data_by_room[room_id]
+      data_by_room[room_id]['data'] << [created_at, reading_value]
     end
+    @data = flatten_readings_for_kickchart(data_by_room)
   end
 
-  def flatten_readings_for_kickchart
-    # flatten
-    @data = []
-    @rooms.each do |_key, room|
-      @data << room
+  def flatten_readings_for_kickchart(data_by_room)
+    data = []
+    data_by_room.each do |_key, room|
+      data << room
     end
-    render json: @data
+    data
   end
 
-  def readings
+  def readings(home_id, key, day)
     Reading
       .joins(:room)
-      .where('readings.created_at::date = ?', params[:day])
-      .where("rooms.home_id": @home.id)
-      .where(key: params[:key])
-      .where('value < 100 AND value > -5')
+      .where('readings.created_at::date = ?', day)
+      .where("rooms.home_id": home_id)
+      .where(key: key)
+      .normal_range
       .order('readings.created_at')
-      .pluck("date_trunc('minute', readings.created_at)", 'rooms.id as room_id', 'rooms.name', :value)
+      .pluck("date_trunc('minute', readings.created_at)",
+             'rooms.id as room_id', 'rooms.name', :value)
   end
 end

@@ -16,8 +16,6 @@ class HomesController < ApplicationController
   def show
     parse_dates
     @keys = %w(temperature humidity)
-    # set_rooms
-    # set_temp_and_humidity_data
     respond_with(@home)
   end
 
