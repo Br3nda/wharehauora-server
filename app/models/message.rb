@@ -1,5 +1,6 @@
 class Message < ActiveRecord::Base
   belongs_to :sensor
+  delegate :home, :home_id, to: :sensor
 
   validates :node_id, :sensor_id, :child_sensor_id,
             :message_type, :ack, :sub_type, presence: true

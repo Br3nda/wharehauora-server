@@ -7,7 +7,7 @@ class Sensor < ActiveRecord::Base
 
   has_many :messages
 
-  delegate :home_type, to: :hoom
+  delegate :home_type, to: :home
   delegate :room_type, to: :room
 
   scope :joins_home, -> { joins(:room, room: :home) }

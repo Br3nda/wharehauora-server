@@ -4,9 +4,10 @@ class Home < ActiveRecord::Base
   belongs_to :home_type
 
   has_many :rooms
+  has_many :messages, through: :sensors
 
-  has_many :sensors, through: :rooms
-  has_many :readings, through: :sensors
+  has_many :sensors
+  has_many :readings, through: :rooms
 
   has_many :home_viewers
 

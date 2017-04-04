@@ -1,10 +1,10 @@
 class Room < ActiveRecord::Base
   belongs_to :home
   belongs_to :room_type
+
   has_many :readings
   has_many :sensors
 
-  has_many :readings
   has_one :home_type, through: :home
   has_one :owner, through: :home
 
