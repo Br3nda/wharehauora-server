@@ -17,5 +17,4 @@
 //= require chartkick
 //= require_tree .
 
-//= require homes_controller
 //= require moment
