@@ -1,7 +1,8 @@
 class Opendata::ReadingsController < ApplicationController
   respond_to :json
-  after_action :skip_authorization
   def index
+    skip_policy_scope
+    skip_authorization
     assemble_readings(params[:key], params[:day])
     render json: @data
   end
