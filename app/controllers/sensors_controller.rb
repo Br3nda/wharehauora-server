@@ -27,7 +27,7 @@ class SensorsController < ApplicationController
 
   def update
     @sensor.update!(sensor_params)
-    respond_with(@sensor)
+    redirect_to home_sensors_path @sensor.home
   end
 
   private
