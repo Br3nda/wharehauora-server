@@ -1,6 +1,9 @@
 %h2 Room types
 
-= link_to 'new', new_admin_room_type_path
+%p
+  = link_to new_admin_room_type_path, class: 'pure-button' do
+    Add
+    = fa_icon "plus"
 
 %table.pure-table
   %thead
@@ -12,9 +15,9 @@
         = ht.name
       %td
         = link_to edit_admin_room_type_path(ht) do
-          = fa_icon "edit"
+          = fa_icon 'edit'
       %td
         = link_to admin_room_type_path(ht),
           method: :delete,
           data: { confirm: 'delete this room_type?' } do
-          = fa_icon "trash"
+          = fa_icon 'trash'

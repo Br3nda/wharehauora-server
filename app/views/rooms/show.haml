@@ -2,13 +2,15 @@
   Room
   = @room.name
 
-%p
-  Home:
-  = link_to @room.home.name, @room.home
+.pure-g
+  .pure-u-1
+    %p
+      Home:
+      = link_to @room.home.name, @room.home
 
-- @keys.each do |key|
-  = line_chart readings_path(home_id: @room.home.id,
-                              room_id: @room.id,
-                              key: key,
-                              day: @day),
-    title: "#{@day} #{key}"
+  .pure-u-1-2
+    - @keys.each do |key|
+      = line_chart readings_path(home_id: @room.home.id,
+                               room_id: @room.id,
+                               key: key,
+                               day: @day), title: "#{@day} #{key}"

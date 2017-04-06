@@ -4,7 +4,7 @@
   %p
     = link_to new_home_path, class: 'pure-button' do
       Add
-      = fa_icon "plus"
+      = fa_icon 'plus'
 
 - unless @homes.empty?
   = render 'table', homes: @homes
