@@ -21,6 +21,8 @@
             = link_to(sensor.node_id, sensor_path(sensor))
           %td
             = sensor.room&.name
+            = link_to edit_sensor_path(sensor) do
+              = fa_icon 'edit'
           %td
             = sensor.messages.first&.updated_at
           %td

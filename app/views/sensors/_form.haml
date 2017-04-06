@@ -1,11 +1,6 @@
-
 %fieldset
-  = f.label :room_name
-  = f.text_field :room_name, type: 'name', placeholder: 'room name'
-
-%fieldset
-  = f.label :room_type
-  - room_types.each do |rt|
+  = f.label :room
+  - @rooms.each do |room|
     %p
-      = f.radio_button :room_type_id, rt.id
-      = f.label :room_type_id, rt.name
+      = f.radio_button :room_id, room.id
+      = f.label :room_id, room.name
