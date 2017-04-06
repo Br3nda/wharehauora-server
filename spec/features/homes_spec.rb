@@ -18,7 +18,7 @@ RSpec.feature 'Homes', type: :feature do
 
     scenario 'Views their friend\'s home' do
       other_home = FactoryGirl.create :home
-      user.homes << other_home
+      user.viewable_homes << other_home
       visit "/homes/#{other_home.id}"
       expect(page).to have_text(other_home.name)
     end
