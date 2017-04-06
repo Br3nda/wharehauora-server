@@ -9,7 +9,7 @@ RSpec.feature 'Widget management', type: :feature do
   context 'not signed in' do
     scenario 'requests room type admin page' do
       visit '/admin/room_types'
-      expect(page).not_to have_text('Create new room type')
+      expect(page).not_to have_text('Add')
     end
   end
 
@@ -17,7 +17,7 @@ RSpec.feature 'Widget management', type: :feature do
     background { login_as(user) }
     scenario 'requests room type admin page' do
       visit '/admin/room_types'
-      expect(page).not_to have_text('Create new room type')
+      expect(page).not_to have_text('Add')
     end
   end
 
@@ -30,7 +30,7 @@ RSpec.feature 'Widget management', type: :feature do
 
     scenario 'User creates a new widget' do
       visit '/admin/room_types/new'
-      expect(page).to have_text('Create new room type')
+      expect(page).to have_text('Add')
       fill_in 'Name', with: 'Pool room'
       click_button 'Create'
 
