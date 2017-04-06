@@ -2,7 +2,9 @@
 
 - if policy(:home).new?
   %p
-    = link_to 'Add a whare?', new_home_path
+    = link_to new_home_path, class: 'pure-button' do
+      Add
+      = fa_icon "plus"
 
 - unless @homes.empty?
   = render 'table', homes: @homes
