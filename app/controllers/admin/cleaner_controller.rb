@@ -1,6 +1,7 @@
 class Admin::CleanerController < ApplicationController
   def index
     authorize :cleaner
+    skip_policy_scope
     @rooms_no_readings = Room.without_readings.without_sensors.count
     @sensors_no_messages = Sensor.without_messages.count
   end
