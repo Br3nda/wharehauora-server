@@ -32,7 +32,12 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    @room.destroy
+    if @room.sensors.empty?
+      ActiveRecord::Base.transaction do
+        Reading.where(room_id: @room.id).delete_all
+        @room.destroy
+      end
+    end
     redirect_to home_rooms_path(@room.home)
   end
 
