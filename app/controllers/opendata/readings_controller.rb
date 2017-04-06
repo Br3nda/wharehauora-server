@@ -32,7 +32,7 @@ class Opendata::ReadingsController < ApplicationController
     Reading.joins(:room, room: :room_type)
            .where('readings.created_at::date = ?', day)
            .where(key: key)
-           .group('room_types.name', "date_trunc('hour', readings.created_at)")
+           .group('room_types.name', "date_trunc('minute', readings.created_at)")
            .median(:value)
   end
 end
