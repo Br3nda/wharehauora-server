@@ -21,10 +21,23 @@ class SensorsController < ApplicationController
     respond_with(@sensor)
   end
 
+  def edit
+    @rooms = @sensor.home.rooms.order(:name)
+  end
+
+  def update
+    @sensor.update!(sensor_params)
+    respond_with(@sensor)
+  end
+
   private
 
   def set_sensor
     @sensor = policy_scope(Sensor).find(params[:id])
     authorize @sensor
+  end
+
+  def sensor_params
+    params.require(:sensor).permit(:room_id)
   end
 end

@@ -3,8 +3,16 @@ class SensorPolicy < ApplicationPolicy
     owner? || janitor? || whanau?
   end
 
+  def edit?
+    owner? || janitor?
+  end
+
+  def update?
+    owner? || janitor?
+  end
+
   def destroy?
-    owner? || user.role?('janitor')
+    owner? || janitor?
   end
 
   private
