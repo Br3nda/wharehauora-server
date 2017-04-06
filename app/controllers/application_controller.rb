@@ -25,6 +25,6 @@ class ApplicationController < ActionController::Base
 
   def set_my_homes
     return unless current_user
-    @my_homes = policy_scope(Home).where(owner_id: current_user.id) + current_user.homes
+    @my_homes = current_user.homes
   end
 end
