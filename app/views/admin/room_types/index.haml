@@ -6,12 +6,15 @@
   %thead
     %tr
       %th Name
-      %th action
   - @room_types.each do |ht|
     %tr
       %td
         = ht.name
       %td
-        = link_to 'edit', edit_admin_room_type_path(ht)
+        = link_to edit_admin_room_type_path(ht) do
+          = fa_icon "edit"
       %td
-        = link_to 'delete', admin_room_type_path(ht), method: :delete
+        = link_to admin_room_type_path(ht),
+          method: :delete,
+          data: { confirm: 'delete this room_type?' } do
+          = fa_icon "trash"

@@ -27,13 +27,13 @@
           %td
             - if policy(room).edit?
               = link_to edit_home_room_path(room.home, room), class: 'pure-button' do
-                = fa_icon "edit"
+                = fa_icon 'edit'
           %td
             - if policy(room).destroy?
               = link_to home_room_path(room.home, room),
                 method: :delete, data: { confirm: 'Delete room?' },
                 class: 'pure-button' do
-                = fa_icon "trash"
+                = fa_icon 'trash'
   %p= paginate(@rooms)
 - else
   %p No rooms detected in this whare.
