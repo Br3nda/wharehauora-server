@@ -72,7 +72,7 @@ class HomesController < ApplicationController
   end
 
   def set_home
-    @home = policy_scope(Home).find(params[:id])
+    @home = policy_scope(Home).includes(:rooms).includes(:sensors).find(params[:id])
     authorize @home
   end
 end
