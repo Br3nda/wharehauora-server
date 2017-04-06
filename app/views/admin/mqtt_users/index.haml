@@ -12,6 +12,7 @@
     %tr
       %th.sortable MQTT Email
       %th MQTT Passcode
+      %th Homes
       %th Provisioned
       %th Actions
   %tbody
@@ -21,6 +22,11 @@
           = user.email
         %td
           = user&.mqtt_user&.password if user.mqtt_user
+        %td
+          - user.owned_homes.each do |home|
+            = link_to home_path(home) do
+              = home.name
+              = fa_icon "home"
         %td
           = user&.mqtt_user&.provisioned_at if user.mqtt_user
         %td

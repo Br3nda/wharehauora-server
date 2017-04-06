@@ -1,7 +1,7 @@
 class Admin::MqttUsersController < ApplicationController
   def index
     authorize :mqtt_user
-    @users = User.all
+    @users = policy_scope User.includes(:owned_homes, :mqtt_user).all
   end
 
   def create
