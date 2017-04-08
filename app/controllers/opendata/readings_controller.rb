@@ -30,7 +30,9 @@ class Opendata::ReadingsController < ApplicationController
 
   def readings_by_room_type(key, day)
     Reading.joins(:room, room: :room_type)
-           .where('readings.created_at::date = ?', Time.zone.parse(day))
+           .where('readings.created_at >= :day AND readings.created_at <= :nextday',
+                  day: Time.zone.parse(day),
+                  nextday: (Time.zone.parse(day) + 1.day))
            .where(key: key)
            .group('room_types.name', "date_trunc('minute', readings.created_at)")
            .median(:value)
