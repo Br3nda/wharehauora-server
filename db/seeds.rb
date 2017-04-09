@@ -19,7 +19,7 @@ ActiveRecord::Base.transaction do
 end
 
 # rubocop:disable BlockLength
-if %w(development test staging).include? Rails.env
+if %w[development test staging].include? Rails.env
   ActiveRecord::Base.transaction do
     num_mock_readings = 100
     roomtypes = ['Living space', 'Sleeping/Bedroom']

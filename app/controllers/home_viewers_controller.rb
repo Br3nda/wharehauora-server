@@ -1,6 +1,6 @@
 class HomeViewersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_home, only: [:create, :index, :new]
+  before_action :set_home, only: %i[create index new]
 
   def index
     authorize @home, :edit?
@@ -43,10 +43,10 @@ class HomeViewersController < ApplicationController
   end
 
   def permitted_params
-    %i(
+    %i[
       id
       email
       home_id
-    )
+    ]
   end
 end

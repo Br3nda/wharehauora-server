@@ -1,6 +1,6 @@
 class Admin::RoomTypesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_room_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_room_type, only: %i[show edit update destroy]
 
   def index
     authorize :room_type

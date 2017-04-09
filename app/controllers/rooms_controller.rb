@@ -1,7 +1,7 @@
 class RoomsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_room, only: [:show, :edit, :destroy, :update]
-  before_action :set_home, only: [:index, :edit, :update]
+  before_action :set_room, only: %i[show edit destroy update]
+  before_action :set_home, only: %i[index edit update]
 
   respond_to :html
 
@@ -18,7 +18,7 @@ class RoomsController < ApplicationController
   def show
     parse_dates
     @home = @room.home
-    @keys = %w(temperature humidity)
+    @keys = %w[temperature humidity]
     respond_with(@room)
   end
 
@@ -58,10 +58,7 @@ class RoomsController < ApplicationController
   end
 
   def permitted_room_params
-    %i(
-      name
-      room_type_id
-    )
+    %i[name room_type_id]
   end
 
   def parse_dates

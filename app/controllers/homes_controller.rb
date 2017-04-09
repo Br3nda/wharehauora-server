@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 class HomesController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :set_home, only: [:show, :edit, :destroy, :update]
+  before_action :set_home, only: %i[show edit destroy update]
   respond_to :html
 
   def index
@@ -15,7 +16,7 @@ class HomesController < ApplicationController
 
   def show
     parse_dates
-    @keys = %w(temperature humidity)
+    @keys = %w[temperature humidity]
     respond_with(@home)
   end
 
@@ -60,11 +61,11 @@ class HomesController < ApplicationController
   end
 
   def permitted_home_params
-    %i(
+    %i[
       name
       is_public
       home_type_id
-    )
+    ]
   end
 
   def set_rooms

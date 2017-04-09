@@ -1,6 +1,6 @@
 class SensorsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_sensor, only: [:show, :edit, :destroy, :update]
+  before_action :set_sensor, only: %i[show edit destroy update]
   respond_to :html
 
   def index

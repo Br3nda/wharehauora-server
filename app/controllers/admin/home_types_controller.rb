@@ -1,6 +1,6 @@
 class Admin::HomeTypesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_home_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_home_type, only: %i[show edit update destroy]
 
   def index
     authorize :home_type
