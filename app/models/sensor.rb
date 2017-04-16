@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Sensor < ActiveRecord::Base
-  belongs_to :home
+  belongs_to :home, counter_cache: true
   validates :home, presence: true
 
   belongs_to :room

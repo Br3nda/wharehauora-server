@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
-  belongs_to :sensor
+  belongs_to :sensor, counter_cache: true
   delegate :home, :home_id, to: :sensor
 
   validates :node_id, :sensor_id, :child_sensor_id,

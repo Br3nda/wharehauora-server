@@ -1,5 +1,5 @@
 class Room < ActiveRecord::Base
-  belongs_to :home
+  belongs_to :home, counter_cache: true
   belongs_to :room_type
 
   has_many :readings

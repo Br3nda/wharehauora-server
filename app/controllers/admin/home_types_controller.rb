@@ -8,7 +8,7 @@ class Admin::HomeTypesController < ApplicationController
   end
 
   def edit
-    @homes_count = @home_type.homes.count
+    @homes_count = @home_type.homes.size
   end
 
   def update

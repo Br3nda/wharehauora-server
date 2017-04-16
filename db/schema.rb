@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170324011548) do
+ActiveRecord::Schema.define(version: 20170416021403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "home_types", force: :cascade do |t|
     t.text     "name",       null: false
@@ -33,12 +32,14 @@ ActiveRecord::Schema.define(version: 20170324011548) do
   add_index "home_viewers", ["user_id", "home_id"], name: "index_home_viewers_on_user_id_and_home_id", unique: true, using: :btree
 
   create_table "homes", force: :cascade do |t|
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.text     "name",                         null: false
-    t.integer  "owner_id",                     null: false
-    t.boolean  "is_public",    default: false, null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.text     "name",                          null: false
+    t.integer  "owner_id",                      null: false
+    t.boolean  "is_public",     default: false, null: false
     t.integer  "home_type_id"
+    t.integer  "rooms_count"
+    t.integer  "sensors_count"
   end
 
   add_index "homes", ["name"], name: "index_homes_on_name", using: :btree
@@ -105,11 +106,12 @@ ActiveRecord::Schema.define(version: 20170324011548) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.integer  "home_id",      null: false
+    t.integer  "home_id",        null: false
     t.text     "name"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "room_type_id"
+    t.integer  "readings_count"
   end
 
   add_index "rooms", ["home_id"], name: "index_rooms_on_home_id", using: :btree
@@ -117,10 +119,11 @@ ActiveRecord::Schema.define(version: 20170324011548) do
 
   create_table "sensors", force: :cascade do |t|
     t.integer  "room_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "node_id",    null: false
-    t.integer  "home_id",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "node_id",        null: false
+    t.integer  "home_id",        null: false
+    t.integer  "messages_count"
   end
 
   add_index "sensors", ["node_id"], name: "index_sensors_on_node_id", using: :btree
