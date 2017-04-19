@@ -19,7 +19,7 @@
         %td
           = link_to home.name.present? ? home.name : 'unnamed home', home_path(home)
         %td
-          = home.home_type.name
+          = home.home_type&.name
         %td
           = home.owner.email
         %td
