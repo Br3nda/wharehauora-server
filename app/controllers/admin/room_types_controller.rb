@@ -4,7 +4,7 @@ class Admin::RoomTypesController < ApplicationController
 
   def index
     authorize :room_type
-    @room_types = policy_scope(RoomType)
+    @room_types = policy_scope RoomType.all.order(:name)
   end
 
   def edit; end
