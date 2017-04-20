@@ -4,7 +4,7 @@ class Admin::UsersController < ApplicationController
 
   def index
     authorize :user
-    @users = policy_scope(User).page(params[:page])
+    @users = policy_scope User.all.order(:email).page(params[:page])
   end
 
   def new
