@@ -4,7 +4,7 @@ class Admin::HomeTypesController < ApplicationController
 
   def index
     authorize :home_type
-    @home_types = policy_scope(HomeType).order(:name)
+    @home_types = policy_scope HomeType.all.order(:name)
   end
 
   def edit
