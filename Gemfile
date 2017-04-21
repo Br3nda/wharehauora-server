@@ -93,6 +93,8 @@ group :development, :test do
 
   gem 'capybara'
   gem 'pry'
+
+  gem 'json_schema_builder'
 end
 
 group :development do

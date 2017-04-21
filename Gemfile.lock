@@ -94,6 +94,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     font-awesome-rails (4.7.0.1)
       railties (>= 3.2, < 5.1)
+    gli (2.16.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     haml (4.0.7)
@@ -128,6 +129,10 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.6)
+    json_schema_builder (0.1.0)
+      activesupport
+      gli
+      json
     kaminari (1.0.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.0.1)
@@ -327,6 +332,7 @@ DEPENDENCIES
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
+  json_schema_builder
   kaminari
   momentjs-rails
   mqtt
