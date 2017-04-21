@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "title": "User role",
+  "description": "object",
+  "properties": {
+    "id": {
+      "description": "the field description",
+      "identity": true,
+      "readonly": true,
+      "type": "integer"
+    },
+    "user_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "role_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "created_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "links": [
+
+  ],
+  "name": "user_role"
+}

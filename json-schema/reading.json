@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "title": "Reading",
+  "description": "object",
+  "properties": {
+    "id": {
+      "description": "the field description",
+      "identity": true,
+      "readonly": true,
+      "type": "integer"
+    },
+    "room_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "key": {
+      "description": "the field description",
+      "type": "string"
+    },
+    "value": {
+      "description": "the field description",
+      "type": "float"
+    },
+    "created_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "links": [
+    {
+      "rel": "index",
+      "method": "GET",
+      "href": "/homes/:home_id/readings"
+    },
+    {
+      "rel": "create",
+      "method": "POST",
+      "href": "/homes/:home_id/readings"
+    },
+    {
+      "rel": "new",
+      "method": "GET",
+      "href": "/homes/:home_id/readings/new"
+    },
+    {
+      "rel": "edit",
+      "method": "GET",
+      "href": "/homes/:home_id/readings/{id}/edit"
+    },
+    {
+      "rel": "show",
+      "method": "GET",
+      "href": "/homes/:home_id/readings/{id}"
+    },
+    {
+      "rel": "update",
+      "method": "PATCH",
+      "href": "/homes/:home_id/readings/{id}"
+    },
+    {
+      "rel": "destroy",
+      "method": "DELETE",
+      "href": "/homes/:home_id/readings/{id}"
+    }
+  ],
+  "name": "reading"
+}

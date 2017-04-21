@@ -1,0 +1,76 @@
+{
+  "type": "object",
+  "title": "User",
+  "description": "object",
+  "properties": {
+    "id": {
+      "description": "the field description",
+      "identity": true,
+      "readonly": true,
+      "type": "integer"
+    },
+    "email": {
+      "description": "the field description",
+      "type": "string",
+      "default": ""
+    },
+    "encrypted_password": {
+      "description": "the field description",
+      "type": "string",
+      "default": ""
+    },
+    "reset_password_token": {
+      "description": "the field description",
+      "type": "string"
+    },
+    "reset_password_sent_at": {
+      "description": "the field description",
+      "type": "string",
+      "format": "date-time"
+    },
+    "remember_created_at": {
+      "description": "the field description",
+      "type": "string",
+      "format": "date-time"
+    },
+    "sign_in_count": {
+      "description": "the field description",
+      "type": "integer",
+      "default": "0"
+    },
+    "current_sign_in_at": {
+      "description": "the field description",
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_sign_in_at": {
+      "description": "the field description",
+      "type": "string",
+      "format": "date-time"
+    },
+    "current_sign_in_ip": {
+      "description": "the field description",
+      "type": "string"
+    },
+    "last_sign_in_ip": {
+      "description": "the field description",
+      "type": "string"
+    },
+    "created_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "links": [
+
+  ],
+  "name": "user"
+}

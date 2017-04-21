@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "title": "Mqtt user",
+  "description": "object",
+  "properties": {
+    "id": {
+      "description": "the field description",
+      "identity": true,
+      "readonly": true,
+      "type": "integer"
+    },
+    "user_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "username": {
+      "description": "the field description",
+      "type": "string"
+    },
+    "password": {
+      "description": "the field description",
+      "type": "string"
+    },
+    "provisioned_at": {
+      "description": "the field description",
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "links": [
+
+  ],
+  "name": "mqtt_user"
+}

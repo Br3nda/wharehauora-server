@@ -1,0 +1,91 @@
+{
+  "type": "object",
+  "title": "Message",
+  "description": "object",
+  "properties": {
+    "id": {
+      "description": "the field description",
+      "identity": true,
+      "readonly": true,
+      "type": "integer"
+    },
+    "node_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "message_type": {
+      "description": "the field description",
+      "type": "string"
+    },
+    "child_sensor_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "ack": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "sub_type": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "payload": {
+      "description": "the field description",
+      "type": "string"
+    },
+    "sensor_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "created_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "links": [
+    {
+      "rel": "index",
+      "method": "GET",
+      "href": "/messages"
+    },
+    {
+      "rel": "create",
+      "method": "POST",
+      "href": "/messages"
+    },
+    {
+      "rel": "new",
+      "method": "GET",
+      "href": "/messages/new"
+    },
+    {
+      "rel": "edit",
+      "method": "GET",
+      "href": "/messages/{id}/edit"
+    },
+    {
+      "rel": "show",
+      "method": "GET",
+      "href": "/messages/{id}"
+    },
+    {
+      "rel": "update",
+      "method": "PATCH",
+      "href": "/messages/{id}"
+    },
+    {
+      "rel": "destroy",
+      "method": "DELETE",
+      "href": "/messages/{id}"
+    }
+  ],
+  "name": "message"
+}

@@ -1,0 +1,88 @@
+{
+  "type": "object",
+  "title": "Home",
+  "description": "object",
+  "properties": {
+    "id": {
+      "description": "the field description",
+      "identity": true,
+      "readonly": true,
+      "type": "integer"
+    },
+    "created_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "description": "the field description",
+      "type": "string"
+    },
+    "owner_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "is_public": {
+      "description": "the field description",
+      "type": "boolean",
+      "default": "false"
+    },
+    "home_type_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "rooms_count": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "sensors_count": {
+      "description": "the field description",
+      "type": "integer"
+    }
+  },
+  "links": [
+    {
+      "rel": "index",
+      "method": "GET",
+      "href": "/homes"
+    },
+    {
+      "rel": "create",
+      "method": "POST",
+      "href": "/homes"
+    },
+    {
+      "rel": "new",
+      "method": "GET",
+      "href": "/homes/new"
+    },
+    {
+      "rel": "edit",
+      "method": "GET",
+      "href": "/homes/{id}/edit"
+    },
+    {
+      "rel": "show",
+      "method": "GET",
+      "href": "/homes/{id}"
+    },
+    {
+      "rel": "update",
+      "method": "PATCH",
+      "href": "/homes/{id}"
+    },
+    {
+      "rel": "destroy",
+      "method": "DELETE",
+      "href": "/homes/{id}"
+    }
+  ],
+  "name": "home"
+}

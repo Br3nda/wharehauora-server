@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "title": "Home viewer",
+  "description": "object",
+  "properties": {
+    "id": {
+      "description": "the field description",
+      "identity": true,
+      "readonly": true,
+      "type": "integer"
+    },
+    "user_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "home_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "created_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "links": [
+    {
+      "rel": "index",
+      "method": "GET",
+      "href": "/homes/:home_id/home_viewers"
+    },
+    {
+      "rel": "create",
+      "method": "POST",
+      "href": "/homes/:home_id/home_viewers"
+    },
+    {
+      "rel": "new",
+      "method": "GET",
+      "href": "/homes/:home_id/home_viewers/new"
+    },
+    {
+      "rel": "edit",
+      "method": "GET",
+      "href": "/homes/:home_id/home_viewers/{id}/edit"
+    },
+    {
+      "rel": "show",
+      "method": "GET",
+      "href": "/homes/:home_id/home_viewers/{id}"
+    },
+    {
+      "rel": "update",
+      "method": "PATCH",
+      "href": "/homes/:home_id/home_viewers/{id}"
+    },
+    {
+      "rel": "destroy",
+      "method": "DELETE",
+      "href": "/homes/:home_id/home_viewers/{id}"
+    }
+  ],
+  "name": "home_viewer"
+}

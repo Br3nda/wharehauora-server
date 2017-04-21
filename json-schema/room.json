@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "title": "Room",
+  "description": "object",
+  "properties": {
+    "id": {
+      "description": "the field description",
+      "identity": true,
+      "readonly": true,
+      "type": "integer"
+    },
+    "home_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "name": {
+      "description": "the field description",
+      "type": "string"
+    },
+    "created_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "description": "the field description",
+      "readonly": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "room_type_id": {
+      "description": "the field description",
+      "type": "integer"
+    },
+    "readings_count": {
+      "description": "the field description",
+      "type": "integer"
+    }
+  },
+  "links": [
+    {
+      "rel": "index",
+      "method": "GET",
+      "href": "/homes/:home_id/rooms"
+    },
+    {
+      "rel": "create",
+      "method": "POST",
+      "href": "/homes/:home_id/rooms"
+    },
+    {
+      "rel": "new",
+      "method": "GET",
+      "href": "/homes/:home_id/rooms/new"
+    },
+    {
+      "rel": "edit",
+      "method": "GET",
+      "href": "/homes/:home_id/rooms/{id}/edit"
+    },
+    {
+      "rel": "show",
+      "method": "GET",
+      "href": "/homes/:home_id/rooms/{id}"
+    },
+    {
+      "rel": "update",
+      "method": "PATCH",
+      "href": "/homes/:home_id/rooms/{id}"
+    },
+    {
+      "rel": "destroy",
+      "method": "DELETE",
+      "href": "/homes/:home_id/rooms/{id}"
+    }
+  ],
+  "name": "room"
+}
