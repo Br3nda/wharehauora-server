@@ -26,7 +26,10 @@ class Admin::RoomTypesController < ApplicationController
   end
 
   def destroy
-    @room_type.destroy
+    ActiveRecord::Base.transaction do
+      Room.where(room_type: @room_type).update_all(room_type_id: nil) # rubocop:disable Rails/SkipsModelValidations
+      @room_type.destroy
+    end
     redirect_to admin_room_types_path
   end
 
