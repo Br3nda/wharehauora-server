@@ -22,7 +22,7 @@
           %td
             = link_to edit_admin_home_type_path(ht) do
               = fa_icon "edit"
-            - if ht.homes.empty?
-              = link_to admin_home_type_path(ht),
-                method: :delete, data: { confirm: 'delete this home type?' } do
-                = fa_icon "trash"
+          %td
+            = link_to admin_home_type_path(ht),
+              method: :delete, data: { confirm: 'delete this home type?' } do
+              = fa_icon "trash"

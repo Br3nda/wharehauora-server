@@ -28,7 +28,12 @@ class Admin::HomeTypesController < ApplicationController
   end
 
   def destroy
-    @home_type.destroy
+    ActiveRecord::Base.transaction do
+      Home.where(
+        home_type_id: @home_type.id
+      ).update_all(home_type_id: nil) # rubocop:disable Rails/SkipsModelValidations
+      @home_type.destroy
+    end
     redirect_to admin_home_types_path
   end
 
