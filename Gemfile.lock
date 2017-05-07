@@ -209,7 +209,8 @@ GEM
     rainbow (2.2.2)
       rake
     rake (12.0.0)
-    raygun4ruby (2.0.0)
+    raygun4ruby (2.2.0)
+      concurrent-ruby
       httparty (> 0.13.7)
       json
       rack
