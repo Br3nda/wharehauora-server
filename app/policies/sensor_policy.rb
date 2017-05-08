@@ -19,13 +19,12 @@ class SensorPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      query = scope.joins_home
       if user
-        query.where('owner_id = ? OR is_public = true')
-      else
-        query.where(is_public: true)
+        return scope.joins(:home)
+                    .joins('LEFT OUTER JOIN home_viewers ON homes.id = home_viewers.home_id')
+                    .where('(homes.owner_id = ? OR home_viewers.user_id = ?)', user.id, user.id)
       end
-      query
+      scope.joins(:home).where(homes: { is_public: true })
     end
   end
 
