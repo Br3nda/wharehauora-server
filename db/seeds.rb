@@ -46,10 +46,12 @@ if %w[development test staging].include? Rails.env
 
     home = Home.find_by!(name: 'Example home 1')
 
-    sensors = [{ node_id: 100, home: home, room: Room.create(name: 'living room', home: home, room_type_id: living_room.id) },
-               { node_id: 101, home: home, room: Room.create(name: "parent's room", home: home, room_type_id: bedroom.id) },
-               { node_id: 102, home: home, room: Room.create(name: "eldest child's room", home: home, room_type_id: bedroom.id) },
-               { node_id: 103, home: home, room: Room.create(name: "youngest child's room", home: home, room_type_id: bedroom.id) }]
+    sensors = [
+      { node_id: 100, home: home, room: Room.create(name: 'living room', home: home, room_type: living_room) },
+      { node_id: 101, home: home, room: Room.create(name: "parent's room", home: home, room_type: bedroom) },
+      { node_id: 102, home: home, room: Room.create(name: "eldest child's room", home: home, room_type: bedroom) },
+      { node_id: 103, home: home, room: Room.create(name: "youngest child's room", home: home, room_type: bedroom) }
+    ]
 
     modifier = 1
     sensors.each do |s|
