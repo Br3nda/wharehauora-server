@@ -2,6 +2,11 @@
 
 Rails.application.routes.draw do
   devise_for :users
+  use_doorkeeper do
+    # OAuth applications must be created using rake tasks `rake oauth:new_application`
+    skip_controllers :applications, :authorized_applications
+  end
+
   root 'welcome#index'
 
   resources :homes do
