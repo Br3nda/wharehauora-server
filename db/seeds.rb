@@ -44,7 +44,7 @@ if %w[development test staging].include? Rails.env
                    home_type: state_house, owner_id: user.id)
     end
 
-    home = Home.find_by(name: 'Example home 1')
+    home = Home.find_by!(name: 'Example home 1')
 
     sensors = [{ node_id: 100, room: Room.create(name: 'living room', home: home, room_type_id: living_room.id) },
                { node_id: 101, room: Room.create(name: "parent's room", home: home, room_type_id: bedroom.id) },
