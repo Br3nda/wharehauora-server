@@ -18,7 +18,6 @@ module WharehauoraServer
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
-
     # db/schema.rb cannot express database specific items such as triggers, sequences, stored procedures
     # or check constraints, etc.
     # While custom SQL statements can be run in migrations, these statements cannot be reconstituted by the
