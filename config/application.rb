@@ -20,10 +20,10 @@ module WharehauoraServer
 
 
     # db/schema.rb cannot express database specific items such as triggers, sequences, stored procedures
-    # or check constraints, etc. 
+    # or check constraints, etc.
     # While custom SQL statements can be run in migrations, these statements cannot be reconstituted by the
-    # schema dumper. Using the :sql schema format will prevent loading the schema into a RDBMS other than 
-    # the one used to create it but will create a perfect copy of the database's structure. 
+    # schema dumper. Using the :sql schema format will prevent loading the schema into a RDBMS other than
+    # the one used to create it but will create a perfect copy of the database's structure.
     config.active_record.schema_format = :sql
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
