@@ -32,6 +32,9 @@ gem 'devise'
 # roles and permissions
 gem 'pundit'
 
+# for oauth
+gem 'doorkeeper'
+
 # templating
 gem 'haml-rails'
 
