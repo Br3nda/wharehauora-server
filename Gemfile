@@ -70,15 +70,9 @@ group :development, :test do
   gem 'byebug'
 
   # code style
-  gem 'haml-lint', require: false
+  gem 'haml_lint', '0.25.1', require: false
   gem 'rubocop', '0.49.1', require: false
   gem 'scss_lint', require: false
-
-  # looks for obvious wrongness
-  gem 'brakeman'
-
-  # check for outdated/insecure gems
-  gem 'bundler-audit'
 
   # test runner
   gem 'rspec-rails'
