@@ -42,11 +42,14 @@ Style/FrozenStringLiteralComment:
 Rails:
   Enabled: true
 
+
+## Turn these on when we go to rails 5
 Rails/HttpPositionalArguments:
+  Enabled: false
+Rails/ApplicationRecord:
   Enabled: false
 
 # Run rails specific checks
-# https://github.com/bbatsov/rubocop#rails
 AllCops:
   TargetRubyVersion: 2.3
   Include:
