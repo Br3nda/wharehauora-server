@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 ruby '2.3.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.7.1'
+gem 'rails', '~> 4.2.8'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -70,15 +70,9 @@ group :development, :test do
   gem 'byebug'
 
   # code style
-  gem 'haml-lint', require: false
-  gem 'rubocop', require: false
+  gem 'haml_lint', '0.25.1', require: false
+  gem 'rubocop', '0.49.1', require: false
   gem 'scss_lint', require: false
-
-  # looks for obvious wrongness
-  gem 'brakeman'
-
-  # check for outdated/insecure gems
-  gem 'bundler-audit'
 
   # test runner
   gem 'rspec-rails'

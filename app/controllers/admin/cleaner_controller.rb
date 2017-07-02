@@ -13,6 +13,7 @@ class Admin::CleanerController < ApplicationController
     end
     redirect_to admin_cleaner_path
   end
+
   def sensors
     authorize :cleaner
     ActiveRecord::Base.transaction do
