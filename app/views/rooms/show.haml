@@ -6,7 +6,7 @@
   .pure-u-1
     %p
       Home:
-      = link_to @room.home.name, @room.home.name
+      = link_to @room.home.name, home_id: @room.home.id
 
   .pure-u-1-2
     - @keys.each do |key|
