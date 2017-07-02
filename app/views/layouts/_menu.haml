@@ -38,6 +38,8 @@
               = link_to 'MQTT Provisioning', admin_mqtt_users_path, class: 'pure-menu-link'
             %li.pure-menu-item
               = link_to 'Orphaned records', admin_cleaner_path, class: 'pure-menu-link'
+            %li.pure-menu-item
+              = link_to 'Messages', messages_path, class: 'pure-menu-link'
 
     - if user_signed_in?
       %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover

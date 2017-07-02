@@ -19,15 +19,15 @@
         %td
           = link_to home.name.present? ? home.name : 'unnamed home', home_path(home)
         %td
-          = home.home_type.name
+          = home.home_type&.name
         %td
           = home.owner.email
         %td
-          - if home.rooms.count.positive?
-            = link_to("#{home.rooms.count} rooms", home_rooms_path(home))
+          - if home.rooms.size.positive?
+            = link_to("#{home.rooms.size} rooms", home_rooms_path(home))
         %td
-          - if home.sensors.count.positive?
-            = link_to("#{home.sensors.count} sensors", home_sensors_path(home))
+          - if home.sensors.size.positive?
+            = link_to("#{home.sensors.size} sensors", home_sensors_path(home))
         %td
           - if policy(home).edit?
             = link_to 'edit', edit_home_path(home)

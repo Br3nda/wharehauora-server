@@ -4,7 +4,7 @@ bundler_args: "--without development"
 sudo: false
 cache: bundler
 rvm:
-  - 2.3.1
+  - 2.3.4
 before_script:
   - RAILS_ENV=test bundle exec rake db:create db:migrate
   - gem install brakeman bundler-audit

@@ -15,12 +15,8 @@
       - @rooms.each do |room|
         %tr
           %td
-            - if room.name.present?
-              = room.name
-            - else
-              = home_room_path(@home, room)
-            - if room.room_type.present?
-              = "(#{room.room_type.name})"
+            = room.name.present? ? room.name :  home_room_path(@home, room)
+            = "(#{room.room_type.name})" if room.room_type.present?
           %td
             - room.sensors.each do |sensor|
               = link_to(sensor.node_id, sensor_path(sensor))

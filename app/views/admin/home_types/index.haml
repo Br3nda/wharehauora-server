@@ -1,20 +1,28 @@
-%h2 Home types
 
-= link_to 'new', new_admin_home_type_path
 
-%table.pure-table
-  %thead
-    %tr
-      %th Name
-      %th Whare
-      %th action
-  - @home_types.each do |ht|
-    %tr
-      %td
-        = ht.name
-      %td
-        = ht.homes.count
-      %td
-        = link_to 'edit', edit_admin_home_type_path(ht)
-        = link_to 'delete', admin_home_type_path(ht),
-          method: :delete, data: { confirm: 'delete this home type?' }
+.pure-g
+  .pure-u-1-4
+    %h3 New Whare Type
+    .pure-form
+      = form_for :home_type, url: { action: 'create' } do |f|
+        = render 'form', f: f, home_type: @home_type
+        %fieldset
+          %button.pure-button.pure-button-primary Create
+  .pure-u-1-2
+    %h2 Whare types
+    %table.pure-table
+      %thead
+        %tr
+          %th Name
+          %th action
+      - @home_types.each do |ht|
+        %tr
+          %td
+            = ht.name
+          %td
+            = link_to edit_admin_home_type_path(ht) do
+              = fa_icon "edit"
+          %td
+            = link_to admin_home_type_path(ht),
+              method: :delete, data: { confirm: 'delete this home type?' } do
+              = fa_icon "trash"

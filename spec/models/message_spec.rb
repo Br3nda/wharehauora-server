@@ -22,7 +22,7 @@ RSpec.describe Message, type: :model do
       it 'Does not save a reading' do
         expect do
           Message.decode(topic, payload)
-        end.not_to change { Reading.count }
+        end.not_to(change { Reading.count })
       end
 
       it 'Saves to the correct home' do
@@ -36,7 +36,7 @@ RSpec.describe Message, type: :model do
       let(:sensor) { FactoryGirl.create :sensor, home: home, room: room, node_id: '130' }
 
       it 'does not make a new sensor record' do
-        expect { Message.decode(topic, payload) }.not_to change { Sensor.count }
+        expect { Message.decode(topic, payload) }.not_to(change { Sensor.count })
       end
 
       it 'saves a reading' do

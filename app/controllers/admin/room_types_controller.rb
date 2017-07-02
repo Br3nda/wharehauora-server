@@ -1,10 +1,10 @@
 class Admin::RoomTypesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_room_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_room_type, only: %i[show edit update destroy]
 
   def index
     authorize :room_type
-    @room_types = policy_scope(RoomType)
+    @room_types = policy_scope RoomType.all.order(:name)
   end
 
   def edit; end
@@ -26,7 +26,10 @@ class Admin::RoomTypesController < ApplicationController
   end
 
   def destroy
-    @room_type.destroy
+    ActiveRecord::Base.transaction do
+      Room.where(room_type: @room_type).update_all(room_type_id: nil) # rubocop:disable Rails/SkipsModelValidations
+      @room_type.destroy
+    end
     redirect_to admin_room_types_path
   end
 

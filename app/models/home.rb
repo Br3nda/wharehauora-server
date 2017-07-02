@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Home < ActiveRecord::Base
   belongs_to :owner, class_name: 'User'
   belongs_to :home_type
@@ -13,7 +14,7 @@ class Home < ActiveRecord::Base
 
   has_many :users, through: :home_viewers
 
-  scope :is_public?, -> { where(is_public: true) }
+  scope(:is_public?, -> { where(is_public: true) })
 
   validates :name, presence: true
   validates :owner, presence: true

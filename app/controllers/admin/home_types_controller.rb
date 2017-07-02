@@ -1,14 +1,14 @@
 class Admin::HomeTypesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_home_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_home_type, only: %i[show edit update destroy]
 
   def index
     authorize :home_type
-    @home_types = policy_scope(HomeType).order(:name)
+    @home_types = policy_scope HomeType.all.order(:name)
   end
 
   def edit
-    @homes_count = @home_type.homes.count
+    @homes_count = @home_type.homes.size
   end
 
   def update
@@ -28,7 +28,12 @@ class Admin::HomeTypesController < ApplicationController
   end
 
   def destroy
-    @home_type.destroy
+    ActiveRecord::Base.transaction do
+      Home.where(
+        home_type_id: @home_type.id
+      ).update_all(home_type_id: nil) # rubocop:disable Rails/SkipsModelValidations
+      @home_type.destroy
+    end
     redirect_to admin_home_types_path
   end
 

@@ -1,10 +1,10 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: %i[show edit update destroy]
 
   def index
     authorize :user
-    @users = policy_scope(User).page(params[:page])
+    @users = policy_scope User.all.order(:email).page(params[:page])
   end
 
   def new

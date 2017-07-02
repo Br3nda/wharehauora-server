@@ -1,5 +1,5 @@
 class Room < ActiveRecord::Base
-  belongs_to :home
+  belongs_to :home, counter_cache: true
   belongs_to :room_type
 
   has_many :readings
@@ -10,8 +10,8 @@ class Room < ActiveRecord::Base
 
   validates :home, presence: true
 
-  scope :without_readings, -> { includes(:readings).where(readings: { id: nil }) }
-  scope :without_sensors, -> { includes(:sensors).where(sensors: { id: nil }) }
+  scope(:without_readings, -> { includes(:readings).where(readings: { id: nil }) })
+  scope(:without_sensors, -> { includes(:sensors).where(sensors: { id: nil }) })
 
   def temperature
     single_current_metric 'temperature'

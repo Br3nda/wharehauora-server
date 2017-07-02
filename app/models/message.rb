@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
-  belongs_to :sensor
+  belongs_to :sensor, counter_cache: true
   delegate :home, :home_id, to: :sensor
 
   validates :node_id, :sensor_id, :child_sensor_id,
@@ -7,7 +7,7 @@ class Message < ActiveRecord::Base
 
   after_save :save_reading
 
-  scope :joins_home, -> { joins(:sensor, sensor: :home) }
+  scope(:joins_home, -> { joins(:sensor, sensor: :home) })
 
   def self.decode(topic, payload)
     (home_id, node_id, child_sensor_id, message_type,

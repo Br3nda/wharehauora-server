@@ -1,23 +1,25 @@
 %h2 Room types
 
-%p
-  = link_to new_admin_room_type_path, class: 'pure-button' do
-    Add
-    = fa_icon 'plus'
 
-%table.pure-table
-  %thead
-    %tr
-      %th Name
-  - @room_types.each do |ht|
-    %tr
-      %td
-        = ht.name
-      %td
-        = link_to edit_admin_room_type_path(ht) do
-          = fa_icon 'edit'
-      %td
-        = link_to admin_room_type_path(ht),
-          method: :delete,
-          data: { confirm: 'delete this room_type?' } do
-          = fa_icon 'trash'
+.pure-g
+  .pure-u-1-4
+    = form_for RoomType.new, url: { action: 'create' } do |f|
+      = render 'form', f: f
+
+  .pure-u-3-4
+    %table.pure-table
+      %thead
+        %tr
+          %th Name
+      - @room_types.each do |ht|
+        %tr
+          %td
+            = ht.name
+          %td
+            = link_to edit_admin_room_type_path(ht) do
+              = fa_icon 'edit'
+          %td
+            = link_to admin_room_type_path(ht),
+              method: :delete,
+              data: { confirm: 'delete this room_type?' } do
+              = fa_icon 'trash'

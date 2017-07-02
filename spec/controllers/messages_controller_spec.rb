@@ -15,8 +15,16 @@ RSpec.describe MessagesController, type: :controller do
   context 'Signed in as home owner' do
     before { sign_in user }
     describe 'GET index' do
-      before { get :index, valid_params }
+      before do
+        @message_one = FactoryGirl.create :message, sensor: sensor
+        @message_two = FactoryGirl.create :message, sensor: sensor
+
+        get :index, valid_params
+      end
       it { expect(response).to have_http_status(:success) }
+      it { expect(assigns(:messages).last).to eq(@message_one) }
+      it { expect(assigns(:messages).first).to eq(@message_two) }
+      it { expect(assigns(:messages)).to eq([@message_two, @message_one]) }
     end
   end
 end
