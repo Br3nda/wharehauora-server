@@ -35,9 +35,6 @@ Style/StringLiteralsInInterpolation:
 Style/SingleLineMethods:
   Enabled: false
 
-Style/EmptyLineBetweenDefs:
-  Enabled: false
-
 # Not ready for this in our codebase yet
 Style/FrozenStringLiteralComment:
   Enabled: false

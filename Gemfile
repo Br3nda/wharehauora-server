@@ -71,7 +71,7 @@ group :development, :test do
 
   # code style
   gem 'haml-lint', require: false
-  gem 'rubocop', require: false
+  gem 'rubocop', '0.49.1', require: false
   gem 'scss_lint', require: false
 
   # looks for obvious wrongness
