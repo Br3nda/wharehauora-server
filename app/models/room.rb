@@ -25,6 +25,10 @@ class Room < ActiveRecord::Base
     single_current_metric 'mould'
   end
 
+  def good?
+    true
+  end
+
   def last_reading_timestamp
     readings.order(created_at: :desc).first&.created_at
   end

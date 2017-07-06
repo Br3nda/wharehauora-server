@@ -1,35 +1,21 @@
-%h2 Rooms in #{@home.name}
 
 = render 'homes/nav', home: @home
+%h2.room-page-title Rooms in #{@home.name}
 
+.room-tables.pure-g
+  - @rooms.order(:name).each do |room|
+    .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+      %div{ class: room.good? ? 'room-table room-table-good' : 'room-table room-table-bad' }
+        .room-table-header
+          %h2= room.name
+          %span.room-table-current
+            = room_temperature(room)
+            %span Temperature
+          %span.room-table-current
+            = room_humidity(room)
+            %span Humidity
+        %ul.room-table-list
+          %li= room&.room_type&.name
+        -# %button.button-analyze.pure-button Analyze
 
-- if @rooms.present?
-  %table.pure-table
-    %thead
-      %tr
-        %th.sortable
-          Room
-          ( Room type )
-        %th Sensors
-    %tbody
-      - @rooms.each do |room|
-        %tr
-          %td
-            = room.name.present? ? room.name :  home_room_path(@home, room)
-            = "(#{room.room_type.name})" if room.room_type.present?
-          %td
-            - room.sensors.each do |sensor|
-              = link_to(sensor.node_id, sensor_path(sensor))
-          %td
-            - if policy(room).edit?
-              = link_to edit_home_room_path(room.home, room), class: 'pure-button' do
-                = fa_icon 'edit'
-          %td
-            - if policy(room).destroy?
-              = link_to home_room_path(room.home, room),
-                method: :delete, data: { confirm: 'Delete room?' },
-                class: 'pure-button' do
-                = fa_icon 'trash'
-  %p= paginate(@rooms)
-- else
-  %p No rooms detected in this whare.
+= paginate(@rooms)

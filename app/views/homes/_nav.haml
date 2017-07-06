@@ -6,11 +6,12 @@
         charts
         = fa_icon 'line-chart'
     %li.pure-menu-item
-      = link_to 'rooms', home_rooms_path(home), class: 'pure-menu-link'
+      = link_to home_rooms_path(home), class: 'pure-menu-link' do
+        rooms
+        = fa_icon 'thermometer-full'
     %li.pure-menu-item
       = link_to home_sensors_path(home), class: 'pure-menu-link' do
         sensors
-        = fa_icon 'thermometer-full'
     - if policy(home).edit?
       %li.pure-menu-item
         = link_to home_home_viewers_path(home), class: 'pure-menu-link' do
@@ -18,6 +19,6 @@
           = fa_icon 'users'
       %li.pure-menu-item
         = link_to edit_home_path(home), class: 'pure-menu-link' do
-          edit
+          edit home
           = fa_icon 'edit'
 
