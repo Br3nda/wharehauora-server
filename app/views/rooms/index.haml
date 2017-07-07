@@ -11,10 +11,14 @@
             %h2= room.name
             %span.room-table-current
               = room_temperature(room)
-              %span Temperature
+              %span
+                Temperature
+                = room_reading_time_ago(room, "temperature")
             %span.room-table-current
               = room_humidity(room)
-              %span Humidity
+              %span
+                Humidity
+                = room_reading_time_ago(room, "humidity")
           %ul.room-table-list
             %li
               = room&.room_type&.name
