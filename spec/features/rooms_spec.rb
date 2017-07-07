@@ -24,7 +24,7 @@ RSpec.feature 'Rooms', type: :feature do
       expect(page).to have_text('??.?')
     end
 
-    scenario 'home has 1 room, some readings' do
+    scenario 'home has 1 room, one reading' do
       room = FactoryGirl.create :room, home: home
       FactoryGirl.create :reading, key: 'temperature', value: 44.4, room: room
       visit "/homes/#{home.id}/rooms"
@@ -32,6 +32,26 @@ RSpec.feature 'Rooms', type: :feature do
       expect(page).to have_text(room.name)
       # Because there is no reading yet
       expect(page).to have_text('44.4C')
+    end
+
+    scenario 'home has 1 room, too cold' do
+      room_type = FactoryGirl.create :room_type, min_temperature: 20.0
+      room = FactoryGirl.create :room, home: home, room_type: room_type
+      FactoryGirl.create :reading, key: 'temperature', value: 15.1, room: room
+      visit "/homes/#{home.id}/rooms"
+      # Because there is no reading yet
+      expect(page).to have_text('15.1C')
+      expect(page).to have_text('Too cold')
+    end
+
+    scenario 'home has 1 room, too hot' do
+      room_type = FactoryGirl.create :room_type, max_temperature: 30.0
+      room = FactoryGirl.create :room, home: home, room_type: room_type
+      FactoryGirl.create :reading, key: 'temperature', value: 45.2, room: room
+      visit "/homes/#{home.id}/rooms"
+      # Because there is no reading yet
+      expect(page).to have_text('45.2C')
+      expect(page).to have_text('Too hot')
     end
 
     scenario 'home has 100 rooms' do

@@ -24,6 +24,10 @@
               = room&.room_type&.name
               = link_to edit_home_room_path(room.home, room), class: 'pure-button' do
                 = fa_icon 'edit'
+            - if room.too_cold?
+              %li Too cold
+            - if room.too_hot?
+              %li Too hot
           -# %button.button-analyze.pure-button Analyze
   = paginate(@rooms)
 - else
