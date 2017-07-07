@@ -6,7 +6,7 @@
   .room-tables.pure-g
     - @rooms.order(:name).each do |room|
       .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-        %div{ class: room.good? ? 'room-table room-table-good' : 'room-table room-table-bad' }
+        %div{ class: room.too_cold? ? 'room-table room-table-bad' : 'room-table room-table-good' }
           .room-table-header
             %h2= room.name
             %span.room-table-current
