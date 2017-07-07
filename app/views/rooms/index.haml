@@ -16,7 +16,10 @@
               = room_humidity(room)
               %span Humidity
           %ul.room-table-list
-            %li= room&.room_type&.name
+            %li
+              = room&.room_type&.name
+              = link_to edit_home_room_path(room.home, room), class: 'pure-button' do
+                = fa_icon 'edit'
           -# %button.button-analyze.pure-button Analyze
   = paginate(@rooms)
 - else
