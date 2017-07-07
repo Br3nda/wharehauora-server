@@ -24,11 +24,19 @@ To set up a development environment
 
   `git clone [repo]`
 
-2. `bundle install`
+1. `cd wharehauora-server`
 
-3. `rake db:create db:migrate`
+1. Add project upstream
+  `git remote add upstream git@github.com:WhareHauora/wharehauora-server.git`
 
-4. `bundle exec rails s`
+1. Set up environment variables
+  `cp env-example .env`
+
+1. `bundle install`
+
+1. `rake db:create db:migrate`
+
+1. `bundle exec rails s`
 
 
 To populate to your database with some records to work with:
@@ -43,12 +51,31 @@ to create a continuous stream of incoming fake sensor readings:
 bundle exec rake sensors:fake
 ```
 
+To pull the latest changes from upstream
+-----------------------------------------
+
+This fill fetch the latest changes on the official wharehauora git repo, and merge them into
+your master branch. Then push those changes up to your own fork.
+
+
+```
+git checkout master
+git fetch upstream
+git merge upstream/master
+git push origin master
+```
+
+More info on how github forks work:
+https://help.github.com/articles/fork-a-repo/
+
 
 Code Quality
 -------------
 
-We use rubocop, and overcommit. To check code style before commiting to git,
-install the overcommit get
+We use code linters. These check code adheres to our configured code styles and standards.
+If your code doesn't match then the hound bot will comment on your pull request.
+
+To check code style on your own code before commiting to git, install the overcommit get
 
 ```
 gem install overcommit
@@ -56,17 +83,28 @@ overcommit --install
 overcommit --sign
 ```
 
+This will run the same linters are travis and hound. Note: Sometimes overcommit configuration
+doesn't match, and overcommit allows code that will fail on a PR with hound. When this
+happens please report as a bug to the wharehauora-server project.
+
 
 How to run the test suite
 -------------------------
 
 `bundle exec rspec`
 
+
+How to run the code linters
+---------------------------
+
+`overcommit -r`
+
+
 Deployment
 ==========
 
 This app is hosted on heroku.
 
-It wil be automatically deploymed to staging, whenevver the `master` branch changes, and Travis-CI build passes.
+It wil be automatically deployed to staging, whenever the `master` branch changes, and Travis-CI build passes.
 
-Production is manually approved, after testing on staging.
+Code is manually promoted from staging to produciton (using the button on heroku)
