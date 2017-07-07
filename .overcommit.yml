@@ -50,6 +50,8 @@ PreCommit:
     on_warn: warn
   RailsSchemaUpToDate:
     enabled: true
+  ScssLint:
+    enabled: true
 
 PostCheckout:
   ALL:

@@ -349,7 +349,9 @@ CREATE TABLE room_types (
     id integer NOT NULL,
     name text NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    min_temperature double precision,
+    max_temperature double precision
 );
 
 
@@ -949,4 +951,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170323214453');
 INSERT INTO schema_migrations (version) VALUES ('20170324011548');
 
 INSERT INTO schema_migrations (version) VALUES ('20170416021403');
+
+INSERT INTO schema_migrations (version) VALUES ('20170707012401');
 
