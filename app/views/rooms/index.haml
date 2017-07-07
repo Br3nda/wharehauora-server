@@ -2,20 +2,23 @@
 = render 'homes/nav', home: @home
 %h2.room-page-title Rooms in #{@home.name}
 
-.room-tables.pure-g
-  - @rooms.order(:name).each do |room|
-    .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-      %div{ class: room.good? ? 'room-table room-table-good' : 'room-table room-table-bad' }
-        .room-table-header
-          %h2= room.name
-          %span.room-table-current
-            = room_temperature(room)
-            %span Temperature
-          %span.room-table-current
-            = room_humidity(room)
-            %span Humidity
-        %ul.room-table-list
-          %li= room&.room_type&.name
-        -# %button.button-analyze.pure-button Analyze
+- if @rooms.size.positive?
+  .room-tables.pure-g
+    - @rooms.order(:name).each do |room|
+      .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+        %div{ class: room.good? ? 'room-table room-table-good' : 'room-table room-table-bad' }
+          .room-table-header
+            %h2= room.name
+            %span.room-table-current
+              = room_temperature(room)
+              %span Temperature
+            %span.room-table-current
+              = room_humidity(room)
+              %span Humidity
+          %ul.room-table-list
+            %li= room&.room_type&.name
+          -# %button.button-analyze.pure-button Analyze
+  = paginate(@rooms)
+- else
+  %p Home has no rooms
 
-= paginate(@rooms)

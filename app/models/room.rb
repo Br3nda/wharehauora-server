@@ -26,11 +26,24 @@ class Room < ActiveRecord::Base
   end
 
   def good?
-    true
+    return unless room_type && current?('temperature')
+    (temperature > room_type.min_temperature) && (temperature < room.max_temperature)
   end
 
-  def last_reading_timestamp
-    readings.order(created_at: :desc).first&.created_at
+  def current?(reading_type)
+    return false unless readings.size.positive?
+    age_of_last_reading(reading_type) < 1.hour
+  end
+
+  def age_of_last_reading(reading_type)
+    Time.current - last_reading_timestamp(reading_type)
+  end
+
+  def last_reading_timestamp(reading_type)
+    readings.where(key: reading_type)
+            .order(created_at: :desc)
+            .limit(1)
+            .first&.created_at
   end
 
   def rating
