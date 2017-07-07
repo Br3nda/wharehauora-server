@@ -3,6 +3,7 @@
 
 .pure-g
   .pure-u-1-4
+    add new room_type
     = form_for RoomType.new, url: { action: 'create' } do |f|
       = render 'form', f: f
 
@@ -11,10 +12,13 @@
       %thead
         %tr
           %th Name
+          %th Min temp
+          %th Max temp
       - @room_types.each do |ht|
         %tr
-          %td
-            = ht.name
+          %td= ht.name
+          %td= ht.min_temperature
+          %td= ht.max_temperature
           %td
             = link_to edit_admin_room_type_path(ht) do
               = fa_icon 'edit'
