@@ -27,18 +27,27 @@ class Room < ActiveRecord::Base
 
   def good?
     return unless room_type && current?('temperature')
-    return unless room_type.min_temperature
-    return unless room_type.max_temperature
-    (temperature > room_type.min_temperature) && (temperature < room.max_temperature)
+    return unless room_type.min_temperature && room_type.max_temperature
+    (temperature > room_type.min_temperature) && (temperature < room_type.max_temperature)
+  end
+
+  def too_cold?
+    return unless room_type && current?('temperature') && room_type.min_temperature
+    (temperature < room_type.min_temperature)
+  end
+
+  def too_hot?
+    return unless room_type && current?('temperature') && room_type.max_temperature
+    (temperature > room_type.max_temperature)
   end
 
   def current?(reading_type)
-    return false unless readings.size.positive?
+    return false unless readings.where(key: reading_type).size.positive?
     age_of_last_reading(reading_type) < 1.hour
   end
 
   def age_of_last_reading(reading_type)
-    return nil unless readings.size.positive?
+    return nil unless readings.where(key: reading_type).size.positive?
     Time.current - last_reading_timestamp(reading_type)
   end
 
