@@ -27,6 +27,8 @@ class Room < ActiveRecord::Base
 
   def good?
     return unless room_type && current?('temperature')
+    return unless room_type.min_temperature
+    return unless room_type.max_temperature
     (temperature > room_type.min_temperature) && (temperature < room.max_temperature)
   end
 
@@ -53,8 +55,6 @@ class Room < ActiveRecord::Base
   private
 
   def single_current_metric(key)
-    Reading.where(room_id: id, key: key).last.value
-  rescue
-    nil
+    Reading.where(room_id: id, key: key)&.last&.value
   end
 end
