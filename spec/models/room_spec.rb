@@ -18,4 +18,21 @@ RSpec.describe Room, type: :model do
     end
     it { expect(room.humidity).to eq(71) }
   end
+
+  pending 'good?'
+  describe 'current?' do
+    describe 'no readings' do
+      it { expect(room.current?('humidity')).to eq(false) }
+    end
+    describe 'has old reading' do
+      before { FactoryGirl.create :reading, key: 'humidity', value: 0, room: room, created_at: 3.hours.ago }
+      it { expect(room.current?('humidity')).to eq(false) }
+    end
+    describe 'has current readings' do
+      before { FactoryGirl.create :reading, key: 'humidity', value: 0, room: room }
+      it { expect(room.current?('humidity')).to eq(true) }
+    end
+  end
+  pending 'age_of_last_reading'
+  pending 'rating'
 end
