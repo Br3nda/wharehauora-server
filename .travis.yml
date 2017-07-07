@@ -5,6 +5,10 @@ sudo: false
 cache: bundler
 rvm:
   - 2.3.4
+env:
+  # yamllint disable rule:line-length
+  - SECRET_KEY_BASE='70c6df4e2a1788c9d79453169ffbf1dde4e6f5bfa91a68d1f408e32b0adf333bf61795bdd9d9c211653467f3cc6db5b791e112b840f2ebbeb86b5fd6c1ad7444'
+  # yamllint enable
 before_script:
   - RAILS_ENV=test bundle exec rake db:create db:migrate
   - gem install brakeman bundler-audit
