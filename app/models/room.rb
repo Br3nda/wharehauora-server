@@ -38,6 +38,7 @@ class Room < ActiveRecord::Base
   end
 
   def age_of_last_reading(reading_type)
+    return nil unless readings.size.positive?
     Time.current - last_reading_timestamp(reading_type)
   end
 
@@ -46,10 +47,6 @@ class Room < ActiveRecord::Base
             .order(created_at: :desc)
             .limit(1)
             .first&.created_at
-  end
-
-  def rating
-    'not calculated yet'
   end
 
   private

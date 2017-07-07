@@ -20,19 +20,23 @@ RSpec.describe Room, type: :model do
   end
 
   pending 'good?'
-  describe 'current?' do
-    describe 'no readings' do
-      it { expect(room.current?('humidity')).to eq(false) }
-    end
-    describe 'has old reading' do
-      before { FactoryGirl.create :reading, key: 'humidity', value: 0, room: room, created_at: 3.hours.ago }
-      it { expect(room.current?('humidity')).to eq(false) }
-    end
-    describe 'has current readings' do
-      before { FactoryGirl.create :reading, key: 'humidity', value: 0, room: room }
-      it { expect(room.current?('humidity')).to eq(true) }
-    end
+  describe 'no readings' do
+    it { expect(room.good?).to eq(nil) }
+    it { expect(room.current?('temperature')).to eq(false) }
+    it { expect(room.current?('humidity')).to eq(false) }
+    it { expect(room.age_of_last_reading('temperature')).to eq(nil) }
+    it { expect(room.age_of_last_reading('humidity')).to eq(nil) }
   end
-  pending 'age_of_last_reading'
-  pending 'rating'
+  describe 'has old reading' do
+    before { FactoryGirl.create :reading, key: 'humidity', value: 0, room: room, created_at: 3.hours.ago }
+    it { expect(room.current?('humidity')).to eq(false) }
+    pending 'good?'
+    pending 'age_of_last_reading'
+  end
+  describe 'has current readings' do
+    before { FactoryGirl.create :reading, key: 'humidity', value: 0, room: room }
+    it { expect(room.current?('humidity')).to eq(true) }
+    pending 'good?'
+    pending 'age_of_last_reading'
+  end
 end
