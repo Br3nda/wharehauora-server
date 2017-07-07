@@ -6,31 +6,7 @@
   .conditions-tables.pure-g
     - @rooms.order(:name).each do |room|
       .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-        %div{ class: 'conditions-table conditions-table-' + (room.too_cold? ? 'bad' : 'good') }
-          .conditions-table-header
-            %h2= room.name
-            %span.conditions-table-current
-              = room_temperature(room)
-              %span
-                Temperature
-                = room_reading_time_ago(room, "temperature")
-            %span.conditions-table-current
-              = room_humidity(room)
-              %span
-                Humidity
-                = room_reading_time_ago(room, "humidity")
-          %ul.conditions-table-list
-            %li
-              = room&.room_type&.name
-              = link_to edit_home_room_path(room.home, room), class: 'pure-button' do
-                = fa_icon 'edit'
-            - if room.too_cold?
-              %li
-                Too cold
-                = fa_icon 'frown-o'
-            - if room.too_hot?
-              %li Too hot
-          -# %button.button-analyze.pure-button Analyze
+        = render "card", room: room
   = paginate(@rooms)
 - else
   %p Home has no rooms
