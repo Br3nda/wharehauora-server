@@ -21,7 +21,6 @@ To set up a development environment
 -----------------------------------
 
 1. make your own fork, and clone
-
   `git clone [repo]`
 
 1. `cd wharehauora-server`
