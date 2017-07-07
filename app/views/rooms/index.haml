@@ -25,7 +25,9 @@
               = link_to edit_home_room_path(room.home, room), class: 'pure-button' do
                 = fa_icon 'edit'
             - if room.too_cold?
-              %li Too cold
+              %li
+                Too cold
+                = fa_icon 'frown-o'
             - if room.too_hot?
               %li Too hot
           -# %button.button-analyze.pure-button Analyze
