@@ -5,7 +5,7 @@ class Message < ActiveRecord::Base
   validates :node_id, :sensor_id, :child_sensor_id,
             :message_type, :ack, :sub_type, presence: true
 
-  after_save :save_reading
+  after_save :save_reading, :save_dewpoint
 
   scope(:joins_home, -> { joins(:sensor, sensor: :home) })
 
@@ -26,6 +26,15 @@ class Message < ActiveRecord::Base
 
   def save_reading
     Reading.create!(room: sensor.room, value: payload.to_f, key: key) if sensor.room
+  end
+
+  def save_dewpoint
+    return unless sensor.room && key == 'temperature'
+    dewpoint = sensor.room.dewpoint
+    return if dewpoint.nil?
+    Reading.create!(room: sensor.room,
+                    value: dewpoint,
+                    key: 'dewpoint')
   end
 
   def key

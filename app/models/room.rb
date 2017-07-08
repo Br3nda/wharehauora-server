@@ -24,6 +24,7 @@ class Room < ActiveRecord::Base
   def dewpoint
     temp_c = single_current_metric 'temperature'
     humidity = single_current_metric 'humidity'
+    return unless temp_c && humidity
     l = Math.log(humidity / 100.0)
     m = 17.27 * temp_c
     n = 237.3 + temp_c
