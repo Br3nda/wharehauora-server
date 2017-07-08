@@ -9,9 +9,6 @@
       = link_to home_rooms_path(home), class: 'pure-menu-link' do
         rooms
         = fa_icon 'thermometer-full'
-    %li.pure-menu-item
-      = link_to home_sensors_path(home), class: 'pure-menu-link' do
-        sensors
     - if policy(home).edit?
       %li.pure-menu-item
         = link_to home_home_viewers_path(home), class: 'pure-menu-link' do
@@ -22,3 +19,10 @@
           edit home
           = fa_icon 'edit'
 
+    - if current_user && current_user.role?('janitor')
+      %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
+        %a.pure-menu-link Admin
+        %ul.pure-menu-children
+          %li.pure-menu-item
+            = link_to home_sensors_path(home), class: 'pure-menu-link' do
+              sensors

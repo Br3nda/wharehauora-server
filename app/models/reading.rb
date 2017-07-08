@@ -13,4 +13,9 @@ class Reading < ActiveRecord::Base
   scope(:mould, -> { where(key: 'mould') })
   scope(:normal_range, -> { where('value < 100 AND value > -5') })
   validates :key, :value, :room, presence: true
+
+  def too_cold?
+    return unless room && room.room_type && room.room_type.min_temperature
+    value < room.room_type.min_temperature
+  end
 end
