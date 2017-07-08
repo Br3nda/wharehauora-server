@@ -40,10 +40,6 @@ gem 'purecss-rails'
 # icons
 gem 'font-awesome-rails'
 
-# for heroku
-gem 'rails_12factor', group: :production
-gem 'raygun4ruby', group: :production
-
 # listens for incoming sensor readings on mqtt
 gem 'mqtt'
 
@@ -64,6 +60,13 @@ gem 'momentjs-rails'
 
 # Rest/http library
 gem 'faraday'
+
+group :production do
+  # for heroku
+  gem 'newrelic_rpm'
+  gem 'rails_12factor'
+  gem 'raygun4ruby'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
