@@ -24,6 +24,7 @@ class Room < ActiveRecord::Base
   def dewpoint
     temp_c = single_current_metric 'temperature'
     humidity = single_current_metric 'humidity'
+    return unless temp_c && humidity
     l = Math.log(humidity / 100.0)
     m = 17.27 * temp_c
     n = 237.3 + temp_c
@@ -41,11 +42,11 @@ class Room < ActiveRecord::Base
   end
 
   def coldest
-    readings.where(key: 'temperature').order(:value)
+    readings.where(key: 'temperature').normal_range.order(:value)
   end
 
   def dampest
-    readings.where(key: 'humidity').order(value: :desc)
+    readings.where(key: 'humidity').normal_range.order(value: :desc)
   end
 
   def good?
