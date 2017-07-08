@@ -20,8 +20,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+# # bundle exec rake doc:rails generates the API under doc/api.
+# gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Postgresql as the database for Active Record
 gem 'pg'
@@ -74,6 +74,9 @@ group :development, :test do
   gem 'rubocop', '0.49.1', require: false
   gem 'scss_lint', require: false
 
+  # pulls in config from environment variables
+  gem 'dotenv-rails'
+
   # test runner
   gem 'rspec-rails'
 
@@ -86,7 +89,6 @@ group :development, :test do
   gem 'coveralls', require: false
 
   gem 'capybara'
-  gem 'pry'
 end
 
 group :development do

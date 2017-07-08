@@ -1,36 +1,12 @@
 
 = render 'homes/nav', home: @home
-%h2.room-page-title Rooms in #{@home.name}
+%h2.conditions-page-title Rooms in #{@home.name}
 
 - if @rooms.size.positive?
-  .room-tables.pure-g
+  .conditions-tables.pure-g
     - @rooms.order(:name).each do |room|
       .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-        %div{ class: room.too_cold? ? 'room-table room-table-bad' : 'room-table room-table-good' }
-          .room-table-header
-            %h2= room.name
-            %span.room-table-current
-              = room_temperature(room)
-              %span
-                Temperature
-                = room_reading_time_ago(room, "temperature")
-            %span.room-table-current
-              = room_humidity(room)
-              %span
-                Humidity
-                = room_reading_time_ago(room, "humidity")
-          %ul.room-table-list
-            %li
-              = room&.room_type&.name
-              = link_to edit_home_room_path(room.home, room), class: 'pure-button' do
-                = fa_icon 'edit'
-            - if room.too_cold?
-              %li
-                Too cold
-                = fa_icon 'frown-o'
-            - if room.too_hot?
-              %li Too hot
-          -# %button.button-analyze.pure-button Analyze
+        = render "card", room: room
   = paginate(@rooms)
 - else
   %p Home has no rooms

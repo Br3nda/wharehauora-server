@@ -1,36 +1,35 @@
-%p Median Temperatures right now
+%h2.conditions-page-title Median Temperatures right now
 
-%table.public_matrix.pure-table.pure-table-bordered
-  %tr
-    %thead
-      %th
-        = '..'
-      - @home_types.each do |home_type|
-        %th
-          = home_type.name
-  - @room_types.each do |room_type|
-    %tr
-      %th
-        = room_type.name
-      - @home_types.each do |home_type|
-        %td
-          - if @temperature[[home_type.id, room_type.id]].present?
-            = @temperature[[home_type.id, room_type.id]]
-            C
-          - if @humidity[[home_type.id, room_type.id]].present?
-            = @humidity[[home_type.id, room_type.id]]
-            = '%'
+.conditions-tables.pure-g
+  - @home_types.each do |home_type|
+    .pure-u-1.pure-u-md-1-2.pure-u-lg-1-2
+      %div{ class: frontpage_conditions_classname(@temperature, home_type, @room_types) }
+        .conditions-table-header
+          %h2= home_type.name
+          - @room_types.each do |room_type|
+            %span.conditions-table-current
+              = frontpage_temperature(@temperature[[home_type.id, room_type.id]])
+              %span= room_type.name
+        %ul.conditions-table-list
+          - @room_types.each do |room_type|
+            - if too_cold? @temperature[[home_type.id, room_type.id]], room_type
+              %li
+                = room_type.name
+                too cold
+                = fa_icon 'frown-o'
 
-%p
-  Based on data from
-  = Sensor.count
-  sensors in
-  = Home.count
-  installations in Wellington
-
-%h3 Median values
+%h2.conditions-page-title Median values
 .pure-g
   .pure-u-1.pure-u-md-1-2
     = line_chart opendata_readings_path(key: 'temperature', day: @day), title: 'temperature'
   .pure-u-1.pure-u-md-1-2
     = line_chart opendata_readings_path(key: 'humidity', day: @day), title: 'humidity'
+
+%h1.conditions-page-title Live demo data
+- @homes.each do |home|
+  %h2.conditions-page-title= home.name
+  %h3.conditions-page-title= home.home_type.name
+  .conditions-tables.pure-g
+    - home.rooms.order(:name).includes(:room_type).each do |room|
+      .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+        = render "rooms/card", room: room

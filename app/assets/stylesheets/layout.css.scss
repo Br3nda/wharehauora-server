@@ -83,24 +83,24 @@ p {
 
 // -- ROOM TABLE WRAPPER --
 // This element wraps up all the room table elements
-.room-tables,
+.conditions-tables,
 .information {
   margin: 0 auto;
   max-width: 980px;
 }
 
-.room-tables {
+.conditions-tables {
   margin-bottom: 3.125em;
   text-align: center;
 }
 
-.room-page-title {
+.conditions-page-title {
   text-align: center;
 }
 
 // -- ROOM TABLE  --
-// Every room table has the .room-table class
-.room-table {
+// Every room table has the .conditions-table class
+.conditions-table {
   border: 1px solid $concrete;
   margin: 0 0.5em 2em;
   padding: 0 0 3em;
@@ -108,17 +108,17 @@ p {
 
 // -- ROOM TABLE HEADER COLORS --
 // Choose a different color based on the type of room table.
-.room-table-good .room-table-header {
+.conditions-table-good .conditions-table-header {
   background: $room-good;
 }
 
-.room-table-bad .room-table-header {
+.conditions-table-bad .conditions-table-header {
   background: $room-bad;
 }
 
 // -- ROOM TABLE HEADER --
 // By default, a header is black/white, and has some styles for its <h2> name.
-.room-table-header {
+.conditions-table-header {
   background: $almost-black;
   color: $white;
 
@@ -133,7 +133,7 @@ p {
 
 // -- ROOM TABLE PRICE --
 // Styles for the price and the corresponding <span>per month</span>
-.room-table-current {
+.conditions-table-current {
   font-size: 4em;
   font-weight: 100;
   margin: 0.2em 0 0;
@@ -150,8 +150,8 @@ p {
 }
 
 // -- ROOM TABLE LIST --
-// Each room table has a <ul> which is denoted by the .room-table-list class
-.room-table-list {
+// Each room table has a <ul> which is denoted by the .conditions-table-list class
+.conditions-table-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -206,7 +206,7 @@ p {
     font-size: 4em;
   }
 
-  .room-table {
+  .conditions-table {
     margin-bottom: 0;
   }
 }
