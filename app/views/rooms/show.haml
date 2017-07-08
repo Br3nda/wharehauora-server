@@ -71,10 +71,30 @@
           = @rating
           %span= @rating_text
       %ul.conditions-table-list
-        %li
-          = fa_icon "check"
-          Room appears healthy
-
+        - if @room.good?
+          %li
+            = fa_icon "check"
+            Room appears healthy
+        - if @room.too_cold?
+          %li
+            = fa_icon 'thermometer-half'
+            Cold
+        - else
+          %li
+            = fa_icon 'check'
+            Warm
+        - if @room.below_dewpoint?
+          %li
+            = fa_icon 'water'
+            Damp
+        - elsif @room.near_dewpoint?
+          %li
+            = fa_icon 'warning'
+            Borderline
+        - else
+          %li
+            = fa_icon 'check'
+            Dry
   .pure-u-1.pure-u-md-1-1.pure-u-lg-1
     = line_chart readings_path(home_id: @room.home.id,
       room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60

@@ -12,5 +12,5 @@ class Sensor < ActiveRecord::Base
   delegate :room_type, to: :room
 
   scope(:joins_home, -> { joins(:room, room: :home) })
-  scope(:without_messages, -> { includes(:messages).where(messages: { id: nil }) })
+  scope(:with_no_messages, -> { includes(:messages).where(messages: { id: nil }) })
 end
