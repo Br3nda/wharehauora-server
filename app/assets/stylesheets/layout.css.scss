@@ -1,21 +1,5 @@
 // Based heavily on sample layout from yahoo's purecss
 
-$boring-white: #526066;
-$concrete: #DDDDDD;
-$lighter-concrete: #F7F7F7;
-$white: #FFFFFF;
-$almost-black: #F7F7F7;
-$footer-grey-text: #888888;
-$shadowy-grey: #CCCCCC;
-$kinda-light-concrete: #E7E7E7;
-$analytical-button-white: #333333;
-$black: #000000;
-$pure-menu-shadow: rgba(0, 0, 0, 0.10);
-$room-conditions-background: rgba(255, 255, 255, 0.5);
-
-$room-bad: #2C4985;
-$room-good: #519251;
-
 body {
   color: $boring-white;
 }
@@ -25,6 +9,7 @@ h3 {
   font-weight: 600;
   letter-spacing: 0.25em;
   text-transform: uppercase;
+  text-align: center;
 }
 
 p {
@@ -51,7 +36,6 @@ p {
 .pure-menu-link {
   padding: 0.5em 0.7em;
 }
-
 
 // -- BANNER --
 // The top banner with the headings. By using a combination
@@ -94,13 +78,11 @@ p {
   text-align: center;
 }
 
-.conditions-page-title {
-  text-align: center;
-}
 
 // -- ROOM TABLE  --
 // Every room table has the .conditions-table class
-.conditions-table {
+.conditions-table,
+room-analysis-metric {
   border: 1px solid $concrete;
   margin: 0 0.5em 2em;
   padding: 0 0 3em;

@@ -21,8 +21,31 @@ class Room < ActiveRecord::Base
     single_current_metric 'humidity'
   end
 
+  def dewpoint
+    temp_c = single_current_metric 'temperature'
+    humidity = single_current_metric 'humidity'
+    l = Math.log(humidity / 100.0)
+    m = 17.27 * temp_c
+    n = 237.3 + temp_c
+    b = (l + (m / n)) / 17.27
+    dewpoint_c = (237.3 * b) / (1 - b)
+    dewpoint_c
+  end
+
+  def below_dewpoint?
+    temperature < dewpoint
+  end
+
   def mould
     single_current_metric 'mould'
+  end
+
+  def coldest
+    readings.where(key: 'temperature').order(:value)
+  end
+
+  def dampest
+    readings.where(key: 'humidity').order(value: :desc)
   end
 
   def good?
