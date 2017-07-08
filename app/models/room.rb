@@ -45,6 +45,10 @@ class Room < ActiveRecord::Base
     temperature < dewpoint
   end
 
+  def near_dewpoint?
+    (temperature - 2) < dewpoint
+  end
+
   def mould
     single_current_metric 'mould'
   end

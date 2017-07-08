@@ -42,13 +42,23 @@
             = sprintf "%.2f%%", @room.humidity
             humidity
       %ul.conditions-table-list
-        %li
-          - if @room.below_dewpoint?
+        - if @room.below_dewpoint?
+          %li
             = fa_icon "warning"
-            Moisture and mould highly likely
-          - else
+            Moisture and mould highly like
+          %li
+            Reduce humidity to reduce mould
+        - elsif @room.near_dewpoint?
+          %li
+            = fa_icon "warning"
+            Reduce humidity
+          %li
+            = fa_icon "warning"
+            Temperature is close to dewpoint
+        - else
+          %li
             = fa_icon "check"
-            Above dewpoint
+            Room is above dewpoint
       When the temperature in this room falls below
       = sprintf "%.2fC", @room.dewpoint
       moisture begins to form on surfaces, leading to mould growth.
@@ -60,6 +70,10 @@
         %span.conditions-table-current
           = @rating
           %span= @rating_text
+      %ul.conditions-table-list
+        %li
+          = fa_icon "check"
+          Room appears healthy
 
   .pure-u-1.pure-u-md-1-1.pure-u-lg-1
     = line_chart readings_path(home_id: @room.home.id,
