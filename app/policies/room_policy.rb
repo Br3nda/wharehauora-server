@@ -19,11 +19,28 @@ class RoomPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      if user
-        return scope.joins(:home)
-                    .joins('LEFT OUTER JOIN home_viewers ON homes.id = home_viewers.home_id')
-                    .where('(homes.owner_id = ? OR home_viewers.user_id = ?)', user.id, user.id)
-      end
+      return janitor_scope if janitor?
+      return user_scope if user.present?
+      public_scope
+    end
+
+    private
+
+    def janitor?
+      user.present? && user.role?('janitor')
+    end
+
+    def janitor_scope
+      scope.all
+    end
+
+    def user_scope
+      scope.joins(:home)
+           .joins('LEFT OUTER JOIN home_viewers ON homes.id = home_viewers.home_id')
+           .where('(homes.owner_id = ? OR home_viewers.user_id = ?)', user.id, user.id)
+    end
+
+    def public_scope
       scope.joins(:home).where(homes: { is_public: true })
     end
   end

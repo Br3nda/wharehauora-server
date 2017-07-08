@@ -1,0 +1,45 @@
+%div{ class: 'conditions-table conditions-table-' + (room.too_cold? ? 'bad' : 'good') }
+  .conditions-table-header
+    %h2= room.name
+    %span.conditions-table-current
+      = room_temperature(room)
+      %span
+        Temperature
+        = room_reading_time_ago(room, "temperature")
+    %span.conditions-table-current
+      = room_humidity(room)
+      %span
+        Humidity
+        = room_reading_time_ago(room, "humidity")
+  %ul.conditions-table-list
+
+    %li
+      = room&.room_type&.name
+      - if policy(room).update?
+        = link_to edit_home_room_path(room.home, room), class: 'pure-button' do
+          = fa_icon 'edit'
+
+    - if room.too_cold?
+      %li.room-warning.room-warning-cold
+        Too cold
+        = fa_icon 'frown-o'
+    - if room.too_hot?
+      %li.room-warning.room-warning-hot Too hot
+
+    - unless room.sensors.size.positive?
+      %li.room-warning
+        No sensors
+        = fa_icon 'warning'
+
+    - unless room.current? "temperature"
+      %li.room-warning
+        No current temperature
+        = fa_icon 'warning'
+
+    - unless room.current? "humidity"
+      %li.room-warning
+        No current humidity
+        = fa_icon 'warning'
+
+  = link_to room_path(room), class: 'button-analyze pure-button' do
+    Analyse
