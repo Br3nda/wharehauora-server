@@ -41,11 +41,11 @@ class Room < ActiveRecord::Base
   end
 
   def coldest
-    readings.where(key: 'temperature').order(:value)
+    readings.where(key: 'temperature').normal_range.order(:value)
   end
 
   def dampest
-    readings.where(key: 'humidity').order(value: :desc)
+    readings.where(key: 'humidity').normal_range.order(value: :desc)
   end
 
   def good?
