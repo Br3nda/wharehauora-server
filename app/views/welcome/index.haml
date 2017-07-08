@@ -24,3 +24,12 @@
     = line_chart opendata_readings_path(key: 'temperature', day: @day), title: 'temperature'
   .pure-u-1.pure-u-md-1-2
     = line_chart opendata_readings_path(key: 'humidity', day: @day), title: 'humidity'
+
+%h1.conditions-page-title Live demo data
+- @homes.each do |home|
+  %h2.conditions-page-title= home.name
+  %h3.conditions-page-title= home.home_type.name
+  .conditions-tables.pure-g
+    - home.rooms.order(:name).includes(:room_type).each do |room|
+      .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+        = render "rooms/card", room: room

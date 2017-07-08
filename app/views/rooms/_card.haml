@@ -1,4 +1,4 @@
-%div{ class: 'conditions-table conditions-table-' + (room.too_cold? ? 'bad' : 'good') }
+%div{ class: 'conditions-table conditions-table-' + (room.good? ? 'good' : 'bad') }
   .conditions-table-header
     %h2= room.name
     %span.conditions-table-current
@@ -15,9 +15,6 @@
 
     %li
       = room&.room_type&.name
-      - if policy(room).update?
-        = link_to edit_home_room_path(room.home, room), class: 'pure-button' do
-          = fa_icon 'edit'
 
     - if room.too_cold?
       %li.room-warning.room-warning-cold
