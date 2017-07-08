@@ -13,6 +13,15 @@ class Room < ActiveRecord::Base
   scope(:without_readings, -> { includes(:readings).where(readings: { id: nil }) })
   scope(:without_sensors, -> { includes(:sensors).where(sensors: { id: nil }) })
 
+  def rating
+    number = 100
+    return '?' unless room_type && current?('temperature')
+    return '?' unless room_type.min_temperature && room_type.max_temperature
+    number -= 15 if too_cold?
+    number -= 40 if below_dewpoint?
+    rating_letter(number)
+  end
+
   def temperature
     single_current_metric 'temperature'
   end
@@ -86,5 +95,19 @@ class Room < ActiveRecord::Base
 
   def single_current_metric(key)
     Reading.where(room_id: id, key: key)&.last&.value
+  end
+
+  def rating_letter(number) # rubocop:disable Metrics/MethodLength
+    if number > 95
+      'A'
+    elsif number > 75
+      'B'
+    elsif number > 50
+      'C'
+    elsif number > 25
+      'D'
+    else
+      'F'
+    end
   end
 end

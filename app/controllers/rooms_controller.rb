@@ -22,6 +22,9 @@ class RoomsController < ApplicationController
     @dampest = @room.dampest.limit(1).first
     @coldest = @room.coldest.limit(1).first
     @start = 5.days.ago
+    @rating = @room.rating
+
+    @rating_text = rating_text
     respond_with(@room)
   end
 
@@ -67,5 +70,22 @@ class RoomsController < ApplicationController
   def parse_dates
     @day = params[:day]
     @day = Date.yesterday if @day.blank?
+  end
+
+  def rating_text # rubocop:disable Metrics/MethodLength
+    case @rating
+    when 'A'
+      'excellent'
+    when 'B'
+      'good'
+    when 'C'
+      'barely acceptable'
+    when 'D'
+      'bad'
+    when 'F'
+      'very bad'
+    else
+      'unknown'
+    end
   end
 end
