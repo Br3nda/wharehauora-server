@@ -44,9 +44,7 @@ p {
 
 .banner {
   background-size: cover;
-  // background: transparent url('http://24.media.tumblr.com/ccb268832580ac12951828a1c179de69/tumblr_mo2xbk8JUK1st5lhmo1_1280.jpg') 0 0 no-repeat fixed;
   display: table;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://24.media.tumblr.com/ccb268832580ac12951828a1c179de69/tumblr_mo2xbk8JUK1st5lhmo1_1280.jpg', sizingMethod='scale');
   height: 200px;
   margin-bottom: 3em;
   text-align: center;
@@ -62,7 +60,6 @@ p {
   text-shadow: 0 1px 1px $black;
   vertical-align: middle;
 }
-
 
 
 // -- ROOM TABLE WRAPPER --

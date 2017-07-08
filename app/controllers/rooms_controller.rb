@@ -21,6 +21,7 @@ class RoomsController < ApplicationController
     @keys = %w[temperature humidity]
     @dampest = @room.dampest.limit(1).first
     @coldest = @room.coldest.limit(1).first
+    @start = 5.days.ago
     respond_with(@room)
   end
 
