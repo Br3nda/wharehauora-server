@@ -10,13 +10,12 @@ class Room < ActiveRecord::Base
 
   validates :home, presence: true
 
-  scope(:without_readings, -> { includes(:readings).where(readings: { id: nil }) })
-  scope(:without_sensors, -> { includes(:sensors).where(sensors: { id: nil }) })
+  scope(:with_no_readings, -> { includes(:readings).where(readings: { id: nil }) })
+  scope(:with_no_sensors, -> { includes(:sensors).where(sensors: { id: nil }) })
 
   def rating
     number = 100
-    return '?' unless room_type && current?('temperature')
-    return '?' unless room_type.min_temperature && room_type.max_temperature
+    return '?' unless enough_info_to_perform_rating?
     number -= 15 if too_cold?
     number -= 40 if below_dewpoint?
     rating_letter(number)
@@ -97,17 +96,15 @@ class Room < ActiveRecord::Base
     Reading.where(room_id: id, key: key)&.last&.value
   end
 
-  def rating_letter(number) # rubocop:disable Metrics/MethodLength
-    if number > 95
-      'A'
-    elsif number > 75
-      'B'
-    elsif number > 50
-      'C'
-    elsif number > 25
-      'D'
-    else
-      'F'
-    end
+  def rating_letter(number)
+    return 'A' if number > 95
+    return 'B' if number > 75
+    return 'C' if number > 50
+    return 'D' if number > 25
+    'F'
+  end
+
+  def enough_info_to_perform_rating?
+    room_type && current?('temperature') && room_type.min_temperature && room_type.max_temperature
   end
 end
