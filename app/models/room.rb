@@ -82,8 +82,10 @@ class Room < ActiveRecord::Base
   end
 
   def current?(reading_type)
-    return false unless readings.where(key: reading_type).size.positive?
-    age_of_last_reading(reading_type) < 1.hour
+    Rails.cache.fetch("#{cache_key}/current/#{reading_type}", expires_in: 1.minute) do
+      return false unless readings.where(key: reading_type).size.positive?
+      age_of_last_reading(reading_type) < 1.hour
+    end
   end
 
   def age_of_last_reading(reading_type)
@@ -101,7 +103,9 @@ class Room < ActiveRecord::Base
   private
 
   def single_current_metric(key)
-    Reading.where(room_id: id, key: key)&.last&.value
+    Rails.cache.fetch("#{cache_key}/#{key}", expires_in: 1.minute) do
+      Reading.where(room_id: id, key: key)&.last&.value
+    end
   end
 
   def rating_letter(number)
