@@ -15,19 +15,17 @@
       %tbody
         - @sensors.each do |sensor|
           %tr
+            %td= sensor.node_id
+            %td= sensor.room&.name
+            %td= time_ago_in_words sensor.messages.last&.updated_at if sensor.messages.last
             %td
-              = link_to(sensor.node_id, sensor_path(sensor))
-            %td
-              = link_to edit_sensor_path(sensor) do
+              = link_to edit_sensor_path(sensor), class: 'pure-button' do
                 = fa_icon 'edit'
-              = sensor.room&.name
-            %td
-              = time_ago_in_words sensor.messages.last&.updated_at if sensor.messages.last
             %td
               - if current_user.role? 'janitor'
                 = link_to sensor_path(sensor),
                   method: :delete, data: { confirm: 'delete this sensor?' },
-                  class: 'pure-button' do
+                  class: 'pure-button button-warning' do
                   = fa_icon 'trash'
 
   %%p= paginate(@sensors)

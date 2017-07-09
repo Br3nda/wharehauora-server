@@ -9,9 +9,11 @@ class RoomsController < ApplicationController
     authorize @home
     @rooms = policy_scope(Room)
              .where(home_id: @home.id)
-             .includes(:home, :sensors, :room_type)
+             .includes(:room_type)
              .order(:name)
              .paginate(page: params[:page])
+
+    @unassigned_sensors = @home.sensors.where(room_id: nil)
     respond_with(@rooms)
   end
 
@@ -21,7 +23,7 @@ class RoomsController < ApplicationController
     @keys = %w[temperature humidity]
     @dampest = @room.dampest.limit(1).first
     @coldest = @room.coldest.limit(1).first
-    @start = 5.days.ago
+    @start = 7.days.ago
     @rating = @room.rating
 
     @rating_text = rating_text
@@ -50,12 +52,16 @@ class RoomsController < ApplicationController
   private
 
   def set_home
-    @home = policy_scope(Home).find(params[:home_id])
+    @home = if @room
+              @room.home
+            else
+              policy_scope(Home).find(params[:home_id])
+            end
     authorize @home
   end
 
   def set_room
-    @room = policy_scope(Room).includes(:home).find(params[:id])
+    @room = policy_scope(Room).find(params[:id])
     authorize @room
   end
 

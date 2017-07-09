@@ -77,6 +77,10 @@ class Room < ActiveRecord::Base
     (temperature > room_type.max_temperature)
   end
 
+  def sensor?
+    sensors.size.positive?
+  end
+
   def current?(reading_type)
     return false unless readings.where(key: reading_type).size.positive?
     age_of_last_reading(reading_type) < 1.hour
