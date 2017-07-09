@@ -77,6 +77,10 @@ class Room < ActiveRecord::Base
     (temperature > room_type.max_temperature)
   end
 
+  def sensor?
+    sensors.size.positive?
+  end
+
   def current?(reading_type)
     Rails.cache.fetch("#{cache_key}/current/#{reading_type}", expires_in: 1.minute) do
       return false unless readings.where(key: reading_type).size.positive?

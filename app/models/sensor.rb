@@ -13,4 +13,8 @@ class Sensor < ActiveRecord::Base
 
   scope(:joins_home, -> { joins(:room, room: :home) })
   scope(:with_no_messages, -> { includes(:messages).where(messages: { id: nil }) })
+
+  def last_message
+    messages.order(created_at: :desc).first.created_at
+  end
 end

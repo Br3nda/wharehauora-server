@@ -1,0 +1,7 @@
+.conditions-table
+  %h2= sensor.node_id
+  detected
+  = time_ago_in_words sensor.created_at
+  ago
+  - unless sensor.room.present?
+    %button.button-analyze.pure-button Assign to room

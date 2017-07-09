@@ -24,12 +24,13 @@
             = sprintf "%.2f%%", @room.humidity
             humidity
         - if @room.room_type
-          This
-          = @room.room_type.name
-          room should be warmer than
-          = @room.room_type.min_temperature
-          C
-          to be comfortable
+          %p
+            This
+            = @room.room_type.name
+            room should be warmer than
+            = @room.room_type.min_temperature
+            C
+            to be comfortable
 
 
     .room-analysis-metric.pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
@@ -59,10 +60,30 @@
           - else
             %li
               = fa_icon "check"
-              Room is above dewpoint
-        When the temperature in this room falls below
-        = sprintf "%.2fC", @room.dewpoint
-        moisture begins to form on surfaces, leading to mould growth.
+              Room is well above dewpoint
+          - if @room.dewpoint < 6
+            %li
+              = fa_icon "check"
+              Low dewpoint is very good
+          - elsif @room.dewpoint < 16
+            %li
+              Acceptable dewpoint
+          - else
+            %li
+              = fa_icon 'warning'
+              High dewpoint
+            %li
+              Keep this room above
+              = sprintf "%.2fC", @room.dewpoint
+        %p
+          When the temperature in this room falls below
+          = sprintf "%.2fC", @room.dewpoint
+          moisture begins to form on surfaces, leading to mould growth.
+        - if @room.near_dewpoint?
+          %p
+            = fa_icon "error"
+            If your room is only heated when you are home, it may become
+            cold and allow mould to grow while you are away.
 
     .room-analysis-metric.pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
       %div{ class: 'conditions-table conditions-table-' + (@room.good? ? 'good' : 'bad') }
@@ -72,6 +93,10 @@
             = @rating
             %span= @rating_text
         %ul.conditions-table-list
+          - unless @room.current?("temperature") && @room.current?("humidity")
+            %li
+              = fa_icon "question"
+              No recent readings
           - if @room.good?
             %li
               = fa_icon "check"
@@ -87,11 +112,11 @@
           - if @room.below_dewpoint?
             %li
               = fa_icon 'water'
-              Damp
+              Damp. Mould likely.
           - elsif @room.near_dewpoint?
             %li
               = fa_icon 'warning'
-              Borderline
+              Borderline. Just warm enough to prevent mould.
           - else
             %li
               = fa_icon 'check'
@@ -99,3 +124,16 @@
     .pure-u-1.pure-u-md-1-1.pure-u-lg-1
       = line_chart readings_path(home_id: @room.home.id,
         room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60
+
+    - @room.sensors.each do |sensor|
+      .room-analysis-metric.pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+        %div{ class: 'conditions-table conditions-table-' + (@room.sensor? ? 'good' : 'bad') }
+          .conditions-table-header
+            %h2 Sensor NodeID
+            %span.conditions-table-current
+              = sensor.node_id
+          %ul.conditions-table-list
+            %li
+              last message
+              = time_ago_in_words sensor.last_message
+              ago

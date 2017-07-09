@@ -18,6 +18,11 @@
         = link_to edit_home_path(home), class: 'pure-menu-link' do
           edit home
           = fa_icon 'edit'
+      - if @room.present?
+        %li.pure-menu-item
+          = link_to edit_room_path(@room), class: 'pure-menu-link' do
+            edit room
+            = fa_icon 'edit'
 
     - if current_user && current_user.role?('janitor')
       %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover

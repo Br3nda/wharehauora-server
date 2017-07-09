@@ -1,14 +1,23 @@
 
 = render 'homes/nav', home: @home
-%h2.conditions-page-title Rooms in #{@home.name}
 
-- cache @home do
+- if @unassigned_sensors.size.positive?
+  %h2.button-warning
+    = fa_icon 'warning'
+    new sensors detected
+
+  .conditions-tables.pure-g
+    - @unassigned_sensors.includes(:room).each do |sensor|
+      .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+        = render "sensors/card", sensor: sensor
+
+- cache @home.rooms do
+  %h2.conditions-page-title Rooms in #{@home.name}
   - if @rooms.size.positive?
     .conditions-tables.pure-g
       - @rooms.order(:name).each do |room|
         .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-          = render "card", room: room
+          = render "rooms/card", room: room
     = paginate(@rooms)
   - else
     %p Home has no rooms
-

@@ -1,14 +1,14 @@
 class RoomPolicy < ApplicationPolicy
   def edit?
-    owner?
+    owner? || janitor?
   end
 
   def show?
-    owner? || whanau?
+    record.home.is_public || owner? || whanau?
   end
 
   def update?
-    owner?
+    owner? || janitor?
   end
 
   def destroy?
