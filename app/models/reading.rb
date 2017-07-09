@@ -11,6 +11,7 @@ class Reading < ActiveRecord::Base
   scope(:temperature, -> { where(key: 'temperature') })
   scope(:humidity, -> { where(key: 'humidity') })
   scope(:mould, -> { where(key: 'mould') })
+  scope(:dewpoint, -> { where(key: 'dewpoint') })
   scope(:normal_range, -> { where('value < 100 AND value > -5') })
   validates :key, :value, :room, presence: true
 
