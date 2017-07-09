@@ -2,6 +2,30 @@
 
 body {
   color: $boring-white;
+  font-family: "proxima-nova";
+  font-weight: 500;
+  margin: 0;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  height: 100%;
+}
+
+.header {
+  background-color: $wharehauora-green;
+  height: 150px;
+  left: 0;
+  top: 0;
+
+  img {
+    height: 100%;
+  }
 }
 
 h2,
@@ -59,6 +83,12 @@ p {
   margin-bottom: 0;
   text-shadow: 0 1px 1px $black;
   vertical-align: middle;
+}
+
+.content {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 1000px;
 }
 
 
