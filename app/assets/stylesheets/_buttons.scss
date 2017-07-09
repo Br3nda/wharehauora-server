@@ -1,0 +1,44 @@
+.pure-button {
+  background-color: $wharehauora-green;
+  text-shadow: 0 1px 1px $button-shadow;
+}
+
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+  border-radius: 4px;
+  color: $white;
+}
+
+.button-success {
+  background: $success-green;
+}
+
+.button-error {
+  background: $error-maroon;
+}
+
+.button-warning {
+  background: $warning-orange;
+}
+
+.button-secondary {
+  background: $secondary-blue;
+}
+
+.button-xsmall {
+  font-size: 70%;
+}
+
+.button-small {
+  font-size: 85%;
+}
+
+.button-large {
+  font-size: 110%;
+}
+
+.button-xlarge {
+  font-size: 125%;
+}
