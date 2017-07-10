@@ -49,14 +49,6 @@ class Room < ActiveRecord::Base
     single_current_metric 'mould'
   end
 
-  def coldest
-    readings.where(key: 'temperature').normal_range.order(:value)
-  end
-
-  def dampest
-    readings.where(key: 'humidity').normal_range.order(value: :desc)
-  end
-
   def good?
     Rails.cache.fetch("#{cache_key}/good?", expires_in: 5.minutes) do
       return unless enough_info_to_perform_rating?
