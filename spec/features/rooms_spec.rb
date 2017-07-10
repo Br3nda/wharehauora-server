@@ -35,7 +35,7 @@ RSpec.feature 'Rooms', type: :feature do
     end
 
     scenario 'home has 1 room, too cold' do
-      room_type = FactoryGirl.create :room_type, min_temperature: 20.0
+      room_type = FactoryGirl.create :room_type, min_temperature: 20.0, max_temperature: 100
       room = FactoryGirl.create :room, home: home, room_type: room_type
       FactoryGirl.create :reading, key: 'temperature', value: 15.1, room: room
       visit "/homes/#{home.id}/rooms"
@@ -45,7 +45,7 @@ RSpec.feature 'Rooms', type: :feature do
     end
 
     scenario 'home has 1 room, too hot' do
-      room_type = FactoryGirl.create :room_type, max_temperature: 30.0
+      room_type = FactoryGirl.create :room_type, min_temperature: 0, max_temperature: 30.0
       room = FactoryGirl.create :room, home: home, room_type: room_type
       FactoryGirl.create :reading, key: 'temperature', value: 45.2, room: room
       visit "/homes/#{home.id}/rooms"

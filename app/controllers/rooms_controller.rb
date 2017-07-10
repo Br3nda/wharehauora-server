@@ -21,8 +21,6 @@ class RoomsController < ApplicationController
     parse_dates
     @home = @room.home
     @keys = %w[temperature humidity]
-    @dampest = @room.dampest.limit(1).first
-    @coldest = @room.coldest.limit(1).first
     @start = 7.days.ago
     @rating = @room.rating
 
