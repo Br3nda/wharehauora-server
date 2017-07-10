@@ -102,7 +102,7 @@ class Room < ActiveRecord::Base
   end
 
   def enough_info_to_perform_rating?
-    room_type && current?('temperature') && room_type.min_temperature && room_type.max_temperature
+    room_type && current?('temperature') && room_type.min_temperature.present? && room_type.max_temperature.present?
   end
 
   def calculate_dewpoint
