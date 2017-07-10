@@ -8,12 +8,19 @@ RSpec.feature 'Rooms', type: :feature do
   let(:home_type) { FactoryGirl.create :home_type }
   let!(:home) { FactoryGirl.create :home, owner_id: user.id, home_type: home_type }
 
+  shared_examples 'show home and room' do
+    it { is_expected.to have_text(home.name) }
+    it { is_expected.to have_text(room.name) }
+    it { is_expected.to have_text(room.room_type.name) }
+  end
+
+  subject { page }
   context 'Normal user' do
     background { login_as(user) }
     context 'home has no rooms' do
       before { visit "/homes/#{home.id}/rooms" }
-      it { expect(page).to have_text(home.name) }
-      it { expect(page).to have_text('Home has no rooms') }
+      it { is_expected.to have_text(home.name) }
+      it { is_expected.to have_text('Home has no rooms') }
     end
 
     context 'home has 1 room' do
@@ -22,10 +29,10 @@ RSpec.feature 'Rooms', type: :feature do
       describe '#index' do
         describe 'no readings' do
           before { visit "/homes/#{home.id}/rooms" }
-          it { expect(page).to have_text(room.name) }
-          it { expect(page).to have_text('??.?') }
-          it { expect(page).to have_text('No current humidity') }
-          it { expect(page).to have_text('No current temperature') }
+          it { is_expected.to have_text('??.?') }
+          it { is_expected.to have_text('No current humidity') }
+          it { is_expected.to have_text('No current temperature') }
+          include_examples 'show home and room'
         end
 
         describe 'one temperature reading' do
@@ -33,7 +40,8 @@ RSpec.feature 'Rooms', type: :feature do
             FactoryGirl.create :reading, key: 'temperature', value: 44.4, room: room
             visit "/homes/#{home.id}/rooms"
           end
-          it { expect(page).to have_text('44.4C') }
+          it { is_expected.to have_text('44.4C') }
+          include_examples 'show home and room'
         end
 
         describe 'too cold' do
@@ -41,9 +49,10 @@ RSpec.feature 'Rooms', type: :feature do
             FactoryGirl.create :reading, key: 'temperature', value: 15.1, room: room
             visit "/homes/#{home.id}/rooms"
           end
-          it { expect(page).to have_text('15.1C') }
-          it { expect(page).to have_text('Too cold') }
-          it { expect(page).to have_text('No current humidity') }
+          it { is_expected.to have_text('15.1C') }
+          it { is_expected.to have_text('Too cold') }
+          it { is_expected.to have_text('No current humidity') }
+          include_examples 'show home and room'
         end
 
         describe 'too hot' do
@@ -51,24 +60,27 @@ RSpec.feature 'Rooms', type: :feature do
             FactoryGirl.create :reading, key: 'temperature', value: 45.2, room: room
             visit "/homes/#{home.id}/rooms"
           end
-          it { expect(page).to have_text('45.2C') }
-          it { expect(page).to have_text('Too hot') }
+          it { is_expected.to have_text('45.2C') }
+          it { is_expected.to have_text('Too hot') }
+          it { is_expected.to have_text('No current humidity') }
+          include_examples 'show home and room'
         end
       end
     end
+
     context 'home has 100 rooms' do
       before do
         100.times { FactoryGirl.create :room, home: home }
         visit "/homes/#{home.id}/rooms"
       end
-      it { expect(page).to have_text(home.rooms.order(:name).first.name) }
+      it { is_expected.to have_text(home.rooms.order(:name).first.name) }
     end
 
     context 'Admin users' do
       background { login_as(admin_user) }
       context 'Views list of homes' do
         before { visit '/homes' }
-        it { expect(page).to have_text(home.name) }
+        it { is_expected.to have_text(home.name) }
       end
     end
   end
