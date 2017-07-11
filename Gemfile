@@ -91,6 +91,7 @@ group :development, :test do
   gem 'coveralls', require: false
 
   gem 'capybara'
+  gem 'capybara-screenshot'
 end
 
 group :development do
