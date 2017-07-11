@@ -30,19 +30,15 @@ class Room < ActiveRecord::Base
   end
 
   def dewpoint
-    temp_c = single_current_metric 'temperature'
-    humidity = single_current_metric 'humidity'
-    return unless temp_c && humidity
-    l = Math.log(humidity / 100.0)
-    m = 17.27 * temp_c
-    n = 237.3 + temp_c
-    b = (l + (m / n)) / 17.27
-    dewpoint_c = (237.3 * b) / (1 - b)
-    dewpoint_c
+    Rails.cache.fetch("#{cache_key}/dewpoint", expires_in: 5.minutes) do
+      calculate_dewpoint
+    end
   end
 
   def below_dewpoint?
-    temperature < dewpoint
+    Rails.cache.fetch("#{cache_key}/below_dewpoint?", expires_in: 5.minutes) do
+      temperature < dewpoint
+    end
   end
 
   def near_dewpoint?
@@ -53,28 +49,19 @@ class Room < ActiveRecord::Base
     single_current_metric 'mould'
   end
 
-  def coldest
-    readings.where(key: 'temperature').normal_range.order(:value)
-  end
-
-  def dampest
-    readings.where(key: 'humidity').normal_range.order(value: :desc)
-  end
-
   def good?
-    return unless room_type && current?('temperature')
-    return unless room_type.min_temperature && room_type.max_temperature
-    (temperature > room_type.min_temperature) && (temperature < room_type.max_temperature)
+    Rails.cache.fetch("#{cache_key}/good?", expires_in: 5.minutes) do
+      return unless enough_info_to_perform_rating?
+      (temperature > room_type.min_temperature) && (temperature < room_type.max_temperature)
+    end
   end
 
   def too_cold?
-    return unless room_type && current?('temperature') && room_type.min_temperature
-    (temperature < room_type.min_temperature)
+    (temperature < room_type.min_temperature) if enough_info_to_perform_rating?
   end
 
   def too_hot?
-    return unless room_type && current?('temperature') && room_type.max_temperature
-    (temperature > room_type.max_temperature)
+    (temperature > room_type.max_temperature) if enough_info_to_perform_rating?
   end
 
   def sensor?
@@ -82,10 +69,8 @@ class Room < ActiveRecord::Base
   end
 
   def current?(reading_type)
-    Rails.cache.fetch("#{cache_key}/current/#{reading_type}", expires_in: 1.minute) do
-      return false unless readings.where(key: reading_type).size.positive?
-      age_of_last_reading(reading_type) < 1.hour
-    end
+    return false unless readings.where(key: reading_type).size.positive?
+    age_of_last_reading(reading_type) < 1.hour
   end
 
   def age_of_last_reading(reading_type)
@@ -117,6 +102,17 @@ class Room < ActiveRecord::Base
   end
 
   def enough_info_to_perform_rating?
-    room_type && current?('temperature') && room_type.min_temperature && room_type.max_temperature
+    room_type && current?('temperature') && room_type.min_temperature.present? && room_type.max_temperature.present?
+  end
+
+  def calculate_dewpoint
+    temp_c = single_current_metric 'temperature'
+    humidity = single_current_metric 'humidity'
+    return unless temp_c && humidity
+    l = Math.log(humidity / 100.0)
+    m = 17.27 * temp_c
+    n = 237.3 + temp_c
+    b = (l + (m / n)) / 17.27
+    (237.3 * b) / (1 - b)
   end
 end
