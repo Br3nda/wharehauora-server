@@ -62,7 +62,7 @@ gem 'faraday'
 
 group :production do
   # for heroku
-  gem 'newrelic_rpm'
+  # gem 'newrelic_rpm'
   gem 'rails_12factor'
   gem 'raygun4ruby'
 end
