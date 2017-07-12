@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :sensor do
-    node_id { Faker::Number }
+    node_id { rand 100..999 }
     room
     home
   end
