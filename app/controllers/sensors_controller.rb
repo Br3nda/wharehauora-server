@@ -27,7 +27,8 @@ class SensorsController < ApplicationController
 
   def update
     @sensor.update!(sensor_params)
-    redirect_to home_sensors_path @sensor.home
+    @sensor.create_room room_params if sensor_params_contains_room?
+    redirect_to home_rooms_path @sensor.home
   end
 
   private
@@ -38,6 +39,14 @@ class SensorsController < ApplicationController
   end
 
   def sensor_params
-    params.require(:sensor).permit(:room_id)
+    params.require(:sensor).permit(:room_id) # are there any other fields needed here? end
+  end
+
+  def sensor_params_contains_room?
+    params[:sensor][:room][:name].present?
+  end
+
+  def room_params
+    params.require(:sensor).require(:room).permit(:name).merge(home_id: @sensor.home_id)
   end
 end

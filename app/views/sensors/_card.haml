@@ -4,4 +4,5 @@
   = time_ago_in_words sensor.created_at
   ago
   - unless sensor.room.present?
-    %button.button-analyze.pure-button Assign to room
+    = link_to edit_sensor_path(sensor), class: 'button-analyze pure-button' do
+      Assign to room

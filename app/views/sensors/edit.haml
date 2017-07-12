@@ -1,4 +1,3 @@
 .pure-form
   = form_for(@sensor) do |f|
-    = render 'form', f: f, room_types: @room_types
-    %button.pure-button.pure-button-primary Save
+    = render 'form', f: f, room_types: @room_types, sensor: @sensor
