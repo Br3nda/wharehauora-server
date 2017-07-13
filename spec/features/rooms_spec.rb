@@ -15,6 +15,7 @@ RSpec.feature 'Rooms', type: :feature do
   end
 
   subject { page }
+
   context 'Normal user' do
     background { login_as(user) }
     context 'home has no rooms' do
@@ -76,12 +77,20 @@ RSpec.feature 'Rooms', type: :feature do
       it { is_expected.to have_text(home.rooms.order(:name).first.name) }
     end
 
-    context 'Admin users' do
-      background { login_as(admin_user) }
-      context 'Views list of homes' do
-        before { visit '/homes' }
-        it { is_expected.to have_text(home.name) }
-      end
+    context 'Views list of homes' do
+      let!(:otherhome) { FactoryGirl.create :home, name: "another person's home" }
+      before { visit '/homes' }
+      it { is_expected.to have_text(home.name) }
+      it { is_expected.to have_text(home.home_type.name) }
+      it { is_expected.not_to have_text(otherhome.name) }
+    end
+  end
+
+  context 'Admin users' do
+    background { login_as(admin_user) }
+    context 'Views list of homes' do
+      before { visit '/homes' }
+      it { is_expected.to have_text(home.name) }
     end
   end
 end
