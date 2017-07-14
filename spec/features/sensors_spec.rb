@@ -36,17 +36,24 @@ RSpec.feature 'Sensors', type: :feature do
         before do
           visit "/homes/#{home.id}/rooms"
           click_link 'Assign to room'
+          fill_in 'sensor_room_name', with: 'room of oarsum'
+          click_button 'Save'
         end
-        pending 'fill in form and save'
+        it { is_expected.to have_text 'room of oarsum' }
+        it { is_expected.not_to have_text 'new sensors detected' }
+        it { is_expected.to have_link 'Analyse' }
       end
-      context 'to an existing room' do
+      context 'home has one room' do
         let!(:existing_room) { FactoryGirl.create :room, name: 'library', home: home }
         before do
           visit "/homes/#{home.id}/rooms"
           click_link 'Assign to room'
+          choose "sensor_room_id_#{existing_room.id}"
+          click_button 'Save'
         end
-        it { is_expected.to have_text 'library' }
-        pending 'selected existing room and save'
+        it { is_expected.not_to have_text 'new sensors detected' }
+        it { is_expected.to have_text existing_room.name }
+        it { is_expected.to have_link 'Analyse' }
       end
     end
   end
