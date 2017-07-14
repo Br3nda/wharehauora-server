@@ -1,5 +1,3 @@
-
-
 = render 'homes/nav', home: @home
 
 - if @unassigned_sensors.size.positive?
@@ -8,17 +6,17 @@
     new sensors detected
 
   .conditions-tables.pure-g
-    - @unassigned_sensors.includes(:room).each do |sensor|
+    - @unassigned_sensors.each do |sensor|
       .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
         - cache sensor do
-          = render "sensors/card", sensor: sensor
+          = render 'sensors/card', sensor: sensor
 
 %h2.conditions-page-title Rooms in #{@home.name}
 - if @rooms.size.positive?
   .conditions-tables.pure-g
     - @rooms.order(:name).each do |room|
       .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-        = render "rooms/card", room: room
+        = render 'rooms/card', room: room
   - cache @rooms do
     = paginate(@rooms)
 - else
