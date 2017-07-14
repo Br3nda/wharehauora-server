@@ -28,6 +28,7 @@ class SensorsController < ApplicationController
   def update
     if sensor_params_contains_room?
       @sensor.create_room! room_params
+      @sensor.save!
     else
       @sensor.update!(sensor_params)
     end
