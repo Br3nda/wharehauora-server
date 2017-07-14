@@ -10,7 +10,6 @@ RSpec.feature 'Sensors', type: :feature do
 
   subject { page }
 
-  # subject { page }
   context 'Normal user' do
     background { login_as(home.owner) }
     # we see a list of sensors on the Homes#index page
