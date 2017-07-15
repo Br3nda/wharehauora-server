@@ -5,12 +5,12 @@
       = room_temperature(room)
       %span
         Temperature
-        = room_reading_time_ago(room, "temperature")
+        = room_reading_time_ago(room, 'temperature')
     %span.conditions-table-current
       = room_humidity(room)
       %span
         Humidity
-        = room_reading_time_ago(room, "humidity")
+        = room_reading_time_ago(room, 'humidity')
   %ul.conditions-table-list
 
     %li
@@ -28,12 +28,12 @@
         No sensors
         = fa_icon 'warning'
 
-    - unless room.current? "temperature"
+    - unless room.current? 'temperature'
       %li.room-warning
         No current temperature
         = fa_icon 'warning'
 
-    - unless room.current? "humidity"
+    - unless room.current? 'humidity'
       %li.room-warning
         No current humidity
         = fa_icon 'warning'
@@ -41,6 +41,6 @@
   - if room.sensors.size.positive?
     = link_to room_path(room), class: 'button-analyze pure-button' do
       Analyse
-  - else
+  - elsif policy(room).edit?
     = link_to home_sensors_path(room.home), class: 'button-analyze pure-button' do
       Assign sensor
