@@ -46,7 +46,7 @@ class RoomPolicy < ApplicationPolicy
   end
 
   def owner?
-    record.home.owner_id == user.id
+    user && record.home.owner_id == user.id
   end
 
   def whanau?
