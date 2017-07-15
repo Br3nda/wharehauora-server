@@ -4,10 +4,11 @@ class WelcomeController < ApplicationController
   def index
     skip_policy_scope
     skip_authorization
-    @homes = public_homes.limit(1)
+    @public_homes = public_homes
 
-    @temperature = readings('temperature', time_frame).median(:value)
+    # @temperature = readings('temperature', time_frame).median(:value)
     # @humidity = readings('humidity', time_frame).median(:value)
+    # @day = Time.zone.today
   end
 
   private
