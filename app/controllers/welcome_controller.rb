@@ -4,13 +4,10 @@ class WelcomeController < ApplicationController
   def index
     skip_policy_scope
     skip_authorization
-    @home_types = HomeType.all.order(:name)
-    @room_types = RoomType.all.order(:name)
-    @homes = public_homes
+    @homes = public_homes.limit(1)
 
     @temperature = readings('temperature', time_frame).median(:value)
     # @humidity = readings('humidity', time_frame).median(:value)
-    @day = Time.zone.today
   end
 
   private
