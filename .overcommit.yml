@@ -18,7 +18,6 @@
 
 PreCommit:
   ALL:
-    on_warn: fail  # Treat all warnings as failures
     quiet: false
   RuboCop:
     enabled: true
