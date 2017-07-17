@@ -26,10 +26,11 @@ class Reading < ActiveRecord::Base
 
   def to_json
     {
-      key: params[:key],
-      value: format('%.1f', reading.value),
-      unit: reading.unit,
-      timestamp: reading.created_at
+      key: key,
+      value: format('%.1f', value),
+      unit: unit,
+      timestamp: created_at,
+      sensors_count: room.sensors.size
     }
   end
 end
