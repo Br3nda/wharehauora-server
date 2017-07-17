@@ -3,6 +3,6 @@
   detected
   = time_ago_in_words sensor.created_at
   ago
-  - unless sensor.room.present?
+  - if sensor.room.blank?
     = link_to edit_sensor_path(sensor), class: 'button-analyze pure-button' do
       Assign to room

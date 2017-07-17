@@ -10,33 +10,17 @@
         :javascript
           updateRoom(#{room.id}, '#{key}');
           //update every 30 seconds
-          setInterval(function () {updateRoom(#{room.id}, 'temperature'); }, 60000);
-  %ul.conditions-table-list
-    %li
-      = room&.room_type&.name
-
-    - if room.too_cold?
-      %li.room-warning.room-warning-cold
-        Too cold
-        = fa_icon 'frown-o'
-    - if room.too_hot?
-      %li.room-warning.room-warning-hot Too hot
-
-    - unless room.sensors.size.positive?
-      %li.room-warning
-        No sensors
-        = fa_icon 'warning'
-
-    - unless room.current? 'temperature'
-      %li.room-warning
-        No current temperature
-        = fa_icon 'warning'
-
-    - unless room.current? 'humidity'
-      %li.room-warning
-        No current humidity
-        = fa_icon 'warning'
-
+          setInterval(function () {updateRoom(#{room.id}, 'temperature'); }, 10000);
+  / %ul.conditions-table-list
+  /   %li= room.room_type.name unless room.room_type.blank?
+  /   %li.room-warning.room-warning-cold{ id: "room-{room.id}-too-cold" } Too cold #{fa_icon 'frown-o'}
+  /   %li.room-warning.room-warning-hot{ id: "room-{room.id}-too-cold" } Too hot #{fa_icon 'frown-o'}
+  /   %li.room-warning.room-no-sensors{ id: "room-{room.id}-no-sensors" } No sensors #{fa_icon 'warning'}
+  /   %li.room-warning.room-no-temperature{ id: "room-{room.id}-no-temperature" } No current temperature #{fa_icon 'warning'}
+  /   %li.room-warning.room-no-humidity{ id: "room-{room.id}-no-humidity" } No current humidity #{fa_icon 'warning'}
   - if room.sensors.size.positive?
     = link_to room_path(room), class: 'button-analyze pure-button' do
       Analyse
+  - elsif policy(room).edit?
+    = button_to room_path(room), method: 'delete', class: 'button-analyze pure-button', confirm: 'are you sure you want to delete this room?' do
+      Delete room

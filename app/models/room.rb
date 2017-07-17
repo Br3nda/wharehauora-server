@@ -30,15 +30,11 @@ class Room < ActiveRecord::Base
   end
 
   def dewpoint
-    Rails.cache.fetch("#{cache_key}/dewpoint", expires_in: 5.minutes) do
-      calculate_dewpoint
-    end
+    Rails.cache.fetch("#{cache_key}/dewpoint", expires_in: 1.minute) { calculate_dewpoint }
   end
 
   def below_dewpoint?
-    Rails.cache.fetch("#{cache_key}/below_dewpoint?", expires_in: 5.minutes) do
-      temperature < dewpoint
-    end
+    Rails.cache.fetch("#{cache_key}/below_dewpoint?", expires_in: 1.minute) { temperature < dewpoint }
   end
 
   def near_dewpoint?
@@ -90,7 +86,7 @@ class Room < ActiveRecord::Base
   end
 
   def most_recent_reading(key)
-    Rails.cache.fetch("#{cache_key}/#{key}", expires_in: 1.minute) do
+    Rails.cache.fetch("#{cache_key}/#{key}", expires_in: 10.seconds) do
       Reading.where(room_id: id, key: key)&.last
     end
   end
@@ -99,9 +95,7 @@ class Room < ActiveRecord::Base
     {
       id: id,
       name: name,
-      room_type: {
-        name: room_type&.name
-      }
+      room_type: { name: room_type&.name }
     }
   end
 

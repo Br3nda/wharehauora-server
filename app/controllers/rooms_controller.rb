@@ -23,7 +23,6 @@ class RoomsController < ApplicationController
     @keys = %w[temperature humidity]
     @start = 7.days.ago
     @rating = @room.rating
-
     @rating_text = rating_text
     respond_with(@room)
   end
@@ -32,7 +31,20 @@ class RoomsController < ApplicationController
     @room = policy_scope(Room).find(params[:room_id])
     authorize @room
     reading = @room.most_recent_reading(params[:key])
-    respond_with(reading.to_json)
+    r = { opinions: opinions }.merge(@room.to_json)
+    r = r.merge(reading.to_json) if reading
+    respond_with(r)
+  end
+
+  def opinions
+    {
+      min_temperature: @room.room_type&.min_temperature,
+      max_temperature: @room.room_type&.max_temperature,
+      too_cold: @room.too_cold?,
+      too_hot: @room.too_hot?,
+      has_current_temperature: @room.current?('temperature'),
+      has_current_humidity: @room.current?('humidity')
+    }
   end
 
   def edit
