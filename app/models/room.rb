@@ -95,6 +95,16 @@ class Room < ActiveRecord::Base
     end
   end
 
+  def to_json
+    {
+      id: id,
+      name: name,
+      room_type: {
+        name: room_type&.name
+      }
+    }
+  end
+
   private
 
   def rating_letter(number)

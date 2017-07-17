@@ -24,4 +24,14 @@ class Home < ActiveRecord::Base
     sensor = Sensor.create!(home_id: id, node_id: node_id) unless sensor
     sensor
   end
+
+  def to_json
+    {
+      id: @room.home.id,
+      name: @room.home.name,
+      home_type: {
+        name: @room.home.home_type&.name
+      }
+    }
+  end
 end

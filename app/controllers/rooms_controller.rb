@@ -37,20 +37,8 @@ class RoomsController < ApplicationController
       value: format('%.1f', reading.value),
       unit: reading.unit,
       timestamp: reading.created_at,
-      room: {
-        id: @room.id,
-        name: @room.name,
-        room_type: {
-          name: @room.room_type&.name
-        }
-      },
-      home: {
-        id: @room.home.id,
-        name: @room.home.name,
-        home_type: {
-          name: @room.home.home_type&.name
-        }
-      }
+      room: @room.to_json,
+      home: @room.home.to_json
     )
   end
 
