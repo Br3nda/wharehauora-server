@@ -6,8 +6,7 @@
         %div{ id: "room-#{room.id}-#{key}" } ??
         %span
           = key
-          / = room_reading_time_ago(room, 'temperature')
-          %div{ id: "room-#{room.id}-#{key}-timestamp"}
+          %div{ id: "room-#{room.id}-#{key}-timestamp" }
         :javascript
           updateRoom(#{room.id}, '#{key}');
           //update every 30 seconds
