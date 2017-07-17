@@ -16,7 +16,7 @@ class RoomPolicy < ApplicationPolicy
   end
 
   def measurement?
-    owner? || whanau? || janitor?
+    record.home.is_public || owner? || whanau? || janitor?
   end
 
   private
