@@ -47,8 +47,9 @@ class Room < ActiveRecord::Base
 
   def good?
     Rails.cache.fetch("#{cache_key}/good?", expires_in: 5.minutes) do
-      return unless enough_info_to_perform_rating?
-      (temperature > room_type.min_temperature) && (temperature < room_type.max_temperature)
+      return false unless enough_info_to_perform_rating?
+      return false if below_dewpoint? || too_cold? || too_hot?
+      true
     end
   end
 
@@ -86,7 +87,7 @@ class Room < ActiveRecord::Base
   end
 
   def most_recent_reading(key)
-    Rails.cache.fetch("#{cache_key}/#{key}", expires_in: 10.seconds) do
+    Rails.cache.fetch("#{cache_key}/reading/#{key}", expires_in: 10.seconds) do
       Reading.where(room_id: id, key: key)&.last
     end
   end

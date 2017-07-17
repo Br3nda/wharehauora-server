@@ -176,20 +176,6 @@ room-analysis-metric {
   }
 }
 
-
-// -- ROOM TABLE BUTTON --
-// Styles for the "Choose" button at the bottom of a room table.
-// This inherits from Pure Button.
-.button-analyze {
-  background: $white;
-  border-radius: 2em;
-  border: 1px solid $shadowy-grey;
-  bottom: -1.5em;
-  color: $analytical-button-white;
-  font-weight: bold;
-  position: relative;
-}
-
 .information-head {
   color: $black;
   font-weight: 500;

@@ -30,20 +30,20 @@ class RoomsController < ApplicationController
   def measurement
     @room = policy_scope(Room).find(params[:room_id])
     authorize @room
-    reading = @room.most_recent_reading(params[:key])
-    r = { opinions: opinions }.merge(@room.to_json)
+    key = params[:key]
+    reading = @room.most_recent_reading(key)
+    r = { opinions: opinions, current: @room.current?(key), room: @room.to_json }
     r = r.merge(reading.to_json) if reading
     respond_with(r)
   end
 
   def opinions
     {
+      good: @room.good?,
       min_temperature: @room.room_type&.min_temperature,
       max_temperature: @room.room_type&.max_temperature,
       too_cold: @room.too_cold?,
-      too_hot: @room.too_hot?,
-      has_current_temperature: @room.current?('temperature'),
-      has_current_humidity: @room.current?('humidity')
+      too_hot: @room.too_hot?
     }
   end
 
