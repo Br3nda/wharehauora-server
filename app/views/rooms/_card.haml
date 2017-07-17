@@ -40,6 +40,3 @@
   - if room.sensors.size.positive?
     = link_to room_path(room), class: 'button-analyze pure-button' do
       Analyse
-  - elsif policy(room).edit?
-    = link_to home_sensors_path(room.home), class: 'button-analyze pure-button' do
-      Assign sensor
