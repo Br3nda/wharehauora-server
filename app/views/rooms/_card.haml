@@ -11,7 +11,7 @@
         :javascript
           updateRoom(#{room.id}, '#{key}');
           //update every 30 seconds
-          //setInterval(function () {updateRoom(#{room.id}, 'temperature'); }, 60000);
+          setInterval(function () {updateRoom(#{room.id}, 'temperature'); }, 60000);
   %ul.conditions-table-list
     %li
       = room&.room_type&.name
