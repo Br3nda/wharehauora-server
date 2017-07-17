@@ -31,10 +31,27 @@ class RoomsController < ApplicationController
   def measurement
     @room = policy_scope(Room).find(params[:room_id])
     authorize @room
-    key = params[:key]
-    value = format('%.1f', @room.single_current_metric(key))
-    unit = MeasurementsUnitsService.unit_for(key)
-    respond_with(key: key, value: value, unit: unit)
+    reading = @room.most_recent_reading(params[:key])
+    respond_with(
+      key: params[:key],
+      value: format('%.1f', reading.value),
+      unit: reading.unit,
+      timestamp: reading.created_at,
+      room: {
+        id: @room.id,
+        name: @room.name,
+        room_type: {
+          name: @room.room_type&.name
+        }
+      },
+      home: {
+        id: @room.home.id,
+        name: @room.home.name,
+        home_type: {
+          name: @room.home.home_type&.name
+        }
+      }
+    )
   end
 
   def edit

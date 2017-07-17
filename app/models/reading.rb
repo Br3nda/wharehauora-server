@@ -19,4 +19,8 @@ class Reading < ActiveRecord::Base
     return unless room && room.room_type && room.room_type.min_temperature
     value < room.room_type.min_temperature
   end
+
+  def unit
+    MeasurementsUnitsService.unit_for(key)
+  end
 end

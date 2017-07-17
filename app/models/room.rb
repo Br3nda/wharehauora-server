@@ -86,8 +86,12 @@ class Room < ActiveRecord::Base
   end
 
   def single_current_metric(key)
+    most_recent_reading(key)&.value
+  end
+
+  def most_recent_reading(key)
     Rails.cache.fetch("#{cache_key}/#{key}", expires_in: 1.minute) do
-      Reading.where(room_id: id, key: key)&.last&.value
+      Reading.where(room_id: id, key: key)&.last
     end
   end
 
