@@ -1,9 +1,9 @@
-%div.conditions-table{id: "room-#{room.id}-table"}
+.conditions-table{id: "room-#{room.id}-table"}
   .conditions-table-header
     %h2= room.name
     %span.conditions-table-current
       - %w[temperature humidity].each do |key|
-        %div{ id: "room-#{room.id}-#{key}-value" }=fa_icon 'spinner '
+        %div{ id: "room-#{room.id}-#{key}-value" }= fa_icon 'spinner '
         %span= key
         %span
           %time.timeago{ datetime: '', id: "room-#{room.id}-#{key}-timestamp" }
@@ -13,7 +13,7 @@
           setInterval(function () {updateRoom(#{room.id}, '#{key}'); }, 30000);
   %ul.conditions-table-list
     %li
-      = room.room_type.name unless room.room_type.blank?
+      = room.room_type.name if room.room_type.present?
       %li{ id: "room-#{room.id}-too-cold" } Too cold #{fa_icon 'frown-o'}
       %li{ id: "room-#{room.id}-too-hot" } Too hot #{fa_icon 'frown-o'}
       %li{ id: "room-#{room.id}-no-sensors" } No sensors #{fa_icon 'warning'}
