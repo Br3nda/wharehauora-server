@@ -4,7 +4,7 @@
 function updateRoom(room_id, key) {
   $.get( "/rooms/" + room_id + "/measurement.json?key=" + key, function( data ) {
     var div = '#room-' + room_id + "-" + key;
-    $(div).text(data['value'] + data['unit']);
-    $(div +"-timestamp").text(data['timestamp']);
+    $(div).text(data.value + data.unit);
+    $(div +"-timestamp").text(data.timestamp);
   });
 }
