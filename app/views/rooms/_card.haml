@@ -14,6 +14,9 @@
   %ul.conditions-table-list
     %li
       = room.room_type.name if room.room_type.present?
+      - if policy(room).edit?
+        = link_to edit_room_path(room) do
+          =fa_icon 'edit'
       %li{ id: "room-#{room.id}-too-cold" } Too cold #{fa_icon 'frown-o'}
       %li{ id: "room-#{room.id}-too-hot" } Too hot #{fa_icon 'frown-o'}
       %li{ id: "room-#{room.id}-no-sensors" } No sensors #{fa_icon 'warning'}
