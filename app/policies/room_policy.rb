@@ -15,6 +15,10 @@ class RoomPolicy < ApplicationPolicy
     owner? || janitor?
   end
 
+  def measurement?
+    owner? || whanau? || janitor?
+  end
+
   private
 
   class Scope < Scope

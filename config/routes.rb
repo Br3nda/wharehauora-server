@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   devise_for :users
   root 'welcome#index'
 
@@ -11,7 +11,9 @@ Rails.application.routes.draw do
     resources :readings
   end
 
-  resources :rooms
+  resources :rooms do
+    get :measurement, to: 'rooms#measurement'
+  end
   resources :sensors
   resources :messages
   resources :readings

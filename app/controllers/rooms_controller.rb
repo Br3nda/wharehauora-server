@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
   before_action :set_room, only: %i[show edit destroy update]
   before_action :set_home, only: %i[index edit update]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
     authorize @home
@@ -26,6 +26,15 @@ class RoomsController < ApplicationController
 
     @rating_text = rating_text
     respond_with(@room)
+  end
+
+  def measurement
+    @room = policy_scope(Room).find(params[:room_id])
+    authorize @room
+    key = params[:key]
+    value = format('%.1f', @room.single_current_metric(key))
+    unit = MeasurementsUnitsService.unit_for(key)
+    respond_with(key: key, value: value, unit: unit)
   end
 
   def edit

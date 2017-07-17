@@ -2,17 +2,16 @@
   .conditions-table-header
     %h2= room.name
     %span.conditions-table-current
-      = room_temperature(room)
-      %span
-        Temperature
-        = room_reading_time_ago(room, 'temperature')
-    %span.conditions-table-current
-      = room_humidity(room)
-      %span
-        Humidity
-        = room_reading_time_ago(room, 'humidity')
+      - ['temperature', 'humidity'].each do |key|
+        %div{ id: "room-#{room.id}-#{key}" } ??
+        %span
+          = key
+          / = room_reading_time_ago(room, 'temperature')
+        :javascript
+          updateRoom(#{room.id}, '#{key}');
+          //update every 30 seconds
+          //setInterval(function () {updateRoom(#{room.id}, 'temperature'); }, 60000);
   %ul.conditions-table-list
-
     %li
       = room&.room_type&.name
 

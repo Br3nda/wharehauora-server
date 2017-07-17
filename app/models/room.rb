@@ -85,13 +85,13 @@ class Room < ActiveRecord::Base
             .first&.created_at
   end
 
-  private
-
   def single_current_metric(key)
     Rails.cache.fetch("#{cache_key}/#{key}", expires_in: 1.minute) do
       Reading.where(room_id: id, key: key)&.last&.value
     end
   end
+
+  private
 
   def rating_letter(number)
     return 'A' if number > 95
