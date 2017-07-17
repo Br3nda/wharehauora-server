@@ -32,14 +32,7 @@ class RoomsController < ApplicationController
     @room = policy_scope(Room).find(params[:room_id])
     authorize @room
     reading = @room.most_recent_reading(params[:key])
-    respond_with(
-      key: params[:key],
-      value: format('%.1f', reading.value),
-      unit: reading.unit,
-      timestamp: reading.created_at,
-      room: @room.to_json,
-      home: @room.home.to_json
-    )
+    respond_with(reading.to_json)
   end
 
   def edit

@@ -23,4 +23,13 @@ class Reading < ActiveRecord::Base
   def unit
     MeasurementsUnitsService.unit_for(key)
   end
+
+  def to_json
+    {
+      key: params[:key],
+      value: format('%.1f', reading.value),
+      unit: reading.unit,
+      timestamp: reading.created_at
+    }
+  end
 end
