@@ -2,7 +2,7 @@
   .conditions-table-header
     %h2= room.name
     %span.conditions-table-current
-      - ['temperature', 'humidity'].each do |key|
+      - %w[temperature humidity].each do |key|
         %div{ id: "room-#{room.id}-#{key}" } ??
         %span
           = key
