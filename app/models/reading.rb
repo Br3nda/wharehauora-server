@@ -24,13 +24,7 @@ class Reading < ActiveRecord::Base
     MeasurementsUnitsService.unit_for(key)
   end
 
-  def to_json
-    {
-      key: key,
-      value: format('%.1f', value),
-      unit: unit,
-      timestamp: created_at,
-      sensors_count: room.sensors.size
-    }
+  def current?
+    created_at > 1.hour.ago
   end
 end

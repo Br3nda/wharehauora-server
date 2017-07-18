@@ -13,6 +13,10 @@ class Room < ActiveRecord::Base
   scope(:with_no_readings, -> { includes(:readings).where(readings: { id: nil }) })
   scope(:with_no_sensors, -> { includes(:sensors).where(sensors: { id: nil }) })
 
+  def public?
+    home.is_public
+  end
+
   def rating
     number = 100
     return '?' unless enough_info_to_perform_rating?
@@ -90,14 +94,6 @@ class Room < ActiveRecord::Base
     Rails.cache.fetch("#{cache_key}/reading/#{key}", expires_in: 10.seconds) do
       Reading.where(room_id: id, key: key)&.last
     end
-  end
-
-  def to_json
-    {
-      id: id,
-      name: name,
-      room_type: { name: room_type&.name }
-    }
   end
 
   private

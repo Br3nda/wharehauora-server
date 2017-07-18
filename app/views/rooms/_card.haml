@@ -7,10 +7,6 @@
         %span= key
         %span
           %time.timeago{ datetime: '', id: "room-#{room.id}-#{key}-timestamp" }
-        :javascript
-          updateRoom(#{room.id}, '#{key}');
-          //update every 30 seconds
-          setInterval(function () {updateRoom(#{room.id}, '#{key}'); }, 30000);
   %ul.conditions-table-list
     %li
       = room.room_type.name if room.room_type.present?
@@ -25,3 +21,8 @@
   - if room.sensors.size.positive?
     = link_to room_path(room), class: 'button-analyze pure-button' do
       Analyse
+
+:javascript
+  updateRoom(#{room.id});
+  //update every 30 seconds
+  setInterval(function () {updateRoom(#{room.id}); }, 30000);

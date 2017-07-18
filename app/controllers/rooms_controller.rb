@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
   before_action :set_room, only: %i[show edit destroy update]
   before_action :set_home, only: %i[index edit update]
 
-  respond_to :html, :json
+  respond_to :html
 
   def index
     authorize @home
@@ -18,33 +18,14 @@ class RoomsController < ApplicationController
   end
 
   def show
+    skip_authorization if @room.public?
     parse_dates
     @home = @room.home
     @keys = %w[temperature humidity]
     @start = 7.days.ago
-    @rating = @room.rating
-    @rating_text = rating_text
+    # @rating = @room.rating
+    # @rating_text = rating_text
     respond_with(@room)
-  end
-
-  def measurement
-    @room = policy_scope(Room).find(params[:room_id])
-    authorize @room
-    key = params[:key]
-    reading = @room.most_recent_reading(key)
-    r = { opinions: opinions, current: @room.current?(key), room: @room.to_json }
-    r = r.merge(reading.to_json) if reading
-    respond_with(r)
-  end
-
-  def opinions
-    {
-      good: @room.good?,
-      min_temperature: @room.room_type&.min_temperature,
-      max_temperature: @room.room_type&.max_temperature,
-      too_cold: @room.too_cold?,
-      too_hot: @room.too_hot?
-    }
   end
 
   def edit
