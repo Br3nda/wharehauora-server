@@ -1,4 +1,5 @@
 class ReadingsController < ApplicationController
+  before_action :authenticate_user!
   respond_to :json
   def index
     set_home
