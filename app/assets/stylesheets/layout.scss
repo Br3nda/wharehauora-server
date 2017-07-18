@@ -128,7 +128,7 @@ room-analysis-metric {
 // -- ROOM TABLE HEADER --
 // By default, a header is black/white, and has some styles for its <h2> name.
 .conditions-table-header {
-  background: $almost-black;
+  background: $shadowy-grey;
   color: $white;
 
   h2 {
@@ -182,7 +182,7 @@ room-analysis-metric {
 }
 
 .footer {
-  background: $almost-black;
+  background: $white-grey;
   color: $footer-grey-text;
   text-align: center;
 
