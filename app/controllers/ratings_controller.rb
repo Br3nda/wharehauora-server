@@ -49,6 +49,8 @@ class RatingsController < ApplicationController
       timestamp: @reading.created_at,
       current: @reading.current?
     }
+  rescue
+    {}
   end
 
   def room_data
