@@ -23,6 +23,20 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
+
+
 SET search_path = public, pg_catalog;
 
 --
@@ -726,6 +740,13 @@ CREATE UNIQUE INDEX index_home_viewers_on_user_id_and_home_id ON home_viewers US
 
 
 --
+-- Name: index_homes_on_is_public; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_homes_on_is_public ON homes USING btree (is_public);
+
+
+--
 -- Name: index_homes_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -740,10 +761,38 @@ CREATE INDEX index_homes_on_owner_id ON homes USING btree (owner_id);
 
 
 --
+-- Name: index_messages_on_created_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_messages_on_created_at ON messages USING btree (created_at);
+
+
+--
 -- Name: index_messages_on_sensor_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_messages_on_sensor_id ON messages USING btree (sensor_id);
+
+
+--
+-- Name: index_readings_on_created_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_readings_on_created_at ON readings USING btree (created_at);
+
+
+--
+-- Name: index_readings_on_key; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_readings_on_key ON readings USING btree (key);
+
+
+--
+-- Name: index_readings_on_key_and_room_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_readings_on_key_and_room_id ON readings USING btree (key, room_id);
 
 
 --
@@ -807,6 +856,13 @@ CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
+
+
+--
+-- Name: readings_room_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX readings_room_id_idx ON readings USING btree (room_id);
 
 
 --
@@ -953,4 +1009,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170324011548');
 INSERT INTO schema_migrations (version) VALUES ('20170416021403');
 
 INSERT INTO schema_migrations (version) VALUES ('20170707012401');
+
+INSERT INTO schema_migrations (version) VALUES ('20170719025235');
 
