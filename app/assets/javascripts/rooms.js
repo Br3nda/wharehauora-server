@@ -25,7 +25,7 @@ function updateRoom(room_id) {
     if(data.ratings.good) conditions_table.addClass('conditions-table-good').removeClass('conditions-table-bad');
     else  conditions_table.addClass('conditions-table-bad').removeClass('conditions-table-good');
 
-    var div = '#room-' + room_id + "-"
+    var div = '#room-' + room_id + "-";
 
     var too_cold_div = $(div +"too-cold");
     if(data.ratings.too_cold) too_cold_div.show();
