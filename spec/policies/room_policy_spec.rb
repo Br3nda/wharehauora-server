@@ -16,6 +16,10 @@ describe RoomPolicy do
     it { is_expected.to permit_action(:show) }
   end
 
+  shared_examples 'forbidden to see the room' do
+    it { is_expected.to forbid_action(:show) }
+  end
+
   shared_examples 'can edit the room' do
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to permit_action(:update) }
@@ -35,6 +39,52 @@ describe RoomPolicy do
     it { is_expected.to permit_action(:destroy) }
   end
 
+  shared_examples 'home owner can see and edit room' do
+    context 'home owner' do
+      let(:user) { owner }
+      include_examples 'can see the room'
+      include_examples 'can edit the room'
+      include_examples 'can delete the room'
+    end
+  end
+
+  shared_examples "admin can do everything" do
+    context 'admin' do
+      let(:user) { admin }
+      include_examples 'can see the room'
+      include_examples 'can edit the room'
+      include_examples 'can delete the room'
+    end
+  end
+
+  shared_examples "whanau can view but not edit" do
+    context 'whanau' do
+      let(:user) { whanau }
+      include_examples 'can see the room'
+      include_examples 'forbidden to edit the room'
+    end
+  end
+
+  context 'private room' do
+    let(:room) { FactoryGirl.create :room }
+
+    context 'a visitor' do
+      let(:user) { nil }
+      include_examples 'forbidden to see the room'
+      include_examples 'forbidden to edit the room'
+    end
+
+    context 'another user, not whanau' do
+      let(:user) { other_user }
+      include_examples 'forbidden to see the room'
+      include_examples 'forbidden to edit the room'
+    end
+
+    include_examples 'home owner can see and edit room'
+    include_examples "whanau can view but not edit"
+    include_examples "admin can do everything"
+  end
+
   context 'public room' do
     let(:room) { FactoryGirl.create :public_room }
 
@@ -43,31 +93,14 @@ describe RoomPolicy do
       include_examples 'can see the room'
       include_examples 'forbidden to edit the room'
     end
-
-    context 'home owner' do
-      let(:user) { owner }
-      include_examples 'can see the room'
-      include_examples 'can edit the room'
-      include_examples 'can delete the room'
-    end
-
-    context 'whanau' do
-      let(:user) { whanau }
-      include_examples 'can see the room'
-      include_examples 'forbidden to edit the room'
-    end
-
-    context 'admin' do
-      let(:user) { admin }
-      include_examples 'can see the room'
-      include_examples 'can edit the room'
-      include_examples 'can delete the room'
-    end
-
     context 'another user, not whanau' do
       let(:user) { other_user }
       include_examples 'can see the room'
       include_examples 'forbidden to edit the room'
     end
+
+    include_examples 'home owner can see and edit room'
+    include_examples "whanau can view but not edit"
+    include_examples "admin can do everything"
   end
 end
