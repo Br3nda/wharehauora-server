@@ -4,6 +4,8 @@ FactoryGirl.define do
     password { Faker::Internet.password }
   end
   factory :admin, class: User do
-    roles { FactoryGirl.create :janitor }
+    email { Faker::Internet.email }
+    password { Faker::Internet.password }
+    roles { [FactoryGirl.create(:janitor)] }
   end
 end
