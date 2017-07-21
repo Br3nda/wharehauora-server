@@ -33,7 +33,7 @@ function updateRoom(room_id) {
     if(data.ratings.too_cold) too_cold_div.show();
     else too_cold_div.hide();
 
-    var too_hot_div = $(div +"too-hot")
+    var too_hot_div = $(div +"too-hot");
     if(data.ratings.too_hot) too_hot_div.show();
     else too_hot_div.hide();
 
