@@ -9,18 +9,18 @@
       .conditions-table-header
         %h2 Temperature
         %span.conditions-table-current
-          = sprintf "%.2fC", @room.temperature
+          = '%.2fC' % @room.temperature
           %span current temperature
       %ul.conditions-table-list
         %li
           - if @room.too_cold?
-            = fa_icon "frown-o"
+            = fa_icon 'frown-o'
             Too cold
           - else
-            = fa_icon "check"
+            = fa_icon 'check'
             Comfortable temperature
         %li
-          = sprintf "%.2f%%", @room.humidity
+          = '%.2f%%' % @room.humidity
           humidity
       - if @room.room_type
         %p
@@ -37,32 +37,32 @@
       .conditions-table-header
         %h2 Dewpoint
         %span.conditions-table-current
-          = sprintf "%.2fC", @room.dewpoint
+          = '%.2fC' % @room.dewpoint
           %span
             based on
-            = sprintf "%.2f%%", @room.humidity
+            = '%.2f%%' % @room.humidity
             humidity
       %ul.conditions-table-list
         - if @room.below_dewpoint?
           %li
-            = fa_icon "warning"
+            = fa_icon 'warning'
             Moisture and mould highly like
           %li
             Reduce humidity to reduce mould
         - elsif @room.near_dewpoint?
           %li
-            = fa_icon "warning"
+            = fa_icon 'warning'
             Reduce humidity
           %li
-            = fa_icon "warning"
+            = fa_icon 'warning'
             Temperature is close to dewpoint
         - else
           %li
-            = fa_icon "check"
+            = fa_icon 'check'
             Room is well above dewpoint
         - if @room.dewpoint < 6
           %li
-            = fa_icon "check"
+            = fa_icon 'check'
             Low dewpoint is very good
         - elsif @room.dewpoint < 16
           %li
@@ -73,14 +73,14 @@
             High dewpoint
           %li
             Keep this room above
-            = sprintf "%.2fC", @room.dewpoint
+            = '%.2fC' % @room.dewpoint
       %p
         When the temperature in this room falls below
-        = sprintf "%.2fC", @room.dewpoint
+        = '%.2fC' % @room.dewpoint
         moisture begins to form on surfaces, leading to mould growth.
       - if @room.near_dewpoint?
         %p
-          = fa_icon "error"
+          = fa_icon 'error'
           If your room is only heated when you are home, it may become
           cold and allow mould to grow while you are away.
 
@@ -92,13 +92,13 @@
           = @rating
           %span= @rating_text
       %ul.conditions-table-list
-        - unless @room.current?("temperature") && @room.current?("humidity")
+        - unless @room.current?('temperature') && @room.current?('humidity')
           %li
-            = fa_icon "question"
+            = fa_icon 'question'
             No recent readings
         - if @room.good?
           %li
-            = fa_icon "check"
+            = fa_icon 'check'
             Room appears healthy
         - if @room.too_cold?
           %li
