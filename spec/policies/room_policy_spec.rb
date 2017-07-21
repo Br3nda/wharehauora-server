@@ -48,7 +48,7 @@ describe RoomPolicy do
     end
   end
 
-  shared_examples "admin can do everything" do
+  shared_examples 'admin can do everything' do
     context 'admin' do
       let(:user) { admin }
       include_examples 'can see the room'
@@ -57,7 +57,7 @@ describe RoomPolicy do
     end
   end
 
-  shared_examples "whanau can view but not edit" do
+  shared_examples 'whanau can view but not edit' do
     context 'whanau' do
       let(:user) { whanau }
       include_examples 'can see the room'
@@ -81,8 +81,8 @@ describe RoomPolicy do
     end
 
     include_examples 'home owner can see and edit room'
-    include_examples "whanau can view but not edit"
-    include_examples "admin can do everything"
+    include_examples 'whanau can view but not edit'
+    include_examples 'admin can do everything'
   end
 
   context 'public room' do
@@ -100,7 +100,7 @@ describe RoomPolicy do
     end
 
     include_examples 'home owner can see and edit room'
-    include_examples "whanau can view but not edit"
-    include_examples "admin can do everything"
+    include_examples 'whanau can view but not edit'
+    include_examples 'admin can do everything'
   end
 end
