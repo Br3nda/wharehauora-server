@@ -22,7 +22,7 @@ class Reading < ActiveRecord::Base
   end
 
   def unit
-    MeasurementsUnitsService.unit_for(key)
+    UnitsService.unit_for(key)
   end
 
   def current?

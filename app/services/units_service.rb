@@ -1,11 +1,11 @@
-class MeasurementsUnitsService
+class UnitsService
   def self.unit_for(key)
-    if key == 'temperature'
+    if %w[temperature dewpoint].include? key
       '°C'
     elsif key == 'humidity'
       '%'
     else
-      'unknown unit'
+      '?'
     end
   end
 end
