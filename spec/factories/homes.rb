@@ -5,4 +5,17 @@ FactoryGirl.define do
     home_type
     is_public false
   end
+
+  factory :public_home, parent: :home do
+    is_public true
+  end
+
+  factory :home_with_rooms, parent: :home do
+    transient do
+      rooms_count 5
+    end
+    after(:create) do |home, evaluator|
+      create_list(:room, evaluator.rooms_count, home: home)
+    end
+  end
 end

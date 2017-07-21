@@ -21,7 +21,7 @@ RSpec.describe Room, type: :model do
 
   pending 'good?'
   describe 'no readings' do
-    it { expect(room.good?).to eq(nil) }
+    it { expect(room.good?).to eq(false) }
     it { expect(room.current?('temperature')).to eq(false) }
     it { expect(room.current?('humidity')).to eq(false) }
     it { expect(room.age_of_last_reading('temperature')).to eq(nil) }

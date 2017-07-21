@@ -2,10 +2,9 @@ class RatingsController < ApplicationController
   respond_to :json
 
   def measurement
-    @room = policy_scope(Room).find(params[:room_id])
+    @room = Room.find(params[:room_id])
     @key = params[:key]
 
-    skip_authorization if @room.public?
     authorize @room
     respond_with(room_details)
   end
@@ -41,14 +40,13 @@ class RatingsController < ApplicationController
 
   def reading_data(key)
     @reading = @room.most_recent_reading(key)
-    return unless @reading
     {
-      key: @reading.key,
+      # key: @reading.key,
       value: format('%.1f', @reading.value),
       unit: @reading.unit,
       timestamp: @reading.created_at,
       current: @reading.current?
-    }
+    } if @reading
   rescue
     {}
   end
