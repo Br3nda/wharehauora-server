@@ -10,17 +10,19 @@ function updateRoom(room_id) {
       var reading = data.readings[key];
       if (reading) {
         var div = '#room-' + room_id + "-" + key + "-";
+        // show the value
         $(div + "value").text(reading.value + reading.unit);
+        // show the timestamp of the readings
         $(div +"timestamp").text(reading.timestamp);
-      // magical time ago
-      // $(div +"-timestamp").attr('datetime', data.timestamp);
 
+        // mark whether this reading is current or old
         var current_reading_div = $("#room-" + room_id + "-no-" + key);
         if(reading.current) current_reading_div.hide();
         else current_reading_div.show();
       }
     });
 
+    // Sets the class on the room card, blue/green
     var conditions_table = $("#room-"+room_id+"-table");
     if(data.ratings.good) conditions_table.addClass('conditions-table-good').removeClass('conditions-table-bad');
     else  conditions_table.addClass('conditions-table-bad').removeClass('conditions-table-good');
