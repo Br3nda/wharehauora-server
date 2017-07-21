@@ -1,4 +1,4 @@
-= render 'homes/nav', home: @home
+= render 'homes/nav', home: @room.home
 
 %h2= @room.name
 %h3= @room.room_type&.name
@@ -90,7 +90,7 @@
         %h2 Rating
         %span.conditions-table-current
           = @rating
-          %span= @rating_text
+          %span= RatingService.rating_text(@rating)
       %ul.conditions-table-list
         - unless @room.current?('temperature') && @room.current?('humidity')
           %li
