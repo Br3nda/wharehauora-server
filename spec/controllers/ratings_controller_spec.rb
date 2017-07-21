@@ -44,7 +44,6 @@ RSpec.describe RatingsController, type: :controller do
     end
   end # returns expected readings
 
-
   let(:room_type) { FactoryGirl.create :room_type, min_temperature: 10, max_temperature: 30 }
   let(:owner) { room.home.owner }
   let(:admin) { FactoryGirl.create :admin }
