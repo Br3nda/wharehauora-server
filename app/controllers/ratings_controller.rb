@@ -40,13 +40,15 @@ class RatingsController < ApplicationController
 
   def reading_data(key)
     @reading = @room.most_recent_reading(key)
-    {
-      # key: @reading.key,
-      value: format('%.1f', @reading.value),
-      unit: @reading.unit,
-      timestamp: @reading.created_at,
-      current: @reading.current?
-    } if @reading
+    if @reading
+      {
+        # key: @reading.key,
+        value: format('%.1f', @reading.value),
+        unit: @reading.unit,
+        timestamp: @reading.created_at,
+        current: @reading.current?
+      }
+    end
   rescue
     {}
   end
