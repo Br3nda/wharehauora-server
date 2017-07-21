@@ -72,18 +72,18 @@ class Room < ActiveRecord::Base
     sensors.size.positive?
   end
 
-  def current?(reading_type)
-    return false unless readings.where(key: reading_type).size.positive?
-    age_of_last_reading(reading_type) < 1.hour
+  def current?(key)
+    age = age_of_last_reading(key)
+    age.present? && age < 1.hour
   end
 
-  def age_of_last_reading(reading_type)
-    return nil unless readings.where(key: reading_type).size.positive?
-    Time.current - last_reading_timestamp(reading_type)
+  def age_of_last_reading(key)
+    return nil unless readings.where(key: key).size.positive?
+    Time.current - last_reading_timestamp(key)
   end
 
-  def last_reading_timestamp(reading_type)
-    readings.where(key: reading_type)
+  def last_reading_timestamp(key)
+    readings.where(key: key)
             .order(created_at: :desc)
             .limit(1)
             .first&.created_at
@@ -99,7 +99,7 @@ class Room < ActiveRecord::Base
     end
   end
 
-  private
+  # private
 
   def rating_letter(number)
     return 'A' if number > 95

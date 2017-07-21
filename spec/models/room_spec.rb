@@ -37,12 +37,20 @@ RSpec.describe Room, type: :model do
   end
 
   describe 'has current readings' do
-    before do
-      FactoryGirl.create :reading, key: 'humidity', value: 0, room: room
-    end
+    before { FactoryGirl.create :reading, key: 'humidity', value: 0, room: room }
     it { expect(room.current?('humidity')).to eq(true) }
     pending 'good?'
-    pending 'age_of_last_reading'
+  end
+
+  describe 'age_of_last_reading' do
+    before do
+      Timecop.freeze
+      FactoryGirl.create :temperature_reading, created_at: 5.minutes.ago, room: room
+    end
+    it { expect(room.age_of_last_reading('temperature')).to be_within(0.0001).of(5 * 60) }
+    after do
+      Timecop.return
+    end
   end
 
   describe 'room_type has min and max temperature set' do

@@ -8,12 +8,13 @@ class Reading < ActiveRecord::Base
 
   scope(:joins_home, -> { joins(:room, room: :home) })
 
-  scope(:temperature, -> { where(key: 'temperature') })
-  scope(:humidity, -> { where(key: 'humidity') })
-  scope(:mould, -> { where(key: 'mould') })
-  scope(:dewpoint, -> { where(key: 'dewpoint') })
+  scope :by_key, ->(key) { where(key: key) }
+
+  scope(:temperature, -> { by_key 'temperature' })
+  scope(:humidity, -> { by_key 'humidity' })
+  scope(:mould, -> { by_key 'mould' })
+  scope(:dewpoint, -> { by_key 'dewpoint' })
   scope(:normal_range, -> { where('value < 100 AND value > -5') })
-  validates :key, :value, :room, presence: true
 
   def too_cold?
     return unless room && room.room_type && room.room_type.min_temperature
