@@ -7,7 +7,7 @@ RSpec.describe ReadingsController, type: :controller do
   context 'Not signed in' do
     describe 'GET index' do
       before { get :index, valid_params }
-      it { expect(response).to have_http_status(:not_found) }
+      it { expect(response).not_to have_http_status(:success) }
     end
   end
 
