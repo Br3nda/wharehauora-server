@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe RatingsController, type: :controller do
-  shared_examples 'can see measurements' do
+RSpec.describe RoomSummaryController, type: :controller do
+  shared_examples 'can see summaries' do
     it { expect(response).to have_http_status(:success) }
   end
-  shared_examples 'cannot see measurements' do
+  shared_examples 'cannot see summaries' do
     it { expect(response).not_to have_http_status(:success) }
   end
 
@@ -62,7 +62,7 @@ RSpec.describe RatingsController, type: :controller do
   before do
     create_readings
     sign_in user unless user.nil?
-    get :measurement, valid_params
+    get :summary, valid_params
   end
 
   describe 'When room is in a public home' do
@@ -71,28 +71,28 @@ RSpec.describe RatingsController, type: :controller do
     shared_examples 'check permissions' do
       describe 'and user is not logged in ' do
         let(:user) { nil }
-        include_examples 'can see measurements'
+        include_examples 'can see summaries'
       end
 
       describe 'and user is logged in ' do
         describe 'as the whare owner' do
           let(:user) { owner }
-          include_examples 'can see measurements'
+          include_examples 'can see summaries'
           include_examples 'returns expected readings'
         end
         describe 'as whanau' do
           let(:user) { whanau }
-          include_examples 'can see measurements'
+          include_examples 'can see summaries'
           include_examples 'returns expected readings'
         end
         describe 'as admin' do
           let(:user) { admin }
-          include_examples 'can see measurements'
+          include_examples 'can see summaries'
           include_examples 'returns expected readings'
         end
         describe 'as a user from another home' do
           let(:user) { otheruser }
-          include_examples 'can see measurements'
+          include_examples 'can see summaries'
           include_examples 'returns expected readings'
         end
       end
@@ -104,27 +104,27 @@ RSpec.describe RatingsController, type: :controller do
     let!(:readings) { FactoryGirl.create_list :reading, 100, room: room }
     describe 'and user is not logged in ' do
       let(:user) { nil }
-      include_examples 'cannot see measurements'
+      include_examples 'cannot see summaries'
     end
     describe 'and user is logged in ' do
       describe 'as the whare owner' do
         let(:user) { owner }
-        include_examples 'can see measurements'
+        include_examples 'can see summaries'
         include_examples 'returns expected readings'
       end
       describe 'as whanau' do
         let(:user) { whanau }
-        include_examples 'can see measurements'
+        include_examples 'can see summaries'
         include_examples 'returns expected readings'
       end
       describe 'as admin' do
         let(:user) { admin }
-        include_examples 'can see measurements'
+        include_examples 'can see summaries'
         include_examples 'returns expected readings'
       end
       describe 'but user is not allowed to view the room' do
         let(:user) { otheruser }
-        include_examples 'cannot see measurements'
+        include_examples 'cannot see summaries'
       end
     end
   end

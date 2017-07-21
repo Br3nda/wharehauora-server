@@ -2,7 +2,7 @@
 // All this logic will automatically be available in application.js.
 
 function updateRoom(room_id) {
-  $.get( "/rooms/" + room_id + "/measurement.json", function( data ) {
+  $.get( "/rooms/" + room_id + "/summary.json", function( data ) {
 
     var keys = ['temperature', 'humidity', 'dewpoint'];
 

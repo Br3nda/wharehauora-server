@@ -12,7 +12,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   end
 
   resources :rooms do
-    resources :measurement, to: 'ratings#measurement'
+    resources :summary, to: 'room_summary#summary'
   end
   resources :sensors
   resources :messages
