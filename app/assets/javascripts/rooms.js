@@ -6,6 +6,7 @@ function setupRoomDataReloader(room_id) {
   $('.room-' + room_id + '-list').hide();
   setInterval(function() { getRoomData(room_id); }, 45*1000);
   getRoomData(room_id);
+
 }
 
 
@@ -29,6 +30,8 @@ function updateRoomDisplay(room_id, data) {
       var div = '#room-' + room_id + "-" + key + "-";
       // show the value
       $(div + "value").text(reading.value + reading.unit);
+
+
       // show the timestamp of the readings
       $(div +"timestamp").text(reading.timestamp);
       jQuery("time.timeago").timeago();
