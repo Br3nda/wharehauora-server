@@ -25,7 +25,6 @@ class RoomService
     @reading = @room.most_recent_reading(key)
     return unless @reading
     {
-      # key: @reading.key,
       value: format('%.1f', @reading.value),
       unit: @reading.unit,
       timestamp: @reading.created_at,
