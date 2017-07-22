@@ -4,7 +4,7 @@
 function setupRoomDataReloader(room_id) {
   console.log("setting up data reloader");
   $('.room-' + room_id + '-list').hide();
-  setInterval(function() { getRoomData(room_id); }, 5*1000);
+  setInterval(function() { getRoomData(room_id); }, 45*1000);
   getRoomData(room_id);
 }
 
