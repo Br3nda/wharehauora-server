@@ -26,8 +26,8 @@ function updateRoomDisplay(room_id, data) {
   keys.forEach(function(key, index, array) {
     console.log(key);
     var reading = data.readings[key];
+    var div = '#room-' + room_id + "-" + key + "-";
     if (reading) {
-      var div = '#room-' + room_id + "-" + key + "-";
 
       // show the value
       $(div + "value").text(reading.value + reading.unit);
@@ -40,6 +40,10 @@ function updateRoomDisplay(room_id, data) {
       var current_reading_div = $("#room-" + room_id + "-no-" + key);
       if(reading.current) current_reading_div.hide();
       else current_reading_div.show();
+    }
+    else {
+      $(div + "value").text("??");
+      $(div +"timestamp").text("No data");
     }
   });
 
