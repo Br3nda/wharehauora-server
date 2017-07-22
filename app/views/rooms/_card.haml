@@ -3,7 +3,8 @@
     %h2= room.name
     %span.conditions-table-current
       - %w[temperature humidity].each do |key|
-        %div{ id: "room-#{room.id}-#{key}-value" }= fa_icon 'spinner '
+        %div{ id: "room-#{room.id}-#{key}-value" }
+          = render "layouts/spinner"
         %span
           = key
           %time.timeago{ datetime: "", id: "room-#{room.id}-#{key}-timestamp" }
