@@ -72,7 +72,6 @@ class SensorsIngest
     last_value = sensor.room.present? ? sensor.room.temperature : 20.0
 
     # create a new temp, that's similar to current one
-    # temp = rand((last_value - 0.5)..(last_value + 0.5))
     new_value = last_value - 0.1
     new_value = 20.0 if new_value > 40.0 || new_value < -5.0
     new_value
