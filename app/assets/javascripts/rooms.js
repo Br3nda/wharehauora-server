@@ -64,5 +64,4 @@ function updateRoomDisplay(room_id, data) {
   else no_sensors_div.hide();
 
   $('.room-' + room_id + '-list').show();
-
 }
