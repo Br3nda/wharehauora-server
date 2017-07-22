@@ -33,7 +33,6 @@ function updateRoomDisplay(room_id, data) {
       $(div + "value").text(reading.value + reading.unit);
 
       // show the timestamp of the readings
-      // $(div +"timestamp").text(reading.timestamp);
       $(div +"timestamp").attr('datetime', reading.timestamp);
       jQuery(div +"timestamp").timeago();
 
