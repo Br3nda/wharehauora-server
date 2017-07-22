@@ -17,7 +17,6 @@ function getRoomData(room_id) {
   });
 }
 
-
 function updateRoomDisplay(room_id, data) {
   console.log("Updating room display");
   console.log(data);
@@ -30,7 +29,6 @@ function updateRoomDisplay(room_id, data) {
       var div = '#room-' + room_id + "-" + key + "-";
       // show the value
       $(div + "value").text(reading.value + reading.unit);
-
 
       // show the timestamp of the readings
       $(div +"timestamp").text(reading.timestamp);
