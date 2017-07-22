@@ -6,7 +6,7 @@
         %div{ id: "room-#{room.id}-#{key}-value" }= fa_icon 'spinner '
         %span
           = key
-          %time.timeago{ datetime: "2017-07-22T03:53:37Z", id: "room-#{room.id}-#{key}-timestamp"}
+          %time.timeago{ datetime: "2017-07-22T03:53:37Z", id: "room-#{room.id}-#{key}-timestamp" }
   %ul.conditions-table-list{ class: "room-#{room.id}-list" }
     %li
       = room.room_type.name if room.room_type.present?
