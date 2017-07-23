@@ -21,7 +21,7 @@ RSpec.feature 'Rooms', type: :feature do
     context 'home has no rooms' do
       before { visit "/homes/#{home.id}/rooms" }
       it { is_expected.to have_text(home.name) }
-      it { is_expected.to have_text('Home has no rooms') }
+      it { is_expected.to have_text('This whare has no monitored rooms.') }
     end
 
     context 'home has 1 room' do
