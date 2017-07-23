@@ -1,46 +1,27 @@
-%div{ class: 'conditions-table conditions-table-' + (room.good? ? 'good' : 'bad') }
+.conditions-table{ id: "room-#{room.id}-table" }
   .conditions-table-header
     %h2= room.name
     %span.conditions-table-current
-      = room_temperature(room)
-      %span
-        Temperature
-        = room_reading_time_ago(room, 'temperature')
-    %span.conditions-table-current
-      = room_humidity(room)
-      %span
-        Humidity
-        = room_reading_time_ago(room, 'humidity')
-  %ul.conditions-table-list
-
+      - %w[temperature humidity].each do |key|
+        %div{ id: "room-#{room.id}-#{key}-value" }
+          = render "layouts/spinner"
+        %span
+          = key
+          %time.timeago{ datetime: "", id: "room-#{room.id}-#{key}-timestamp" }
+  %ul.conditions-table-list{ class: "room-#{room.id}-list" }
     %li
-      = room&.room_type&.name
-
-    - if room.too_cold?
-      %li.room-warning.room-warning-cold
-        Too cold
-        = fa_icon 'frown-o'
-    - if room.too_hot?
-      %li.room-warning.room-warning-hot Too hot
-
-    - unless room.sensors.size.positive?
-      %li.room-warning
-        No sensors
-        = fa_icon 'warning'
-
-    - unless room.current? 'temperature'
-      %li.room-warning
-        No current temperature
-        = fa_icon 'warning'
-
-    - unless room.current? 'humidity'
-      %li.room-warning
-        No current humidity
-        = fa_icon 'warning'
-
+      = room.room_type.name if room.room_type.present?
+      - if policy(room).edit?
+        = link_to edit_room_path(room) do
+          = fa_icon 'edit'
+      %li{ id: "room-#{room.id}-too-cold" } Too cold #{fa_icon 'frown-o'}
+      %li{ id: "room-#{room.id}-too-hot" } Too hot #{fa_icon 'frown-o'}
+      %li{ id: "room-#{room.id}-no-sensors" } No sensors #{fa_icon 'warning'}
+      %li{ id: "room-#{room.id}-no-temperature" } No current temperature #{fa_icon 'warning'}
+      %li{ id: "room-#{room.id}-no-humidity" } No current humidity #{fa_icon 'warning'}
   - if room.sensors.size.positive?
     = link_to room_path(room), class: 'button-analyze pure-button' do
       Analyse
-  - elsif policy(room).edit?
-    = link_to home_sensors_path(room.home), class: 'button-analyze pure-button' do
-      Assign sensor
+
+:javascript
+  setupRoomDataReloader(#{room.id});

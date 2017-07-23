@@ -13,6 +13,10 @@ class Room < ActiveRecord::Base
   scope(:with_no_readings, -> { includes(:readings).where(readings: { id: nil }) })
   scope(:with_no_sensors, -> { includes(:sensors).where(sensors: { id: nil }) })
 
+  def public?
+    home.is_public
+  end
+
   def rating
     number = 100
     return '?' unless enough_info_to_perform_rating?
@@ -30,13 +34,12 @@ class Room < ActiveRecord::Base
   end
 
   def dewpoint
-    Rails.cache.fetch("#{cache_key}/dewpoint", expires_in: 5.minutes) do
-      calculate_dewpoint
-    end
+    Rails.cache.fetch("#{cache_key}/dewpoint", expires_in: 1.minute) { calculate_dewpoint }
   end
 
   def below_dewpoint?
-    Rails.cache.fetch("#{cache_key}/below_dewpoint?", expires_in: 5.minutes) do
+    return if temperature.nil? || dewpoint.nil?
+    Rails.cache.fetch("#{cache_key}/below_dewpoint?", expires_in: 1.minute) do
       temperature < dewpoint
     end
   end
@@ -51,8 +54,9 @@ class Room < ActiveRecord::Base
 
   def good?
     Rails.cache.fetch("#{cache_key}/good?", expires_in: 5.minutes) do
-      return unless enough_info_to_perform_rating?
-      (temperature > room_type.min_temperature) && (temperature < room_type.max_temperature)
+      return false unless enough_info_to_perform_rating?
+      return false if below_dewpoint? || too_cold? || too_hot?
+      true
     end
   end
 
@@ -68,30 +72,34 @@ class Room < ActiveRecord::Base
     sensors.size.positive?
   end
 
-  def current?(reading_type)
-    return false unless readings.where(key: reading_type).size.positive?
-    age_of_last_reading(reading_type) < 1.hour
+  def current?(key)
+    age = age_of_last_reading(key)
+    age.present? && age < 1.hour
   end
 
-  def age_of_last_reading(reading_type)
-    return nil unless readings.where(key: reading_type).size.positive?
-    Time.current - last_reading_timestamp(reading_type)
+  def age_of_last_reading(key)
+    return nil unless readings.where(key: key).size.positive?
+    Time.current - last_reading_timestamp(key)
   end
 
-  def last_reading_timestamp(reading_type)
-    readings.where(key: reading_type)
+  def last_reading_timestamp(key)
+    readings.where(key: key)
             .order(created_at: :desc)
             .limit(1)
             .first&.created_at
   end
 
-  private
-
   def single_current_metric(key)
-    Rails.cache.fetch("#{cache_key}/#{key}", expires_in: 1.minute) do
-      Reading.where(room_id: id, key: key)&.last&.value
+    most_recent_reading(key)&.value
+  end
+
+  def most_recent_reading(key)
+    Rails.cache.fetch("#{cache_key}/reading/#{key}", expires_in: 10.seconds) do
+      Reading.where(room_id: id, key: key)&.last
     end
   end
+
+  # private
 
   def rating_letter(number)
     return 'A' if number > 95

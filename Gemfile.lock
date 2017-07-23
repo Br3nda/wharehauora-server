@@ -168,6 +168,9 @@ GEM
     public_suffix (2.0.5)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
+    pundit-matchers (1.3.0)
+      pundit (~> 1.1, >= 1.1.0)
+      rspec-rails (>= 3.0.0)
     purecss-rails (0.6.1)
       railties (>= 3.2.6, < 6)
     rack (1.6.8)
@@ -194,6 +197,9 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
+    rails-timeago (2.16.0)
+      actionpack (>= 3.1)
+      activesupport (>= 3.1)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
@@ -282,10 +288,8 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
+    timecop (0.9.1)
     tins (1.15.0)
-    turbolinks (5.0.1)
-      turbolinks-source (~> 5)
-    turbolinks-source (5.0.3)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
@@ -330,8 +334,10 @@ DEPENDENCIES
   mqtt
   pg
   pundit
+  pundit-matchers (~> 1.3.0)
   purecss-rails
   rails (~> 4.2.8)
+  rails-timeago (~> 2.0)
   rails_12factor
   raygun4ruby
   rspec-rails
@@ -340,11 +346,10 @@ DEPENDENCIES
   scss_lint
   sendgrid-ruby
   spring
-  turbolinks
+  timecop
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
   will_paginate
 
-
 BUNDLED WITH
-   1.15.1
+   1.15.2

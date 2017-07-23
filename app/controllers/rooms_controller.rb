@@ -18,13 +18,7 @@ class RoomsController < ApplicationController
   end
 
   def show
-    parse_dates
-    @home = @room.home
-    @keys = %w[temperature humidity]
-    @start = 7.days.ago
-    @rating = @room.rating
-
-    @rating_text = rating_text
+    skip_authorization if @room.public?
     respond_with(@room)
   end
 
@@ -50,11 +44,7 @@ class RoomsController < ApplicationController
   private
 
   def set_home
-    @home = if @room
-              @room.home
-            else
-              policy_scope(Home).find(params[:home_id])
-            end
+    @home = @room ? @room.home : policy_scope(Home).find(params[:home_id])
     authorize @home
   end
 
@@ -69,27 +59,5 @@ class RoomsController < ApplicationController
 
   def permitted_room_params
     %i[name room_type_id]
-  end
-
-  def parse_dates
-    @day = params[:day]
-    @day = Date.yesterday if @day.blank?
-  end
-
-  def rating_text # rubocop:disable Metrics/MethodLength
-    case @rating
-    when 'A'
-      'excellent'
-    when 'B'
-      'good'
-    when 'C'
-      'barely acceptable'
-    when 'D'
-      'bad'
-    when 'F'
-      'very bad'
-    else
-      'unknown'
-    end
   end
 end

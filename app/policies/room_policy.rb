@@ -4,7 +4,7 @@ class RoomPolicy < ApplicationPolicy
   end
 
   def show?
-    record.home.is_public || owner? || whanau?
+    record.home.is_public || owner? || whanau? || janitor?
   end
 
   def update?
@@ -13,6 +13,10 @@ class RoomPolicy < ApplicationPolicy
 
   def destroy?
     owner? || janitor?
+  end
+
+  def summary?
+    show?
   end
 
   private

@@ -128,7 +128,7 @@ room-analysis-metric {
 // -- ROOM TABLE HEADER --
 // By default, a header is black/white, and has some styles for its <h2> name.
 .conditions-table-header {
-  background: $almost-black;
+  background: $shadowy-grey;
   color: $white;
 
   h2 {
@@ -176,27 +176,13 @@ room-analysis-metric {
   }
 }
 
-
-// -- ROOM TABLE BUTTON --
-// Styles for the "Choose" button at the bottom of a room table.
-// This inherits from Pure Button.
-.button-analyze {
-  background: $white;
-  border-radius: 2em;
-  border: 1px solid $shadowy-grey;
-  bottom: -1.5em;
-  color: $analytical-button-white;
-  font-weight: bold;
-  position: relative;
-}
-
 .information-head {
   color: $black;
   font-weight: 500;
 }
 
 .footer {
-  background: $almost-black;
+  background: $white-grey;
   color: $footer-grey-text;
   text-align: center;
 

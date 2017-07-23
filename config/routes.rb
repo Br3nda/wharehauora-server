@@ -11,7 +11,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :readings
   end
 
-  resources :rooms
+  resources :rooms do
+    resources :summary, to: 'room_summary#summary'
+  end
   resources :sensors
   resources :messages
   resources :readings

@@ -35,7 +35,7 @@ class SensorsIngest
     @previous_values = {}
     loop do
       Sensor.all.each do |sensor|
-        save_message(sensor, MySensors::SetReq::V_TEMP, fake_temperature(sensor.id))
+        save_message(sensor, MySensors::SetReq::V_TEMP, fake_temperature(sensor))
         save_message(sensor, MySensors::SetReq::V_HUM, fake_humidity(sensor.id))
       end
       sleep(10)
@@ -67,18 +67,14 @@ class SensorsIngest
     puts "home #{sensor.home_id} sensors #{sensor.id} value: #{value}"
   end
 
-  def fake_temperature(sensor_id)
+  def fake_temperature(sensor)
     # Grab the last value for this room
-    last_value = @previous_values["#{sensor_id}-#{MySensors::SetReq::V_TEMP}"] || 20
+    last_value = sensor.room.present? ? sensor.room.temperature : 20.0
 
     # create a new temp, that's similar to current one
-    temp = rand((last_value - 0.5)..(last_value + 0.5))
-    temp = 20.0 if temp > 40 || temp < -5
-
-    # save it for next method call
-    @previous_values["#{sensor_id}-#{MySensors::SetReq::V_TEMP}"]
-
-    temp
+    new_value = last_value - 0.1
+    new_value = 20.0 if new_value > 40.0 || new_value < -5.0
+    new_value
   end
 
   def fake_humidity(sensor_id)
