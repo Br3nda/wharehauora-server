@@ -25,19 +25,8 @@ class User < ActiveRecord::Base
     roles.any? { |r| r.name == role }
   end
 
-  def provision_mqtt
-    mqtt_password = "#{random_password 3}-#{random_password 3}-#{random_password 3}"
-    Mqtt.provision_mqtt_user email, mqtt_password
-    if mqtt_user
-      mqtt_user.update(password: mqtt_password, provisioned_at: Time.zone.now)
-    else
-      self.mqtt_user = MqttUser.create!(username: email,
-                                        password: mqtt_password,
-                                        provisioned_at: Time.zone.now)
-    end
-  end
-
-  def random_password(length)
-    (0...length).map { (65 + rand(26)).chr }.join
+  def provision_mqtt!
+    self.mqtt_user = MqttUser.new(username: email) if mqtt_user.nil?
+    mqtt_user.provision!
   end
 end

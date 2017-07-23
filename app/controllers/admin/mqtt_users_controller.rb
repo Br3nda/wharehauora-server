@@ -7,7 +7,13 @@ class Admin::MqttUsersController < ApplicationController
   def create
     authorize :mqtt_user
     @user = User.find(params[:user_id])
-    @user.provision_mqtt
+    @user.provision_mqtt!
+    redirect_to admin_mqtt_users_path
+  end
+
+  def sync
+    authorize :mqtt_user
+    Mqtt.sync_mqtt_users
     redirect_to admin_mqtt_users_path
   end
 end
