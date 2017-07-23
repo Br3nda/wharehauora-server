@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   devise_for :users
   root 'welcome#index'
 
@@ -29,5 +29,6 @@ Rails.application.routes.draw do
     resources :home_types
     resources :room_types
     resources :mqtt_users
+    post :mqtt_sync, to: 'mqtt_users#sync'
   end
 end

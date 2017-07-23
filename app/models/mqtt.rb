@@ -30,6 +30,15 @@ class Mqtt
     end
   end
 
+  def self.grant_write_access(username, home)
+    topic = "/sensors/wharehauora/#{home.id}/#"
+    faraday_conn.post do |req|
+      req.url 'acl'
+      req.headers['Content-Type'] = 'application/json'
+      req.body = { username: username, topic: topic, read: false, write: true }.to_json
+    end
+  end
+
   def self.url
     'https://api.cloudmqtt.com'
   end
