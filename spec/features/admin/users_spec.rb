@@ -48,6 +48,13 @@ RSpec.feature 'Users', type: :feature do
       it { is_expected.to have_text 'hiria@example.com' }
     end
 
-    pending '#destroy'
+    describe '#destroy' do
+      before do
+        visit '/admin/users'
+        click_link user.email
+        click_button 'delete'
+      end
+      it { is_expected.not_to have_text user.email }
+    end
   end
 end
