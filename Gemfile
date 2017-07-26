@@ -103,6 +103,8 @@ group :development do
   gem 'spring'
 
   gem 'bullet'
+
+  gem 'letter_opener'
 end
 
 group :test do
