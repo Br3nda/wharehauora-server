@@ -27,7 +27,7 @@ gem 'pg'
 gem 'devise'
 
 # soft delete of records
-gem 'acts_as_paranoid'
+gem 'paranoia', '~> 2.2'
 
 # roles and permissions
 gem 'pundit'
