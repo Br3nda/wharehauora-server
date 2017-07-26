@@ -89,8 +89,8 @@
       .conditions-table-header
         %h2 Rating
         %span.conditions-table-current
-          = @rating
-          %span= RatingService.rating_text(@rating)
+          = RatingService.rating_letter(@room.rating)
+          %span= RatingService.rating_text(RatingService.rating_letter(@room.rating))
       %ul.conditions-table-list
         - unless @room.current?('temperature') && @room.current?('humidity')
           %li

@@ -1,6 +1,6 @@
 class RatingService
-  def self.rating_text(rating) # rubocop:disable Metrics/MethodLength
-    case rating
+  def self.rating_text(letter) # rubocop:disable Metrics/MethodLength
+    case letter
     when 'A'
       'excellent'
     when 'B'
@@ -14,5 +14,13 @@ class RatingService
     else
       'unknown'
     end
+  end
+
+  def self.rating_letter(number)
+    return 'A' if number > 95
+    return 'B' if number > 75
+    return 'C' if number > 50
+    return 'D' if number > 25
+    'F'
   end
 end

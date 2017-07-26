@@ -17,12 +17,17 @@ class Room < ActiveRecord::Base
     home.is_public
   end
 
-  def rating
+  def calculate_rating
     number = 100
     return '?' unless enough_info_to_perform_rating?
     number -= 15 if too_cold?
     number -= 40 if below_dewpoint?
-    rating_letter(number)
+
+    number
+  end
+
+  def rating
+    single_current_metric 'rating'
   end
 
   def temperature
@@ -97,16 +102,6 @@ class Room < ActiveRecord::Base
     Rails.cache.fetch("#{cache_key}/reading/#{key}", expires_in: 10.seconds) do
       Reading.where(room_id: id, key: key)&.last
     end
-  end
-
-  # private
-
-  def rating_letter(number)
-    return 'A' if number > 95
-    return 'B' if number > 75
-    return 'C' if number > 50
-    return 'D' if number > 25
-    'F'
   end
 
   def enough_info_to_perform_rating?
