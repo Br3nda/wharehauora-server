@@ -53,10 +53,6 @@ class Room < ActiveRecord::Base
     (temperature - 2) < dewpoint
   end
 
-  def mould
-    single_current_metric 'mould'
-  end
-
   def good?
     Rails.cache.fetch("#{cache_key}/good?", expires_in: 5.minutes) do
       return false unless enough_info_to_perform_rating?
