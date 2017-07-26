@@ -4,7 +4,7 @@
       %th.sortable Email
       %th.sortable Roles
   %tbody
-    - users.each do |user|
+    - users.includes(:roles).each do |user|
       %tr
         %td
           = link_to user.email, edit_admin_user_path(user)
@@ -12,6 +12,6 @@
           - user.roles.map(&:friendly_name).each do |friendly_name|
             = friendly_name
         %td
-          = link_to edit_admin_user_path(user) do
+          = link_to edit_admin_user_path(user), class: 'pure-button' do
             = fa_icon 'edit'
 = paginate users
