@@ -29,4 +29,8 @@ class User < ActiveRecord::Base
     self.mqtt_user = MqttUser.new(username: email) if mqtt_user.nil?
     mqtt_user.provision!
   end
+
+  def janitor?
+    role? 'janitor'
+  end
 end
