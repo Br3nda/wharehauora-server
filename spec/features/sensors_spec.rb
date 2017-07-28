@@ -1,59 +1,112 @@
 require 'rails_helper'
 
 RSpec.feature 'Sensors', type: :feature do
-  let(:user) { FactoryGirl.create :user }
-  let(:janitor) { FactoryGirl.create :role, name: 'janitor' }
-  let(:admin_user) { FactoryGirl.create :user, roles: [janitor] }
+  let(:home) do
+    FactoryGirl.create :home, name: 'Toku whare whanau'
+  end
 
-  let(:home_type) { FactoryGirl.create :home_type }
-  let(:home) { FactoryGirl.create :home, owner_id: user.id, home_type: home_type, name: 'Toku whare whanau' }
+  shared_examples 'home has one sensor' do
+    let!(:sensor) { FactoryGirl.create :sensor, home: home, room: nil }
+  end
+
+  shared_examples 'new sensors detected and assignable' do
+    describe 'sensor is displayed' do
+      it { is_expected.to have_text 'new sensors detected' }
+      it { is_expected.to have_link 'Assign to room' }
+      it { is_expected.to have_text sensor.node_id }
+    end
+  end
+
+  shared_examples 'can assign a sensor to a new room' do
+    before do
+      visit "/homes/#{home.id}/rooms"
+      click_link 'Assign to room'
+      fill_in 'sensor_room_name', with: 'room of oarsum'
+      click_button 'Save'
+    end
+    it { is_expected.to have_text 'room of oarsum' }
+    it { is_expected.not_to have_text 'new sensors detected' }
+    it { is_expected.to have_link 'Analyse' }
+  end
+
+  shared_examples 'can see sensors' do
+    describe 'can see sensors' do
+      context 'with 1 unassigned sensor in home' do
+        before { visit "/homes/#{sensor.home_id}/rooms" }
+        include_examples 'home has one sensor'
+        it { expect(home.sensors.size).to eq 1 }
+        include_examples 'new sensors detected and assignable'
+      end
+
+      context 'with no sensors in home' do
+        before { visit "/homes/#{home.id}/rooms" }
+        describe 'no sensors detected' do
+          it { is_expected.not_to have_text 'new sensors detected' }
+          it { is_expected.not_to have_link 'Assign to room' }
+        end
+      end
+    end
+  end
+
+  shared_examples 'can assign to new room' do
+    include_examples 'home has one sensor'
+    describe 'can assign to a new room' do
+      before do
+        visit "/homes/#{home.id}/rooms"
+        click_link 'Assign to room'
+        fill_in 'sensor_room_name', with: 'room of oarsum'
+        click_button 'Save'
+      end
+      describe 'no sensors displayed' do
+        it { is_expected.not_to have_text 'new sensors detected' }
+        it { is_expected.to have_text 'room of oarsum' }
+        it { is_expected.to have_link 'Analyse' }
+      end
+    end
+  end
+
+  shared_examples 'can assign to existing room' do
+    include_examples 'home has one sensor'
+    describe 'can assign to existing room' do
+      let!(:existing_room) { FactoryGirl.create :room, name: 'library', home: home, sensors: [] }
+      before do
+        visit "/homes/#{home.id}/rooms"
+        click_link 'Assign to room'
+        choose "sensor_room_id_#{existing_room.id}"
+        click_button 'Save'
+      end
+      it { is_expected.not_to have_text 'new sensors detected' }
+      it { is_expected.to have_text existing_room.name }
+      it { is_expected.to have_link 'Analyse' }
+    end
+  end
 
   subject { page }
 
-  context 'Normal user' do
+  context 'signed in as a normal user' do
     background { login_as(home.owner) }
-    # we see a list of sensors on the Homes#index page
-    context 'rooms#index' do
-      context '1 unassigned sensor' do
-        let!(:sensor) { FactoryGirl.create :sensor, home: home }
-        before { visit "/homes/#{sensor.home_id}/rooms" }
-        it { is_expected.to have_text 'new sensors detected' }
-        it { is_expected.to have_link 'Assign to room' }
-        it { is_expected.to have_text sensor.node_id }
-      end
-
-      context 'no sensors' do
-        before { visit "/homes/#{home.id}/rooms" }
-        it { is_expected.not_to have_text 'new sensors detected' }
-        it { is_expected.not_to have_link 'Assign to room' }
-      end
+    include_examples 'can see sensors'
+    describe 'can assign sensors' do
+      include_examples 'can assign to new room'
+      include_examples 'can assign to existing room'
     end
+  end
 
-    context 'assign sensor' do
-      let!(:sensor) { FactoryGirl.create :sensor, home: home }
-      context 'to a new room' do
-        before do
-          visit "/homes/#{home.id}/rooms"
-          click_link 'Assign to room'
-          fill_in 'sensor_room_name', with: 'room of oarsum'
-          click_button 'Save'
-        end
-        it { is_expected.to have_text 'room of oarsum' }
-        it { is_expected.not_to have_text 'new sensors detected' }
-        it { is_expected.to have_link 'Analyse' }
-      end
-      context 'home has one room' do
-        let!(:existing_room) { FactoryGirl.create :room, name: 'library', home: home }
-        before do
-          visit "/homes/#{home.id}/rooms"
-          click_link 'Assign to room'
-          choose "sensor_room_id_#{existing_room.id}"
-          click_button 'Save'
-        end
-        it { is_expected.not_to have_text 'new sensors detected' }
-        it { is_expected.to have_text existing_room.name }
-        it { is_expected.to have_link 'Analyse' }
-      end
+  # context 'signed in as whanau' do
+  #   let(:whanau) do
+  #     user = FactoryGirl.create :user
+  #     home.users << user
+  #     user
+  #   end
+  #   background { login_as(whanau) }
+  # end
+
+  context 'signed in as admin' do
+    background { login_as(FactoryGirl.create(:admin)) }
+    include_examples 'can see sensors'
+    describe 'can assign sensors' do
+      include_examples 'can assign to new room'
+      include_examples 'can assign to existing room'
     end
   end
 end
