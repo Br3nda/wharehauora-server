@@ -18,4 +18,13 @@ FactoryGirl.define do
       create_list(:room, evaluator.rooms_count, home: home)
     end
   end
+
+  factory :home_with_sensors, parent: :home do
+    transient do
+      sensors_count 5
+    end
+    after(:create) do |home, evaluator|
+      create_list(:sensor, evaluator.sensors_count, home: home)
+    end
+  end
 end

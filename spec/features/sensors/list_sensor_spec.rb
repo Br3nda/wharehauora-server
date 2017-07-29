@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-RSpec.feature 'delete sensors', type: :feature do
+RSpec.feature 'admin sensors in a home', type: :feature do
   let(:home) do
     FactoryGirl.create(:home_with_sensors, sensors_count: 15)
   end
+
   let(:whanau) do
     user = FactoryGirl.create :user
     home.users << user
@@ -22,17 +23,6 @@ RSpec.feature 'delete sensors', type: :feature do
     end
   end
 
-  shared_examples 'delete sensor' do
-    let!(:sensor) { FactoryGirl.create :sensor, home: home }
-    describe 'deletes a sensor in home' do
-      before do
-        visit "/homes/#{home.id}/sensors"
-        click_link "/sensors/#{sensor.id}"
-      end
-      it { is_expected.not_to have_text sensor.node_id }
-    end
-  end
-
   context 'signed in as a normal user' do
     background { login_as(home.owner) }
     include_examples 'lists sensors'
@@ -46,6 +36,5 @@ RSpec.feature 'delete sensors', type: :feature do
   context 'signed in as admin' do
     background { login_as(FactoryGirl.create(:admin)) }
     include_examples 'lists sensors'
-    include_examples 'delete sensor'
   end
 end
