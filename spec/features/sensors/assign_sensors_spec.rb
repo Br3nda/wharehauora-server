@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Sensors', type: :feature do
+RSpec.feature 'assign sensors', type: :feature do
   let(:home) do
     FactoryGirl.create :home, name: 'Toku whare whanau'
   end
@@ -92,14 +92,16 @@ RSpec.feature 'Sensors', type: :feature do
     end
   end
 
-  # context 'signed in as whanau' do
-  #   let(:whanau) do
-  #     user = FactoryGirl.create :user
-  #     home.users << user
-  #     user
-  #   end
-  #   background { login_as(whanau) }
-  # end
+  context 'signed in as whanau' do
+    let(:whanau) do
+      user = FactoryGirl.create :user
+      home.users << user
+      user
+    end
+    background { login_as(whanau) }
+    pending 'can see sensors'
+    pending 'cannot assign sensors'
+  end
 
   context 'signed in as admin' do
     background { login_as(FactoryGirl.create(:admin)) }
