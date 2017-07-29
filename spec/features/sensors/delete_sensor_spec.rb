@@ -21,7 +21,6 @@ RSpec.feature 'admin lists sensors', type: :feature do
   shared_examples 'can delete sensors' do
     before(:each) do
       visit "/homes/#{sensor.home.id}/sensors"
-      # click_link "/sensors/#{sensor.id}" # delete method
       click_link 'delete'
     end
     context 'unassigned sensor' do
@@ -44,13 +43,15 @@ RSpec.feature 'admin lists sensors', type: :feature do
     include_examples 'can delete sensors'
   end
 
-  # context 'signed in as whanau' do
-  #   background { login_as(whanau) }
-  #   include_examples 'lists sensors'
-  # end
-
   context 'signed in as admin' do
     background { login_as(FactoryGirl.create(:admin)) }
     include_examples 'can delete sensors'
+  end
+
+  context 'signed in as whanau' do
+    background { login_as(whanau) }
+    let(:sensor) { FactoryGirl.create :sensor, home: home }
+    before { visit "/homes/#{sensor.home.id}/sensors" }
+    it { is_expected.not_to have_link 'delete' }
   end
 end
