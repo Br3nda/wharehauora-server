@@ -105,6 +105,8 @@ group :development do
   gem 'bullet'
 
   gem 'letter_opener'
+
+  gem 'overcommit' # linter
 end
 
 group :test do
