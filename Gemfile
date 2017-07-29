@@ -26,6 +26,9 @@ gem 'pg'
 # for logins
 gem 'devise'
 
+# soft delete of records
+gem 'paranoia', '~> 2.2'
+
 # roles and permissions
 gem 'pundit'
 
@@ -100,6 +103,8 @@ group :development do
   gem 'spring'
 
   gem 'bullet'
+
+  gem 'letter_opener'
 end
 
 group :test do
