@@ -7,7 +7,7 @@ class Sensor < ActiveRecord::Base
 
   belongs_to :room
 
-  has_many :messages
+  has_many :messages, dependent: :destroy
 
   delegate :home_type, to: :home
   delegate :room_type, to: :room

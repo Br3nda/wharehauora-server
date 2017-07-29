@@ -19,14 +19,17 @@
             %td= sensor.room&.name
             %td= time_ago_in_words sensor.messages.last&.updated_at if sensor.messages.last
             %td
-              = link_to edit_sensor_path(sensor), class: 'pure-button' do
+              = link_to edit_sensor_path(sensor), class: 'pure-button edit-button' do
                 = fa_icon 'edit'
+                edit
             %td
               - if current_user.role? 'janitor'
                 = link_to sensor_path(sensor),
-                  method: :delete, data: { confirm: 'delete this sensor?' },
-                  class: 'pure-button button-warning' do
+                  method: :delete,
+                  data: { confirm: 'delete this sensor?' },
+                  class: 'pure-button delete-button' do
                   = fa_icon 'trash'
+                  delete
 
   %%p= paginate(@sensors)
 - else
