@@ -34,17 +34,18 @@ class Room < ActiveRecord::Base
   end
 
   def dewpoint
-    Rails.cache.fetch("#{cache_key}/dewpoint", expires_in: 1.minute) { calculate_dewpoint }
+    single_current_metric 'dewpoint'
   end
 
   def below_dewpoint?
-    return if temperature.nil? || dewpoint.nil?
+    return false if temperature.nil? || dewpoint.nil?
     Rails.cache.fetch("#{cache_key}/below_dewpoint?", expires_in: 1.minute) do
       temperature < dewpoint
     end
   end
 
   def near_dewpoint?
+    return false if temperature.nil? || dewpoint.nil?
     (temperature - 2) < dewpoint
   end
 

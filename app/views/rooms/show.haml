@@ -9,7 +9,7 @@
       .conditions-table-header
         %h2 Temperature
         %span.conditions-table-current
-          = '%.2fC' % @room.temperature
+          = display_temperature(@room)
           %span current temperature
       %ul.conditions-table-list
         %li
@@ -20,7 +20,7 @@
             = fa_icon 'check'
             Comfortable temperature
         %li
-          = '%.2f%%' % @room.humidity
+          = display_humidity @room
           humidity
       - if @room.room_type
         %p
@@ -37,10 +37,10 @@
       .conditions-table-header
         %h2 Dewpoint
         %span.conditions-table-current
-          = '%.2fC' % @room.dewpoint
+          = display_dewpoint @room
           %span
             based on
-            = '%.2f%%' % @room.humidity
+            = display_humidity @room
             humidity
       %ul.conditions-table-list
         - if @room.below_dewpoint?
@@ -60,28 +60,29 @@
           %li
             = fa_icon 'check'
             Room is well above dewpoint
-        - if @room.dewpoint < 6
-          %li
-            = fa_icon 'check'
-            Low dewpoint is very good
-        - elsif @room.dewpoint < 16
-          %li
-            Acceptable dewpoint
-        - else
-          %li
-            = fa_icon 'warning'
-            High dewpoint
-          %li
-            Keep this room above
-            = '%.2fC' % @room.dewpoint
+        - if @room.dewpoint.present?
+          - if @room.dewpoint < 6
+            %li
+              = fa_icon 'check'
+              Low dewpoint is very good
+          - elsif @room.dewpoint < 16
+            %li
+              Acceptable dewpoint
+          - else
+            %li
+              = fa_icon 'warning'
+              High dewpoint
+            %li
+              Keep this room above
+              = display_dewpoint @room
       %p
         When the temperature in this room falls below
-        = '%.2fC' % @room.dewpoint
+        = display_dewpoint @room
         moisture begins to form on surfaces, leading to mould growth.
       - if @room.near_dewpoint?
         %p
           = fa_icon 'error'
-          If your room is only heated when you are home, it may become
+          If this room is only heated when you are home, it may become
           cold and allow mould to grow while you are away.
 
   .room-analysis-metric.pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
