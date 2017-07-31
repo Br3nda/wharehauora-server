@@ -30,7 +30,7 @@ class Message < ActiveRecord::Base
 
   def save_dewpoint
     return unless sensor.room && key == 'temperature'
-    dewpoint = sensor.room.dewpoint
+    dewpoint = sensor.room.calculate_dewpoint
     return if dewpoint.nil?
     Reading.create!(room: sensor.room,
                     value: dewpoint,
