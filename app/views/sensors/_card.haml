@@ -24,6 +24,7 @@
     - if policy(sensor).unassign?
       %p
         = link_to sensor_unassign_path(sensor),
-          class: 'pure-button button-warning xsmall', method: :delete do
+          class: 'pure-button button-warning xsmall', method: :delete,
+          data: { confirm: 'remove sensor from this room?' } do
           remove from room
           = fa_icon 'trash'
