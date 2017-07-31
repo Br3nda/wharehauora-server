@@ -35,6 +35,14 @@ class SensorsController < ApplicationController
     redirect_to home_rooms_path @sensor.home
   end
 
+  def unassign
+    @sensor = policy_scope(Sensor).find(params[:sensor_id])
+    authorize @sensor
+    room = @sensor.room
+    @sensor.update! room: nil
+    respond_with room
+  end
+
   private
 
   def set_sensor

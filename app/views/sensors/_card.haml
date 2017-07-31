@@ -11,6 +11,7 @@
       %h2 Sensor NodeID
       %span.conditions-table-current
         = sensor.node_id
+
     %ul.conditions-table-list
       %li
         - if sensor.messages.size.positive?
@@ -19,3 +20,10 @@
           ago
         - else
           No messages recieved
+
+    - if policy(sensor).unassign?
+      %p
+        = link_to sensor_unassign_path(sensor),
+          class: 'pure-button button-warning xsmall', method: :delete do
+          remove from room
+          = fa_icon 'trash'

@@ -34,4 +34,8 @@ FactoryGirl.define do
                   room: room, created_at: 5.minutes.ago)
     end
   end
+
+  factory :room_with_sensors, parent: :room do
+    sensors { create_list(:sensor_with_messages, 1, home: home) }
+  end
 end
