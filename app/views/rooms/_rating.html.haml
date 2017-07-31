@@ -5,7 +5,7 @@
       = room.rating
       %span
         - if room.enough_info_to_perform_rating?
-          = RatingService.rating_text(@rating)
+          = RatingService.rating_text(room.rating)
         - else
           not enough data
   %ul.conditions-table-list
