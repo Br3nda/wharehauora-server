@@ -1,8 +1,21 @@
 .conditions-table
-  %h2= sensor.node_id
-  detected
-  = time_ago_in_words sensor.created_at
-  ago
   - if sensor.room.blank?
+    %h2= sensor.node_id
+    first detected
+    = time_ago_in_words sensor.created_at
+    ago
     = link_to edit_sensor_path(sensor), class: 'button-analyze pure-button' do
       Assign to room
+  - else
+    .conditions-table-header
+      %h2 Sensor NodeID
+      %span.conditions-table-current
+        = sensor.node_id
+    %ul.conditions-table-list
+      %li
+        - if sensor.messages.size.positive?
+          last message
+          = time_ago_in_words sensor.last_message
+          ago
+        - else
+          No messages recieved
