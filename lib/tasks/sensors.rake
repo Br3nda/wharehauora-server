@@ -69,7 +69,8 @@ class SensorsIngest
 
   def fake_temperature(sensor)
     # Grab the last value for this room
-    last_value = sensor.room.present? ? sensor.room.temperature : 20.0
+    last_value = sensor.room.temperature if sensor.room.present?
+    last_value ||= 20.0
 
     # create a new temp, that's similar to current one
     new_value = last_value - 0.1
