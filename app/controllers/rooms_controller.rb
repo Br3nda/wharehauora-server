@@ -19,6 +19,7 @@ class RoomsController < ApplicationController
 
   def show
     skip_authorization if @room.public?
+    @readings = Reading.where(room: @room).order(created_at: :desc).limit(10)
     respond_with(@room)
   end
 
