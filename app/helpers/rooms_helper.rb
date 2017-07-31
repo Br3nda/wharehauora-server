@@ -1,18 +1,23 @@
 module RoomsHelper
-  def display_temperature(_room)
-    temperature = @room.temperature
-    unit = UnitsService.unit_for 'temperature'
-    temperature.nil? ? '??' : format("%.1f#{unit}", temperature)
+  def display_temperature(room)
+    display_metric room, 'temperature'
   end
 
-  def display_humidity(_room)
-    humidity = @room.humidity
-    humidity.nil? ? '??' : format('%.1f%%', humidity)
+  def display_humidity(room)
+    display_metric room, 'humidity'
   end
 
-  def display_dewpoint(_room)
-    dewpoint = @room.dewpoint
-    unit = UnitsService.unit_for 'temperature'
-    dewpoint.nil? ? '??' : format("%.1f#{unit}", dewpoint)
+  def display_dewpoint(room)
+    display_metric room, 'dewpoint'
+  end
+
+  private
+
+  def display_metric(room, key)
+    unit = UnitsService.unit_for key
+    value = room.single_current_metric key
+    return '??' if value.nil?
+    value = format('%.1f', value)
+    "#{value}#{unit}"
   end
 end
