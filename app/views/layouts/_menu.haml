@@ -1,7 +1,7 @@
 .pure-menu.pure-menu-horizontal
   %ul.pure-menu-list
     - if user_signed_in?
-      = render 'menus/homes', homes: @my_homes
+      = render 'menus/homes', homes: homes if homes
       = render 'menus/admin' if current_user.role?('janitor')
     - else
       %li.pure-menu-item

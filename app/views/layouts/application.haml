@@ -11,7 +11,7 @@
   %body
     .pure-g
       .pure-u-1.menu
-        = render 'layouts/menu'
+        = render 'layouts/menu', homes: @my_homes
       .pure-u-1.header
         = image_tag(image_url('logo.png'))
       .pure-u-1.content
