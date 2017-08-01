@@ -15,6 +15,10 @@ class SensorPolicy < ApplicationPolicy
     owner? || janitor?
   end
 
+  def unassign?
+    edit?
+  end
+
   private
 
   class Scope < Scope

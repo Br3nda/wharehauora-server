@@ -11,22 +11,22 @@
   color: $white;
 }
 
-.success
+.success,
 .button-success {
   background: $success-green;
 }
 
-.error
+.error,
 .button-error {
   background: $error-maroon;
 }
 
-.warning
+.warning,
 .button-warning {
   background: $warning-orange;
 }
 
-.secondary
+.secondary,
 .button-secondary {
   background: $secondary-blue;
 }
