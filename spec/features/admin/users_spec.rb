@@ -1,13 +1,16 @@
 require 'rails_helper'
 
 RSpec.feature 'Users', type: :feature do
-  let!(:admin_user) { FactoryGirl.create(:admin) }
+  let!(:admin_user) { FactoryGirl.create :admin }
   let!(:user) { FactoryGirl.create :user }
+  let!(:user_tahi) { FactoryGirl.create :user }
+  let!(:user_rua) { FactoryGirl.create :user }
+  let!(:user_toru) { FactoryGirl.create :user }
 
   shared_examples 'cannot #index' do
     describe '#index' do
       before { visit '/admin/users' }
-      it { expect(page).not_to have_text(user.email) }
+      it { expect(page).not_to have_text(user_tahi.email) }
     end
   end
 
@@ -26,8 +29,9 @@ RSpec.feature 'Users', type: :feature do
     background { login_as(admin_user) }
     describe '#index' do
       before { visit '/admin/users' }
-      it { expect(page).to have_text(admin_user.email) }
-      it { expect(page).to have_text(user.email) }
+      it { expect(page).to have_text(user_tahi.email) }
+      it { expect(page).to have_text(user_rua.email) }
+      it { expect(page).to have_text(user_toru.email) }
     end
 
     describe '#edit' do
