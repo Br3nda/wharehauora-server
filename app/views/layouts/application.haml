@@ -15,4 +15,6 @@
       .pure-u-1.header
         = image_tag(image_url('logo.png'))
       .pure-u-1.content
+        - flash.each do |name, msg|
+          = content_tag :div, msg, class: name
         = yield
