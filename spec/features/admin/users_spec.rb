@@ -11,6 +11,8 @@ RSpec.feature 'Users', type: :feature do
     describe '#index' do
       before { visit '/admin/users' }
       it { expect(page).not_to have_text(user_tahi.email) }
+      it { expect(page).not_to have_text(user_rua.email) }
+      it { expect(page).not_to have_text(user_toru.email) }
     end
   end
 
