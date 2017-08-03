@@ -1,51 +1,19 @@
 .pure-menu.pure-menu-horizontal
   %ul.pure-menu-list
-    %li.pure-menu-item.pure-menu-selected
-      = link_to 'WHARE HAUORA', root_path, class: 'pure-menu-heading pure-menu-link'
     - if user_signed_in?
-      - cache @my_homes do
-        %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
-          %a.pure-menu-link
-            My Whare
-          %ul.pure-menu-children
-            - @my_homes.each do |home|
-              %li.pure-menu-item
-                = link_to home.name, home_rooms_path(home), class: 'pure-menu-link'
-            %li.pure-menu-item
-              = link_to 'new whare', new_home_path, class: 'pure-menu-link'
+      = render 'menus/homes', homes: homes if homes
+      = render 'menus/admin' if current_user.role?('janitor')
     - else
       %li.pure-menu-item
         = link_to 'Sign up', new_user_registration_path, class: 'pure-menu-link'
       %li.pure-menu-item
         = link_to 'Sign in', new_user_session_path, class: 'pure-menu-link'
 
-    - if current_user && current_user.role?('janitor')
-      %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
-        %a.pure-menu-link Admin
-        %ul.pure-menu-children
-          - if policy(:home).index?
-            %li.pure-menu-item
-              = link_to 'Whare', homes_path, class: 'pure-menu-link'
-          - if policy(:home_type).edit?
-            %li.pure-menu-item
-              = link_to 'Whare Types', admin_home_types_path, class: 'pure-menu-link'
-          - if policy(:room_type).edit?
-            %li.pure-menu-item
-              = link_to 'Room Types', admin_room_types_path, class: 'pure-menu-link'
-          - if policy(:user).edit?
-            %li.pure-menu-item
-              = link_to 'Users', admin_users_path, class: 'pure-menu-link'
-            %li.pure-menu-item
-              = link_to 'MQTT Provisioning', admin_mqtt_users_path, class: 'pure-menu-link'
-            %li.pure-menu-item
-              = link_to 'Orphaned records', admin_cleaner_path, class: 'pure-menu-link'
-            %li.pure-menu-item
-              = link_to 'Messages', messages_path, class: 'pure-menu-link'
 
     - if user_signed_in?
       %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
         %a.pure-menu-link
-          My Account
+          = current_user.email
         %ul.pure-menu-children
           %li.pure-menu-item
             = link_to 'Sign out', destroy_user_session_path,
