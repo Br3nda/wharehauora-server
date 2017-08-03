@@ -1,7 +1,6 @@
-%h2
-  = @home.name
-
 = render 'nav', home: @home
+
+%h2= @home.name
 
 - unless @home.rooms.empty?
   %h3 #{@day} Readings
