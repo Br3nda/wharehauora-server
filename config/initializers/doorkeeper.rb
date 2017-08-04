@@ -7,14 +7,15 @@ Doorkeeper.configure do
     current_user || warden.authenticate!(scope: :user)
   end
 
-  resource_owner_from_credentials do |routes|
-    request.params[:user] = {:email => request.params[:username], :password => request.params[:password]}
-    request.env["warden"].logout(:user)
-    request.env["devise.allow_params_authentication"] = true
-    request.env["warden"].authenticate!(:scope => :user)
+  resource_owner_from_credentials do |_routes|
+    request.params[:user] = { email: request.params[:username], password: request.params[:password] }
+    request.env['warden'].logout(:user)
+    request.env['devise.allow_params_authentication'] = true
+    request.env['warden'].authenticate!(scope: :user)
   end
 
-  # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
+  # If you want to restrict access to the web interface for adding oauth authorized applications,
+  # you need to declare the block below.
   # admin_authenticator do
   #   # Put your admin authentication logic here.
   #   # Example implementation:
@@ -74,7 +75,8 @@ Doorkeeper.configure do
   # access_token_methods :from_bearer_authorization, :from_access_token_param, :from_bearer_param
 
   # Change the native redirect uri for client apps
-  # When clients register with the following redirect uri, they won't be redirected to any server and the authorization code will be displayed within the provider
+  # When clients register with the following redirect uri, they won't be redirected to any server
+  # and the authorization code will be displayed within the provider
   # The value can be any string. Use nil to disable this feature. When disabled, clients must provide a valid URL
   # (Similar behaviour: https://developers.google.com/accounts/docs/OAuth2InstalledApp#choosingredirecturi)
   #
@@ -102,7 +104,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  grant_flows %w(password)
+  grant_flows %w[password]
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
@@ -112,5 +114,5 @@ Doorkeeper.configure do
   # end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
-  realm "Whare Hauora"
+  realm 'Whare Hauora'
 end
