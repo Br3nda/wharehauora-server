@@ -1,3 +1,2 @@
-class Api::V1::HomesController < JSONAPI::ResourceController
-  include Pundit::ResourceController
+class Api::V1::HomesController < Api::V1::BaseController
 end
