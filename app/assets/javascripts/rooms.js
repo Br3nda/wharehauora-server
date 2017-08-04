@@ -12,7 +12,7 @@ function setupRoomDataReloader(room_id) {
 
 function getRoomData(room_id) {
   console.log("Getting room data");
-  $.get( "/rooms/" + room_id + "/summary.json", function( data ) {
+  $.get( "/api/rooms/" + room_id + ".json", function( data ) {
     updateRoomDisplay(room_id, data);
   });
 }

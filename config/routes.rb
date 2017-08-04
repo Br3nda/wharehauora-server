@@ -12,7 +12,6 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   end
 
   resources :rooms do
-    resources :summary, to: 'room_summary#summary'
   end
   resources :sensors do
     delete :unassign, to: 'sensors#unassign'
@@ -23,6 +22,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   namespace :opendata do
     resources :readings, only: [:index]
+  end
+
+  namespace :api do
+    resources :rooms, only: [:show]
   end
 
   namespace :admin do
