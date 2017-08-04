@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::RoomsController, type: :controller do
+RSpec.describe Api::V1::RoomsController, type: :controller do
   shared_examples 'can see summaries' do
     it { expect(response).to have_http_status(:success) }
   end
