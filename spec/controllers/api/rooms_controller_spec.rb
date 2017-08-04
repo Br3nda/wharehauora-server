@@ -8,13 +8,6 @@ RSpec.describe Api::RoomsController, type: :controller do
     it { expect(response).not_to have_http_status(:success) }
   end
 
-  shared_examples 'response has expected keys' do
-    subject { JSON.parse(response.body) }
-    # it { byebug; is_expected.to include('sensors_count') }
-    # it { is_expected.to include('room') }
-    # it { is_expected.to include('readings') }
-  end
-
   shared_examples 'returns expected readings' do
     subject { JSON.parse(response.body) }
 
