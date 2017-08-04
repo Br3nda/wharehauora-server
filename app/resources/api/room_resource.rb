@@ -8,27 +8,15 @@ module Api
       @model.sensors.size
     end
 
-    def ratings # rubocop:disable Metrics/MethodLength
+    def ratings
       Rails.cache.fetch("#{@model.cache_key}/ratings/#{@model.updated_at}", expires_in: 60.minutes) do
-        {
-          good: @model.good?,
-          min_temperature: @model.room_type&.min_temperature,
-          max_temperature: @model.room_type&.max_temperature,
-          too_cold: @model.too_cold?,
-          too_hot: @model.too_hot?,
-          too_damp: @model.below_dewpoint?,
-          bit_damp: @model.near_dewpoint?
-        }
+        RoomService.ratings(@model)
       end
     end
 
     def readings
       Rails.cache.fetch("#{@model.cache_key}/readings/#{@model.updated_at}", expires_in: 60.minutes) do
-        readings = {}
-        %w[temperature humidity dewpoint].each do |key|
-          readings[key] = reading_data key
-        end
-        readings
+        RoomService.readings(@model)
       end
     end
 

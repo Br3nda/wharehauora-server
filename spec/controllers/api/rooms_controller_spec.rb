@@ -103,10 +103,12 @@ RSpec.describe Api::RoomsController, type: :controller do
   describe 'when room is private' do
     let(:room) { FactoryGirl.create :room, room_type: room_type }
     let!(:readings) { FactoryGirl.create_list :reading, 100, room: room }
+
     describe 'and user is not logged in ' do
       let(:user) { nil }
       include_examples 'cannot see summaries'
     end
+
     describe 'and user is logged in ' do
       describe 'as the whare owner' do
         let(:user) { owner }
