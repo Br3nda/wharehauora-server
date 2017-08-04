@@ -22,7 +22,6 @@ RSpec.describe Api::RoomsController, type: :controller do
       let(:create_readings) { FactoryGirl.create :temperature_reading, value: 101.1, room: room }
       it { expect(temperature_response).to include('value' => 101.1, 'unit' => '°C') }
       it { expect(ratings_response).to include('good' => false, 'too_hot' => true, 'too_cold' => false) }
-      include_examples 'response has expected keys'
     end
 
     describe 'room too cold' do
