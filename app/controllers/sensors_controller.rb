@@ -26,8 +26,21 @@ class SensorsController < ApplicationController
   end
 
   def update
-    @sensor.update!(sensor_params)
-    redirect_to home_sensors_path @sensor.home
+    if sensor_params_contains_room?
+      @sensor.create_room! room_params
+      @sensor.save!
+    else
+      @sensor.update!(sensor_params)
+    end
+    redirect_to home_rooms_path @sensor.home
+  end
+
+  def unassign
+    @sensor = policy_scope(Sensor).find(params[:sensor_id])
+    authorize @sensor
+    room = @sensor.room
+    @sensor.update! room: nil
+    respond_with room
   end
 
   private
@@ -39,5 +52,13 @@ class SensorsController < ApplicationController
 
   def sensor_params
     params.require(:sensor).permit(:room_id)
+  end
+
+  def sensor_params_contains_room?
+    params[:sensor][:room][:name].present?
+  end
+
+  def room_params
+    params.require(:sensor).require(:room).permit(:name).merge(home_id: @sensor.home_id)
   end
 end

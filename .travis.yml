@@ -3,21 +3,16 @@ language: ruby
 bundler_args: "--without development"
 sudo: false
 cache: bundler
-rvm:
-  - 2.3.4
 before_script:
-  - RAILS_ENV=test bundle exec rake db:create db:migrate
   - gem install brakeman bundler-audit
   - bundle-audit update
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - RAILS_ENV=test bundle exec rake db:create db:migrate
 script:
-  - bundle exec rubocop
   - brakeman --run-all-checks --exit-on-warn --format plain .
-  - bundle exec haml-lint ./app
   - bundle-audit
+  - ./cc-test-reporter before-build
   - bundle exec rspec spec
-  - bundle exec codeclimate-test-reporter
-notifications:
-  slack:
-    # yamllint disable rule:line-length
-    secure: o6YTwOQAilx0hgtDSqgvFjZ+geDgxpp/1I7yU5GihZDeKF1Z3GBIf7SCPx3kmHdwqZC/YWipBF0/S2VBtytwU6U2kuEZBkLb0fBqXIUCwEz+ZlP5XtZDTqlvtC2s3arJlvsDm3lQqqZNL21bgtbcj7yv+1om1e+anSG8D2HfHopzThF2/goX1t0UUokLY7cgL+wWILoDUbaSu6d2GEfcWn7EAACTHJVLVNZ9Sdttf/dN6mCNg4gPW2X9izEdboIGsAbUoXbYC0gM57zOMVCctDxXSEfYWD7wiX8BVRaj7B5fAfZb4o7f/nRDrSRbUrPaxoH6o0NRZX4mC8kXYoEFZpcaW3GlbVCnMNvti4w3wAWeHkga9zQdVw9K91w/KAjpLaMLh+EumJ9dVmGMGtR+V+d7YgaveDPw5FkXWmbOSXE7qlhNTxxmHjJ7GcLzjfiKultd3cmw0lYLPhCo88S1dmmIffcKKYAHrkcENtGytSC26CGyN7ISeWsNdVRVLg1S6M1cN1R7+B51/9tv0jBYfe2Cr8u/P6ligg2ArV6SBIJi5N/rymOc38S0R8ej4w7pC5OSoAvKpwrfJUcMgfAjnAZitI+l6Ct3MJYpp9B3qqN8FNduRKHKaDaXJpg18kq1MHlI6yYliK5g7ceCVSqTd3Amlvt1tIJgQHqN/6pCfoA=
-    # yamllint enable
+after_success:
+  - ./cc-test-reporter after-build --id $CC_TEST_REPORTER_ID

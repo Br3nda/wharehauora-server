@@ -18,11 +18,10 @@
   =require purecss/menus
   =require purecss/tables
   =require font-awesome
-  =require buttons
 */
 
-@import "elements";
 @import "variables";
+@import "buttons";
+@import "layout";
 @import "modules/signin_grid";
 @import "font-awesome";
-

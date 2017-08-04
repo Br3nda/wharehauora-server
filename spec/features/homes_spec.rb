@@ -13,12 +13,6 @@ RSpec.feature 'Homes', type: :feature do
       expect(page).to have_text(home.name)
     end
 
-    scenario 'home has rooms' do
-      FactoryGirl.create :room, name: 'bedroom'
-      visit "/homes/#{home.id}"
-      expect(page).to have_text(home.name)
-    end
-
     scenario 'Views their friend\'s home' do
       other_home = FactoryGirl.create :home
       user.viewable_homes << other_home

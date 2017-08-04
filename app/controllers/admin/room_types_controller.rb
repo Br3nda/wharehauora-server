@@ -41,6 +41,6 @@ class Admin::RoomTypesController < ApplicationController
   end
 
   def room_type_params
-    params[:room_type].permit(:name)
+    params[:room_type].permit(:name, :min_temperature, :max_temperature)
   end
 end

@@ -38,6 +38,9 @@ gem 'doorkeeper'
 # templating
 gem 'haml-rails'
 
+# For soft-deletion
+gem 'acts_as_paranoid', '~> 0.5.0'
+
 gem 'purecss-rails'
 
 # icons

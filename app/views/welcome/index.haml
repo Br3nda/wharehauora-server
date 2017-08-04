@@ -1,36 +1,37 @@
-%p Median Temperatures right now
 
-%table.public_matrix.pure-table.pure-table-bordered
-  %tr
-    %thead
-      %th
-        = '..'
-      - @home_types.each do |home_type|
-        %th
-          = home_type.name
-  - @room_types.each do |room_type|
-    %tr
-      %th
-        = room_type.name
-      - @home_types.each do |home_type|
-        %td
-          - if @temperature[[home_type.id, room_type.id]].present?
-            = @temperature[[home_type.id, room_type.id]]
-            C
-          - if @humidity[[home_type.id, room_type.id]].present?
-            = @humidity[[home_type.id, room_type.id]]
-            = '%'
+%h2 WhareSensors are the affordable to measure the healthiness of our homes.
 
 %p
-  Based on data from
-  = Sensor.count
-  sensors in
-  = Home.count
-  installations in Wellington
+  Whare Hauora is a charitable trust, working to measure the quality of
+  the environment we live in: the rooms of our homes.
 
-%h3 Median values
-.pure-g
-  .pure-u-1.pure-u-md-1-2
-    = line_chart opendata_readings_path(key: 'temperature', day: @day), title: 'temperature'
-  .pure-u-1.pure-u-md-1-2
-    = line_chart opendata_readings_path(key: 'humidity', day: @day), title: 'humidity'
+%h3 How do our sensors work?
+%p
+  WhareSensors measures the temperature and humidity of a room every 30
+  seconds. Place sensors in each room you spend significant time in, your
+  bedrooms, and the main living space. The sensors discover each other
+  wirelessly and form a mesh network, sending their readings to each other.
+  One "gateway" unit, placed in the centre of the home will gather up all
+  readings, and send to Whare Hauora for analysis.
+
+= render 'livedemo', homes: @public_homes
+
+%h3 Compare your home against robust health standards.
+
+%p
+  Within days, we'll create a summary of the home environment, as it
+  changes from day to night, warm to cold. Over the course of the year
+  you'll create a profile of the seasons. You may learn that your child's
+  room is well suited to sleeping in summer, but the temperature drops
+  too low overnight in winter. Your living space may be too humid from
+  cooking or lack of ventilation, and likely to allow mould growth.
+  As you make changes to your home, you can measure the difference.
+
+-# = render "charts"
+
+%p
+  What gets measured, gets managed. Remove the guesswork. Reassure
+  yourself on your home's quality or learn where to focus improvement
+
+
+-# = render "medians", temperatures: @temperature

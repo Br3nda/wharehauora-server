@@ -20,6 +20,25 @@ RSpec.describe RoomsController, type: :controller do
   context 'user is signed in as owner' do
     before { sign_in user }
 
+    describe 'GET index' do
+      before { get :index, home_id: room.home.id }
+      it { expect(response).to have_http_status(:success) }
+      context 'one room' do
+        it { expect(assigns(:rooms)).to eq([room]) }
+        context 'no unassigned_sensors' do
+          it { expect(assigns(:unassigned_sensors)).to eq([]) }
+        end
+        context '1 unassigned_sensors' do
+          let!(:sensor) { FactoryGirl.create :sensor, home: home, room: nil }
+          it { expect(assigns(:unassigned_sensors)).to eq([sensor]) }
+        end
+        context '30 unassigned_sensors' do
+          before { 30.times { FactoryGirl.create(:sensor, home: home, room: nil) } }
+          it { expect(assigns(:unassigned_sensors).size).to eq 30 }
+        end
+      end
+    end
+
     describe 'GET show' do
       before { get :show, home_id: room.home.id, id: room.id }
       it { expect(response).to have_http_status(:success) }
@@ -61,6 +80,11 @@ RSpec.describe RoomsController, type: :controller do
     describe "GET edit for someone else's home" do
       let(:home) { FactoryGirl.create(:home) }
       let(:room) { FactoryGirl.create(:room, home: home) }
+
+      describe '#index' do
+        before { get :index, home_id: home.id }
+        it { expect(response).to have_http_status(:not_found) }
+      end
 
       describe '#show' do
         before { get :show, home_id: home.id, id: room.to_param }

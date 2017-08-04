@@ -25,6 +25,11 @@ class Admin::UsersController < ApplicationController
     render :edit, @user
   end
 
+  def destroy
+    @user.destroy
+    redirect_to admin_users_path
+  end
+
   private
 
   def user_params

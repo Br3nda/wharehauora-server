@@ -7,6 +7,10 @@ class MqttUserPolicy < ApplicationPolicy
     janitor?
   end
 
+  def sync?
+    janitor?
+  end
+
   class Scope < Scope
     def resolve
       scope.all if user && user.role?('janitor')

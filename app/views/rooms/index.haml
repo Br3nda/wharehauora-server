@@ -1,35 +1,22 @@
-%h2 Rooms in #{@home.name}
-
 = render 'homes/nav', home: @home
 
+- if @unassigned_sensors.size.positive?
+  %h2.warning
+    = fa_icon 'warning'
+    new sensors detected
 
-- if @rooms.present?
-  %table.pure-table
-    %thead
-      %tr
-        %th.sortable
-          Room
-          ( Room type )
-        %th Sensors
-    %tbody
-      - @rooms.each do |room|
-        %tr
-          %td
-            = room.name.present? ? room.name :  home_room_path(@home, room)
-            = "(#{room.room_type.name})" if room.room_type.present?
-          %td
-            - room.sensors.each do |sensor|
-              = link_to(sensor.node_id, sensor_path(sensor))
-          %td
-            - if policy(room).edit?
-              = link_to edit_home_room_path(room.home, room), class: 'pure-button' do
-                = fa_icon 'edit'
-          %td
-            - if policy(room).destroy?
-              = link_to home_room_path(room.home, room),
-                method: :delete, data: { confirm: 'Delete room?' },
-                class: 'pure-button' do
-                = fa_icon 'trash'
-  %p= paginate(@rooms)
+  .conditions-tables.pure-g
+    - @unassigned_sensors.each do |sensor|
+      .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+        = render 'sensors/card', sensor: sensor
+
+%h2.conditions-page-title Rooms in #{@home.name}
+- if @rooms.size.positive?
+  .conditions-tables.pure-g
+    - @rooms.order(:name).each do |room|
+      .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+        = render 'rooms/card', room: room
+  = paginate(@rooms)
 - else
-  %p No rooms detected in this whare.
+  %p This whare has no monitored rooms.
+  %p Activate sensors in your home, and they will appear here.

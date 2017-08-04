@@ -7,6 +7,10 @@
 %p
   Each account has write-only access
 
+%p
+  = button_to admin_mqtt_sync_path, class: 'pure-button' do
+    Sync with MQTT server
+
 %table.pure-table
   %thead
     %tr
@@ -18,10 +22,8 @@
   %tbody
     - @users.each do |user|
       %tr
-        %td
-          = user.email
-        %td
-          = user&.mqtt_user&.password if user.mqtt_user
+        %td= user.email
+        %td= user&.mqtt_user&.password if user.mqtt_user
         %td
           - user.owned_homes.each do |home|
             = link_to home_path(home) do

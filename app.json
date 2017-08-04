@@ -1,8 +1,12 @@
 {
   "name": "wharehauora-server",
   "scripts": {
+    "postdeploy": "bundle exec rake db:migrate db:seed uat:testdata"
   },
   "env": {
+    "CLOUDMQTT_URL": {
+      "required": true
+    }
   },
   "formation": {
   },

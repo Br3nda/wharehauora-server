@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-# BlockLength cop disabled as to define routes otherwise is a major and unnecessary
-# exercise in refactoring.
-# rubocop:disable Metrics/BlockLength
-Rails.application.routes.draw do
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   devise_for :users
   use_doorkeeper do
-    # OAuth applications must be created using rake tasks `rake oauth:new_application`
+    # OAuth applications must be created using rake tasks `rake oauth:application`
     skip_controllers :applications, :authorized_applications
   end
 
@@ -19,8 +16,12 @@ Rails.application.routes.draw do
     resources :readings
   end
 
-  resources :rooms
-  resources :sensors
+  resources :rooms do
+    resources :summary, to: 'room_summary#summary'
+  end
+  resources :sensors do
+    delete :unassign, to: 'sensors#unassign'
+  end
   resources :messages
   resources :readings
   resources :home_viewers
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
     resources :home_types
     resources :room_types
     resources :mqtt_users
+    post :mqtt_sync, to: 'mqtt_users#sync'
   end
 
   namespace :api do

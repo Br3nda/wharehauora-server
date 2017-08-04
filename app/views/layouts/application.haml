@@ -1,17 +1,18 @@
 !!!
 %html
   %head
-    %title
-      WharehauoraServer
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    %title WharehauoraServer
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'https://www.gstatic.com/charts/loader.js'
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
 
   %body
     .pure-g
+      .pure-u-1.menu
+        = render 'layouts/menu', homes: @my_homes
       .pure-u-1.header
         = image_tag(image_url('logo.png'))
-      .pure-u-1.menu
-        = render 'layouts/menu'
       .pure-u-1.content
         = yield

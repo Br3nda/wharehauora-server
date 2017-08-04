@@ -1,42 +1,36 @@
-%h2
-  = @home.name
-
 = render 'homes/nav', home: @home
 
+%h2= @home.name
+
 - if @sensors.present?
-  %%p= paginate(@sensors)
-  %table.pure-table
-    %thead
-      %tr
-        %th.sortable Sensor
-        %th Room
-        %td First message
-        %td Last message
-        %th Message count
-        %th
-    %tbody
-      - @sensors.each do |sensor|
+  .information
+    %%p= paginate(@sensors)
+
+    %table.pure-table
+      %thead
         %tr
-          %td
-            = link_to(sensor.node_id, sensor_path(sensor))
-          %td
-            = sensor.room&.name
-            = link_to edit_sensor_path(sensor) do
-              = fa_icon 'edit'
-          %td
-            = sensor.messages.first&.updated_at
-          %td
-            = sensor.messages.last&.updated_at
-          %td
-            - if sensor.messages.count.positive?
-              = link_to(sensor.messages.count, messages_path(sensor_id: sensor.id))
-            - else
-              0
-          %td
-            - if current_user.role? 'janitor'
-              = link_to 'delete', sensor_path(sensor),
-                method: :delete, data: { confirm: 'delete this sensor?' },
-                class: 'pure-button'
+          %th.sortable Sensor
+          %th Room
+          %td Last message
+      %tbody
+        - @sensors.each do |sensor|
+          %tr
+            %td= sensor.node_id
+            %td= sensor.room&.name
+            %td= time_ago_in_words sensor.messages.last&.updated_at if sensor.messages.last
+            - if policy(sensor).edit?
+              %td
+                = link_to edit_sensor_path(sensor), class: 'pure-button edit-button' do
+                  = fa_icon 'edit'
+                  edit
+            - if policy(sensor).destroy?
+              %td
+                = link_to sensor_path(sensor),
+                  method: :delete,
+                  data: { confirm: 'delete this sensor?' },
+                  class: 'pure-button delete-button' do
+                  = fa_icon 'trash'
+                  delete
 
   %%p= paginate(@sensors)
 - else

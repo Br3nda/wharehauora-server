@@ -1,16 +1,33 @@
-%h2
-  Room
-  = @room.name
+= render 'homes/nav', home: @room.home
 
-.pure-g
-  .pure-u-1
-    %p
-      Home:
-      = link_to @room.home.name, @room.home
+%h2= @room.name
+%h3= @room.room_type&.name
 
-  .pure-u-1-2
-    - @keys.each do |key|
+.conditions-tables.pure-g
+
+  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+    = render "rating", room: @room
+  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+    = render "temperature", room: @room
+  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+    = render "dewpoint", room: @room
+
+  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-4
+    .conditions-table
+      %h3 Readings
+      %ul.conditions-table-list
+        - @readings.each do |reading|
+          %li
+            = display_reading reading
+            = reading.key
+            %br
+            = timeago_tag reading.created_at, nojs: true, limit: 100.days.ago
+
+  .pure-u-1.pure-u-md-1-1.pure-u-lg-2-3
+    .pure-u-1.pure-u-md-1.pure-u-lg-1
       = line_chart readings_path(home_id: @room.home.id,
-                               room_id: @room.id,
-                               key: key,
-                               day: @day), title: "#{@day} #{key}"
+        room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60
+      %h2 sensors in this room
+      - @room.sensors.each do |sensor|
+        .pure-u-1.pure-u-md-1-3.pure-u-lg-1-3
+          = render 'sensors/card', sensor: sensor
