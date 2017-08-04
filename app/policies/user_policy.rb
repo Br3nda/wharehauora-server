@@ -12,7 +12,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    janitor?
+    janitor? || user == record
   end
 
   def update?
