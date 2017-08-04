@@ -19,18 +19,5 @@ module Api
         RoomService.readings(@model)
       end
     end
-
-    private
-
-    def reading_data(key)
-      reading = @model.most_recent_reading(key)
-      return unless reading
-      {
-        value: format('%.1f', reading.value).to_f,
-        unit: reading.unit,
-        timestamp: reading.created_at,
-        current: reading.current?
-      }
-    end
   end
 end
