@@ -10,15 +10,19 @@ module Api
       end
 
       def ratings
-        Rails.cache.fetch("#{@model.cache_key}/ratings/#{@model.updated_at}", expires_in: 60.minutes) do
+        room_cache 'ratings' do
           RoomService.ratings(@model)
         end
       end
 
       def readings
-        Rails.cache.fetch("#{@model.cache_key}/readings/#{@model.updated_at}", expires_in: 60.minutes) do
+        room_cache 'readings' do
           RoomService.readings(@model)
         end
+      end
+
+      def room_cache(key)
+        yield Rails.cache.fetch("#{@model.cache_key}/#{key}/#{@model.updated_at}", expires_in: 60.minutes)
       end
     end
   end
