@@ -38,4 +38,8 @@ Rails.application.routes.draw do
     resources :room_types
     resources :mqtt_users
   end
+
+  namespace :api do
+    resource :user, only: :show
+  end
 end
