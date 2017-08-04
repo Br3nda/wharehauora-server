@@ -24,7 +24,7 @@ function updateRoomDisplay(room_id, data) {
   var keys = ['temperature', 'humidity', 'dewpoint'];
 
   var readings = data.attributes.readings;
-  keys.forEach(function(key, index, array) {
+  keys.forEach(function(key, index) {
     console.log(key);
     var reading = readings[key];
     var div = '#room-' + room_id + "-" + key + "-";
