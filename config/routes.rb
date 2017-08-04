@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# BlockLength cop disabled as to define routes otherwise is a major and unnecessary
+# exercise in refactoring.
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   devise_for :users
   use_doorkeeper do
