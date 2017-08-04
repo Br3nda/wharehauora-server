@@ -25,7 +25,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   end
 
   namespace :api do
-    resources :rooms, only: [:show]
+    jsonapi_resources :homes
+    jsonapi_resources :rooms
+    # resources :rooms, only: [:show]
   end
 
   namespace :admin do

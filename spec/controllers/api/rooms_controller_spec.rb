@@ -9,26 +9,27 @@ RSpec.describe Api::RoomsController, type: :controller do
   end
 
   shared_examples 'response has expected keys' do
-    subject { JSON.parse response.body }
-    it { is_expected.to include('sensors_count') }
-    it { is_expected.to include('room') }
-    it { is_expected.to include('readings') }
+    subject { JSON.parse(response.body) }
+    # it { byebug; is_expected.to include('sensors_count') }
+    # it { is_expected.to include('room') }
+    # it { is_expected.to include('readings') }
   end
 
   shared_examples 'returns expected readings' do
-    subject { JSON.parse response.body }
+    subject { JSON.parse(response.body) }
 
-    let(:readings_response) { subject['readings'] }
+    let(:readings_response) { subject['data']['attributes']['readings'] }
     let(:temperature_response) { readings_response['temperature'] }
     let(:humidity_response) { readings_response['humidity'] }
     let(:dewpoint_response) { readings_response['dewpoint'] }
-    let(:ratings_response) { subject['ratings'] }
+    let(:ratings_response) { subject['data']['attributes']['ratings'] }
 
-    it { expect(subject['room']).to include('id' => room.id, 'name' => room.name) }
+    it { expect(subject['data']['attributes']).to include('name' => room.name) }
     describe 'room too hot' do
       let(:create_readings) { FactoryGirl.create :temperature_reading, value: 101.1, room: room }
       it { expect(temperature_response).to include('value' => 101.1, 'unit' => '°C') }
       it { expect(ratings_response).to include('good' => false, 'too_hot' => true, 'too_cold' => false) }
+      include_examples 'response has expected keys'
     end
 
     describe 'room too cold' do

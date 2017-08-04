@@ -7,8 +7,6 @@ class RoomService
     Rails.cache.fetch("#{@room.cache_key}/summary/#{@room.updated_at}", expires_in: 60.minutes) do
       {
         sensors_count: @room.sensors.size,
-        home: home_data,
-        room: room_data,
         readings: readings,
         ratings: ratings
       }
@@ -16,14 +14,6 @@ class RoomService
   end
 
   private
-
-  def home_data
-    {
-      id: @room.home.id,
-      name: @room.home.name,
-      owner: @room.owner.email
-    }
-  end
 
   def ratings
     {
@@ -53,15 +43,6 @@ class RoomService
       unit: @reading.unit,
       timestamp: @reading.created_at,
       current: @reading.current?
-    }
-  end
-
-  def room_data
-    {
-      id: @room.id,
-      name: @room.name,
-      room_type: { name: @room.room_type&.name },
-      updated_at: @room.updated_at
     }
   end
 end
