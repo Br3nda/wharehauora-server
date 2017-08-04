@@ -5,4 +5,3 @@ FactoryGirl.define do
     expires_in 2.hours
   end
 end
-
