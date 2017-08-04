@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe RoomService, type: :model do
-  describe 'ratings' do
-    before do
-      FactoryGirl.create :reading, key: 'dewpoint', value: room.calculate_dewpoint, room: room
-    end
+  before { FactoryGirl.create :reading, key: 'dewpoint', value: room.calculate_dewpoint, room: room }
 
+  describe 'ratings' do
     subject { RoomService.ratings(room) }
 
     describe 'too hot' do
@@ -38,7 +36,23 @@ RSpec.describe RoomService, type: :model do
       it { is_expected.to include(too_damp: true) }
     end
   end
+
   describe 'readings' do
+    let(:room) { FactoryGirl.create :room, temperature: 1.1, humidity: 86.1, room_type: room_type }
+    let(:room_type) { FactoryGirl.create :room_type }
+
     subject { RoomService.readings(room) }
+
+    describe 'temperature' do
+      it { expect(subject['temperature']).to include(value: 1.1) }
+    end
+
+    describe 'dewpoint' do
+      it { expect(subject['dewpoint']).to include(value: -1.0) }
+    end
+
+    describe 'humidity' do
+      it { expect(subject['humidity']).to include(value: 86.1) }
+    end
   end
 end
