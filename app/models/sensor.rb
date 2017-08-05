@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Sensor < ActiveRecord::Base
-  belongs_to :home, counter_cache: true
+  belongs_to :home
   validates :home, presence: true
   validate :same_home_as_room
 
-  belongs_to :room
+  belongs_to :room, counter_cache: true
 
   has_many :messages, dependent: :destroy
 

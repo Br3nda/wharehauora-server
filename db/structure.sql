@@ -23,20 +23,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
---
--- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
-
-
 SET search_path = public, pg_catalog;
 
 --
@@ -399,7 +385,8 @@ CREATE TABLE rooms (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     room_type_id integer,
-    readings_count integer
+    readings_count integer,
+    sensors_count integer DEFAULT 0
 );
 
 
@@ -515,7 +502,11 @@ CREATE TABLE users (
     last_sign_in_ip character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    confirmation_token character varying,
+    confirmed_at timestamp without time zone,
+    confirmation_sent_at timestamp without time zone,
+    unconfirmed_email character varying
 );
 
 
@@ -846,6 +837,13 @@ CREATE INDEX index_user_roles_on_user_id ON user_roles USING btree (user_id);
 
 
 --
+-- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_confirmation_token ON users USING btree (confirmation_token);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -857,13 +855,6 @@ CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
-
-
---
--- Name: readings_room_id_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX readings_room_id_idx ON readings USING btree (room_id);
 
 
 --
@@ -1014,4 +1005,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170707012401');
 INSERT INTO schema_migrations (version) VALUES ('20170719025235');
 
 INSERT INTO schema_migrations (version) VALUES ('20170725084656');
+
+INSERT INTO schema_migrations (version) VALUES ('20170801095409');
+
+INSERT INTO schema_migrations (version) VALUES ('20170804072223');
 
