@@ -2,6 +2,11 @@
 
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   devise_for :users
+  use_doorkeeper do
+    # OAuth applications must be created using rake tasks `rake oauth:application`
+    skip_controllers :applications, :authorized_applications
+  end
+
   root 'welcome#index'
 
   resources :homes do
@@ -40,5 +45,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :room_types
     resources :mqtt_users
     post :mqtt_sync, to: 'mqtt_users#sync'
+  end
+
+  namespace :api do
+    resource :user, only: :show
   end
 end

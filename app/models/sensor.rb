@@ -5,7 +5,7 @@ class Sensor < ActiveRecord::Base
   validates :home, presence: true
   validate :same_home_as_room
 
-  belongs_to :room
+  belongs_to :room, counter_cache: true
 
   has_many :messages, dependent: :destroy
 
