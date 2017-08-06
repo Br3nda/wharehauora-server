@@ -385,7 +385,8 @@ CREATE TABLE rooms (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     room_type_id integer,
-    readings_count integer
+    readings_count integer,
+    sensors_count integer DEFAULT 0
 );
 
 
@@ -1006,4 +1007,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170719025235');
 INSERT INTO schema_migrations (version) VALUES ('20170725084656');
 
 INSERT INTO schema_migrations (version) VALUES ('20170801095409');
+
+INSERT INTO schema_migrations (version) VALUES ('20170804072223');
 
