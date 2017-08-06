@@ -58,6 +58,9 @@ gem 'active_median'
 
 gem 'momentjs-rails'
 
+# OAuth for API
+gem 'doorkeeper'
+
 # Rest/http library
 gem 'faraday'
 
