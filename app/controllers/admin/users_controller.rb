@@ -19,7 +19,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user.update!(user_params)
-    @user.save!
+    @user.confirm
     redirect_to admin_users_path
   rescue
     render :edit, @user
