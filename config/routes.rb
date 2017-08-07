@@ -31,8 +31,10 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   namespace :api do
     namespace :v1 do
-      jsonapi_resources :homes
-      jsonapi_resources :rooms
+      jsonapi_resources :homes do
+        jsonapi_resources :rooms, only: [:index]
+      end
+      jsonapi_resources :rooms, only: [:show]
     end
   end
 
@@ -45,9 +47,5 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :room_types
     resources :mqtt_users
     post :mqtt_sync, to: 'mqtt_users#sync'
-  end
-
-  namespace :api do
-    resource :user, only: :show
   end
 end
