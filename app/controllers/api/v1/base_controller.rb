@@ -1,8 +1,12 @@
 class Api::V1::BaseController < JSONAPI::ResourceController
   include Pundit::ResourceController
-  before_action :doorkeeper_authorize!
+  before_action :auth!
 
   private
+
+  def auth!
+    doorkeeper_authorize! if current_user.blank?
+  end
 
   def current_resource_owner
     User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
