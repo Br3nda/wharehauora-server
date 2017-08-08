@@ -35,8 +35,8 @@ RSpec.feature 'Rooms', type: :feature do
 
       describe ' visit #index' do
         shared_examples 'show home and room' do
-          it { is_expected.to have_text(home.name) }
-          it { is_expected.to have_text(room.name) }
+          it { is_expected.to have_text(home.name, maximum: 1) }
+          it { is_expected.to have_text(room.name, maximum: 1) }
           it { is_expected.to have_text(room.room_type.name) }
         end
 
@@ -66,18 +66,38 @@ RSpec.feature 'Rooms', type: :feature do
     end
   end
 
-  context 'Whare owner' do
-    background { login_as(home.owner) }
-    include_examples 'shows room list'
+  shared_examples 'Test as all user types' do
+    context 'Whare owner' do
+      background { login_as(home.owner) }
+      include_examples 'shows room list'
+    end
+
+    context 'Whare owner' do
+      background { login_as(whanau) }
+      include_examples 'shows room list'
+    end
+
+    context 'Admin users' do
+      background { login_as(FactoryGirl.create(:admin)) }
+      include_examples 'shows room list'
+    end
+
+    context 'Not Logged in' do
+      before(:each) { visit home_rooms_path(home.id) }
+      describe 'Cannot see private home' do
+        it { is_expected.not_to have_text(home.name) }
+        it { is_expected.not_to have_text('This whare has no monitored rooms.') }
+      end
+      pending 'Can see public home'
+    end
   end
 
-  context 'Whare owner' do
-    background { login_as(whanau) }
-    include_examples 'shows room list'
+  context 'No other whanau' do
+    include_examples 'Test as all user types'
   end
-
-  context 'Admin users' do
-    background { login_as(FactoryGirl.create(:admin)) }
-    include_examples 'shows room list'
+  context 'Homes with lots of Whanau' do
+    before { FactoryGirl.create_list(:home_viewer, 7, home: home) }
+    it { expect(home.users.size).to eq(7) }
+    include_examples 'Test as all user types'
   end
 end
