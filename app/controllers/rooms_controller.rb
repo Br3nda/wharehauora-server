@@ -1,5 +1,4 @@
 class RoomsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_room, only: %i[show edit destroy update]
   before_action :set_home, only: %i[index edit update]
 
@@ -7,12 +6,7 @@ class RoomsController < ApplicationController
 
   def index
     authorize @home
-    @rooms = policy_scope(Room)
-             .where(home_id: @home.id)
-             .includes(:room_type)
-             .order(:name)
-             .paginate(page: params[:page])
-
+    @rooms = @home.rooms.includes(:room_type).order(:name).paginate(page: params[:page])
     @unassigned_sensors = @home.sensors.where(room_id: nil)
     respond_with(@rooms)
   end
