@@ -10,90 +10,106 @@ RSpec.describe RoomsController, type: :controller do
   let(:room) { FactoryGirl.create(:room, home: home, room_type: bedroom) }
   let(:sensor) { FactoryGirl.create(:sensor, room: room, node_id: '1100') }
 
-  context 'Not signed in' do
-    describe 'GET show' do
-      before { get :show, home_id: room.home.id, id: room.id }
-      it { expect(response).to redirect_to(new_user_session_path) }
+  shared_examples 'Test as all user types' do
+    context 'Not signed in' do
+      describe 'GET show' do
+        before { get :show, home_id: room.home.id, id: room.id }
+        it { expect(response).not_to have_http_status(:success) }
+      end
     end
-  end
+    context 'user is signed in as owner' do
+      before { sign_in user }
 
-  context 'user is signed in as owner' do
-    before { sign_in user }
+      describe 'GET index' do
+        before { get :index, home_id: room.home.id }
+        it { expect(response).to have_http_status(:success) }
 
-    describe 'GET index' do
-      before { get :index, home_id: room.home.id }
-      it { expect(response).to have_http_status(:success) }
-      context 'one room' do
-        it { expect(assigns(:rooms)).to eq([room]) }
-        context 'no unassigned_sensors' do
-          it { expect(assigns(:unassigned_sensors)).to eq([]) }
+        context 'one room' do
+          it 'Only finds our one room' do
+            expect(assigns(:rooms)).to eq([room])
+          end
+
+          context 'no unassigned_sensors' do
+            it { expect(assigns(:unassigned_sensors)).to eq([]) }
+          end
+
+          context '1 unassigned_sensors' do
+            let!(:sensor) { FactoryGirl.create :sensor, home: home, room: nil }
+            it { expect(assigns(:unassigned_sensors)).to eq([sensor]) }
+          end
+
+          context '30 unassigned_sensors' do
+            before { 30.times { FactoryGirl.create(:sensor, home: home, room: nil) } }
+            it { expect(assigns(:unassigned_sensors).size).to eq 30 }
+          end
         end
-        context '1 unassigned_sensors' do
-          let!(:sensor) { FactoryGirl.create :sensor, home: home, room: nil }
-          it { expect(assigns(:unassigned_sensors)).to eq([sensor]) }
+      end
+
+      describe 'GET show' do
+        before { get :show, home_id: room.home.id, id: room.id }
+        it { expect(response).to have_http_status(:success) }
+      end
+
+      describe '#update' do
+        before do
+          patch :update, home_id: room.home.id, id: room.to_param,
+                         room: { name: 'Living room' }
         end
-        context '30 unassigned_sensors' do
-          before { 30.times { FactoryGirl.create(:sensor, home: home, room: nil) } }
-          it { expect(assigns(:unassigned_sensors).size).to eq 30 }
-        end
+        it { expect(response).to redirect_to home_rooms_path(home) }
       end
     end
 
-    describe 'GET show' do
-      before { get :show, home_id: room.home.id, id: room.id }
-      it { expect(response).to have_http_status(:success) }
-    end
+    context 'user is signed in as whānau' do
+      let(:whanau) { FactoryGirl.create :user }
 
-    describe '#update' do
       before do
-        patch :update, home_id: room.home.id, id: room.to_param,
-                       room: { name: 'Living room' }
+        home.users << whanau
+        sign_in whanau
       end
-      it { expect(response).to redirect_to home_rooms_path(home) }
+
+      describe 'GET show' do
+        before { get :show, home_id: room.home.id, id: room.id }
+        it { expect(response).to have_http_status(:success) }
+      end
+
+      describe '#update' do
+        before do
+          patch :update, home_id: room.home.id, id: room.to_param,
+                         room: { name: 'Living room' }
+        end
+        it { expect(response).to have_http_status(:redirect) }
+      end
+    end
+
+    context "Trying to access another users's data" do
+      before { sign_in user }
+      describe "GET edit for someone else's home" do
+        let(:home) { FactoryGirl.create(:home) }
+        let(:room) { FactoryGirl.create(:room, home: home) }
+
+        describe '#index' do
+          before { get :index, home_id: home.id }
+          it { expect(response).to have_http_status(:not_found) }
+        end
+
+        describe '#show' do
+          before { get :show, home_id: home.id, id: room.to_param }
+          it { expect(response).to have_http_status(:not_found) }
+        end
+        describe '#edit' do
+          before { get :edit, home_id: home.id, id: room.to_param }
+          it { expect(response).to have_http_status(:not_found) }
+        end
+      end
     end
   end
 
-  context 'user is signed in as whānau' do
-    let(:whanau) { FactoryGirl.create :user }
-
-    before do
-      home.users << whanau
-      sign_in whanau
-    end
-
-    describe 'GET show' do
-      before { get :show, home_id: room.home.id, id: room.id }
-      it { expect(response).to have_http_status(:success) }
-    end
-
-    describe '#update' do
-      before do
-        patch :update, home_id: room.home.id, id: room.to_param,
-                       room: { name: 'Living room' }
-      end
-      it { expect(response).to have_http_status(:redirect) }
-    end
+  context 'No other whanau' do
+    include_examples 'Test as all user types'
   end
-
-  context "Trying to access another users's data" do
-    before { sign_in user }
-    describe "GET edit for someone else's home" do
-      let(:home) { FactoryGirl.create(:home) }
-      let(:room) { FactoryGirl.create(:room, home: home) }
-
-      describe '#index' do
-        before { get :index, home_id: home.id }
-        it { expect(response).to have_http_status(:not_found) }
-      end
-
-      describe '#show' do
-        before { get :show, home_id: home.id, id: room.to_param }
-        it { expect(response).to have_http_status(:not_found) }
-      end
-      describe '#edit' do
-        before { get :edit, home_id: home.id, id: room.to_param }
-        it { expect(response).to have_http_status(:not_found) }
-      end
-    end
+  context 'Homes with lots of Whanau' do
+    before { FactoryGirl.create_list(:home_viewer, 7, home: home) }
+    it { expect(home.users.size).to eq(7) }
+    include_examples 'Test as all user types'
   end
 end
