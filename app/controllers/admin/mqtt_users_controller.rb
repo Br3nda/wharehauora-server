@@ -1,13 +1,13 @@
 class Admin::MqttUsersController < ApplicationController
   def index
     authorize :mqtt_user
-    @users = policy_scope User.includes(:owned_homes, :mqtt_user).all
+    @homes = policy_scope Home.all.includes(:mqtt_user)
   end
 
   def create
     authorize :mqtt_user
-    @user = User.find(params[:user_id])
-    @user.provision_mqtt!
+    @home = policy_scope(Home).find(params[:home_id])
+    @home.provision_mqtt!
     redirect_to admin_mqtt_users_path
   end
 
