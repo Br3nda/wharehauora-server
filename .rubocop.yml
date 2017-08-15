@@ -32,6 +32,16 @@ Metrics/ParameterLists:
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: single_quotes
 
+Style/SymbolArray:
+  EnforcedStyle: percent
+  MinSize: 3
+
+Style/PercentLiteralDelimiters:
+  Enabled: true
+  PreferredDelimiters:
+    'default': '[]'
+    '%i':      '[]'
+
 Style/SingleLineMethods:
   Enabled: false
 
