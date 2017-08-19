@@ -10,16 +10,17 @@ class Message < ActiveRecord::Base
   scope(:joins_home, -> { joins(:sensor, sensor: :home) })
 
   def self.decode(topic, payload)
-    (home_id, node_id, child_sensor_id, message_type,
-        ack, sub_type) = topic.split('/')[3..-1]
-    home = Home.find(home_id)
-    message = Message.create!(
-      node_id: node_id, child_sensor_id: child_sensor_id,
-      message_type: message_type, ack: ack, sub_type: sub_type,
-      payload: payload,
-      sensor: home.find_or_create_sensor(node_id)
+    (home_id, node_id, child_sensor_id, message_type, ack, sub_type) = topic.split('/')[3..-1]
+
+    Message.create!(
+      sensor: Sensor.find_or_create_by!(home_id: home_id, node_id: node_id),
+      node_id: node_id,
+      child_sensor_id: child_sensor_id,
+      message_type: message_type,
+      ack: ack,
+      sub_type: sub_type,
+      payload: payload
     )
-    message
   end
 
   private

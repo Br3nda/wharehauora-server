@@ -21,12 +21,6 @@ class Home < ActiveRecord::Base
   validates :name, presence: true
   validates :owner, presence: true
 
-  def find_or_create_sensor(node_id)
-    sensor = sensors.find_by(node_id: node_id)
-    sensor = Sensor.create!(home_id: id, node_id: node_id) unless sensor
-    sensor
-  end
-
   def provision_mqtt!
     self.mqtt_user = MqttUser.new(home_id: id) if mqtt_user.nil?
     mqtt_user.provision!
