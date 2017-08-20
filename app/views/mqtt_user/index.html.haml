@@ -1,0 +1,20 @@
+= render 'homes/nav', home: @home
+%h2 Set up
+
+
+
+- if @home.mqtt_user
+  %p
+    Here are your credentials to set up a WhareGateway in
+    = @home.name
+
+  %p
+    Username:
+    %b= @home.mqtt_user.username
+  %p
+    Password:
+    %b= @home.mqtt_user.password
+- else
+  %p Your home has not been provisioned yet.
+
+-# http://192.168.4.1

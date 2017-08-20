@@ -14,6 +14,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :home_viewers
     resources :sensors
     resources :readings
+    resources :mqtt_user
   end
 
   resources :rooms do
