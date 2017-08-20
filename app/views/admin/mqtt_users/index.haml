@@ -14,23 +14,23 @@
 %table.pure-table
   %thead
     %tr
-      %th.sortable MQTT Email
+      %th Home
+      %th Owner
+      %th MQTT Username
       %th MQTT Passcode
-      %th Homes
       %th Provisioned
       %th Actions
   %tbody
-    - @users.each do |user|
+    - @homes.includes(:mqtt_user, :owner).each do |home|
       %tr
-        %td= user.email
-        %td= user&.mqtt_user&.password if user.mqtt_user
         %td
-          - user.owned_homes.each do |home|
-            = link_to home_path(home) do
-              = home.name
-              = fa_icon 'home'
+          = link_to home_path(home) do
+            = fa_icon 'home'
+            = home.name
+        %td= home.owner.email
+        %td= home&.mqtt_user&.username
+        %td= home&.mqtt_user&.password
+        %td= home&.mqtt_user&.provisioned_at
         %td
-          = user&.mqtt_user&.provisioned_at if user.mqtt_user
-        %td
-          = link_to 'Provision', admin_mqtt_users_path(user_id: user.id),
+          = link_to 'Provision', admin_mqtt_users_path(home_id: home.id),
             method: 'post', class: 'pure-button'
