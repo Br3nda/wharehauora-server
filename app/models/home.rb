@@ -22,7 +22,9 @@ class Home < ActiveRecord::Base
   validates :owner, presence: true
 
   def provision_mqtt!
-    self.mqtt_user = MqttUser.new(home_id: id) if mqtt_user.nil?
-    mqtt_user.provision!
+    ActiveRecord::Base.transaction do
+      self.mqtt_user = MqttUser.where(home: self).first_or_initialize
+      mqtt_user.provision!
+    end
   end
 end
