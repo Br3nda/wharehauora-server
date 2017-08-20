@@ -10,9 +10,7 @@
   },
   "formation": {
   },
-  "addons": [
-
-  ],
+  "addons": [ "sendgrid", "raygun" ],
   "buildpacks": [
 
   ]
