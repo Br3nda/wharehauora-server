@@ -216,7 +216,8 @@ CREATE TABLE mqtt_users (
     password character varying,
     provisioned_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    home_id integer
 );
 
 
@@ -1085,6 +1086,14 @@ ALTER TABLE ONLY readings
 
 
 --
+-- Name: fk_rails_44263702dd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY mqtt_users
+    ADD CONSTRAINT fk_rails_44263702dd FOREIGN KEY (home_id) REFERENCES homes(id);
+
+
+--
 -- Name: fk_rails_491effc3a4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1231,4 +1240,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170725084656');
 INSERT INTO schema_migrations (version) VALUES ('20170801095409');
 
 INSERT INTO schema_migrations (version) VALUES ('20170804072223');
+
+INSERT INTO schema_migrations (version) VALUES ('20170812022839');
 
