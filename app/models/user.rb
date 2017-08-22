@@ -28,11 +28,6 @@ class User < ActiveRecord::Base
     roles.any? { |r| r.name == role }
   end
 
-  def provision_mqtt!
-    self.mqtt_user = MqttUser.new(username: email) if mqtt_user.nil?
-    mqtt_user.provision!
-  end
-
   def janitor?
     role? 'janitor'
   end
