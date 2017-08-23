@@ -1,0 +1,7 @@
+%tr
+  %td
+    = home_viewer.user.email
+  %td
+    - unless home_viewer.user == current_user
+      = link_to home_home_viewer_path(home_viewer.home, home_viewer.user), method: :delete do
+        %i.fa.fa-trash
