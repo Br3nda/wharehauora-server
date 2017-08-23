@@ -25,15 +25,11 @@
   %table.pure-table
     %thead
       %tr
-        %th.sortable
-          Email
+        %th.sortable Email
+        %th Actions
     %tbody
-      - @home.users.each do |v|
-        %tr
-          %td
-            = v.email
-          %td
-            delete
+      = render partial: 'home_viewer', collection: @home.home_viewers
+
 - else
   %p No whānau
 

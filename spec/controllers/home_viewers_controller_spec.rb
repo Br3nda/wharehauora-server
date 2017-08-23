@@ -49,7 +49,6 @@ RSpec.describe HomeViewersController, type: :controller do
         end.to change { HomeViewer.count }.by(-1)
         expect(response).to redirect_to(home_home_viewers_path(home))
         expect(assigns(:home)).to eq(home)
-        expect(assigns(:user)).to eq(my_friend)
       end
     end
   end
@@ -74,7 +73,6 @@ RSpec.describe HomeViewersController, type: :controller do
         end.to change { HomeViewer.count }.by(-1)
         expect(response).to redirect_to(home_home_viewers_path(home))
         expect(assigns(:home)).to eq(home)
-        expect(assigns(:user)).to eq(my_friend)
       end
     end
   end
