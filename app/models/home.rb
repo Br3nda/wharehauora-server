@@ -16,6 +16,8 @@ class Home < ActiveRecord::Base
 
   has_many :users, through: :home_viewers
 
+  has_many :invitations
+
   scope(:is_public?, -> { where(is_public: true) })
 
   validates :name, presence: true
