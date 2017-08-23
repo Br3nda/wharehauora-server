@@ -14,7 +14,7 @@ class InvitationsController < ApplicationController
       inviter: current_user,
       email: params[:invitation][:email]
     )
-    # TODO: send invitation notification/instructions
+    InvitationMailer.invitation_email(@invitation).deliver
     redirect_to home_home_viewers_path(@home)
   end
 
