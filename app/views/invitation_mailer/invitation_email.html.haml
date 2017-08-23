@@ -1,0 +1,14 @@
+%p Kia ora,
+
+%p
+  = @invitation.inviter.email
+  has invited you to join their whānau
+  and view details of their whare.
+
+%p
+  To accept or decline this invitation,
+  = link_to 'Click here', invitation_url(@invitation)
+  or copy and paste the link below into your browser:
+
+%p
+  = invitation_url(@invitation)
