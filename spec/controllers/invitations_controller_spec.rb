@@ -87,33 +87,26 @@ RSpec.describe InvitationsController, type: :controller do
     end
   end
 
-  # context 'signed in as admin/janitor' do
-  #   before { sign_in admin_user }
-  #   describe 'GET index' do
-  #     before { get :index, home_id: home.to_param }
-  #     it { expect(response).to have_http_status(:success) }
-  #   end
-  #   describe 'GET new' do
-  #     before { get :new, home_id: home.to_param }
-  #     it { expect(response).to have_http_status(:success) }
-  #     it { expect(response).to render_template(:new) }
-  #     it { expect(assigns(:home)).to eq(home) }
-  #   end
-  #   describe 'PUT create' do
-  #     before { put :create, home_id: home.to_param, home_viewer: { user: my_friend.email } }
-  #     it { expect(response).to redirect_to(home_home_viewers_path(home)) }
-  #     it { expect(assigns(:home)).to eq(home) }
-  #   end
-  #   describe 'DELETE' do
-  #     before { home.users << my_friend }
-  #     it do
-  #       expect do
-  #         delete :destroy, id: my_friend.to_param, home_id: home.id
-  #       end.to change { HomeViewer.count }.by(-1)
-  #       expect(response).to redirect_to(home_home_viewers_path(home))
-  #       expect(assigns(:home)).to eq(home)
-  #       expect(assigns(:user)).to eq(my_friend)
-  #     end
-  #   end
-  # end
+  context 'signed in as admin/janitor' do
+    before { sign_in admin_user }
+
+    describe 'POST create' do
+      it 'creates an invitation' do
+        expect do
+          post :create, home_id: home.to_param, invitation: { email: my_friend.email }
+        end.to change { home.invitations.count }.by(1)
+        expect(response).to redirect_to(home_home_viewers_path(home))
+      end
+    end
+
+    describe 'DELETE' do
+      it 'deletes the invitation' do
+        expect(invitation).to be_present
+        expect do
+          delete :destroy, home_id: home.to_param, id: invitation.to_param
+        end.to change { home.invitations.count }.by(-1)
+        expect(response).to redirect_to(home_home_viewers_path(home))
+      end
+    end
+  end
 end
