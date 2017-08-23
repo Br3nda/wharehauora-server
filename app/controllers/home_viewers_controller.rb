@@ -4,7 +4,10 @@ class HomeViewersController < ApplicationController
 
   def index
     authorize @home, :edit?
-    @viewers = policy_scope(HomeViewer).where(home_id: params[:home_id]).page(params[:page])
+    @viewers = policy_scope(HomeViewer)
+               .includes(:user)
+               .where(home_id: params[:home_id])
+               .page(params[:page])
     @invitations = @home.invitations.pending
   end
 
@@ -15,8 +18,7 @@ class HomeViewersController < ApplicationController
 
   def destroy
     authorize @home, :edit?
-    @user = User.find(params[:id])
-    viewer = HomeViewer.find_by(home_id: @home.id, user_id: @user.id)
+    viewer = @home.home_viewers.find_by!(user_id: params[:id])
     viewer.destroy
   ensure
     redirect_to home_home_viewers_path(@home)
