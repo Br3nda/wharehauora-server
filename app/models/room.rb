@@ -13,6 +13,8 @@ class Room < ActiveRecord::Base
   scope(:with_no_readings, -> { includes(:readings).where(readings: { id: nil }) })
   scope(:with_no_sensors, -> { includes(:sensors).where(sensors: { id: nil }) })
 
+  scope(:has_readings, -> { includes(:sensors).where.not(sensors: { id: nil }) })
+
   def public?
     home.is_public
   end
