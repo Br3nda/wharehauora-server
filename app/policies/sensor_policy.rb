@@ -46,10 +46,10 @@ class SensorPolicy < ApplicationPolicy
   end
 
   def owner?
-    record.home.owner_id == user.id
+    user.present? && (record.home.owner_id == user.id)
   end
 
   def whanau?
-    record.home.users.include? user
+    user.present? && record.home.users.include?(user)
   end
 end

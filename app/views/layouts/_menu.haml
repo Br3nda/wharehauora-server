@@ -16,5 +16,8 @@
           = current_user.email
         %ul.pure-menu-children
           %li.pure-menu-item
+            = link_to 'Change password', edit_user_registration_path,
+              class: 'pure-menu-link'
+          %li.pure-menu-item
             = link_to 'Sign out', destroy_user_session_path,
-              class: ' pure-menu-link', method: :delete
+              class: 'pure-menu-link', method: :delete
