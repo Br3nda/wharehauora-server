@@ -1,6 +1,6 @@
 = render 'homes/nav', home: @home
 
-- if @unassigned_sensors.size.positive?
+- if policy(@home).edit? && @unassigned_sensors.size.positive?
   %h2.warning
     = fa_icon 'warning'
     new sensors detected
