@@ -14,7 +14,7 @@ class WelcomeController < ApplicationController
   private
 
   def public_homes
-    Home.where(is_public: true).includes(:home_type)
+    Home.where(is_public: true)
   end
 
   def time_frame
