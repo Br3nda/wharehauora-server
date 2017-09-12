@@ -44,6 +44,6 @@ class InvitationsController < ApplicationController
   end
 
   def set_invitation
-    @invitation = Invitation.includes(:home).find_by(token: params[:id])
+    @invitation = Invitation.find_by(token: params[:id])
   end
 end
