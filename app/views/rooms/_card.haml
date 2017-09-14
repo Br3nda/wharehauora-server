@@ -4,10 +4,10 @@
     %span.conditions-table-current
       - %w[temperature humidity].each do |key|
         %div{ id: "room-#{room.id}-#{key}-value" }
-          = render "layouts/spinner"
+          = render 'layouts/spinner'
         %span
           = key
-          %time.timeago{ datetime: "", id: "room-#{room.id}-#{key}-timestamp" }
+          %time.timeago{ datetime: '', id: "room-#{room.id}-#{key}-timestamp" }
   %ul.conditions-table-list{ class: "room-#{room.id}-list" }
     %li
       = room.room_type.name if room.room_type.present?
