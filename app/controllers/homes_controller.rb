@@ -68,12 +68,8 @@ class HomesController < ApplicationController
     ]
   end
 
-  def set_rooms
-    @rooms = policy_scope(Room).where(home_id: @home.id).limit(10)
-  end
-
   def set_home
-    @home = policy_scope(Home).includes(:rooms).includes(:sensors).find(params[:id])
+    @home = policy_scope(Home).find(params[:id])
     authorize @home
   end
 end

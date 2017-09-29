@@ -1,0 +1,6 @@
+%tr
+  %td= invitation.email
+  %td= l invitation.created_at, format: :short
+  %td
+    = link_to home_invitation_path(invitation.home, invitation), method: :delete do
+      %i.fa.fa-trash

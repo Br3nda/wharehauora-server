@@ -1,6 +1,6 @@
 = render 'homes/nav', home: @home
 
-- if @unassigned_sensors.size.positive?
+- if policy(@home).edit? && @unassigned_sensors.size.positive?
   %h2.warning
     = fa_icon 'warning'
     new sensors detected
@@ -13,7 +13,7 @@
 %h2.conditions-page-title Rooms in #{@home.name}
 - if @rooms.size.positive?
   .conditions-tables.pure-g
-    - @rooms.order(:name).each do |room|
+    - @rooms.includes(:room_type).order(:name).each do |room|
       .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
         = render 'rooms/card', room: room
   = paginate(@rooms)

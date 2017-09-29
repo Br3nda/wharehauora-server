@@ -3,10 +3,8 @@ class Room < ActiveRecord::Base
 
   belongs_to :home, counter_cache: true
   belongs_to :room_type
-
   has_many :readings
   has_many :sensors
-
   has_one :home_type, through: :home
   has_one :owner, through: :home
 
@@ -14,14 +12,15 @@ class Room < ActiveRecord::Base
 
   scope(:with_no_readings, -> { includes(:readings).where(readings: { id: nil }) })
   scope(:with_no_sensors, -> { includes(:sensors).where(sensors: { id: nil }) })
+  scope(:has_readings, -> { includes(:sensors).where.not(sensors: { id: nil }) })
 
   def public?
     home.is_public
   end
 
   def rating
-    number = 100
     return '?' unless enough_info_to_perform_rating?
+    number = 100
     number -= 15 if too_cold?
     number -= 40 if below_dewpoint?
     rating_letter(number)

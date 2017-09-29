@@ -174,6 +174,41 @@ ALTER SEQUENCE homes_id_seq OWNED BY homes.id;
 
 
 --
+-- Name: invitations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE invitations (
+    id integer NOT NULL,
+    inviter_id integer NOT NULL,
+    home_id integer NOT NULL,
+    token character varying(40) NOT NULL,
+    email character varying,
+    status character varying(16) DEFAULT 'pending'::character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: invitations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE invitations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE invitations_id_seq OWNED BY invitations.id;
+
+
+--
 -- Name: messages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -221,7 +256,8 @@ CREATE TABLE mqtt_users (
     password character varying,
     provisioned_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    home_id integer
 );
 
 
@@ -668,6 +704,13 @@ ALTER TABLE ONLY homes ALTER COLUMN id SET DEFAULT nextval('homes_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY invitations ALTER COLUMN id SET DEFAULT nextval('invitations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY messages ALTER COLUMN id SET DEFAULT nextval('messages_id_seq'::regclass);
 
 
@@ -777,6 +820,14 @@ ALTER TABLE ONLY home_viewers
 
 ALTER TABLE ONLY homes
     ADD CONSTRAINT homes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY invitations
+    ADD CONSTRAINT invitations_pkey PRIMARY KEY (id);
 
 
 --
@@ -916,6 +967,13 @@ CREATE INDEX index_homes_on_name ON homes USING btree (name);
 --
 
 CREATE INDEX index_homes_on_owner_id ON homes USING btree (owner_id);
+
+
+--
+-- Name: index_invitations_on_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_invitations_on_token ON invitations USING btree (token);
 
 
 --
@@ -1105,6 +1163,14 @@ ALTER TABLE ONLY readings
 
 
 --
+-- Name: fk_rails_44263702dd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY mqtt_users
+    ADD CONSTRAINT fk_rails_44263702dd FOREIGN KEY (home_id) REFERENCES homes(id);
+
+
+--
 -- Name: fk_rails_491effc3a4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1251,6 +1317,10 @@ INSERT INTO schema_migrations (version) VALUES ('20170725084656');
 INSERT INTO schema_migrations (version) VALUES ('20170801095409');
 
 INSERT INTO schema_migrations (version) VALUES ('20170804072223');
+
+INSERT INTO schema_migrations (version) VALUES ('20170812022839');
+
+INSERT INTO schema_migrations (version) VALUES ('20170822215700');
 
 INSERT INTO schema_migrations (version) VALUES ('20170929015648');
 
