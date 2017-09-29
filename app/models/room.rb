@@ -1,4 +1,6 @@
 class Room < ActiveRecord::Base
+  acts_as_paranoid # soft deletes, sets deleted_at column
+
   belongs_to :home, counter_cache: true
   belongs_to :room_type
 

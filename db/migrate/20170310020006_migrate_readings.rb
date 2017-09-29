@@ -24,7 +24,7 @@ class MigrateReadings < ActiveRecord::Migration
   end
 
   def remove_orphaned_sensor_records
-    newest_home = Home.all.order(:id).last
+    newest_home = Home.unscoped.all.order(:id).last
     return unless newest_home
     sensors = Sensor.where('home_id > ?', newest_home.id)
     sensors.delete_all if sensors.count
@@ -33,7 +33,7 @@ class MigrateReadings < ActiveRecord::Migration
   def migrate_sensor_records
     orphaned_query = "home_id IS NULL OR home_id NOT IN (SELECT id FROM homes)"
     Sensor.where(orphaned_query).delete_all
-    Room.where(orphaned_query).delete_all
+    Room.unscoped.where(orphaned_query).delete_all
 
     # Migrate existing data
     Sensor.all.each do |sensor|
@@ -49,8 +49,8 @@ class MigrateReadings < ActiveRecord::Migration
     end
   end
 
-  def migrate_reading_records
-    OldReading.where("sensor_id IS NULL OR sensor_id NOT IN (SELECT id FROM sensors)").delete_all
+  def migrate_reading_records # rubocop:disable Metrics/MethodLength
+    OldReading.where('sensor_id IS NULL OR sensor_id NOT IN (SELECT id FROM sensors)').delete_all
     count = OldReading.count
     num_per_batch = 500
     batches = count / num_per_batch

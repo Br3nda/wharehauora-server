@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Home < ActiveRecord::Base
+  acts_as_paranoid # soft deletes, sets deleted_at column
   belongs_to :owner, class_name: 'User'
   belongs_to :home_type
 
