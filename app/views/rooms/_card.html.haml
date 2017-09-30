@@ -3,20 +3,20 @@
     %h2= room.name
     %h4= room.room_type.name if room.room_type.present?
     %a.head-action{ href: edit_room_path(room) }
-      %img.svg{ alt: "edit", src: image_url("icons/edit.svg") }/
+      %img.svg{ alt: 'edit', src: image_url('icons/edit.svg') }/
   .readings
     - %w[temperature humidity].each do |key|
       .reading{class: metric_quality(room, key)}
         %span.vis
           %span.loader
-        %span.label=key
+        %span.label= key
         %span.value{ id: "room-#{room.id}-#{key}-value" }
         %span.time
           %time.timeago{ datetime: '', id: "room-#{room.id}-#{key}-timestamp" }
   %footer{ id: "room-#{room.id}-footer" }
     %p{ id: "room-#{room.id}-too-cold" } Slightly too cool, but otherwise healthy.
     %a.btn{ href: room_path(room) }
-      %img.svg{ alt: "icon", src: image_url("icons/btn-analyse.svg") }>/
+      %img.svg{ alt: 'icon', src: image_url('icons/btn-analyse.svg') }>/
       Analyse
 
 :javascript
