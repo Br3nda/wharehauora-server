@@ -1,34 +1,3 @@
--# .conditions-table
--#   - if sensor.room.blank?
--#     %h2= sensor.node_id
--#     first detected
--#     = time_ago_in_words sensor.created_at
--#     ago
--#     = link_to edit_sensor_path(sensor), class: 'button-analyze pure-button' do
--#       Assign to room
--#   - else
--#     .conditions-table-header
--#       %h2 Sensor NodeID
--#       %span.conditions-table-current
--#         = sensor.node_id
-
--#     %ul.conditions-table-list
--#       %li
--#         - if sensor.messages.size.positive?
--#           last message
--#           = time_ago_in_words sensor.last_message
--#           ago
--#         - else
--#           No messages recieved
-
--#     - if policy(sensor).unassign?
--#       %p
--#         = link_to sensor_unassign_path(sensor),
--#           class: 'pure-button button-warning xsmall', method: :delete,
--#           data: { confirm: 'remove sensor from this room?' } do
--#           remove from room
--#           = fa_icon 'trash'
-
 %section.card
   %header
     %h2

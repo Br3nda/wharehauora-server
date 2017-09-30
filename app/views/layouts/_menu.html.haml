@@ -38,20 +38,18 @@
           %h6 Homes
           - current_user.homes.each do |home|
             %li=link_to home.name, home_rooms_path(home)
-        -# %h6 Rooms
-        -# %ul.nav-links
-        -#   %li
-        -#     %a{href: "room-detail1.html"} Living Room
-        -#   %li
-        -#     %a{href: "room-detail2.html"} Master Bedroom
-        -#   %li
-        -#     %a{href: "room-detail3.html"} Kid's Room
-        -# %h6 Setup
-        -# %ul.nav-links
-        -#   %li
-        -#     %a{href: "rooms.html"} Whare  Rooms
-        -#   %li
-        -#     %a{href: "whanau.html"} Wh&#x101;nau
+        - if @home.present?
+          %h6 Rooms
+          %ul.nav-links
+            - @home.rooms.each do |room|
+              %li=link_to room.name, home_room_path(@home, room)
+
+          -# %h6 Setup
+          -# %ul.nav-links
+          -#   %li
+          -#     %a{href: "rooms.html"} Whare  Rooms
+          -#   %li
+          -#     %a{href: "whanau.html"} Wh&#x101;nau
         %h6 Account
         %ul.nav-links
           %li= link_to 'My Account', edit_user_registration_path
