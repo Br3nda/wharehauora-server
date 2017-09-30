@@ -1,6 +1,6 @@
 %section.card.summary
   %header
-    %h2=room.name
+    %h2= room.name
     %h4= room.room_type.name if room.room_type.present?
     %a.head-action{ href: edit_room_path(room) }
       %img.svg{ alt: "edit", src: image_url("icons/edit.svg") }/

@@ -2,10 +2,10 @@
   %header
     %h2
       Sensor
-      %span.sensor=sensor.node_id
+      %span.sensor= sensor.node_id
     %dl.col4.restrict-width
       %dt First Detected
-      %dd=sensor.created_at
+      %dd= sensor.created_at
       %dt Last reading
       %dd
         - if sensor.messages.size.positive?
