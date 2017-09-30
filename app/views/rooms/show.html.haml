@@ -4,13 +4,12 @@
   = @home.name
 %section.card.report{ class: @room.enough_info_to_perform_rating? ? '' : 'expired' }
   %header
-    %h2=@room.name
-    %h4=@room.room_type&.name
+    %h2= @room.name
+    %h4= @room.room_type&.name
     %a.head-action{ href: edit_room_path(@room) }
       %img.svg{ alt: "edit", src: image_url("icons/edit.svg") }/
   .readings
     .reading{ class: temperature_quality(@room) }
-      -# temp-mid-a
       %span.vis
         %span.loader
       %span.value= display_temperature @room
@@ -63,17 +62,9 @@
         - else
           %li Comfortable temperature
 
-        -# %a.i.tooltip{href: "#", title: ""}
-        -# %h6 Dewpoint
-        -# %p
-        -# When the temperature in this room falls below #{display_dewpoint @room}
-        -# moisture begins to form on surfaces, leading to mould growth.
-
-        -# %p
-        -#   %a{href: "#"} Click for more info
-        -# %img.svg{alt: "info", src: image_url("icons/i.svg") }/
-      -# %li Room appears healthy, warm,  dry
-
+    %p
+      When the temperature in this room falls below #{display_dewpoint @room}
+      moisture begins to form on surfaces, leading to mould growth.
 
 %section.card
   %header.condensed
@@ -89,7 +80,7 @@
   .graph
     .scroller
       = line_chart readings_path(home_id: @room.home.id,
-        room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60
+        room_id: @room.id, key: 'temperature', day: Time.now), legend: false, refresh: 60
 
 - @room.sensors.each do |sensor|
   = render 'sensors/card', sensor: sensor
