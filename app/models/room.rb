@@ -22,11 +22,8 @@ class Room < ActiveRecord::Base
   def rating
     number = 100
     return '?' unless enough_info_to_perform_rating?
-    number -= 15
-    if too_cold?
-      number -= (7 * (room_type.min_temperature - temperature))
-    end
-    number -= 40 if below_dewpoint?
+    number -= (7 * (room_type.min_temperature - temperature)) if too_cold?
+    number -= 60 if below_dewpoint?
     rating_letter(number)
   end
 

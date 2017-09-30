@@ -38,4 +38,40 @@ FactoryGirl.define do
   factory :room_with_sensors, parent: :room do
     sensors { create_list(:sensor_with_messages, 1, home: home) }
   end
+
+  factory :room_with_min_max, parent: :room do
+    room_type { create :room_type, min_temperature: 18, max_temperature: 28 }
+  end
+
+  factory :cold_room, parent: :room_with_min_max do
+    readings { create_list(:temperature_reading, 1, value: 12.5) }
+  end
+
+  factory :ok_room, parent: :room_with_min_max do
+    readings { create_list(:temperature_reading, 1, value: 20.5) }
+  end
+
+  factory :hot_room, parent: :room_with_min_max do
+    readings { create_list(:temperature_reading, 1, value: 32.0) }
+  end
+
+  factory :healthy_room, parent: :room_with_min_max do
+    readings do
+      [
+        create(:temperature_reading, value: 22.0),
+        create(:humidity_reading, value: 45),
+        create(:dewpoint_reading, value: 9)
+      ]
+    end
+  end
+
+  factory :damp_room, parent: :room_with_min_max do
+    readings do
+      [
+        create(:temperature_reading, value: 19.0),
+        create(:humidity_reading, value: 98),
+        create(:dewpoint_reading, value: 21)
+      ]
+    end
+  end
 end

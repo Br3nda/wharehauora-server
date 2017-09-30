@@ -13,11 +13,11 @@ module RoomsHelper
 
   def room_quality_level(room)
     if room.rating == 'A'
-      return 'high'
+      'high'
     elsif room.rating == 'B' || room.rating == 'C'
-      return 'mid'
+      'mid'
     else
-      return 'low'
+      'low'
     end
   end
 
@@ -28,6 +28,17 @@ module RoomsHelper
       'temperature-low-2b'
     else
       'temperature-mid-a'
+    end
+  end
+
+  def metric_quality(room, key)
+    return temperature_quality(room) if key == 'temperature'
+    if room.below_dewpoint?
+      'humidity-high-2b'
+    elsif room.near_dewpoint?
+      'humidity-high-1a'
+    else
+      'humidity-mid-a'
     end
   end
 
