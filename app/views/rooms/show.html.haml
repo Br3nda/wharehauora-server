@@ -113,8 +113,8 @@
         Humidity
   .graph
     .scroller
-      -# = line_chart readings_path(home_id: @room.home.id,
-      -#   room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60
+      = line_chart readings_path(home_id: @room.home.id,
+        room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60
 
 - @room.sensors.each do |sensor|
   = render 'sensors/card', sensor: sensor
