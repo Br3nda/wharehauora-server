@@ -1,15 +1,15 @@
 %h1.sm.narrow-down-only
-  %a.back{href: home_rooms_path(@room.home)}>
-    %img.svg{alt: "back", src: image_url("icons/back.svg") }/
+  %a.back{ href: home_rooms_path(@room.home) }>
+    %img.svg{ alt: "back", src: image_url("icons/back.svg") }/
   Lisefski House
-%section.card.report{class: @room.enough_info_to_perform_rating? ? '' : 'expired' }
+%section.card.report{ class: @room.enough_info_to_perform_rating? ? '' : 'expired' }
   %header
     %h2=@room.name
     %h4=@room.room_type&.name
-    %a.head-action{href: edit_room_path(@room)}
-      %img.svg{alt: "edit", src: image_url("icons/edit.svg") }/
+    %a.head-action{ href: edit_room_path(@room) }
+      %img.svg{ alt: "edit", src: image_url("icons/edit.svg") }/
   .readings
-    .reading{class: temperature_quality(@room)}
+    .reading{ class: temperature_quality(@room) }
       -# temp-mid-a
       %span.vis
         %span.loader
