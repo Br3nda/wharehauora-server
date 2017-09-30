@@ -1,7 +1,7 @@
 %h1.sm.narrow-down-only
   %a.back{ href: home_rooms_path(@room.home) }>
     %img.svg{ alt: "back", src: image_url("icons/back.svg") }/
-  Lisefski House
+  = @home.name
 %section.card.report{ class: @room.enough_info_to_perform_rating? ? '' : 'expired' }
   %header
     %h2=@room.name
