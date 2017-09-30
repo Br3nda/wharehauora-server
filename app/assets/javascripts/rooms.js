@@ -2,7 +2,7 @@
 // All this logic will automatically be available in application.js.
 
 function setupRoomDataReloader(room_id) {
-  console.log("setting up data reloader");
+  //console.log("setting up data reloader");
   $('.room-' + room_id + '-list').hide();
   setInterval(function() { getRoomData(room_id); }, 45*1000);
   getRoomData(room_id);
@@ -11,7 +11,7 @@ function setupRoomDataReloader(room_id) {
 
 
 function getRoomData(room_id) {
-  console.log("Getting room data");
+  //console.log("Getting room data");
   $.get( "/rooms/" + room_id + "/summary.json", function( data ) {
     updateRoomDisplay(room_id, data);
   });
@@ -19,12 +19,12 @@ function getRoomData(room_id) {
 
 
 function updateRoomDisplay(room_id, data) {
-  console.log("Updating room display");
-  console.log(data);
+  //console.log("Updating room display");
+  //console.log(data);
   var keys = ['temperature', 'humidity', 'dewpoint'];
 
   keys.forEach(function(key, index, array) {
-    console.log(key);
+    //console.log(key);
     var reading = data.readings[key];
     var div = '#room-' + room_id + "-" + key + "-";
     if (reading) {
