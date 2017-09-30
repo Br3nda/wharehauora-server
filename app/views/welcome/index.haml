@@ -1,64 +1,69 @@
-%h2 WhareSensors measure the healthiness of our homes.
+%h1.lg WhareSensors measure the healthiness of our homes.
 
-%p
-  Whare Hauora is a charitable trust, working to measure the quality of
-  the environment we live in: the rooms of our homes.
+%section.card
+  %p
+    Whare Hauora is a charitable trust, working to measure the quality of
+    the environment we live in: the rooms of our homes.
 
-%p
-  We provide sensors, for free, to families who live in social housing or private rentals.
-  Together with the app we built they can gather data and make decisions on their living
-  conditions based on real data collected in their own home realtime.
+  %p
+    We provide sensors, for free, to families who live in social housing or private rentals.
+    Together with the app we built they can gather data and make decisions on their living
+    conditions based on real data collected in their own home realtime.
 
-%p
-  Evidence of actual conditions will take out the guess work. Rooms are compared
-  against WHO standards, and against each other, so a resident can decide which
-  room is best to sleep in, or which room needs the most urgent improvements.
+  %p
+    Evidence of actual conditions will take out the guess work. Rooms are compared
+    against WHO standards, and against each other, so a resident can decide which
+    room is best to sleep in, or which room needs the most urgent improvements.
 
-%h3 How do our sensors work?
+  %h2 How do our sensors work?
 
-%p
-  WhareSensors measures the temperature and humidity of a room every 30
-  seconds. Place sensors in each room you spend significant time in, your
-  bedrooms, and the main living space. The sensors discover each other
-  wirelessly and form a mesh network, sending their readings to each other.
-  One "gateway" unit, placed in the centre of the home will gather up all
-  readings, and send to Whare Hauora for analysis.
+  %p
+    WhareSensors measures the temperature and humidity of a room every 30
+    seconds. Place sensors in each room you spend significant time in, your
+    bedrooms, and the main living space. The sensors discover each other
+    wirelessly and form a mesh network, sending their readings to each other.
+    One "gateway" unit, placed in the centre of the home will gather up all
+    readings, and send to Whare Hauora for analysis.
 
 = render 'livedemo', homes: @public_homes
 
-%h3 Compare your home against robust health standards.
+%h2 Compare your home against robust health standards.
 
-%p
-  Within days, we'll create a summary of the home environment, as it
-  changes from day to night, warm to cold. Over the course of the year
-  you'll create a profile of the seasons. You may learn that your child's
-  room is well suited to sleeping in summer, but the temperature drops
-  too low overnight in winter. Your living space may be too humid from
-  cooking or lack of ventilation, and likely to allow mould growth.
-  As you make changes to your home, you can measure the difference.
+%section.card
+  %p
+    Within days, we'll create a summary of the home environment, as it
+    changes from day to night, warm to cold. Over the course of the year
+    you'll create a profile of the seasons. You may learn that your child's
+    room is well suited to sleeping in summer, but the temperature drops
+    too low overnight in winter. Your living space may be too humid from
+    cooking or lack of ventilation, and likely to allow mould growth.
+    As you make changes to your home, you can measure the difference.
 
--# = render "charts"
+  -# = render "charts"
 
-%p
-  What gets measured, gets managed. Remove the guesswork. Reassure
-  yourself on your home's quality or learn where to focus improvement
+  %p
+    What gets measured, gets managed. Remove the guesswork. Reassure
+    yourself on your home's quality or learn where to focus improvement
 
 
--# = render "medians", temperatures: @temperature
+  -# = render "medians", temperatures: @temperature
+
 
 %h2 There are some people we wish to thank.
 
-%h3
-  = link_to 'Rabid Technologies', 'http://rabid.co.nz'
 
-%p
-  Whare Hauora wouldn't exist without the huge support of RabidTechnologies, who have allowed
-  their staff to work on the app, for free, during work hours. Rabid allow staff to donate up to 20%
-  of their work time to charities, and several Rabid staff have chosen Whare Hauora to contribute to
+%section.card
+  %h3
+    = link_to 'Rabid Technologies', 'http://rabid.co.nz'
 
-%h3
-  = link_to 'OSHPark', 'http://oshpark.com'
+  %p
+    Whare Hauora wouldn't exist without the huge support of RabidTechnologies, who have allowed
+    their staff to work on the app, for free, during work hours. Rabid allow staff to donate up to 20%
+    of their work time to charities, and several Rabid staff have chosen Whare Hauora to contribute to
 
-%p
-  OSHPark print pretty purple circuit boards.
-  OshPark have donated free PCB printing for several of our prototype runs.
+  %h2
+    = link_to 'OSHPark', 'http://oshpark.com'
+
+  %p
+    OSHPark print pretty purple circuit boards.
+    OshPark have donated free PCB printing for several of our prototype runs.

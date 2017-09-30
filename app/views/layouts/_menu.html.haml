@@ -1,0 +1,68 @@
+-# .pure-menu.pure-menu-horizontal
+-#   %ul.pure-menu-list
+-#     - if user_signed_in?
+-#       = render 'menus/homes', homes: homes if homes
+-#       = render 'menus/admin' if current_user.role?('janitor')
+-#     - else
+-#       %li.pure-menu-item
+-#         = link_to 'Sign up', new_user_registration_path, class: 'pure-menu-link'
+-#       %li.pure-menu-item
+-#         = link_to 'Sign in', new_user_session_path, class: 'pure-menu-link'
+
+
+-#     - if user_signed_in?
+-#       %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
+-#         %a.pure-menu-link
+-#           = current_user.email
+-#         %ul.pure-menu-children
+-#           %li.pure-menu-item
+-#             = link_to 'Change password', edit_user_registration_path,
+-#               class: 'pure-menu-link'
+-#           %li.pure-menu-item
+-#             = link_to 'Sign out', destroy_user_session_path,
+-#               class: 'pure-menu-link', method: :delete
+
+.overlay
+%nav.menu
+  %header
+    %a.logo{href: ""} Whare Hauora
+    %h6 Menu
+    %a.x{href: "#"}
+      %img.svg{ alt: "close", src: image_url("icons/x.svg") }/
+  .nav
+    %ul.nav-links
+      - if user_signed_in?
+        - if current_user.homes.size == 1
+          %li= link_to 'Dashboard', home_rooms_path(current_user.homes.first)
+        -else
+          %h6 Homes
+          - current_user.homes.each do |home|
+            %li=link_to home.name, home_rooms_path(home), class: 'pure-menu-link'
+    %h6 Rooms
+    %ul.nav-links
+      %li
+        %a{href: "room-detail1.html"} Living Room
+      %li
+        %a{href: "room-detail2.html"} Master Bedroom
+      %li
+        %a{href: "room-detail3.html"} Kid's Room
+    %h6 Setup
+    %ul.nav-links
+      %li
+        %a{href: "rooms.html"} Whare  Rooms
+      %li
+        %a{href: "whanau.html"} Wh&#x101;nau
+    %h6 Account
+    %ul.nav-links
+      %li
+        %a{href: "account.html"} My Account
+      %li
+        %a{href: "help.html"} Wh&#x101;nau
+      %li
+        %a{href: "#"} Logout
+  %footer
+    %select.lang-picker
+      %option{"data-iconurl" => image_url("/images/icons/lang-eng.svg"), value: "English"} English
+      %option{"data-iconurl" => image_url("/images/icons/lang-mri.svg"), value: "Te Reo Māori"} Te Reo M&#x101;ori
+      %option{"data-iconurl" => image_url("/images/icons/lang-smo.svg"), value: "Samoan"} Samoan
+/ end menu

@@ -11,6 +11,26 @@ module RoomsHelper
     display_metric room, 'dewpoint'
   end
 
+  def room_quality_level(room)
+    if room.rating == 'A'
+      return 'high'
+    elsif room.rating == 'B' || room.rating == 'C'
+      return 'mid'
+    else
+      return 'low'
+    end
+  end
+
+  def temperature_quality(room)
+    if room.too_hot?
+      'temperature-high-1b'
+    elsif room.too_cold?
+      'temperature-low-2b'
+    else
+      'temperature-mid-a'
+    end
+  end
+
   private
 
   def display_metric(room, key)

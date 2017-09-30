@@ -1,30 +1,55 @@
-.conditions-table
-  - if sensor.room.blank?
-    %h2= sensor.node_id
-    first detected
-    = time_ago_in_words sensor.created_at
-    ago
-    = link_to edit_sensor_path(sensor), class: 'button-analyze pure-button' do
-      Assign to room
-  - else
-    .conditions-table-header
-      %h2 Sensor NodeID
-      %span.conditions-table-current
-        = sensor.node_id
+-# .conditions-table
+-#   - if sensor.room.blank?
+-#     %h2= sensor.node_id
+-#     first detected
+-#     = time_ago_in_words sensor.created_at
+-#     ago
+-#     = link_to edit_sensor_path(sensor), class: 'button-analyze pure-button' do
+-#       Assign to room
+-#   - else
+-#     .conditions-table-header
+-#       %h2 Sensor NodeID
+-#       %span.conditions-table-current
+-#         = sensor.node_id
 
-    %ul.conditions-table-list
-      %li
+-#     %ul.conditions-table-list
+-#       %li
+-#         - if sensor.messages.size.positive?
+-#           last message
+-#           = time_ago_in_words sensor.last_message
+-#           ago
+-#         - else
+-#           No messages recieved
+
+-#     - if policy(sensor).unassign?
+-#       %p
+-#         = link_to sensor_unassign_path(sensor),
+-#           class: 'pure-button button-warning xsmall', method: :delete,
+-#           data: { confirm: 'remove sensor from this room?' } do
+-#           remove from room
+-#           = fa_icon 'trash'
+
+%section.card
+  %header
+    %h2
+      Sensor
+      %span.sensor=sensor.node_id
+    %dl.col4.restrict-width
+      %dt First Detected
+      %dd=sensor.created_at
+      %dt Last reading
+      %dd
         - if sensor.messages.size.positive?
-          last message
           = time_ago_in_words sensor.last_message
-          ago
         - else
-          No messages recieved
-
+          never
+      %dt Battery
+      %dd coming soon
+      %dt Software
+      %dd coming soon
     - if policy(sensor).unassign?
-      %p
+      .right-action
         = link_to sensor_unassign_path(sensor),
-          class: 'pure-button button-warning xsmall', method: :delete,
+          class: 'btn small', method: :delete,
           data: { confirm: 'remove sensor from this room?' } do
-          remove from room
-          = fa_icon 'trash'
+          Disconnect from room

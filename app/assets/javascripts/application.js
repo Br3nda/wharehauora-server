@@ -16,3 +16,6 @@
 //= require chartkick
 //= require_tree .
 //= require moment
+//= require tooltipster.bundle.min
+//= require 'icheck'
+//= require magnific-popup

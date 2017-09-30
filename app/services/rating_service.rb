@@ -2,15 +2,15 @@ class RatingService
   def self.rating_text(rating) # rubocop:disable Metrics/MethodLength
     case rating
     when 'A'
-      'excellent'
+      'Excellent'
     when 'B'
-      'good'
+      'Good'
     when 'C'
-      'barely acceptable'
+      'Mediocre'
     when 'D'
-      'bad'
+      'Poor'
     when 'F'
-      'very bad'
+      'Very poor'
     else
       'unknown'
     end

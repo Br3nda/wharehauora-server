@@ -1,20 +1,21 @@
-= form_for(@room, url: home_room_path(@home, @room,
-                  html: { class: 'pure-form pure-form-aligned' })) do |f|
-  .pure-g
-    .pure-u-1
-      %h2 Room
+%h1 Edit Room
 
-    .pure-u-1
-      %h3= @home.name
-    .pure-u-1.pure-u-md-1-2.pure-u-lg-1-2
-      %h4= f.label :name
-      = f.text_field :name, type: 'name', placeholder: 'room name'
-    .pure-u-1.pure-u-md-1-2.pure-u-lg-1-2
-      %h4
-        = f.label :room_type
-      - RoomType.all.each do |rt|
-        %p
-          = f.radio_button :room_type_id, rt.id
-          = f.label :room_type_id, rt.name
-    .pure-u-1
-      %button.pure-button.pure-button-primary Save
+= form_for(@room, url: home_room_path(@home, @room)) do |f|
+  %section.card
+    %header
+      %h1 Edit Room
+
+    %ul.form-row
+      %li.half
+        = f.label :name
+        = f.text_field :name, type: 'name', placeholder: 'room name'
+      %li.half
+        %ul.form-controls
+          = f.label :room_type
+          - RoomType.all.each do |rt|
+            %li
+              -# = f.label :room_type_id
+              = f.radio_button :room_type_id, rt.id
+              =rt.name
+    %footer
+      %button.btn.submit save
