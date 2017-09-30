@@ -37,29 +37,30 @@
         -else
           %h6 Homes
           - current_user.homes.each do |home|
-            %li=link_to home.name, home_rooms_path(home), class: 'pure-menu-link'
-    %h6 Rooms
-    %ul.nav-links
-      %li
-        %a{href: "room-detail1.html"} Living Room
-      %li
-        %a{href: "room-detail2.html"} Master Bedroom
-      %li
-        %a{href: "room-detail3.html"} Kid's Room
-    %h6 Setup
-    %ul.nav-links
-      %li
-        %a{href: "rooms.html"} Whare  Rooms
-      %li
-        %a{href: "whanau.html"} Wh&#x101;nau
-    %h6 Account
-    %ul.nav-links
-      %li
-        %a{href: "account.html"} My Account
-      %li
-        %a{href: "help.html"} Wh&#x101;nau
-      %li
-        %a{href: "#"} Logout
+            %li=link_to home.name, home_rooms_path(home)
+        -# %h6 Rooms
+        -# %ul.nav-links
+        -#   %li
+        -#     %a{href: "room-detail1.html"} Living Room
+        -#   %li
+        -#     %a{href: "room-detail2.html"} Master Bedroom
+        -#   %li
+        -#     %a{href: "room-detail3.html"} Kid's Room
+        -# %h6 Setup
+        -# %ul.nav-links
+        -#   %li
+        -#     %a{href: "rooms.html"} Whare  Rooms
+        -#   %li
+        -#     %a{href: "whanau.html"} Wh&#x101;nau
+        %h6 Account
+        %ul.nav-links
+          %li= link_to 'My Account', edit_user_registration_path
+          %li
+            %a{href: "help.html"} Wh&#x101;nau
+          %li= link_to 'Logout', destroy_user_session_path, method: :delete
+      - else
+        %li= link_to 'Sign up', new_user_registration_path
+        %li= link_to 'Sign in', new_user_session_path
   %footer
     %select.lang-picker
       %option{"data-iconurl" => image_url("/images/icons/lang-eng.svg"), value: "English"} English
