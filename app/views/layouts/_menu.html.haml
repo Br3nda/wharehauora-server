@@ -44,17 +44,13 @@
             - @home.rooms.each do |room|
               %li=link_to room.name, home_room_path(@home, room)
 
-          -# %h6 Setup
-          -# %ul.nav-links
-          -#   %li
-          -#     %a{href: "rooms.html"} Whare  Rooms
-          -#   %li
-          -#     %a{href: "whanau.html"} Wh&#x101;nau
+          %h6 Setup
+          %ul.nav-links
+            %li=link_to 'Whare  Rooms', home_rooms_path(@home)
+            %li=link_to 'Whānau', home_home_viewers_path(@home)
         %h6 Account
         %ul.nav-links
           %li= link_to 'My Account', edit_user_registration_path
-          %li
-            %a{href: "help.html"} Wh&#x101;nau
           %li= link_to 'Logout', destroy_user_session_path, method: :delete
       - else
         %li= link_to 'Sign up', new_user_registration_path
@@ -64,4 +60,3 @@
       %option{"data-iconurl" => image_url("/images/icons/lang-eng.svg"), value: "English"} English
       %option{"data-iconurl" => image_url("/images/icons/lang-mri.svg"), value: "Te Reo Māori"} Te Reo M&#x101;ori
       %option{"data-iconurl" => image_url("/images/icons/lang-smo.svg"), value: "Samoan"} Samoan
-/ end menu
