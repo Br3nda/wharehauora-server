@@ -1,10 +1,10 @@
 .overlay
 %nav.menu
   %header
-    %a.logo{ href: "" } Whare Hauora
+    %a.logo{ href: '' } Whare Hauora
     %h6 Menu
-    %a.x{ href: "#" }
-      %img.svg{ alt: "close", src: image_url("icons/x.svg") }/
+    %a.x{ href: '#' }
+      %img.svg{ alt: 'close', src: image_url('icons/x.svg') }/
   .nav
     %ul.nav-links
       - if user_signed_in?
@@ -33,6 +33,6 @@
         %li= link_to 'Sign in', new_user_session_path
   %footer
     %select.lang-picker
-      %option{ "data-iconurl" => image_url("/images/icons/lang-eng.svg"), value: "English" } English
-      %option{ "data-iconurl" => image_url("/images/icons/lang-mri.svg"), value: "Te Reo Māori" } Te Reo M&#x101;ori
-      %option{ "data-iconurl" => image_url("/images/icons/lang-smo.svg"), value: "Samoan" } Samoan
+      %option{ 'data-iconurl' => image_url('/images/icons/lang-eng.svg'), value: 'English' } English
+      %option{ 'data-iconurl' => image_url('/images/icons/lang-mri.svg'), value: 'Te Reo Māori' } Te Reo M&#x101;ori
+      %option{ 'data-iconurl' => image_url('/images/icons/lang-smo.svg'), value: 'Samoan' } Samoan
