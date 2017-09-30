@@ -28,7 +28,7 @@
       %span.value= display_dewpoint @room
       %span.label Dewpoint
       -# %span.time 5 minutes ago
-  .report-card{class: "grade-#{room_quality_level(@room)}" }
+  .report-card{ class: "grade-#{room_quality_level(@room)}" }
     .rating
       %span.grade= @room.rating
       %span.value
@@ -65,7 +65,9 @@
 
         -# %a.i.tooltip{href: "#", title: ""}
         -# %h6 Dewpoint
-        -# %p When the temperature in this room falls below #{display_dewpoint @room} moisture begins to form on surfaces, leading to mould growth.
+        -# %p
+        -# When the temperature in this room falls below #{display_dewpoint @room}
+        -# moisture begins to form on surfaces, leading to mould growth.
 
         -# %p
         -#   %a{href: "#"} Click for more info

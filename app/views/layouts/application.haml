@@ -1,15 +1,15 @@
 !!!
-%html{lang: "en"}
+%html{ lang: "en" }
   %head
-    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }/
     %title Whare Hauora front-end index
-    %link{href: "/favicon.ico", rel: "shortcut icon"}/
+    %link{ href: "/favicon.ico", rel: "shortcut icon" }/
     / meta
-    %meta{charset: "utf-8"}/
-    %meta{content: "", name: "description"}/
-    %meta{content: "on", "http-equiv" => "cleartype"}/
+    %meta{ charset: "utf-8" }/
+    %meta{ content: "", name: "description" }/
+    %meta{ content: "on", "http-equiv" => "cleartype" }/
     / webfont
-    %link{href: "https://fonts.googleapis.com/css?family=Merriweather:700|Roboto:300,400,700&subset=latin-ext", rel: "stylesheet"}/
+    %link{ href: "https://fonts.googleapis.com/css?family=Merriweather:700|Roboto:300,400,700&subset=latin-ext", rel: "stylesheet" }/
     / css
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     / js
@@ -19,9 +19,9 @@
     = javascript_include_tag :detectizr
 
     / mobile & iOS
-    %meta{content: "yes", name: "apple-mobile-web-app-capable"}/
-    %meta{content: "width=device-width, initial-scale=1.0, user-scalable=no", name: "viewport"}/
-    %link{href: "/app-icon.png", rel: "apple-touch-icon-precomposed"}/
+    %meta{ content: "yes", name: "apple-mobile-web-app-capable" }/
+    %meta{ content: "width=device-width, initial-scale=1.0, user-scalable=no", name: "viewport" }/
+    %link{ href: "/app-icon.png", rel: "apple-touch-icon-precomposed" }/
   %body
     = render 'layouts/header'
     = render 'layouts/menu'
