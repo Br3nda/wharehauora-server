@@ -10,20 +10,20 @@
       - if user_signed_in?
         - if current_user.homes.size == 1
           %li= link_to 'Dashboard', home_rooms_path(current_user.homes.first)
-        -else
+        - else
           %h6 Homes
           - current_user.homes.each do |home|
-            %li=link_to home.name, home_rooms_path(home)
+            %li= link_to home.name, home_rooms_path(home)
         - if @home.present?
           %h6 Rooms
           %ul.nav-links
             - @home.rooms.each do |room|
-              %li=link_to room.name, home_room_path(@home, room)
+              %li= link_to room.name, home_room_path(@home, room)
 
           %h6 Setup
           %ul.nav-links
-            %li=link_to 'Whare  Rooms', home_rooms_path(@home)
-            %li=link_to 'Whānau', home_home_viewers_path(@home)
+            %li= link_to 'Whare  Rooms', home_rooms_path(@home)
+            %li= link_to 'Whānau', home_home_viewers_path(@home)
         %h6 Account
         %ul.nav-links
           %li= link_to 'My Account', edit_user_registration_path
