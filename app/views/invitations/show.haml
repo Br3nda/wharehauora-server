@@ -1,0 +1,14 @@
+%h3
+  Join
+  = @invitation.home.name
+
+%p
+  = @invitation.inviter.email
+  has invited you to view information about their home.
+
+%p
+  You may accept or decline this invitation.
+
+.buttons
+  = button_to 'Accept', accept_invitation_path(@invitation), method: :post
+  = button_to 'Decline', decline_invitation_path(@invitation), method: :post

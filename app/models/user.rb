@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   has_many :viewable_homes, class_name: 'Home', source: :home, through: :home_viewers
   has_many :owned_homes, class_name: 'Home', foreign_key: :owner_id
 
+  has_many :invitations, inverse_of: :inviter, foreign_key: :inviter_id, dependent: :destroy
+
   acts_as_paranoid # soft deletes, sets deleted_at column
 
   def homes
@@ -26,11 +28,6 @@ class User < ActiveRecord::Base
 
   def role?(role)
     roles.any? { |r| r.name == role }
-  end
-
-  def provision_mqtt!
-    self.mqtt_user = MqttUser.new(username: email) if mqtt_user.nil?
-    mqtt_user.provision!
   end
 
   def janitor?

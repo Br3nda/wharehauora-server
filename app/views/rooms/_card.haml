@@ -4,10 +4,10 @@
     %span.conditions-table-current
       - %w[temperature humidity].each do |key|
         %div{ id: "room-#{room.id}-#{key}-value" }
-          = render "layouts/spinner"
+          = render 'layouts/spinner'
         %span
           = key
-          %time.timeago{ datetime: "", id: "room-#{room.id}-#{key}-timestamp" }
+          %time.timeago{ datetime: '', id: "room-#{room.id}-#{key}-timestamp" }
   %ul.conditions-table-list{ class: "room-#{room.id}-list" }
     %li
       = room.room_type.name if room.room_type.present?
@@ -19,7 +19,7 @@
       %li{ id: "room-#{room.id}-no-sensors" } No sensors #{fa_icon 'warning'}
       %li{ id: "room-#{room.id}-no-temperature" } No current temperature #{fa_icon 'warning'}
       %li{ id: "room-#{room.id}-no-humidity" } No current humidity #{fa_icon 'warning'}
-  - if room.sensors.size.positive?
+  - if room.enough_info_to_perform_rating? || room.sensors.size.positive?
     = link_to room_path(room), class: 'button-analyze pure-button' do
       Analyse
 

@@ -11,9 +11,18 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   resources :homes do
     resources :rooms
-    resources :home_viewers
+    resources :home_viewers, except: %i[create update]
+    resources :invitations, only: %i[create destroy]
     resources :sensors
     resources :readings
+    resources :mqtt_user
+  end
+
+  resources :invitations, only: :show do
+    member do
+      post :accept
+      post :decline
+    end
   end
 
   resources :rooms do

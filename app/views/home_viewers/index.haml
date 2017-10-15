@@ -9,20 +9,27 @@
     %li.pure-menu-item
       = link_to 'add someone to whare', new_home_home_viewer_path(@home), class: 'pure-button'
 
+- if @invitations.any?
+  %h3 Invitations
+  %table.pure-table
+    %thead
+      %tr
+        %th.sortable Email
+        %th.sortable Sent
+        %th Actions
+    %tbody
+      = render partial: 'invitations/invitation', collection: @invitations
+
 - if @home.users.present?
   %h3 Users
   %table.pure-table
     %thead
       %tr
-        %th.sortable
-          Email
+        %th.sortable Email
+        %th Actions
     %tbody
-      - @home.users.each do |v|
-        %tr
-          %td
-            = v.email
-          %td
-            delete
+      = render partial: 'home_viewer', collection: @home.home_viewers
+
 - else
   %p No whānau
 

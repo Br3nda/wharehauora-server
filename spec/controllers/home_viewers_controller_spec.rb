@@ -19,10 +19,6 @@ RSpec.describe HomeViewersController, type: :controller do
       before { get :new, home_id: home.to_param }
       it { expect(response).to redirect_to(new_user_session_path) }
     end
-    describe 'PUT create' do
-      before { put :create, home_id: home.to_param }
-      it { expect(response).to redirect_to(new_user_session_path) }
-    end
     describe 'DELETE' do
       it do
         expect do
@@ -45,11 +41,6 @@ RSpec.describe HomeViewersController, type: :controller do
       it { expect(response).to render_template(:new) }
       it { expect(assigns(:home)).to eq(home) }
     end
-    describe 'PUT create' do
-      before { put :create, home_id: home.to_param, home_viewer: { user: my_friend.email } }
-      it { expect(response).to redirect_to(home_home_viewers_path(home)) }
-      it { expect(assigns(:home)).to eq(home) }
-    end
     describe 'DELETE' do
       before { home.users << my_friend }
       it do
@@ -58,7 +49,6 @@ RSpec.describe HomeViewersController, type: :controller do
         end.to change { HomeViewer.count }.by(-1)
         expect(response).to redirect_to(home_home_viewers_path(home))
         expect(assigns(:home)).to eq(home)
-        expect(assigns(:user)).to eq(my_friend)
       end
     end
   end
@@ -75,11 +65,6 @@ RSpec.describe HomeViewersController, type: :controller do
       it { expect(response).to render_template(:new) }
       it { expect(assigns(:home)).to eq(home) }
     end
-    describe 'PUT create' do
-      before { put :create, home_id: home.to_param, home_viewer: { user: my_friend.email } }
-      it { expect(response).to redirect_to(home_home_viewers_path(home)) }
-      it { expect(assigns(:home)).to eq(home) }
-    end
     describe 'DELETE' do
       before { home.users << my_friend }
       it do
@@ -88,7 +73,6 @@ RSpec.describe HomeViewersController, type: :controller do
         end.to change { HomeViewer.count }.by(-1)
         expect(response).to redirect_to(home_home_viewers_path(home))
         expect(assigns(:home)).to eq(home)
-        expect(assigns(:user)).to eq(my_friend)
       end
     end
   end
