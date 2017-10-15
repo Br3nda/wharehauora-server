@@ -10,7 +10,7 @@ function setupRoomDataReloader(room_id) {
 function getRoomData(room_id) {
   var url = "/api/v1/rooms/" + room_id + ".json";
   $.get( url )
-  .done(function(data) {
+  .done(function(response) {
     updateRoomDisplay(room_id, response.data);
   })
   .fail(function(response, data) {
@@ -33,7 +33,6 @@ function updateRoomDisplay(room_id, data) {
   var readings = data.attributes.readings;
 
   keys.forEach(function(key, index) {
-    console.log(key);
     var reading = readings[key];
     var div = '#room-' + room_id + "-" + key + "-";
     if (reading) {
