@@ -2,28 +2,36 @@
 // All this logic will automatically be available in application.js.
 
 function setupRoomDataReloader(room_id) {
-  console.log("setting up data reloader");
   $('.room-' + room_id + '-list').hide();
-  setInterval(function() { getRoomData(room_id); }, 45*1000);
   getRoomData(room_id);
-
 }
 
 
 function getRoomData(room_id) {
-  console.log("Getting room data");
-  $.get( "/api/v1/rooms/" + room_id + ".json", function( response ) {
+  var url = "/api/v1/rooms/" + room_id + ".json";
+  $.get( url )
+  .done(function(data) {
     updateRoomDisplay(room_id, response.data);
+  })
+  .fail(function(response, data) {
+    displayErrorForRoom(room_id);
   });
 }
 
 
+function displayErrorForRoom(room_id, data) {
+  var keys = ['temperature', 'humidity', 'dewpoint'];
+  keys.forEach(function(key, index) {
+    var div = '#room-' + room_id + "-" + key + "-";
+    $(div + "value").text("ERROR");
+  });
+}
+
 function updateRoomDisplay(room_id, data) {
-  console.log("Updating room display");
-  console.log(data);
   var keys = ['temperature', 'humidity', 'dewpoint'];
 
   var readings = data.attributes.readings;
+
   keys.forEach(function(key, index) {
     console.log(key);
     var reading = readings[key];
