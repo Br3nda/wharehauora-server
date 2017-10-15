@@ -13,6 +13,6 @@ class Api::V1::BaseController < JSONAPI::ResourceController
   # end
 
   def auth!
-    before_action :doorkeeper_authorize! if doorkeeper_token
+    doorkeeper_authorize! if doorkeeper_token
   end
 end
