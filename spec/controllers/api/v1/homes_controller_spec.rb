@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::HomesController, type: :controller do
-  let(:my_home) { FactoryGirl.create(:home, owner: user) }
-  let(:public_home) { FactoryGirl.create(:home, owner: user) }
-  let(:private_home) { FactoryGirl.create(:home) }
+  let!(:my_home) { FactoryGirl.create(:home, owner: user) }
+  let!(:public_home) { FactoryGirl.create(:public_home) }
+  let!(:private_home) { FactoryGirl.create(:home) }
 
   let!(:user) { FactoryGirl.create :user }
 
@@ -18,17 +18,28 @@ RSpec.describe Api::V1::HomesController, type: :controller do
                              application: application,
                              resource_owner_id: my_home.owner.id)
         end
-      end
-
-      shared_examples 'response includes my home' do
-        it { is_expected.to eq('hello') }
-        it { expect(subject['data']['homes']).to eq(id: my_home.id, name: my_home.name) }
         it { expect(my_home.owner.id).to eq(token.resource_owner_id) }
         it { expect(user.owned_homes).to include(my_home) }
       end
+
+      shared_examples 'response includes my home' do
+        describe 'response includes my home' do
+          let(:matching_home) { subject['data'].select { |home| home['id'] == my_home.id.to_s }.first }
+          it { expect(matching_home).to include('id' => my_home.id.to_s) }
+          it { expect(matching_home['attributes']).to include('name' => my_home.name) }
+        end
+      end
       shared_examples 'response includes public homes' do
+        describe 'response includes public home' do
+          let(:matching_home) { subject['data'].select { |home| home['id'] == public_home.id.to_s }.first }
+          it { expect(matching_home).to include('id' => public_home.id.to_s) }
+          it { expect(matching_home['attributes']).to include('name' => public_home.name) }
+        end
       end
       shared_examples 'response does not includes private homes' do
+        describe 'response does not include private homes' do
+          it { expect(subject['data'].any? { |home| home['id'] == private_home.id.to_s }).to eq(false) }
+        end
       end
 
       describe 'home owner' do
