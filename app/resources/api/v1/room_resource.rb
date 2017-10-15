@@ -4,6 +4,8 @@ module Api
       model_name 'Room'
       attributes :name, :updated_at, :ratings, :readings, :sensor_count
       has_one :home
+      has_many :sensors
+      has_many :readings
 
       def sensor_count
         @model.sensors.size
