@@ -1,6 +1,6 @@
 class Api::V1::BaseController < JSONAPI::ResourceController
   include Pundit::ResourceController
-  before_action :auth!
+  before_action :doorkeeper_auth!
 
   private
 
@@ -9,10 +9,11 @@ class Api::V1::BaseController < JSONAPI::ResourceController
   end
 
   def current_user
-    current_resource_owner
+    current_resource_owner if doorkeeper_token
+    super
   end
 
-  def auth!
+  def doorkeeper_auth!
     doorkeeper_authorize! if doorkeeper_token
   end
 end

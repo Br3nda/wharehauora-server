@@ -18,6 +18,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     let(:ratings_response) { subject['data']['attributes']['ratings'] }
 
     it { expect(subject['data']['attributes']).to include('name' => room.name) }
+
     describe 'room too hot' do
       let(:create_readings) { FactoryGirl.create :temperature_reading, value: 101.1, room: room }
       it { expect(temperature_response).to include('value' => 101.1, 'unit' => '°C') }
