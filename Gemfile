@@ -14,8 +14,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'rails-timeago', '~> 2.0'
 
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jsonapi-resources'
+gem 'pundit-resources'
 
 # # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc

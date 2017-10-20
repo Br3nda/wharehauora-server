@@ -1,5 +1,5 @@
 class Reading < ActiveRecord::Base
-  belongs_to :room, counter_cache: true
+  belongs_to :room, counter_cache: true, touch: true
 
   delegate :home, :home_id, :home_type, to: :room, allow_nil: false
   delegate :room_type, to: :room, allow_nil: false
