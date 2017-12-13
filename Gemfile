@@ -76,7 +76,7 @@ group :development, :test do
   gem 'byebug'
 
   # code style
-  gem 'haml_lint', '0.25.1', require: false
+  gem 'haml_lint', '0.26.0', require: false
   gem 'rubocop', '0.49.1', require: false
   gem 'scss_lint', require: false
 
