@@ -112,11 +112,11 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
-    haml_lint (0.25.1)
+    haml_lint (0.26.0)
       haml (>= 4.0, < 5.1)
       rainbow
       rake (>= 10, < 13)
-      rubocop (>= 0.47.0)
+      rubocop (>= 0.49.0)
       sysexits (~> 1.1)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
@@ -175,8 +175,8 @@ GEM
     parallel (1.12.0)
     paranoia (2.4.0)
       activerecord (>= 4.0, < 5.2)
-    parser (2.4.0.0)
-      ast (~> 2.2)
+    parser (2.4.0.2)
+      ast (~> 2.3)
     pg (0.21.0)
     powerpack (0.1.1)
     public_suffix (3.0.1)
@@ -231,7 +231,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.2.2)
       rake
-    rake (12.2.1)
+    rake (12.3.0)
     raygun4ruby (2.6.0)
       concurrent-ruby
       httparty (> 0.13.7)
@@ -353,7 +353,7 @@ DEPENDENCIES
   faraday
   font-awesome-rails
   haml-rails
-  haml_lint (= 0.25.1)
+  haml_lint (= 0.26.0)
   jquery-rails
   jsonapi-resources
   kaminari
