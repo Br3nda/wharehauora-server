@@ -77,7 +77,7 @@ group :development, :test do
 
   # code style
   gem 'haml_lint', '0.25.1', require: false
-  gem 'rubocop', '0.49.1', require: false
+  gem 'rubocop', '0.52.1', require: false
   gem 'scss_lint', require: false
 
   # pulls in config from environment variables
