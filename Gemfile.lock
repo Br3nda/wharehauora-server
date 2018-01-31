@@ -177,7 +177,7 @@ GEM
       activerecord (>= 4.0, < 5.2)
     parser (2.4.0.2)
       ast (~> 2.3)
-    pg (1.0.0)
+    pg (0.21.0)
     powerpack (0.1.1)
     public_suffix (3.0.1)
     pundit (1.1.0)
@@ -363,7 +363,7 @@ DEPENDENCIES
   nokogiri (>= 1.8.1)
   overcommit
   paranoia (~> 2.2)
-  pg
+  pg (< 1.0.0)
   pundit
   pundit-matchers (~> 1.3.0)
   pundit-resources
@@ -383,6 +383,5 @@ DEPENDENCIES
   web-console (~> 2.0)
   will_paginate
 
-
 BUNDLED WITH
-   1.15.4
+   1.16.1

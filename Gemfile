@@ -21,7 +21,7 @@ gem 'pundit-resources'
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Postgresql as the database for Active Record
-gem 'pg'
+gem 'pg', '< 1.0.0'
 
 # for logins
 gem 'devise'
