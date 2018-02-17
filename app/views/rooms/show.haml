@@ -33,18 +33,33 @@
           not enough data
       %span.label Rating
     %ul.check
-      %li Comfortable temperature
-      %li Comfortable humidity
-      %li Acceptable dewpoint
-      %li
-        Temp is well above dewpoint
-        %a.i.tooltip{href: "#", title: ""}
-        %h6 Dewpoint
-        %p When the temperature in this room falls below 11.9&#xB0;C moisture begins to form on surfaces, leading to mould growth.
-        %p
-          %a{href: "#"} Click for more info
-        %img.svg{alt: "info", src: image_url('icon/i.svg') }/
-      %li Room appears healthy, warm,  dry
+      - unless @room.current?('temperature') && @room.current?('humidity')
+        %li.bullet No recent readings
+      - if @room.good?
+        %li Room appears healthy
+      - if @room.too_cold?
+        %li.bullet Cold
+      - else
+        %li Warm
+      - if @room.below_dewpoint?
+        %li.bullet Damp. Mould likely.
+      - elsif @room.near_dewpoint?
+        %li.bullet Borderline. Just warm enough to prevent mould.
+      - else
+        %li Dry
+
+      -# %li Comfortable temperature
+      -# %li Comfortable humidity
+      -# %li Acceptable dewpoint
+      -# %li
+      -#   Temp is well above dewpoint
+      -#   %a.i.tooltip{href: "#", title: ""}
+      -#   %h6 Dewpoint
+      -#   %p When the temperature in this room falls below 11.9&#xB0;C moisture begins to form on surfaces, leading to mould growth.
+      -#   %p
+      -#     %a{href: "#"} Click for more info
+      -#   %img.svg{alt: "info", src: image_url('icon/i.svg') }/
+      -# %li Room appears healthy, warm,  dry
 
 -# = render 'homes/nav', home: @room.home
 
