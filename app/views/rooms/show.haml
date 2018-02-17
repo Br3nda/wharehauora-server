@@ -10,19 +10,19 @@
         %span.loader
       %span.value= display_temperature(@room)
       %span.label Temperature
-      %span.time 5 minutes ago
+      %span.time TODO 5 minutes ago
     .reading.hum-mid-a
       %span.vis
         %span.loader
       %span.value= display_humidity(@room)
       %span.label Humidity
-      %span.time 5 minutes ago
+      %span.time TODO 5 minutes ago
     .reading.dew-mid
       %span.vis
         %span.loader
       %span.value= display_dewpoint(@room)
       %span.label Dewpoint
-      %span.time 5 minutes ago
+      %span.time TODO 5 minutes ago
   .report-card.grade-high
     .rating
       %span.grade=@room.rating
@@ -47,6 +47,11 @@
         %li.bullet Borderline. Just warm enough to prevent mould.
       - else
         %li Dry
+        %li
+          Temperature is well above dewpoint
+          %a.i.tooltip{ href: "#", title: "<h6>Dewpoint</h6><p>When the temperature in this room falls below 11.9°C moisture begins to form on surfaces, leading to mould growth.</p><p><a href='#'>Click for more info</a></p>" }
+            %img.svg{alt: "info", src: image_url("icon/i.svg") }/
+
 
       -# %li Comfortable temperature
       -# %li Comfortable humidity
