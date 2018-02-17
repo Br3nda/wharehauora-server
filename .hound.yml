@@ -6,3 +6,5 @@ haml:
   config_file: .haml-lint.yml
 scss:
   config_file: .scss-lint.yml
+jshint:
+  ignore_file: .javascript_ignore
