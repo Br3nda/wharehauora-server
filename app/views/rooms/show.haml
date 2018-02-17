@@ -1,33 +1,81 @@
-= render 'homes/nav', home: @room.home
+%section.card.report
+  %header
+    %h2 Living Room
+    %h4 Living Space
+    %a.head-action{href: "#"}
+      %img.svg{alt: "edit", src: image_url('icon/edit.svg') }/
+  .readings
+    .reading.temp-mid-a
+      %span.vis
+        %span.loader
+      %span.value= display_temperature(@room)
+      %span.label Temperature
+      %span.time 5 minutes ago
+    .reading.hum-mid-a
+      %span.vis
+        %span.loader
+      %span.value= display_humidity(@room)
+      %span.label Humidity
+      %span.time 5 minutes ago
+    .reading.dew-mid
+      %span.vis
+        %span.loader
+      %span.value= display_dewpoint(@room)
+      %span.label Dewpoint
+      %span.time 5 minutes ago
+  .report-card.grade-high
+    .rating
+      %span.grade=@room.rating
+      %span.value
+        - if @room.enough_info_to_perform_rating?
+          = RatingService.rating_text(@room.rating)
+        - else
+          not enough data
+      %span.label Rating
+    %ul.check
+      %li Comfortable temperature
+      %li Comfortable humidity
+      %li Acceptable dewpoint
+      %li
+        Temp is well above dewpoint
+        %a.i.tooltip{href: "#", title: ""}
+        %h6 Dewpoint
+        %p When the temperature in this room falls below 11.9&#xB0;C moisture begins to form on surfaces, leading to mould growth.
+        %p
+          %a{href: "#"} Click for more info
+        %img.svg{alt: "info", src: image_url('icon/i.svg') }/
+      %li Room appears healthy, warm,  dry
 
-%h2= @room.name
-%h3= @room.room_type&.name
+-# = render 'homes/nav', home: @room.home
 
-.conditions-tables.pure-g
+-# %h2= @room.name
+-# %h3= @room.room_type&.name
 
-  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-    = render 'rating', room: @room
-  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-    = render 'temperature', room: @room
-  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-    = render 'dewpoint', room: @room
+-# .conditions-tables.pure-g
 
-  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-4
-    .conditions-table
-      %h3 Readings
-      %ul.conditions-table-list
-        - @readings.each do |reading|
-          %li
-            = display_reading reading
-            = reading.key
-            %br
-            = timeago_tag reading.created_at, nojs: true, limit: 100.days.ago
+-#   .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+-#     = render 'rating', room: @room
+-#   .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+-#     = render 'temperature', room: @room
+-#   .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
+-#     = render 'dewpoint', room: @room
 
-  .pure-u-1.pure-u-md-1-1.pure-u-lg-2-3
-    .pure-u-1.pure-u-md-1.pure-u-lg-1
-      = line_chart readings_path(home_id: @room.home.id,
-        room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60
-      %h2 sensors in this room
-      - @room.sensors.each do |sensor|
-        .pure-u-1.pure-u-md-1-3.pure-u-lg-1-3
-          = render 'sensors/card', sensor: sensor
+-#   .pure-u-1.pure-u-md-1-2.pure-u-lg-1-4
+-#     .conditions-table
+-#       %h3 Readings
+-#       %ul.conditions-table-list
+-#         - @readings.each do |reading|
+-#           %li
+-#             = display_reading reading
+-#             = reading.key
+-#             %br
+-#             = timeago_tag reading.created_at, nojs: true, limit: 100.days.ago
+
+-#   .pure-u-1.pure-u-md-1-1.pure-u-lg-2-3
+-#     .pure-u-1.pure-u-md-1.pure-u-lg-1
+-#       = line_chart readings_path(home_id: @room.home.id,
+-#         room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60
+-#       %h2 sensors in this room
+-#       - @room.sensors.each do |sensor|
+-#         .pure-u-1.pure-u-md-1-3.pure-u-lg-1-3
+-#           = render 'sensors/card', sensor: sensor
