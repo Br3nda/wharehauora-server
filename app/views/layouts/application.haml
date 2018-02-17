@@ -20,18 +20,15 @@
     %meta{  content: "width=device-width, initial-scale=1.0, user-scalable=no", name: "viewport" }/
     %link{  href: "./app-icon.png", rel: "apple-touch-icon-precomposed" }/
 
-    -# = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'https://www.gstatic.com/charts/loader.js'
-    -# = javascript_include_tag 'application', 'data-turbolinks-track' => true
-    -#
     = csrf_meta_tags
 
   %body
     %header.header
-      %a.logo-sm{href: "./"} Whare Hauora
-      %a.open-menu{href: "#"}
+      %a.logo-sm{ href: root_path } Whare Hauora
+      %a.open-menu{ href: "#" }
         %span.label Menu
-        %img.svg{alt: "menu", src: image_url("icon/menu.svg")}/
+        %img.svg{ alt: "menu", src: image_url("icon/menu.svg") }/
     .overlay
     %nav.menu
       = render 'layouts/header'
