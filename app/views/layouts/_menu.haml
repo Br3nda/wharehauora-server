@@ -1,23 +1,37 @@
-.pure-menu.pure-menu-horizontal
-  %ul.pure-menu-list
-    - if user_signed_in?
-      = render 'menus/homes', homes: homes if homes
-      = render 'menus/admin' if current_user.role?('janitor')
-    - else
-      %li.pure-menu-item
-        = link_to 'Sign up', new_user_registration_path, class: 'pure-menu-link'
-      %li.pure-menu-item
-        = link_to 'Sign in', new_user_session_path, class: 'pure-menu-link'
-
-
-    - if user_signed_in?
-      %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
-        %a.pure-menu-link
-          = current_user.email
-        %ul.pure-menu-children
-          %li.pure-menu-item
-            = link_to 'Change password', edit_user_registration_path,
-              class: 'pure-menu-link'
-          %li.pure-menu-item
-            = link_to 'Sign out', destroy_user_session_path,
-              class: 'pure-menu-link', method: :delete
+.nav
+  - if user_signed_in? && current_user.homes.size.positive?
+    %ul.nav-links
+      %li
+        = link_to home_rooms_path(current_user.homes.first) do
+          Dashboard
+    %h6 Rooms
+    %ul.nav-links
+      - current_user.homes.first.rooms.order(:name).each do |room|
+        %li
+          = link_to room do
+            = room.name
+          -# %a.current{href: "./room-detail1.html"} Living Room
+    -# %h6 Setup
+    -# %ul.nav-links
+    -#   %li
+    -#     %a{href: "./rooms.html"} Whare  Rooms
+    -#   %li
+    -#     %a{href: "./whanau.html"} Whānau
+    %h6 Account
+    %ul.nav-links
+      %li
+        = link_to edit_user_registration_path do
+          My Account
+      -# %li
+      -#   %a{href: "./help.html"} Help
+      %li
+        = link_to destroy_user_session_path, method: :delete do
+          Logout
+    -if current_user.role?('janitor')
+      = render 'menus/admin'
+  - else
+    %ul.nav-links
+      %li
+        = link_to 'Sign up', new_user_registration_path
+      %li
+        = link_to 'Sign in', new_user_session_path
