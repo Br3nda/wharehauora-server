@@ -2,8 +2,12 @@
 
 %section.card.report
   %header
-    %h2 Living Room
-    %h4 Living Space
+    %h2= @room.name
+    %h4
+  - if @room.room_type.present?
+    = @room.room_type.name
+  - else
+    uncategorised
     %a.head-action{href: "#"}
       %img.svg{alt: "edit", src: image_url('icon/edit.svg') }/
   .readings
