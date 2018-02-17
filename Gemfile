@@ -14,6 +14,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'rails-timeago', '~> 2.0'
 
+gem 'modernizr-rails'
+
 gem 'jsonapi-resources'
 gem 'pundit-resources'
 
@@ -34,8 +36,6 @@ gem 'pundit'
 
 # templating
 gem 'haml-rails'
-
-gem 'purecss-rails'
 
 # icons
 gem 'font-awesome-rails'

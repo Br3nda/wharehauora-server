@@ -1,0 +1,28 @@
+.nav
+  %ul.nav-links
+    %li
+      %a{href: "./dashboard.html"} Dashboard
+  %h6 Rooms
+  %ul.nav-links
+    %li
+      %a.current{href: "./room-detail1.html"} Living Room
+    %li
+      %a{href: "./room-detail2.html"} Master Bedroom
+    %li
+      %a{href: "./room-detail3.html"} Kid's Room
+  %h6 Setup
+  %ul.nav-links
+    %li
+      %a{href: "./rooms.html"} Whare  Rooms
+    %li
+      %a{href: "./whanau.html"} Whānau
+  %h6 Account
+  %ul.nav-links
+    %li
+      = link_to edit_user_registration_path do
+        My Account
+    %li
+      %a{href: "./help.html"} Help
+    %li
+      = link_to destroy_user_session_path, method: :delete do
+        Logout

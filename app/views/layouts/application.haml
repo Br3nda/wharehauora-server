@@ -1,20 +1,53 @@
 !!!
 %html
   %head
-    %title WharehauoraServer
-    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    %title Room Detail - high grade
+
+    %link{ href: "./favicon.ico", rel: "shortcut icon" }/
+
+    %meta{ charset: "utf-8" }/
+    %meta{ content: "", name: "description" }/
+    %meta{ content: "on", "http-equiv" => "cleartype" }/
+
+    %link{ href: "https://fonts.googleapis.com/css?family=Merriweather:700|Roboto:300,400,700&subset=latin-ext",
+      rel: "stylesheet" }/
+
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = javascript_include_tag :modernizr
+
+    %meta{  content: "yes", name: "apple-mobile-web-app-capable" }/
+    %meta{  content: "width=device-width, initial-scale=1.0, user-scalable=no", name: "viewport" }/
+    %link{  href: "./app-icon.png", rel: "apple-touch-icon-precomposed" }/
+
+    -# = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'https://www.gstatic.com/charts/loader.js'
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    -# = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    -#
     = csrf_meta_tags
 
   %body
-    .pure-g
-      .pure-u-1.menu
-        = render 'layouts/menu', homes: @my_homes
-      .pure-u-1.header
-        = image_tag(image_url('logo.png'))
-      .pure-u-1.content
-        - flash.each do |name, msg|
-          = content_tag :div, msg, class: name
+    %header.header
+      %a.logo-sm{href: "./"} Whare Hauora
+      %a.open-menu{href: "#"}
+        %span.label Menu
+        %img.svg{alt: "menu", src: image_url("icon/menu.svg")}/
+    .overlay
+    %nav.menu
+      = render 'layouts/header'
+      = render 'layouts/nav'
+      = render 'layouts/footer'
+
+    .content
+      .center
+        %h1.sm.narrow-down-only
         = yield
+
+
+    -# %script{src: "./js/jquery-2.1.3.min.js"}
+    -# %script{src: "./js/jquery-ui-widget.min.js"}
+    -# %script{src: "./js/jquery.selectBoxIt.min.js"}
+    -# %script{src: "./js/jquery.icheck.min.js"}
+    -# %script{src: "./js/jquery.magnific-popup.min.js"}
+
+    = javascript_include_tag 'init.js'

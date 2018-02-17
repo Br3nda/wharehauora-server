@@ -16,3 +16,5 @@
 //= require chartkick
 //= require_tree .
 //= require moment
+//= require vendor/detectizr
+//= require vendor/tooltipster.bundle.min.js
