@@ -1,5 +1,5 @@
 .nav
-  - if user_signed_in?
+  - if user_signed_in? && current_user.homes.size.positive?
     %ul.nav-links
       %li
         = link_to home_rooms_path(current_user.homes.first) do

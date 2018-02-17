@@ -1,3 +1,5 @@
+- content_for :title, @room.name
+
 %section.card.report
   %header
     %h2 Living Room
@@ -49,7 +51,8 @@
         %li Dry
         %li
           Temperature is well above dewpoint
-          %a.i.tooltip{ href: "#", title: "<h6>Dewpoint</h6><p>When the temperature in this room falls below 11.9°C moisture begins to form on surfaces, leading to mould growth.</p><p><a href='#'>Click for more info</a></p>" }
+          %a.i.tooltip{ href: "#",
+            title: "<h6>Dewpoint</h6><p>When the temperature in this room falls below 11.9°C moisture begins to form on surfaces, leading to mould growth.</p><p><a href='#'>Click for more info</a></p>" }
             %img.svg{alt: "info", src: image_url("icon/i.svg") }/
 
 
