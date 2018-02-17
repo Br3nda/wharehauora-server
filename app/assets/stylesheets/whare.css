@@ -74,9 +74,6 @@ fieldset {
 
 textarea {
   resize: none;
-}
-
-textarea {
   overflow: hidden;
 }
 
