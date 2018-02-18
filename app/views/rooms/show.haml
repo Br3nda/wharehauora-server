@@ -106,3 +106,88 @@
 -#       - @room.sensors.each do |sensor|
 -#         .pure-u-1.pure-u-md-1-3.pure-u-lg-1-3
 -#           = render 'sensors/card', sensor: sensor
+
+
+
+-# %section.card.summary
+-#   %header
+-#     %h2= room.name
+-#     %h4= room.room_type.name if room.room_type.present?
+-#     = link_to edit_room_path(room), class: 'head-action' do
+-#       %img.svg{ alt: 'edit', src: image_url('icon/edit.svg') }
+-#   .readings
+-#     .reading.temp-low-1a
+-#       %span.vis
+-#         %span.loader
+-#       %span.value= display_temperature(room)
+-#       %span.label Temperature
+-#       %span.time TODO 5 minutes ago
+-#     .reading.hum-mid-a
+-#       %span.vis
+-#         %span.loader
+-#       %span.value= display_humidity(room)
+-#       %span.label Humidity
+-#       %span.time TODO 5 minutes ago
+-#   %footer.grade-high
+-#     %p Slightly too cool, but otherwise healthy.
+-#     = link_to room_path(room), class: 'btn' do
+-#       %img.svg{ alt: "icon", src: image_url('icon/btn-analyse.svg') }
+-#       Analyse
+
+-# %section.card.summary
+-#   %header
+-#     %h2= room.name
+-#     %h4= room.room_type.name if room.room_type.present?
+-#     = link_to edit_room_path(room), class: 'head-action' do
+-#       %img.svg{ alt: 'edit', src: image_url('icon/edit.svg') }
+-#   .readings
+-#     .reading.temp-high-2a
+-#       %span.vis
+-#         %span.loader
+-#       %span.value= display_temperature(room)
+-#       %span.label Temperature
+-#       %span.time TODO 5 minutes ago
+-#     .reading.hum-high-2a
+-#       %span.vis
+-#         %span.loader
+-#       %span.value= display_humidity(room)
+-#       %span.label Humidity
+-#       %span.time TODO 5 minutes ago
+-#   %footer.grade-mid
+-#     %p
+-#       Too hot and humid for sleeping.
+-#       %br/
+-#       = succeed "." do
+-#         %a.underline{ href: "#"} TODO Learn how to fix this
+-#     = link_to room_path(room), class: 'btn' do
+-#       %img.svg{ alt: "icon", src: image_url('icon/btn-analyse.svg') }
+-#       Analyse
+
+-# %section.card.summary
+-#   %header
+-#     %h2= room.name
+-#     %h4= room.room_type.name if room.room_type.present?
+-#     = link_to edit_room_path(room), class: 'head-action' do
+-#       %img.svg{ alt: 'edit', src: image_url('icon/edit.svg') }
+-#   .readings
+-#     .reading.temp-low-2a
+-#       %span.vis
+-#         %span.loader
+-#       %span.value= display_temperature(room)
+-#       %span.label Temperature
+-#       %span.time TODO 5 minutes ago
+-#     .reading.hum-mid-a
+-#       %span.vis
+-#         %span.loader
+-#       %span.value= display_humidity(room)
+-#       %span.label Humidity
+-#       %span.time TODO 5 minutes ago
+-#   %footer.grade-low
+-#     %p
+-#       Too cold for children to be sleeping.
+-#       %br
+-#       = succeed "." do
+-#         %a.underline{ href: "#"} TODO Learn how to fix this
+-#     = link_to room_path(room), class: 'btn' do
+-#       %img.svg{ alt: "icon", src: image_url('icon/btn-analyse.svg') }
+-#       Analyse
