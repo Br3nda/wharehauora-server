@@ -1,12 +1,12 @@
 .nav
-  - if user_signed_in? && current_user.homes.size.positive?
+  - if user_signed_in? && @my_homes.size.positive?
     %ul.nav-links
       %li
-        = link_to home_rooms_path(current_user.homes.first) do
+        = link_to home_rooms_path(@my_homes.first) do
           Dashboard
     %h6 Rooms
     %ul.nav-links
-      - current_user.homes.first.rooms.order(:name).each do |room|
+      - @my_homes.first.rooms.order(:name).each do |room|
         %li
           = link_to room do
             = room.name
