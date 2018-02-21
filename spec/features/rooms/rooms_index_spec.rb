@@ -37,7 +37,7 @@ RSpec.feature 'Rooms', type: :feature do
         shared_examples 'show home and room' do
           subject { find('.summary-grid') }
           it { is_expected.to have_text(home.name, maximum: 1) }
-          it { is_expected.to have_text(room.name, maximum: 1) }
+          it { is_expected.to have_text(room.name, maximum: 2) }
           it { is_expected.to have_text(room.room_type.name) }
         end
 
