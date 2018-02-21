@@ -75,13 +75,14 @@
       = line_chart readings_path(home_id: @room.home.id,
         room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60
 
-%h3 Readings
-- @readings.each do |reading|
-  %li
-    = display_reading reading
-    = reading.key
-    %br
-    = timeago_tag reading.created_at, nojs: true, limit: 100.days.ago
+%section.card
+  %h3 Readings
+  - @readings.each do |reading|
+    %li
+      = display_reading reading
+      = reading.key
+      %br
+      = timeago_tag reading.created_at, nojs: true, limit: 100.days.ago
 
 %h2 Sensors in this room
 - @room.sensors.each do |sensor|
