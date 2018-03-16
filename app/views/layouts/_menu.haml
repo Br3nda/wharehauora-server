@@ -28,7 +28,8 @@
         = link_to destroy_user_session_path, method: :delete do
           Logout
     -if current_user.role?('janitor')
-      = render 'menus/admin'
+      TODO admin menu
+      / = render 'menus/admin'
   - else
     %ul.nav-links
       %li
