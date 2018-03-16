@@ -1,45 +1,63 @@
 - content_for :title, "Edit user"
 
-%h2 Edit #{resource_name.to_s.humanize}
 
 = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
   = devise_error_messages!
+  %h1.sm.narrow-down-only My Account
+  %section.card
+    %header
+      %h2 My Account
+    %ul.form-row
+      / %li.half
+      /   %label Name
+      /   %span.helper (optional)
+      /   %input{placeholder: "First / Given Name", type: "text"}/
+      / %li.half.collapse-mob
+      /   %label.hidden Last Name
+      /   %input{placeholder: "Last / Family Name", type: "text"}/
+      %li.max-half
+        %label Email Address
+        = f.email_field :email
+      %li.half
+        %label Password
+        %span.helper (Leave blank if you don't want to change it)
+        = f.password_field :password, autocomplete: 'off'
+      %li.half
+        %label Repeat Password
+        %span.helper (Required if changing password)
+        = f.password_field :password_confirmation, autocomplete: 'off'
+      %li.max-half
+        %label Current Password
+        %span.helper (Required if changing password)
+        = f.password_field :password_confirmation, autocomplete: 'off'
+    %footer
+      = f.submit 'Save Changes', class: 'btn submit'
+      %a.btn.submit{href: "#"} Save Changes
+      %a.del{href: "#"}
+        %img.svg{alt: "icon", src: image_url("icon/del.svg")}>/
+        Cancel Account
 
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-
-  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    %div Currently waiting confirmation for: #{resource.unconfirmed_email}
-
-  .field
-    = f.label :password
-    %i (leave blank if you don't want to change it)
-    %br/
-    = f.password_field :password, autocomplete: 'off'
-    - if @minimum_password_length
-      %br/
-      %em #{@minimum_password_length} characters minimum
-
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: 'off'
-
-  .field
-    = f.label :current_password
-    %i (we need your current password to confirm your changes)
-    %br/
-    = f.password_field :current_password, autocomplete: 'off'
-
-  .actions
-    = f.submit 'Update'
-
-%h3 Cancel my account
-
-%p
-  Unhappy?
-  = button_to 'Cancel my account', registration_path(resource_name), data: { confirm: 'Are you sure?' }, method: :delete
-
-= link_to 'Back', :back
+  / %section.card
+  /   %header
+  /     %h2 Notification preferences
+  /   %ul.form-row
+  /     %li
+  /       %ul.form-controls
+  /         %li
+  /           %label
+  /             %input{checked: "checked", name: "email_health_alert", type: "checkbox", value: "yes"}>/
+  /             Email me room health alerts
+  /         %li
+  /           %label
+  /             %input{name: "email_new_sensor", type: "checkbox", value: "yes"}>/
+  /             Email me when a new sensor is detected
+  /         %li
+  /           %label
+  /             %input{name: "email_sensor_unresponsive", type: "checkbox", value: "yes"}>/
+  /             Email me when a sensor is not responding
+  /         %li
+  /           %label
+  /             %input{name: "app_push", type: "checkbox", value: "yes"}>/
+  /             Allow push notifications through Whare Hauora app
+  /   %footer
+  /     %a.btn.submit{href: "#"} Save Preferences
