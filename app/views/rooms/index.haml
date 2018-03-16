@@ -1,3 +1,5 @@
+- content_for :title, "Dashboard"
+
 %h1=@home.name
 
 - if policy(@home).edit? && @unassigned_sensors.size.positive?

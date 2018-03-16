@@ -1,7 +1,11 @@
 !!!
 %html
   %head
-    %title Room Detail - high grade
+    %title
+      Whare Hauora
+      = if content_for? :title
+        |
+        - yield :title
 
     %link{ href: './favicon.ico', rel: 'shortcut icon' }/
 
