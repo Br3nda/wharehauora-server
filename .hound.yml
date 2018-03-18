@@ -7,4 +7,6 @@ haml:
 scss:
   config_file: .scss-lint.yml
 jshint:
-  ignore_file: .javascript_ignore
+  enabled: false
+eslint:
+  enabled: true
