@@ -108,8 +108,6 @@ group :development do
   gem 'spring'
 
   gem 'letter_opener'
-
-  gem 'overcommit' # linter
 end
 
 group :test do
