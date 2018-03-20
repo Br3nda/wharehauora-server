@@ -16,7 +16,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:valid_params) { { email: 'bob@example.com' } }
   context 'user is signed in' do
     before { sign_in user }
@@ -35,8 +35,8 @@ RSpec.describe Admin::UsersController, type: :controller do
   end
 
   context 'user is admin' do
-    let(:admin_role) { FactoryGirl.create(:role, name: 'janitor') }
-    let(:admin) { FactoryGirl.create(:user, roles: [admin_role]) }
+    let(:admin_role) { FactoryBot.create(:role, name: 'janitor') }
+    let(:admin) { FactoryBot.create(:user, roles: [admin_role]) }
     before { sign_in admin }
     describe 'GET index' do
       before { get :index }

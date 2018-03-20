@@ -8,10 +8,10 @@ RSpec.describe Admin::RoomTypesController, type: :controller do
   shared_examples 'redirect to home' do
     it { expect(response).to redirect_to(root_path) }
   end
-  let(:room_type) { FactoryGirl.create(:room_type) }
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin_role) { FactoryGirl.create(:role, name: 'janitor') }
-  let(:admin_user) { FactoryGirl.create(:user, roles: [admin_role]) }
+  let(:room_type) { FactoryBot.create(:room_type) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:admin_role) { FactoryBot.create(:role, name: 'janitor') }
+  let(:admin_user) { FactoryBot.create(:user, roles: [admin_role]) }
   let(:valid_params) { { name: Faker.name } }
   context 'not signed in ' do
     describe 'GET index' do

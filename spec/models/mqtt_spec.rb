@@ -30,7 +30,7 @@ RSpec.describe Mqtt, type: :model do
       expect { Mqtt.sync_mqtt_users }.to change { MqttUser.count }.by(1)
     end
     it 'sync mqtt user when user does exit' do
-      FactoryGirl.create :user, email: 'hiria@hiria.nz'
+      FactoryBot.create :user, email: 'hiria@hiria.nz'
       expect(faraday_double).to receive(:get).and_return(response_double)
       expect { Mqtt.sync_mqtt_users }.to change { MqttUser.count }.by(1)
     end

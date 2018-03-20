@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Invitation, type: :model do
-  subject(:invitation) { FactoryGirl.create(:invitation) }
+  subject(:invitation) { FactoryBot.create(:invitation) }
 
   it { is_expected.to be_valid }
   it { is_expected.to be_pending }
@@ -22,7 +22,7 @@ RSpec.describe Invitation, type: :model do
   end
 
   context 'with a token that already exists' do
-    let(:existing_invitation) { FactoryGirl.create(:invitation) }
+    let(:existing_invitation) { FactoryBot.create(:invitation) }
     before { invitation.token = existing_invitation.token }
     it { is_expected.not_to be_valid }
   end

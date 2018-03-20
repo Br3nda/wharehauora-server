@@ -2,13 +2,13 @@ require 'rails_helper'
 RSpec.describe HomesController, type: :controller do
   include Devise::Test::ControllerHelpers
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin_role) { FactoryGirl.create(:role, name: 'janitor') }
-  let(:admin_user) { FactoryGirl.create(:user, roles: [admin_role]) }
-  let!(:home) { FactoryGirl.create(:home, owner_id: user.id) }
-  let!(:room) { FactoryGirl.create(:room, home: home) }
-  let!(:another_home) { FactoryGirl.create(:home, name: "someone else's home") }
-  let!(:public_home)  { FactoryGirl.create(:home, name: 'public home', is_public: true) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:admin_role) { FactoryBot.create(:role, name: 'janitor') }
+  let(:admin_user) { FactoryBot.create(:user, roles: [admin_role]) }
+  let!(:home) { FactoryBot.create(:home, owner_id: user.id) }
+  let!(:room) { FactoryBot.create(:room, home: home) }
+  let!(:another_home) { FactoryBot.create(:home, name: "someone else's home") }
+  let!(:public_home)  { FactoryBot.create(:home, name: 'public home', is_public: true) }
 
   context 'not signed in ' do
     describe 'GET index' do
@@ -86,7 +86,7 @@ RSpec.describe HomesController, type: :controller do
       end
       describe 'lots of sensors' do
         before do
-          15.times { FactoryGirl.create(:room, home: home) }
+          15.times { FactoryBot.create(:room, home: home) }
           get :show, id: home.id
         end
         it { expect(response).to have_http_status(:success) }
@@ -155,7 +155,7 @@ RSpec.describe HomesController, type: :controller do
       end
       describe 'my home lots of rooms' do
         before do
-          15.times { FactoryGirl.create(:room, home: home) }
+          15.times { FactoryBot.create(:room, home: home) }
           get :show, id: home.id
         end
         it { expect(response).to have_http_status(:success) }

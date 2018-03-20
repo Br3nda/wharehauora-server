@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.feature 'admin sensors in a home', type: :feature do
   let(:home) do
-    FactoryGirl.create(:home_with_sensors, sensors_count: 15)
+    FactoryBot.create(:home_with_sensors, sensors_count: 15)
   end
 
   let(:whanau) do
-    user = FactoryGirl.create :user
+    user = FactoryBot.create :user
     home.users << user
     user
   end
@@ -34,7 +34,7 @@ RSpec.feature 'admin sensors in a home', type: :feature do
   end
 
   context 'signed in as admin' do
-    background { login_as(FactoryGirl.create(:admin)) }
+    background { login_as(FactoryBot.create(:admin)) }
     include_examples 'lists sensors'
   end
 end

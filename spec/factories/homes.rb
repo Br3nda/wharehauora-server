@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :home do
     name { Faker::Space.planet }
     owner

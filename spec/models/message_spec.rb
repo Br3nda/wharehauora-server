@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Message, type: :model do
   describe 'decode' do
-    let(:home) { FactoryGirl.create :home }
+    let(:home) { FactoryBot.create :home }
     let(:payload) { '20.9' }
 
     context 'No rooms associated with sensor' do
@@ -32,8 +32,8 @@ RSpec.describe Message, type: :model do
     end
     context 'when sensor is allocated to a room' do
       let!(:topic) { "/sensors/wharehauora/#{home.id}/#{sensor.node_id}/1/1/0/0" }
-      let(:room) { FactoryGirl.create :room, home: home }
-      let(:sensor) { FactoryGirl.create :sensor, home: home, room: room, node_id: '130' }
+      let(:room) { FactoryBot.create :room, home: home }
+      let(:sensor) { FactoryBot.create :sensor, home: home, room: room, node_id: '130' }
 
       it 'does not make a new sensor record' do
         expect { Message.decode(topic, payload) }.not_to(change { Sensor.count })

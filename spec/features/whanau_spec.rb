@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.feature 'Whānau', type: :feature do
-  let(:user) { FactoryGirl.create :user }
-  let(:friend) { FactoryGirl.create :user }
-  let(:home) { FactoryGirl.create :home, owner_id: user.id }
+  let(:user) { FactoryBot.create :user }
+  let(:friend) { FactoryBot.create :user }
+  let(:home) { FactoryBot.create :home, owner_id: user.id }
 
   context 'With a whānau member' do
     let!(:viewer) { home.home_viewers.create!(user: friend) }

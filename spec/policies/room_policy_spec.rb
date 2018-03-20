@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe RoomPolicy do
-  let(:admin) { FactoryGirl.create :admin }
+  let(:admin) { FactoryBot.create :admin }
   let(:owner) { room.home.owner }
   let(:whanau) do
-    u = FactoryGirl.create :user
+    u = FactoryBot.create :user
     room.home.users << u
     u
   end
-  let(:other_user) { FactoryGirl.create :user }
+  let(:other_user) { FactoryBot.create :user }
 
   subject { described_class.new(user, room) }
 
@@ -66,7 +66,7 @@ describe RoomPolicy do
   end
 
   context 'private room' do
-    let(:room) { FactoryGirl.create :room }
+    let(:room) { FactoryBot.create :room }
 
     context 'a visitor' do
       let(:user) { nil }
@@ -86,7 +86,7 @@ describe RoomPolicy do
   end
 
   context 'public room' do
-    let(:room) { FactoryGirl.create :public_room }
+    let(:room) { FactoryBot.create :public_room }
 
     context 'a visitor' do
       let(:user) { nil }

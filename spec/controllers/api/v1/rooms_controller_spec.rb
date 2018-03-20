@@ -20,33 +20,33 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     it { expect(subject['data']['attributes']).to include('name' => room.name) }
 
     describe 'room too hot' do
-      let(:create_readings) { FactoryGirl.create :temperature_reading, value: 101.1, room: room }
+      let(:create_readings) { FactoryBot.create :temperature_reading, value: 101.1, room: room }
       it { expect(temperature_response).to include('value' => 101.1, 'unit' => '°C') }
       it { expect(ratings_response).to include('good' => false, 'too_hot' => true, 'too_cold' => false) }
     end
 
     describe 'room too cold' do
-      let(:create_readings) { FactoryGirl.create :temperature_reading, value: 3.1, room: room }
+      let(:create_readings) { FactoryBot.create :temperature_reading, value: 3.1, room: room }
       it { expect(temperature_response).to include('value' => 3.1, 'unit' => '°C') }
       it { expect(ratings_response).to include('good' => false, 'too_hot' => false, 'too_cold' => true) }
     end
 
     describe 'room just right' do
-      let(:create_readings) { FactoryGirl.create :temperature_reading, value: 20.5, room: room }
+      let(:create_readings) { FactoryBot.create :temperature_reading, value: 20.5, room: room }
       it { expect(temperature_response).to include('value' => 20.5, 'unit' => '°C') }
       it { expect(ratings_response).to include('good' => true, 'too_hot' => false, 'too_cold' => false) }
     end
   end # returns expected readings
 
-  let(:room_type) { FactoryGirl.create :room_type, min_temperature: 10, max_temperature: 30 }
+  let(:room_type) { FactoryBot.create :room_type, min_temperature: 10, max_temperature: 30 }
   let(:owner) { room.home.owner }
-  let(:admin) { FactoryGirl.create :admin }
+  let(:admin) { FactoryBot.create :admin }
   let(:whanau) do
-    whanau = FactoryGirl.create :user
+    whanau = FactoryBot.create :user
     room.home.users << whanau
     whanau
   end
-  let(:otheruser) { FactoryGirl.create :user }
+  let(:otheruser) { FactoryBot.create :user }
 
   let(:valid_params) { { id: room.id, format: :json } }
 
@@ -60,7 +60,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
   end
 
   describe 'When room is in a public home' do
-    let(:room) { FactoryGirl.create :public_room, room_type: room_type }
+    let(:room) { FactoryBot.create :public_room, room_type: room_type }
 
     shared_examples 'check permissions' do
       describe 'and user is not logged in ' do
@@ -94,8 +94,8 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
   end
 
   describe 'when room is private' do
-    let(:room) { FactoryGirl.create :room, room_type: room_type }
-    let!(:readings) { FactoryGirl.create_list :reading, 100, room: room }
+    let(:room) { FactoryBot.create :room, room_type: room_type }
+    let!(:readings) { FactoryBot.create_list :reading, 100, room: room }
 
     describe 'and user is not logged in ' do
       let(:user) { nil }

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.feature 'Widget management', type: :feature do
-  let(:admin_role) { FactoryGirl.create(:role, name: 'janitor') }
-  let(:admin_user) { FactoryGirl.create(:user, roles: [admin_role]) }
-  let(:user) { FactoryGirl.create :user }
-  let!(:existing) { FactoryGirl.create(:room_type, name: 'Cake room') }
+  let(:admin_role) { FactoryBot.create(:role, name: 'janitor') }
+  let(:admin_user) { FactoryBot.create(:user, roles: [admin_role]) }
+  let(:user) { FactoryBot.create :user }
+  let!(:existing) { FactoryBot.create(:room_type, name: 'Cake room') }
 
   context 'not signed in' do
     scenario 'requests room type admin page' do

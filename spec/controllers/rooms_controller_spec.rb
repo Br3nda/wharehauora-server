@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe RoomsController, type: :controller do
   include Devise::Test::ControllerHelpers
 
-  let(:bedroom) { FactoryGirl.create(:room_type, name: 'bedroom') }
+  let(:bedroom) { FactoryBot.create(:room_type, name: 'bedroom') }
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:home) { FactoryGirl.create(:home, owner_id: user.id) }
-  let(:room) { FactoryGirl.create(:room, home: home, room_type: bedroom) }
-  let(:sensor) { FactoryGirl.create(:sensor, room: room, node_id: '1100') }
+  let(:user) { FactoryBot.create(:user) }
+  let(:home) { FactoryBot.create(:home, owner_id: user.id) }
+  let(:room) { FactoryBot.create(:room, home: home, room_type: bedroom) }
+  let(:sensor) { FactoryBot.create(:sensor, room: room, node_id: '1100') }
 
   shared_examples 'Test as all user types' do
     context 'Not signed in' do
@@ -34,12 +34,12 @@ RSpec.describe RoomsController, type: :controller do
           end
 
           context '1 unassigned_sensors' do
-            let!(:sensor) { FactoryGirl.create :sensor, home: home, room: nil }
+            let!(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
             it { expect(assigns(:unassigned_sensors)).to eq([sensor]) }
           end
 
           context '30 unassigned_sensors' do
-            before { 30.times { FactoryGirl.create(:sensor, home: home, room: nil) } }
+            before { 30.times { FactoryBot.create(:sensor, home: home, room: nil) } }
             it { expect(assigns(:unassigned_sensors).size).to eq 30 }
           end
         end
@@ -60,7 +60,7 @@ RSpec.describe RoomsController, type: :controller do
     end
 
     context 'user is signed in as whānau' do
-      let(:whanau) { FactoryGirl.create :user }
+      let(:whanau) { FactoryBot.create :user }
 
       before do
         home.users << whanau
@@ -84,8 +84,8 @@ RSpec.describe RoomsController, type: :controller do
     context "Trying to access another users's data" do
       before { sign_in user }
       describe "GET edit for someone else's home" do
-        let(:home) { FactoryGirl.create(:home) }
-        let(:room) { FactoryGirl.create(:room, home: home) }
+        let(:home) { FactoryBot.create(:home) }
+        let(:room) { FactoryBot.create(:room, home: home) }
 
         describe '#index' do
           before { get :index, home_id: home.id }
@@ -108,7 +108,7 @@ RSpec.describe RoomsController, type: :controller do
     include_examples 'Test as all user types'
   end
   context 'Homes with lots of Whanau' do
-    before { FactoryGirl.create_list(:home_viewer, 7, home: home) }
+    before { FactoryBot.create_list(:home_viewer, 7, home: home) }
     it { expect(home.users.size).to eq(7) }
     include_examples 'Test as all user types'
   end
