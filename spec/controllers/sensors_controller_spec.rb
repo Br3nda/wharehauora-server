@@ -2,12 +2,12 @@ require 'rails_helper'
 RSpec.describe SensorsController, type: :controller do
   include Devise::Test::ControllerHelpers
 
-  let(:bedroom) { FactoryGirl.create(:room_type, name: 'bedroom') }
+  let(:bedroom) { FactoryBot.create(:room_type, name: 'bedroom') }
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:home) { FactoryGirl.create(:home, owner_id: user.id) }
-  let(:room) { FactoryGirl.create(:room, home: home, room_type: bedroom) }
-  let(:sensor) { FactoryGirl.create(:sensor, home: home, room: room, node_id: '1100') }
+  let(:user) { FactoryBot.create(:user) }
+  let(:home) { FactoryBot.create(:home, owner_id: user.id) }
+  let(:room) { FactoryBot.create(:room, home: home, room_type: bedroom) }
+  let(:sensor) { FactoryBot.create(:sensor, home: home, room: room, node_id: '1100') }
 
   context 'Not signed in' do
     describe 'GET show' do

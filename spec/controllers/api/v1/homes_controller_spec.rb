@@ -1,22 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::HomesController, type: :controller do
-  let!(:my_home) { FactoryGirl.create(:home, owner: user) }
-  let!(:public_home) { FactoryGirl.create(:public_home) }
-  let!(:private_home) { FactoryGirl.create(:home) }
+  let!(:my_home) { FactoryBot.create(:home, owner: user) }
+  let!(:public_home) { FactoryBot.create(:public_home) }
+  let!(:private_home) { FactoryBot.create(:home) }
 
-  let!(:user) { FactoryGirl.create :user }
+  let!(:user) { FactoryBot.create :user }
 
   context 'OAuth authenticated ' do
-    let!(:application) { FactoryGirl.create(:oauth_application) }
+    let!(:application) { FactoryBot.create(:oauth_application) }
     subject { JSON.parse response.body }
 
     describe 'GET #index' do
       shared_examples 'token belongs to home owner' do
         let!(:token) do
-          FactoryGirl.create(:oauth_access_token,
-                             application: application,
-                             resource_owner_id: my_home.owner.id)
+          FactoryBot.create(:oauth_access_token,
+                            application: application,
+                            resource_owner_id: my_home.owner.id)
         end
         it { expect(my_home.owner.id).to eq(token.resource_owner_id) }
         it { expect(user.owned_homes).to include(my_home) }

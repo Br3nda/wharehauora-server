@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.feature 'assign sensors', type: :feature do
   let(:home) do
-    FactoryGirl.create :home, name: 'Toku whare whanau'
+    FactoryBot.create :home, name: 'Toku whare whanau'
   end
 
   shared_examples 'home has one sensor' do
-    let!(:sensor) { FactoryGirl.create :sensor, home: home, room: nil }
+    let!(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
   end
 
   shared_examples 'new sensors detected and assignable' do
@@ -68,7 +68,7 @@ RSpec.feature 'assign sensors', type: :feature do
   shared_examples 'can assign to existing room' do
     include_examples 'home has one sensor'
     describe 'can assign to existing room' do
-      let!(:existing_room) { FactoryGirl.create :room, name: 'library', home: home, sensors: [] }
+      let!(:existing_room) { FactoryBot.create :room, name: 'library', home: home, sensors: [] }
       before do
         visit "/homes/#{home.id}/rooms"
         click_link 'Assign to room'
@@ -94,7 +94,7 @@ RSpec.feature 'assign sensors', type: :feature do
 
   context 'signed in as whanau' do
     let(:whanau) do
-      user = FactoryGirl.create :user
+      user = FactoryBot.create :user
       home.users << user
       user
     end
@@ -104,7 +104,7 @@ RSpec.feature 'assign sensors', type: :feature do
   end
 
   context 'signed in as admin' do
-    background { login_as(FactoryGirl.create(:admin)) }
+    background { login_as(FactoryBot.create(:admin)) }
     include_examples 'can see sensors'
     describe 'can assign sensors' do
       include_examples 'can assign to new room'

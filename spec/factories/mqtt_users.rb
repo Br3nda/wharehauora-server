@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :mqtt_user do
     username { Faker::Internet.email }
     password { Faker::Internet.password }

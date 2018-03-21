@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 RSpec.feature 'Front page', type: :feature do
-  let(:user) { FactoryGirl.create :user }
-  let!(:public_home) { FactoryGirl.create :home, home_type: home_type, is_public: true }
-  let!(:private_home) { FactoryGirl.create :home, home_type: home_type, is_public: false }
-  let!(:public_room) { FactoryGirl.create :room, home: public_home, room_type: room_type }
-  let!(:private_room) { FactoryGirl.create :room, home: private_home, room_type: room_type }
-  let(:home_type) { FactoryGirl.create :home_type }
-  let(:room_type) { FactoryGirl.create :room_type, min_temperature: 18, max_temperature: 30 }
+  let(:user) { FactoryBot.create :user }
+  let!(:public_home) { FactoryBot.create :home, home_type: home_type, is_public: true }
+  let!(:private_home) { FactoryBot.create :home, home_type: home_type, is_public: false }
+  let!(:public_room) { FactoryBot.create :room, home: public_home, room_type: room_type }
+  let!(:private_room) { FactoryBot.create :room, home: private_home, room_type: room_type }
+  let(:home_type) { FactoryBot.create :home_type }
+  let(:room_type) { FactoryBot.create :room_type, min_temperature: 18, max_temperature: 30 }
 
   before do
-    100.times { FactoryGirl.create :reading, room: public_room }
-    100.times { FactoryGirl.create :reading, room: private_room }
+    100.times { FactoryBot.create :reading, room: public_room }
+    100.times { FactoryBot.create :reading, room: private_room }
   end
 
   shared_examples 'displays only public data' do

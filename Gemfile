@@ -87,7 +87,7 @@ group :development, :test do
   gem 'rspec-rails'
 
   # content generators
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
 
   # Code coverage analysis
@@ -108,8 +108,6 @@ group :development do
   gem 'spring'
 
   gem 'letter_opener'
-
-  gem 'overcommit' # linter
 end
 
 group :test do

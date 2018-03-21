@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.feature 'Room', type: :feature do
   let(:whanau) do
-    user = FactoryGirl.create :user
+    user = FactoryBot.create :user
     room.home.users << user
     user
   end
 
   subject { page }
 
-  let(:room) { FactoryGirl.create :room_with_sensors }
+  let(:room) { FactoryBot.create :room_with_sensors }
 
   shared_examples 'unassign sensor from a room' do
     describe 'unassign sensor from a room' do
@@ -27,7 +27,7 @@ RSpec.feature 'Room', type: :feature do
   end
 
   context 'login as admin' do
-    background { login_as(FactoryGirl.create(:admin)) }
+    background { login_as(FactoryBot.create(:admin)) }
     include_examples 'unassign sensor from a room'
   end
 

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Opendata::ReadingsController, type: :controller do
-  let(:user) { FactoryGirl.create :user }
-  let(:home) { FactoryGirl.create :home, owner: user }
+  let(:user) { FactoryBot.create :user }
+  let(:home) { FactoryBot.create :home, owner: user }
   let(:valid_params) { { key: 'temperature', day: day } }
   let(:day) { '2017-01-01' }
 
@@ -24,12 +24,12 @@ RSpec.describe Opendata::ReadingsController, type: :controller do
           @readings = []
           @room_types = []
           5.times do
-            room_type = FactoryGirl.create :room_type
+            room_type = FactoryBot.create :room_type
             @room_types << room_type
-            room = FactoryGirl.create :room, home: home, room_type: room_type
+            room = FactoryBot.create :room, home: home, room_type: room_type
             6.times do
-              @readings << FactoryGirl.create(:reading, room: room, key: 'temperature', value: 10, created_at: day)
-              @readings << FactoryGirl.create(:reading, room: room, key: 'humidity', value: 10, created_at: day)
+              @readings << FactoryBot.create(:reading, room: room, key: 'temperature', value: 10, created_at: day)
+              @readings << FactoryBot.create(:reading, room: room, key: 'humidity', value: 10, created_at: day)
             end
           end
           get :index, valid_params

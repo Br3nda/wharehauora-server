@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :room do
     name { Faker::Hipster.word }
     home
@@ -18,7 +18,7 @@ FactoryGirl.define do
   end
 
   factory :public_room, parent: :room do
-    home { FactoryGirl.create(:public_home) }
+    home { FactoryBot.create(:public_home) }
   end
 
   factory :room_with_readings, parent: :room do

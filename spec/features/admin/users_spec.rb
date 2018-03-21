@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature 'Users', type: :feature do
-  let!(:admin_user) { FactoryGirl.create :admin }
-  let!(:user) { FactoryGirl.create :user }
-  let!(:user_tahi) { FactoryGirl.create :user }
-  let!(:user_rua) { FactoryGirl.create :user }
-  let!(:user_toru) { FactoryGirl.create :user }
+  let!(:admin_user) { FactoryBot.create :admin }
+  let!(:user) { FactoryBot.create :user }
+  let!(:user_tahi) { FactoryBot.create :user }
+  let!(:user_rua) { FactoryBot.create :user }
+  let!(:user_toru) { FactoryBot.create :user }
 
   shared_examples 'cannot #index' do
     describe '#index' do

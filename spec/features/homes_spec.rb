@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature 'Homes', type: :feature do
-  let(:user) { FactoryGirl.create :user }
-  let(:janitor) { FactoryGirl.create :role, name: 'janitor' }
-  let(:admin_user) { FactoryGirl.create :user, roles: [janitor] }
-  let(:home_type) { FactoryGirl.create :home_type }
-  let!(:home) { FactoryGirl.create :home, owner_id: user.id, home_type: home_type }
+  let(:user) { FactoryBot.create :user }
+  let(:janitor) { FactoryBot.create :role, name: 'janitor' }
+  let(:admin_user) { FactoryBot.create :user, roles: [janitor] }
+  let(:home_type) { FactoryBot.create :home_type }
+  let!(:home) { FactoryBot.create :home, owner_id: user.id, home_type: home_type }
   context 'Normal user' do
     background { login_as(user) }
     scenario 'Views their home' do
@@ -14,7 +14,7 @@ RSpec.feature 'Homes', type: :feature do
     end
 
     scenario 'Views their friend\'s home' do
-      other_home = FactoryGirl.create :home
+      other_home = FactoryBot.create :home
       user.viewable_homes << other_home
       visit "/homes/#{other_home.id}"
       expect(page).to have_text(other_home.name)

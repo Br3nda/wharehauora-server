@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ReadingsController, type: :controller do
-  let(:user) { FactoryGirl.create :user }
-  let(:home) { FactoryGirl.create :home, owner: user }
+  let(:user) { FactoryBot.create :user }
+  let(:home) { FactoryBot.create :home, owner: user }
   let(:valid_params) { { home_id: home.id, key: 'temperature', day: '2017-01-01' } }
   context 'Not signed in' do
     describe 'GET index' do
@@ -21,10 +21,10 @@ RSpec.describe ReadingsController, type: :controller do
       describe 'has readings' do
         before do
           5.times do
-            room = FactoryGirl.create :room, home: home
+            room = FactoryBot.create :room, home: home
             100.times do
-              FactoryGirl.create :reading, room: room, key: 'temperature'
-              FactoryGirl.create :reading, room: room, key: 'humidity'
+              FactoryBot.create :reading, room: room, key: 'temperature'
+              FactoryBot.create :reading, room: room, key: 'humidity'
             end
           end
         end

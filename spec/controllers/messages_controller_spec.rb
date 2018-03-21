@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
-  let(:user) { FactoryGirl.create :user }
-  let(:home) { FactoryGirl.create :home, owner: user }
-  let(:sensor) { FactoryGirl.create :sensor, home: home, node_id: 1 }
+  let(:user) { FactoryBot.create :user }
+  let(:home) { FactoryBot.create :home, owner: user }
+  let(:sensor) { FactoryBot.create :sensor, home: home, node_id: 1 }
   let(:valid_params) { { sensor_id: sensor.id } }
   context 'Not signed in' do
     describe 'GET index' do
@@ -16,8 +16,8 @@ RSpec.describe MessagesController, type: :controller do
     before { sign_in user }
     describe 'GET index' do
       before do
-        @message_one = FactoryGirl.create :message, sensor: sensor
-        @message_two = FactoryGirl.create :message, sensor: sensor
+        @message_one = FactoryBot.create :message, sensor: sensor
+        @message_two = FactoryBot.create :message, sensor: sensor
 
         get :index, valid_params
       end

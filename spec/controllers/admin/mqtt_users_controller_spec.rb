@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Admin::MqttUsersController, type: :controller do
   include Devise::Test
-  let(:home) { FactoryGirl.create(:home) }
-  let(:mqtt_user) { FactoryGirl.create(:mqtt_user, home: home) }
-  let(:admin_user) { FactoryGirl.create(:admin) }
+  let(:home) { FactoryBot.create(:home) }
+  let(:mqtt_user) { FactoryBot.create(:mqtt_user, home: home) }
+  let(:admin_user) { FactoryBot.create(:admin) }
 
   let(:valid_params) { { name: Faker.name } }
   let(:faraday_double) { double(Faraday, basic_auth: nil, post: '') }
@@ -39,7 +39,7 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
 
   context 'signed in as whanau' do
     before do
-      user = FactoryGirl.create :user
+      user = FactoryBot.create :user
       home.users << user
       sign_in user
     end

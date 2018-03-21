@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe WelcomeController, type: :controller do
   include Devise::Test::ControllerHelpers
-  let(:user) { FactoryGirl.create(:user) }
-  let(:home_type) { FactoryGirl.create(:home_type) }
-  let(:home) { FactoryGirl.create(:home, home_type: home_type) }
-  let(:room) { FactoryGirl.create(:room, home: home) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:home_type) { FactoryBot.create(:home_type) }
+  let(:home) { FactoryBot.create(:home, home_type: home_type) }
+  let(:room) { FactoryBot.create(:room, home: home) }
 
   context 'user is not sign in' do
     describe 'GET index' do
@@ -16,11 +16,11 @@ RSpec.describe WelcomeController, type: :controller do
       context 'lots of sensor data' do
         let!(:readings) do
           [
-            FactoryGirl.create(:reading, room: room),
-            FactoryGirl.create(:reading, room: room),
-            FactoryGirl.create(:reading, room: room),
-            FactoryGirl.create(:reading, room: room),
-            FactoryGirl.create(:reading, room: room)
+            FactoryBot.create(:reading, room: room),
+            FactoryBot.create(:reading, room: room),
+            FactoryBot.create(:reading, room: room),
+            FactoryBot.create(:reading, room: room),
+            FactoryBot.create(:reading, room: room)
           ]
         end
         before { get :index }

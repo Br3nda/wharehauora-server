@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user, aliases: [:owner] do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
@@ -8,6 +8,6 @@ FactoryGirl.define do
     end
   end
   factory :admin, parent: :user do
-    roles { [FactoryGirl.create(:janitor)] }
+    roles { [FactoryBot.create(:janitor)] }
   end
 end
