@@ -115,3 +115,4 @@ group :test do
   gem 'timecop'
 end
 gem 'nokogiri', '>= 1.8.1'
+gem 'rails-html-sanitizer', '>= 1.0.4'
