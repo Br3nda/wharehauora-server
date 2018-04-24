@@ -49,6 +49,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       jsonapi_resources :sensors, only: [:show]
       jsonapi_resources :readings, only: [:show]
     end
+    resources :docs, only: [:index], path: '/swagger'
   end
 
   namespace :admin do

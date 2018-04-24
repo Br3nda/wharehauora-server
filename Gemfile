@@ -15,6 +15,8 @@ gem 'jquery-rails'
 gem 'rails-timeago', '~> 2.0'
 
 gem 'jsonapi-resources'
+gem 'jsonapi_spec_helpers'
+gem 'jsonapi_swagger_helpers'
 gem 'pundit-resources'
 
 # # bundle exec rake doc:rails generates the API under doc/api.

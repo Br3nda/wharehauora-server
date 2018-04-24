@@ -19,6 +19,8 @@
 PreCommit:
   ALL:
     quiet: false
+    exclude:
+      - 'public/api/docs/*'
   RuboCop:
     enabled: true
     command: ['bundle', 'exec', 'rubocop', '-D']
@@ -26,10 +28,13 @@ PreCommit:
     enabled: true
     exclude:
       - '**/db/structure.sql'  # Ignore trailing whitespace in generated files
+      - 'public/api/docs/*'
   CoffeeLint:
     enabled: true
   HardTabs:
     enabled: true
+    exclude:
+      - 'public/api/docs/*'
   CommitPlease:
     enabled: true
   AuthorEmail:
