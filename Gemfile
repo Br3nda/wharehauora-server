@@ -64,6 +64,8 @@ gem 'doorkeeper'
 # Rest/http library
 gem 'faraday'
 
+gem 'rack-cors', require: 'rack/cors'
+
 group :production do
   # for heroku
   # gem 'newrelic_rpm'
