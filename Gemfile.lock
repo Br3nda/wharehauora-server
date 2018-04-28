@@ -186,7 +186,7 @@ GEM
       rails (>= 4.2.1, < 5.1)
     purecss-rails (0.6.1)
       railties (>= 3.2.6, < 6)
-    rack (1.6.9)
+    rack (1.6.10)
     rack-cors (1.0.2)
     rack-protection (1.5.5)
       rack
