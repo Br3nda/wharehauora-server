@@ -3,9 +3,9 @@ class ReadingPolicy < ApplicationPolicy
     def resolve
       query = scope.joins_home
       if user
-        query.where('owner_id = ? OR is_public = true', user.id)
+        query.where('owner_id = ? OR homes.is_public = true', user.id)
       else
-        query.where(is_public: true)
+        query.where(homes: { is_public: true })
       end
     end
   end
