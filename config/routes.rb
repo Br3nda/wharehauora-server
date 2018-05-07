@@ -45,7 +45,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
         jsonapi_resources :sensors, only: [:index]
         jsonapi_resources :readings, only: [:index]
       end
-      jsonapi_resources :rooms, only: [:show] do |variable|
+      jsonapi_resources :rooms, only: [:show] do
         jsonapi_resources :readings, only: [:index]
       end
       jsonapi_resources :sensors, only: [:show]
