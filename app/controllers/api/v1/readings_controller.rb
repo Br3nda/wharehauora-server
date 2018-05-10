@@ -2,7 +2,7 @@ class Api::V1::ReadingsController < ApplicationController
   respond_to :json
 
   def index
-    @room = policy_scope(Room).find(params[:room_id])
+    @room = policy_scope(Room).find_by(id: params[:room_id])
     authorize @room, :show?
     @readings = {}
     %w[temperature humidity dewpoint].each do |key|
