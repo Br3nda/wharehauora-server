@@ -13,7 +13,7 @@ class Api::V1::ReadingsController < ApplicationController
 
   def readings(week_start, key)
     Reading.where(key: key, room: @room).by_week(week_start)
-      .group("date_trunc('hour', readings.created_at)")
-      .median(:value)
+           .group("date_trunc('hour', readings.created_at)")
+           .median(:value)
   end
 end
