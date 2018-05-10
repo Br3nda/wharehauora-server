@@ -16,7 +16,7 @@ class Reading < ActiveRecord::Base
   scope(:dewpoint, -> { by_key 'dewpoint' })
   scope(:normal_range, -> { where('value < 100 AND value > -5') })
 
-  scope :by_week, ->(week_start) {
+  scope :by_week, lambda { |week_start|
     where('readings.created_at >= :start AND readings.created_at <= :end',
           start: Time.zone.parse(week_start),
           end: (Time.zone.parse(week_start) + 1.week))
