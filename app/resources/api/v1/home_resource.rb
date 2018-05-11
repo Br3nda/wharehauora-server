@@ -5,6 +5,10 @@ module Api
       attribute :name
       has_many :rooms
       has_many :sensors
+      has_many :users
+      has_one :owner, class_name: 'User'
+
+      included :users
     end
   end
 end
