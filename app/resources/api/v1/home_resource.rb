@@ -3,12 +3,16 @@ module Api
     class HomeResource < ApplicationResource
       model_name 'Home'
       attribute :name
+
       has_many :rooms
       has_many :sensors
       has_many :users
       has_one :owner, class_name: 'User'
+      has_one :home_type
 
-      included :users
+      before_save do
+        @model.owner_id = current_user.id if @model.new_record?
+      end
     end
   end
 end
