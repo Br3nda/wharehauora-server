@@ -52,7 +52,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
         it { expect(temperature_response).to include('value' => 20.5, 'unit' => '°C') }
         it { expect(ratings_response).to include('good' => true, 'too_hot' => false, 'too_cold' => false) }
       end
-    end # returns expected readings
+    end
 
     before do
       create_readings
