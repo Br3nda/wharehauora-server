@@ -174,7 +174,9 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       request.headers.merge! headers
       patch :update, id: room.to_param, data: body
     end
-    it { expect(room.owner).to eq owner }
+    subject { JSON.parse(response.body)['data'] }
+    it { expect(room.name).to eq "new room name" }
     it { expect(response).to have_http_status(:success) }
+
   end
 end
