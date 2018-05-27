@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::RoomsController, type: :controller do
+  let(:headers) do
+    {
+      'Accept' => 'application/vnd.api+json',
+      'Content-Type' => 'application/vnd.api+json'
+    }
+  end
   let(:room_type) { FactoryBot.create :room_type, min_temperature: 10, max_temperature: 30 }
   let(:owner) { room.home.owner }
   let(:admin) { FactoryBot.create :admin }
@@ -8,12 +14,6 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     whanau = FactoryBot.create :user
     room.home.users << whanau
     whanau
-  end
-  let(:headers) do
-    {
-      'Accept' => 'application/vnd.api+json',
-      'Content-Type' => 'application/vnd.api+json'
-    }
   end
 
   let(:otheruser) { FactoryBot.create :user }
@@ -155,7 +155,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     it { expect(response).to have_http_status(:success) }
     it { expect(attributes['name']).to eq 'new room name' }
     it { expect(attributes['home-id']).to eq home.id }
-    it { expect(Room.first.owner.id).to eq owner.id }
+    it { expect(Room.last.owner.id).to eq owner.id }
   end
 
   describe '#update' do

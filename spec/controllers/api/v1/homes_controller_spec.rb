@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::HomesController, type: :controller do
+  let(:headers) do
+    {
+      'Accept' => 'application/vnd.api+json',
+      'Content-Type' => 'application/vnd.api+json'
+    }
+  end
   let!(:my_home) { FactoryBot.create(:home, owner: user) }
   let!(:public_home) { FactoryBot.create(:public_home) }
   let!(:private_home) { FactoryBot.create(:home) }
@@ -58,4 +64,48 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       # end
     end
   end
+
+  describe '#create' do
+    let(:owner) { FactoryBot.create :user }
+    let(:body) do
+      {
+        "type": 'homes',
+        "attributes": {
+          "name": 'home home home name',
+          "owner-id": owner.id
+        }
+      }
+    end
+    before do
+      sign_in owner
+      request.headers.merge! headers
+      post :create, data: body
+    end
+    subject { JSON.parse(response.body)['data'] }
+    let(:attributes) { subject['attributes'] }
+    it { expect(response).to have_http_status(:success) }
+    it { expect(attributes['name']).to eq 'home home home name' }
+    it { expect(Home.last.owner.id).to eq owner.id }
+  end
+
+  # describe '#update' do
+  #   let(:room) { FactoryBot.create :room, room_type: room_type }
+  #   let(:body) do
+  #     {
+  #       "type": 'rooms',
+  #       "id": room.id,
+  #       "attributes": {
+  #         "name": 'new room name'
+  #       }
+  #     }
+  #   end
+  #   before do
+  #     sign_in owner
+  #     request.headers.merge! headers
+  #     patch :update, id: room.to_param, data: body
+  #   end
+  #   subject { JSON.parse(response.body)['data'] }
+  #   it { room.reload; expect(room.name).to eq 'new room name' }
+  #   it { expect(response).to have_http_status(:success) }
+  # end
 end
