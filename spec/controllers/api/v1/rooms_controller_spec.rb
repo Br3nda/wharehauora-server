@@ -175,7 +175,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       patch :update, id: room.to_param, data: body
     end
     subject { JSON.parse(response.body)['data'] }
-    it { expect(room.name).to eq "new room name" }
+    it { room.reload; expect(room.name).to eq "new room name" }
     it { expect(response).to have_http_status(:success) }
 
   end
