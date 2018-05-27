@@ -88,24 +88,28 @@ RSpec.describe Api::V1::HomesController, type: :controller do
     it { expect(Home.last.owner.id).to eq owner.id }
   end
 
-  # describe '#update' do
-  #   let(:room) { FactoryBot.create :room, room_type: room_type }
-  #   let(:body) do
-  #     {
-  #       "type": 'rooms',
-  #       "id": room.id,
-  #       "attributes": {
-  #         "name": 'new room name'
-  #       }
-  #     }
-  #   end
-  #   before do
-  #     sign_in owner
-  #     request.headers.merge! headers
-  #     patch :update, id: room.to_param, data: body
-  #   end
-  #   subject { JSON.parse(response.body)['data'] }
-  #   it { room.reload; expect(room.name).to eq 'new room name' }
-  #   it { expect(response).to have_http_status(:success) }
-  # end
+  describe '#update' do
+    let(:home) { FactoryBot.create :home }
+    let(:home_type) { FactoryBot.create :home_type }
+    let(:owner) { home.owner }
+    let(:body) do
+      {
+        "type": 'homes',
+        "id": home.id,
+        "attributes": {
+          "name": 'new home name',
+          "home-type-id": home_type.id
+        }
+      }
+    end
+    before do
+      sign_in owner
+      request.headers.merge! headers
+      patch :update, id: home.to_param, data: body
+    end
+    subject { JSON.parse(response.body)['data'] }
+    it { home.reload; expect(home.name).to eq 'new home name' }
+    it { expect(response).to have_http_status(:success) }
+    it { expect(subject['attributes']['home-type-id']).to eq(home_type.id) }
+  end
 end
