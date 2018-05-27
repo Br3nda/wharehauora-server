@@ -25,8 +25,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  resources :rooms do
-  end
+  resources :rooms
   resources :sensors do
     delete :unassign, to: 'sensors#unassign'
   end
@@ -40,12 +39,16 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   namespace :api do
     namespace :v1 do
+      jsonapi_resources :home_types, only: [:index, :show]
+      jsonapi_resources :room_types, only: [:index, :show]
+
       jsonapi_resources :homes do
         jsonapi_resources :rooms, only: [:index]
         jsonapi_resources :sensors, only: [:index]
         jsonapi_resources :readings, only: [:index]
+        jsonapi_resources :users
       end
-      jsonapi_resources :rooms, only: [:show] do
+      jsonapi_resources :rooms do
         jsonapi_resources :readings, only: [:index]
       end
       jsonapi_resources :sensors, only: [:show]

@@ -1,6 +1,6 @@
 class HomeTypePolicy < ApplicationPolicy
   def index?
-    janitor?
+    true
   end
 
   def new?
@@ -16,7 +16,7 @@ class HomeTypePolicy < ApplicationPolicy
   end
 
   def show?
-    janitor?
+    true
   end
 
   def update?

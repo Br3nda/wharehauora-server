@@ -1,5 +1,4 @@
-class Admin::RoomTypesController < ApplicationController
-  before_action :authenticate_user!
+class Admin::RoomTypesController < Admin::AdminController
   before_action :set_room_type, only: %i[show edit update destroy]
 
   def index
@@ -10,6 +9,7 @@ class Admin::RoomTypesController < ApplicationController
   def edit; end
 
   def update
+    authorize :room_type
     @room_type.update!(room_type_params)
     redirect_to admin_room_types_path
   end
