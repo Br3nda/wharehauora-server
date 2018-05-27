@@ -13,9 +13,9 @@ module Api
       attribute :home_name
 
       has_one :home
+      has_one :owner
       has_many :sensors
       has_many :readings
-      has_one :owner
 
       def home_name
         @model.home.name

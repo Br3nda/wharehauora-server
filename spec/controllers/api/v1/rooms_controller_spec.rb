@@ -9,14 +9,20 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     room.home.users << whanau
     whanau
   end
+  let(:headers) do
+    {
+      'Accept' => 'application/vnd.api+json',
+      'Content-Type' => 'application/vnd.api+json'
+    }
+  end
 
   let(:otheruser) { FactoryBot.create :user }
-  let(:valid_params) { { id: room.id, format: :json } }
 
   # do nothing normally. Contexts below can add readings
   let(:create_readings) {}
 
   describe '#show' do
+    let(:valid_params) { { id: room.id, format: :json } }
     shared_examples 'can see summaries' do
       it { expect(response).to have_http_status(:success) }
     end
@@ -127,25 +133,48 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     end
   end
 
-  describe '#update' do
-    let(:room) { FactoryBot.create :room, room_type: room_type }
-    let(:user) { owner }
+  describe '#create' do
+    let(:home) { FactoryBot.create :home, owner: owner }
+    let(:owner) { FactoryBot.create :user }
     let(:body) do
-      {
-        #   #     data: {
-        #   #       # type: 'rooms',
-        #   #       # id: room.id,
-        #   #       # attributes: {
-        #   #       #   name: 'living room'
-        #   #       # }
-        #   #     }
+     {
+      "type": "rooms",
+      "attributes": {
+        "name": "new room name",
+        "home-id": home.id
       }
+    }
     end
     before do
-      create_readings
-      sign_in user unless user.nil?
-      patch :update, format: :json, params: { id: room.id, body: body }
+      sign_in owner
+      request.headers.merge! headers
+      post :create, data: body
     end
+    subject { JSON.parse(response.body)['data'] }
+    let(:attributes) { subject['attributes'] }
+    it { expect(response).to have_http_status(:success) }
+    it { expect(attributes['name']).to eq "new room name" }
+    it { expect(attributes['home-id']).to eq home.id }
+    it { expect(Room.first.owner.id).to eq owner.id}
+  end
+
+  describe '#update' do
+    let(:room) { FactoryBot.create :room, room_type: room_type }
+    let(:body) do
+     {
+      "type": "rooms",
+      "id": room.id,
+      "attributes": {
+        "name": "new room name"
+      }
+    }
+    end
+    before do
+      sign_in owner
+      request.headers.merge! headers
+      patch :update, id: room.to_param, data: body
+    end
+    it { expect(room.owner).to eq owner }
     it { expect(response).to have_http_status(:success) }
   end
 end
