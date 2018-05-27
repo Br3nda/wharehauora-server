@@ -26,7 +26,7 @@ module Api
       end
 
       def room_type_name
-        @model.room_type.name
+        @model.room_type.name if @model.room_type.present?
       end
 
       def sensor_count
