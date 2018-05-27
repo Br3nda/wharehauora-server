@@ -25,7 +25,9 @@ class UserPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.all if janitor?
+      return scope.all if janitor?
+      return scope.where(id: user.id) if user.present?
+      scope.none
     end
   end
 end
