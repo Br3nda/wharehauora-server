@@ -25,8 +25,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  resources :rooms do
-  end
+  resources :rooms
   resources :sensors do
     delete :unassign, to: 'sensors#unassign'
   end
