@@ -57,11 +57,11 @@ RSpec.describe Api::V1::HomesController, type: :controller do
         include_examples 'response does not includes private homes'
       end
 
-      # context 'invalid access token' do
-      #   before { get :index, format: :json }
-      #   include_examples 'response includes public homes'
-      #   include_examples 'response does not includes private homes'
-      # end
+      context 'invalid access token' do
+        before { get :index, format: :json }
+        include_examples 'response includes public homes'
+        include_examples 'response does not includes private homes'
+      end
     end
   end
 
