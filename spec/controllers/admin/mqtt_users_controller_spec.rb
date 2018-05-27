@@ -17,11 +17,11 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
   context 'not signed in ' do
     describe 'GET index' do
       before { get :index }
-      it { expect(response).to redirect_to(root_path) }
+      it { expect(response).to redirect_to(new_user_session_path) }
     end
     describe 'PUT create' do
       before { put :create }
-      it { expect(response).to redirect_to(root_path) }
+      it { expect(response).to redirect_to(new_user_session_path) }
     end
   end
 

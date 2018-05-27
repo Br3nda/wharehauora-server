@@ -7,15 +7,15 @@ RSpec.describe Admin::CleanerController, type: :controller do
   context 'not signed in ' do
     describe 'GET index' do
       before { get :index }
-      it { expect(response).to redirect_to(root_path) }
+      it { expect(response).to redirect_to(new_user_session_path) }
     end
     describe 'delete rooms' do
       before { delete :rooms }
-      it { expect(response).to redirect_to(root_path) }
+      it { expect(response).to redirect_to(new_user_session_path) }
     end
     describe 'delete sensors' do
       before { delete :sensors }
-      it { expect(response).to redirect_to(root_path) }
+      it { expect(response).to redirect_to(new_user_session_path) }
     end
   end
   context 'signed in as normal user' do
