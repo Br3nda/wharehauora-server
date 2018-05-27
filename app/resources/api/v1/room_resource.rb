@@ -2,13 +2,30 @@ module Api
   module V1
     class RoomResource < ApplicationResource
       model_name 'Room'
-      attributes :name, :updated_at, :ratings, :readings, :sensor_count, :room_type, :room_type_id
+      attribute :name
+      attribute :updated_at
+      attribute :ratings
+      attribute :readings
+      attribute :sensor_count
+      attribute :room_type_name
+      attribute :room_type_id
+      attribute :home_id
+      attribute :home_name
 
       has_one :home
       has_many :sensors
       has_many :readings
+      has_one :owner
 
-      def room_type
+      included :home
+      included :room_type
+      included :owner
+
+      def home_name
+        @model.home.name
+      end
+
+      def room_type_name
         @model.room_type.name
       end
 

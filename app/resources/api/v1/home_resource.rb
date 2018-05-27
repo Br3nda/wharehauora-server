@@ -2,13 +2,15 @@ module Api
   module V1
     class HomeResource < ApplicationResource
       model_name 'Home'
-      attribute :name
+      attributes :name, :home_type, :home_type_id
 
       has_many :rooms
       has_many :sensors
       has_many :users
       has_one :owner, class_name: 'User'
       has_one :home_type
+
+      included :home_type
 
       before_save do
         @model.owner_id = current_user.id if @model.new_record?
