@@ -5,6 +5,6 @@ class Admin::AdminController < ApplicationController
 
   def authenticate_admin!
     authenticate_user!
-    fail Pundit::NotAuthorizedError unless current_user.janitor?
+    raise Pundit::NotAuthorizedError unless current_user.janitor?
   end
 end
