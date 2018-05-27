@@ -1,4 +1,4 @@
-class Admin::CleanerController < ApplicationController
+class Admin::CleanerController < Admin::AdminController
   def index
     authorize :cleaner
     skip_policy_scope

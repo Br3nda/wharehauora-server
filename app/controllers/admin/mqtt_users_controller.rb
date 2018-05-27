@@ -1,4 +1,4 @@
-class Admin::MqttUsersController < ApplicationController
+class Admin::MqttUsersController < Admin::AdminController
   def index
     authorize :mqtt_user
     @homes = policy_scope Home.all.includes(:mqtt_user)
