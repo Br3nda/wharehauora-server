@@ -108,7 +108,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       patch :update, id: home.to_param, data: body
     end
     subject { JSON.parse(response.body)['data'] }
-    it { home.reload; expect(home.name).to eq 'new home name' }
+    it { expect(Home.find(home.id).name).to eq 'new home name' }
     it { expect(response).to have_http_status(:success) }
     it { expect(subject['attributes']['home-type-id']).to eq(home_type.id) }
   end
