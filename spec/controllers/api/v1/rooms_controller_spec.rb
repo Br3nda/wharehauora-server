@@ -137,13 +137,13 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     let(:home) { FactoryBot.create :home, owner: owner }
     let(:owner) { FactoryBot.create :user }
     let(:body) do
-     {
-      "type": "rooms",
-      "attributes": {
-        "name": "new room name",
-        "home-id": home.id
+      {
+        "type": 'rooms',
+        "attributes": {
+          "name": 'new room name',
+          "home-id": home.id
+        }
       }
-    }
     end
     before do
       sign_in owner
@@ -153,21 +153,21 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     subject { JSON.parse(response.body)['data'] }
     let(:attributes) { subject['attributes'] }
     it { expect(response).to have_http_status(:success) }
-    it { expect(attributes['name']).to eq "new room name" }
+    it { expect(attributes['name']).to eq 'new room name' }
     it { expect(attributes['home-id']).to eq home.id }
-    it { expect(Room.first.owner.id).to eq owner.id}
+    it { expect(Room.first.owner.id).to eq owner.id }
   end
 
   describe '#update' do
     let(:room) { FactoryBot.create :room, room_type: room_type }
     let(:body) do
-     {
-      "type": "rooms",
-      "id": room.id,
-      "attributes": {
-        "name": "new room name"
+      {
+        "type": 'rooms',
+        "id": room.id,
+        "attributes": {
+          "name": 'new room name'
+        }
       }
-    }
     end
     before do
       sign_in owner
@@ -175,8 +175,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       patch :update, id: room.to_param, data: body
     end
     subject { JSON.parse(response.body)['data'] }
-    it { room.reload; expect(room.name).to eq "new room name" }
+    it { room.reload; expect(room.name).to eq 'new room name' }
     it { expect(response).to have_http_status(:success) }
-
   end
 end
