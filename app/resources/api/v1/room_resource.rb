@@ -17,10 +17,6 @@ module Api
       has_many :readings
       has_one :owner
 
-      included :home
-      included :room_type
-      included :owner
-
       def home_name
         @model.home.name
       end
