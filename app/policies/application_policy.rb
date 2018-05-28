@@ -15,7 +15,7 @@ class ApplicationPolicy
     end
 
     def janitor?
-      user.role? 'janitor'
+      user.present? && user.role?('janitor')
     end
   end
 
