@@ -3,6 +3,7 @@ module Api
     class UserResource < ApplicationResource
       model_name 'User'
       attribute :email
+      filters :email
     end
   end
 end
