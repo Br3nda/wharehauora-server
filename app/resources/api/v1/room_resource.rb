@@ -17,6 +17,8 @@ module Api
       has_many :sensors
       has_many :readings
 
+      filters :room_type_id, :home_id
+
       def home_name
         @model.home.name
       end

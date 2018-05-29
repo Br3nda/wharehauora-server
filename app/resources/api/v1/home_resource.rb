@@ -10,6 +10,8 @@ module Api
       has_one :owner, class_name: 'User'
       has_one :home_type
 
+      filters :owner_id, :home_type_id
+
       before_save do
         @model.owner_id = current_user.id if @model.new_record?
       end
