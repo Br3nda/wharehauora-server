@@ -19,8 +19,6 @@ class SensorPolicy < ApplicationPolicy
     edit?
   end
 
-  private
-
   class Scope < Scope
     def resolve
       if user.janitor?
@@ -44,6 +42,8 @@ class SensorPolicy < ApplicationPolicy
            .where('(homes.owner_id = ? OR home_viewers.user_id = ?)', user.id, user.id)
     end
   end
+
+  private
 
   def owner?
     user.present? && (record.home.owner_id == user.id)

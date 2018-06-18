@@ -91,25 +91,45 @@ RSpec.describe Api::V1::HomesController, type: :controller do
   describe '#update' do
     let(:home) { FactoryBot.create :home }
     let(:home_type) { FactoryBot.create :home_type }
-    let(:owner) { home.owner }
-    let(:body) do
-      {
-        "type": 'homes',
-        "id": home.id,
-        "attributes": {
-          "name": 'new home name',
-          "home-type-id": home_type.id
+
+    shared_examples "update home" do
+      let(:body) do
+        {
+          "type": 'homes',
+          "id": home.id,
+          "attributes": {
+            "name": 'new home name',
+            "home-type-id": home_type.id
+          }
         }
-      }
+      end
+      before do
+        sign_in user
+        request.headers.merge! headers
+        patch :update, id: home.to_param, data: body
+      end
+      subject { JSON.parse(response.body)['data'] }
+      it { expect(Home.find(home.id).name).to eq 'new home name' }
+      it { expect(response).to have_http_status(:success) }
+      it { expect(subject['attributes']['home-type-id']).to eq(home_type.id) }
     end
-    before do
-      sign_in owner
-      request.headers.merge! headers
-      patch :update, id: home.to_param, data: body
+
+    describe 'my home' do
+      let(:user) { home.owner}
+      include_examples "update home"
     end
-    subject { JSON.parse(response.body)['data'] }
-    it { expect(Home.find(home.id).name).to eq 'new home name' }
-    it { expect(response).to have_http_status(:success) }
-    it { expect(subject['attributes']['home-type-id']).to eq(home_type.id) }
+
+    describe 'my family home' do
+      let(:user) { FactoryBot.create :user, homes: [home]}
+      include_examples "update home"
+    end
+    describe 'not my home' do
+      let(:user) { FactoryBot.create :user, homes: [home]}
+      include_examples "update home"
+    end
+    describe 'not authenticated' do
+    end
+    describe 'admin' do
+    end
   end
 end

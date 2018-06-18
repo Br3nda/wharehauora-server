@@ -22,16 +22,12 @@ class HomePolicy < ApplicationPolicy
   end
 
   def update?
-    return true if janitor?
-    owner?
+    owner? || janitor?
   end
 
   def destroy?
-    return true if janitor?
-    owner?
+    owner? || janitor?
   end
-
-  private
 
   class Scope < Scope
     def resolve
@@ -50,6 +46,8 @@ class HomePolicy < ApplicationPolicy
       HomeViewer.where(user_id: user.id).pluck(:home_id)
     end
   end
+
+  private
 
   def owner?
     record.owner_id == user.id if user.present?
