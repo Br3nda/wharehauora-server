@@ -26,7 +26,7 @@ class Home < ActiveRecord::Base
   validates :owner, presence: true
 
   def provision_mqtt!
-    return unless gateway_mac_address.present?
+    return if gateway_mac_address.blank?
 
     ActiveRecord::Base.transaction do
       self.mqtt_user = MqttUser.where(home: self).first_or_initialize
