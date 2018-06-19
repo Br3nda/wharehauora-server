@@ -25,7 +25,7 @@ class MqttUser < ActiveRecord::Base
   end
 
   def salt
-    ENV["SALT"]
+    ENV['SALT']
   end
 
   # def new_username
