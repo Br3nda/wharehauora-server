@@ -2,7 +2,7 @@ module Api
   module V1
     class HomeResource < ApplicationResource
       model_name 'Home'
-      attributes :name, :home_type, :home_type_id, :owner_id
+      attributes :name, :home_type, :home_type_id, :owner_id, :gateway_mac_address
 
       has_many :rooms
       has_many :sensors
