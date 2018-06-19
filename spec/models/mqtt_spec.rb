@@ -35,9 +35,9 @@ RSpec.describe Mqtt, type: :model do
       expect { Mqtt.sync_mqtt_users }.to change { MqttUser.count }.by(1)
     end
 
-    it 'provision_mqtt_user(username, password)' do
+    it 'provision_user(username, password)' do
       expect(faraday_double).to receive(:post).and_return ''
-      Mqtt.provision_mqtt_user('bob', 'bob')
+      Mqtt.provision_user('bob', 'bob')
     end
   end
 end

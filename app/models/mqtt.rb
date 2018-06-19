@@ -31,13 +31,7 @@ class Mqtt
     end
   end
 
-  def self.grant_access(username, home)
-    grant_write_access(username, home)
-    grant_read_access(username, home)
-  end
-
-  def self.grant_write_access(username, topic)
-    # topic = '/sensors/v2/758141BE1E18/#'
+  def self.grant_access(username, topic)
     body = {
       "type": 'topic',
       "pattern": topic,
@@ -45,6 +39,7 @@ class Mqtt
       "write": true,
       "username": username
     }
+
     faraday_conn.post do |req|
       req.url 'api/acl'
       req.headers['Content-Type'] = 'application/json'

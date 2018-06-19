@@ -2,16 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.4
--- Dumped by pg_dump version 9.5.4
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -25,6 +21,20 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
 
 
 SET search_path = public, pg_catalog;
@@ -74,7 +84,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: home_types; Type: TABLE; Schema: public; Owner: -
+-- Name: home_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE home_types (
@@ -105,7 +115,7 @@ ALTER SEQUENCE home_types_id_seq OWNED BY home_types.id;
 
 
 --
--- Name: home_viewers; Type: TABLE; Schema: public; Owner: -
+-- Name: home_viewers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE home_viewers (
@@ -137,7 +147,7 @@ ALTER SEQUENCE home_viewers_id_seq OWNED BY home_viewers.id;
 
 
 --
--- Name: homes; Type: TABLE; Schema: public; Owner: -
+-- Name: homes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE homes (
@@ -149,7 +159,8 @@ CREATE TABLE homes (
     is_public boolean DEFAULT false NOT NULL,
     home_type_id integer,
     rooms_count integer,
-    sensors_count integer
+    sensors_count integer,
+    gateway_mac_address character varying
 );
 
 
@@ -173,7 +184,7 @@ ALTER SEQUENCE homes_id_seq OWNED BY homes.id;
 
 
 --
--- Name: invitations; Type: TABLE; Schema: public; Owner: -
+-- Name: invitations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE invitations (
@@ -208,7 +219,7 @@ ALTER SEQUENCE invitations_id_seq OWNED BY invitations.id;
 
 
 --
--- Name: messages; Type: TABLE; Schema: public; Owner: -
+-- Name: messages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE messages (
@@ -245,7 +256,7 @@ ALTER SEQUENCE messages_id_seq OWNED BY messages.id;
 
 
 --
--- Name: mqtt_users; Type: TABLE; Schema: public; Owner: -
+-- Name: mqtt_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE mqtt_users (
@@ -280,7 +291,7 @@ ALTER SEQUENCE mqtt_users_id_seq OWNED BY mqtt_users.id;
 
 
 --
--- Name: oauth_access_grants; Type: TABLE; Schema: public; Owner: -
+-- Name: oauth_access_grants; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE oauth_access_grants (
@@ -316,7 +327,7 @@ ALTER SEQUENCE oauth_access_grants_id_seq OWNED BY oauth_access_grants.id;
 
 
 --
--- Name: oauth_access_tokens; Type: TABLE; Schema: public; Owner: -
+-- Name: oauth_access_tokens; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE oauth_access_tokens (
@@ -353,7 +364,7 @@ ALTER SEQUENCE oauth_access_tokens_id_seq OWNED BY oauth_access_tokens.id;
 
 
 --
--- Name: oauth_applications; Type: TABLE; Schema: public; Owner: -
+-- Name: oauth_applications; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE oauth_applications (
@@ -388,7 +399,7 @@ ALTER SEQUENCE oauth_applications_id_seq OWNED BY oauth_applications.id;
 
 
 --
--- Name: old_readings; Type: TABLE; Schema: public; Owner: -
+-- Name: old_readings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE old_readings (
@@ -425,7 +436,7 @@ ALTER SEQUENCE old_readings_id_seq OWNED BY old_readings.id;
 
 
 --
--- Name: readings; Type: TABLE; Schema: public; Owner: -
+-- Name: readings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE readings (
@@ -458,7 +469,7 @@ ALTER SEQUENCE readings_id_seq OWNED BY readings.id;
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: -
+-- Name: roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE roles (
@@ -490,7 +501,7 @@ ALTER SEQUENCE roles_id_seq OWNED BY roles.id;
 
 
 --
--- Name: room_types; Type: TABLE; Schema: public; Owner: -
+-- Name: room_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE room_types (
@@ -523,7 +534,7 @@ ALTER SEQUENCE room_types_id_seq OWNED BY room_types.id;
 
 
 --
--- Name: rooms; Type: TABLE; Schema: public; Owner: -
+-- Name: rooms; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE rooms (
@@ -558,7 +569,7 @@ ALTER SEQUENCE rooms_id_seq OWNED BY rooms.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE schema_migrations (
@@ -567,7 +578,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: sensors; Type: TABLE; Schema: public; Owner: -
+-- Name: sensors; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE sensors (
@@ -601,7 +612,7 @@ ALTER SEQUENCE sensors_id_seq OWNED BY sensors.id;
 
 
 --
--- Name: user_roles; Type: TABLE; Schema: public; Owner: -
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE user_roles (
@@ -633,7 +644,7 @@ ALTER SEQUENCE user_roles_id_seq OWNED BY user_roles.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -797,7 +808,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: home_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: home_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY home_types
@@ -805,7 +816,7 @@ ALTER TABLE ONLY home_types
 
 
 --
--- Name: home_viewers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: home_viewers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY home_viewers
@@ -813,7 +824,7 @@ ALTER TABLE ONLY home_viewers
 
 
 --
--- Name: homes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: homes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY homes
@@ -821,7 +832,7 @@ ALTER TABLE ONLY homes
 
 
 --
--- Name: invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY invitations
@@ -829,7 +840,7 @@ ALTER TABLE ONLY invitations
 
 
 --
--- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY messages
@@ -837,7 +848,7 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: mqtt_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: mqtt_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY mqtt_users
@@ -845,7 +856,7 @@ ALTER TABLE ONLY mqtt_users
 
 
 --
--- Name: oauth_access_grants_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: oauth_access_grants_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY oauth_access_grants
@@ -853,7 +864,7 @@ ALTER TABLE ONLY oauth_access_grants
 
 
 --
--- Name: oauth_access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: oauth_access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY oauth_access_tokens
@@ -861,7 +872,7 @@ ALTER TABLE ONLY oauth_access_tokens
 
 
 --
--- Name: oauth_applications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: oauth_applications_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY oauth_applications
@@ -869,7 +880,7 @@ ALTER TABLE ONLY oauth_applications
 
 
 --
--- Name: old_readings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: old_readings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY old_readings
@@ -877,7 +888,7 @@ ALTER TABLE ONLY old_readings
 
 
 --
--- Name: readings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: readings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY readings
@@ -885,7 +896,7 @@ ALTER TABLE ONLY readings
 
 
 --
--- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY roles
@@ -893,7 +904,7 @@ ALTER TABLE ONLY roles
 
 
 --
--- Name: room_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: room_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY room_types
@@ -901,7 +912,7 @@ ALTER TABLE ONLY room_types
 
 
 --
--- Name: rooms_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: rooms_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY rooms
@@ -909,7 +920,7 @@ ALTER TABLE ONLY rooms
 
 
 --
--- Name: sensors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: sensors_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY sensors
@@ -917,7 +928,7 @@ ALTER TABLE ONLY sensors
 
 
 --
--- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY user_roles
@@ -925,7 +936,7 @@ ALTER TABLE ONLY user_roles
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY users
@@ -933,182 +944,189 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_home_viewers_on_user_id_and_home_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_home_viewers_on_user_id_and_home_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_home_viewers_on_user_id_and_home_id ON home_viewers USING btree (user_id, home_id);
 
 
 --
--- Name: index_homes_on_is_public; Type: INDEX; Schema: public; Owner: -
+-- Name: index_homes_on_is_public; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_homes_on_is_public ON homes USING btree (is_public);
 
 
 --
--- Name: index_homes_on_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_homes_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_homes_on_name ON homes USING btree (name);
 
 
 --
--- Name: index_homes_on_owner_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_homes_on_owner_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_homes_on_owner_id ON homes USING btree (owner_id);
 
 
 --
--- Name: index_invitations_on_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_invitations_on_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_invitations_on_token ON invitations USING btree (token);
 
 
 --
--- Name: index_messages_on_created_at; Type: INDEX; Schema: public; Owner: -
+-- Name: index_messages_on_created_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_messages_on_created_at ON messages USING btree (created_at);
 
 
 --
--- Name: index_messages_on_sensor_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_messages_on_sensor_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_messages_on_sensor_id ON messages USING btree (sensor_id);
 
 
 --
--- Name: index_oauth_access_grants_on_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_oauth_access_grants_on_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_oauth_access_grants_on_token ON oauth_access_grants USING btree (token);
 
 
 --
--- Name: index_oauth_access_tokens_on_refresh_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_oauth_access_tokens_on_refresh_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_oauth_access_tokens_on_refresh_token ON oauth_access_tokens USING btree (refresh_token);
 
 
 --
--- Name: index_oauth_access_tokens_on_resource_owner_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_oauth_access_tokens_on_resource_owner_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_oauth_access_tokens_on_resource_owner_id ON oauth_access_tokens USING btree (resource_owner_id);
 
 
 --
--- Name: index_oauth_access_tokens_on_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_oauth_access_tokens_on_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_oauth_access_tokens_on_token ON oauth_access_tokens USING btree (token);
 
 
 --
--- Name: index_oauth_applications_on_uid; Type: INDEX; Schema: public; Owner: -
+-- Name: index_oauth_applications_on_uid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_oauth_applications_on_uid ON oauth_applications USING btree (uid);
 
 
 --
--- Name: index_readings_on_created_at; Type: INDEX; Schema: public; Owner: -
+-- Name: index_readings_on_created_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_readings_on_created_at ON readings USING btree (created_at);
 
 
 --
--- Name: index_readings_on_key; Type: INDEX; Schema: public; Owner: -
+-- Name: index_readings_on_key; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_readings_on_key ON readings USING btree (key);
 
 
 --
--- Name: index_readings_on_key_and_room_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_readings_on_key_and_room_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_readings_on_key_and_room_id ON readings USING btree (key, room_id);
 
 
 --
--- Name: index_readings_on_room_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_readings_on_room_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_readings_on_room_id ON readings USING btree (room_id);
 
 
 --
--- Name: index_roles_on_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_roles_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_roles_on_name ON roles USING btree (name);
 
 
 --
--- Name: index_rooms_on_home_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_rooms_on_home_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_rooms_on_home_id ON rooms USING btree (home_id);
 
 
 --
--- Name: index_rooms_on_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_rooms_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_rooms_on_name ON rooms USING btree (name);
 
 
 --
--- Name: index_sensors_on_node_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_sensors_on_node_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_sensors_on_node_id ON sensors USING btree (node_id);
 
 
 --
--- Name: index_user_roles_on_role_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_user_roles_on_role_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_user_roles_on_role_id ON user_roles USING btree (role_id);
 
 
 --
--- Name: index_user_roles_on_user_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_user_roles_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_user_roles_on_user_id ON user_roles USING btree (user_id);
 
 
 --
--- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_confirmation_token ON users USING btree (confirmation_token);
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_id_and_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_on_id_and_deleted_at ON users USING btree (id, deleted_at);
+
+
+--
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -1238,7 +1256,7 @@ ALTER TABLE ONLY homes
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user", public;
+SET search_path TO "$user",public;
 
 INSERT INTO schema_migrations (version) VALUES ('20160922042938');
 
@@ -1305,4 +1323,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170804072223');
 INSERT INTO schema_migrations (version) VALUES ('20170812022839');
 
 INSERT INTO schema_migrations (version) VALUES ('20170822215700');
+
+INSERT INTO schema_migrations (version) VALUES ('20170913005055');
+
+INSERT INTO schema_migrations (version) VALUES ('20180619034843');
 
