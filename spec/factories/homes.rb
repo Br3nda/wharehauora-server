@@ -4,7 +4,7 @@ FactoryBot.define do
     owner
     home_type
     is_public false
-  #   gateway_mac_address
+    gateway_mac_address nil
   end
 
   factory :public_home, parent: :home do
