@@ -32,7 +32,7 @@ RSpec.describe Message, type: :model do
 
     context 'when sensor is allocated to a room' do
       let(:room) { FactoryBot.create :room, home: home }
-      let(:sensor) { FactoryBot.create :sensor, home: home, room: room, node_id: '130' }
+      let!(:sensor) { FactoryBot.create :sensor, home: home, room: room, node_id: '130' }
 
       shared_examples "decodes messages" do
         it 'does not make a new sensor record' do
