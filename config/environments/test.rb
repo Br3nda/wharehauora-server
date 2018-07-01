@@ -50,4 +50,6 @@ Rails.application.configure do
     Bullet.rails_logger = true
     Bullet.raise = true # raise an error if n+1 query occurs
   end
+
+  ENV['CLOUDMQTT_URL'] = 'mqtt://bob:bobpassword@qwerty.mqttsomewhere.nz:12345/hey'
 end
