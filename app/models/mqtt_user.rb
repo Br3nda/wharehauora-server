@@ -27,16 +27,4 @@ class MqttUser < ActiveRecord::Base
   def salt
     ENV['SALT']
   end
-
-  # def new_username
-  #   "whare#{home.id}"
-  # end
-
-  # def new_password
-  #   "#{random_password 3}-#{random_password 3}-#{random_password 3}"
-  # end
-
-  # def random_password(length)
-  #   (0...length).map { (65 + rand(26)).chr }.join
-  # end
 end
