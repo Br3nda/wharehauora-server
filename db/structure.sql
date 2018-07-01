@@ -23,6 +23,20 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
+
+
 SET search_path = public, pg_catalog;
 
 --
@@ -1100,6 +1114,13 @@ CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
+-- Name: index_users_on_id_and_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_on_id_and_deleted_at ON users USING btree (id, deleted_at);
+
+
+--
 -- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1304,6 +1325,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170804072223');
 INSERT INTO schema_migrations (version) VALUES ('20170812022839');
 
 INSERT INTO schema_migrations (version) VALUES ('20170822215700');
+
+INSERT INTO schema_migrations (version) VALUES ('20170913005055');
 
 INSERT INTO schema_migrations (version) VALUES ('20180619034843');
 
