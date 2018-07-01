@@ -1,6 +1,10 @@
 .conditions-table
   - if sensor.room.blank?
-    %h2= sensor.node_id
+    %h2
+      - if sensor.mac_address.present?
+        = sensor.mac_address
+      - else
+        = sensor.node_id
     first detected
     = time_ago_in_words sensor.created_at
     ago
@@ -10,7 +14,10 @@
     .conditions-table-header
       %h2 Sensor NodeID
       %span.conditions-table-current
-        = sensor.node_id
+        - if sensor.mac_address.present?
+          = sensor.mac_address
+        - else
+          = sensor.node_id
 
     %ul.conditions-table-list
       %li
