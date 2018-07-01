@@ -1,6 +1,5 @@
 class CounterCaches < ActiveRecord::Migration
   def change
-
     add_column :homes, :rooms_count, :integer
     add_column :homes, :sensors_count, :integer
 
