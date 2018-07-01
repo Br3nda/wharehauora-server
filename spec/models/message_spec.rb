@@ -60,7 +60,7 @@ RSpec.describe Message, type: :model do
         include_examples "decodes messages"
       end
 
-      pending 'v2' do
+      context 'v2' do
         let(:topic) { "/sensors/v2/#{home.gateway_mac_address}/#{sensor.mac_address}/1/1/0/0" }
         include_examples "decodes messages"
       end
