@@ -5,20 +5,19 @@ class Message < ActiveRecord::Base
   validates :node_id, :sensor_id, :child_sensor_id,
             :message_type, :ack, :sub_type, presence: true
 
-  after_save :save_reading, :save_dewpoint
+  after_create :save_reading, :save_dewpoint
 
   scope(:joins_home, -> { joins(:sensor, sensor: :home) })
 
   def decode(topic, payload)
     self.topic = topic
     self.payload = payload
-    puts version
     if version == 'v2'
       decode_v2
-    # else
-    #   decode_v1
+    else
+      decode_v1
     end
-    save!
+    self
   end
 
   def version
@@ -29,7 +28,7 @@ class Message < ActiveRecord::Base
 
   def decode_v1
     (home_id, node_id, child_sensor_id, message_type, ack, sub_type) = topic.split('/')[3..-1]
-    update_attributes(
+    update!(
       sensor: Sensor.find_or_create_by!(home_id: home_id, node_id: node_id),
       node_id: node_id,
       child_sensor_id: child_sensor_id,
@@ -45,8 +44,8 @@ class Message < ActiveRecord::Base
     home = Home.find_by!(gateway_mac_address: gateway_mac_address)
     sensor = Sensor.find_or_create_by!(home: home, mac_address: sensor_mac, node_id: sensor_mac)
 
-    update_attributes(
-      sensor: Sensor.find_or_create_by!(home: home, mac_address: sensor_mac),
+    update!(
+      sensor: sensor,
       node_id: sensor_mac,
       child_sensor_id: child_sensor_id,
       message_type: message_type,

@@ -4,6 +4,7 @@ FactoryBot.define do
     owner
     home_type
     is_public false
+    gateway_mac_address 123456789
   end
 
   factory :public_home, parent: :home do
