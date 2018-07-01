@@ -232,7 +232,8 @@ CREATE TABLE messages (
     payload text,
     sensor_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    topic character varying
 );
 
 
@@ -588,7 +589,8 @@ CREATE TABLE sensors (
     updated_at timestamp without time zone NOT NULL,
     node_id integer NOT NULL,
     home_id integer NOT NULL,
-    messages_count integer
+    messages_count integer,
+    mac_address character varying
 );
 
 
@@ -1327,4 +1329,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170822215700');
 INSERT INTO schema_migrations (version) VALUES ('20170913005055');
 
 INSERT INTO schema_migrations (version) VALUES ('20180619034843');
+
+INSERT INTO schema_migrations (version) VALUES ('20180701090246');
 
