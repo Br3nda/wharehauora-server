@@ -9,10 +9,27 @@ class Message < ActiveRecord::Base
 
   scope(:joins_home, -> { joins(:sensor, sensor: :home) })
 
-  def self.decode(topic, payload)
-    (home_id, node_id, child_sensor_id, message_type, ack, sub_type) = topic.split('/')[3..-1]
+  def decode(topic, payload)
+    self.topic = topic
+    self.payload = payload
+    puts version
+    if version == 'v2'
+      decode_v2
+    # else
+    #   decode_v1
+    end
+    save!
+  end
 
-    Message.create!(
+  def version
+    topic.split('/')[2]
+  end
+
+  private
+
+  def decode_v1
+    (home_id, node_id, child_sensor_id, message_type, ack, sub_type) = topic.split('/')[3..-1]
+    update_attributes(
       sensor: Sensor.find_or_create_by!(home_id: home_id, node_id: node_id),
       node_id: node_id,
       child_sensor_id: child_sensor_id,
@@ -23,7 +40,21 @@ class Message < ActiveRecord::Base
     )
   end
 
-  private
+  def decode_v2
+    (gateway_mac_address, sensor_mac, child_sensor_id, message_type, ack, sub_type) = topic.split('/')[3..-1]
+    home = Home.find_by!(gateway_mac_address: gateway_mac_address)
+    sensor = Sensor.find_or_create_by!(home: home, mac_address: sensor_mac, node_id: sensor_mac)
+
+    update_attributes(
+      sensor: Sensor.find_or_create_by!(home: home, mac_address: sensor_mac),
+      node_id: sensor_mac,
+      child_sensor_id: child_sensor_id,
+      message_type: message_type,
+      ack: ack,
+      sub_type: sub_type,
+      payload: payload
+    )
+  end
 
   def save_reading
     Reading.create!(room: sensor.room, value: payload.to_f, key: key) if sensor.room

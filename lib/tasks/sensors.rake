@@ -23,7 +23,7 @@ class SensorsIngest
       c.get('/sensors/#') do |topic, message|
         puts "#{topic} #{message}"
         begin
-          Message.decode(topic, message)
+          Message.new.decode(topic, message)
         rescue ActiveRecord::RecordNotFound => e
           puts e
         end
