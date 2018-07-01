@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
+  let(:home) { FactoryBot.create :home, gateway_mac_address: 123456789 }
+
   describe 'decode' do
-    let(:home) { FactoryBot.create :home }
     let(:sensor) { FactoryBot.create :sensor, home: home }
     let(:payload) { '20.9' }
 
@@ -29,28 +30,38 @@ RSpec.describe Message, type: :model do
     end
 
     context 'when sensor is allocated to a room' do
-      let!(:topic) { "/sensors/wharehauora/#{home.id}/#{sensor.node_id}/1/1/0/0" }
       let(:room) { FactoryBot.create :room, home: home }
       let(:sensor) { FactoryBot.create :sensor, home: home, room: room, node_id: '130' }
 
-      it 'does not make a new sensor record' do
-        expect { Message.new.decode(topic, payload) }.not_to(change { Sensor.count })
+      shared_examples "decodes messages" do
+        it 'does not make a new sensor record' do
+          expect { subject }.not_to(change { Sensor.count })
+        end
+
+        it 'saves a reading' do
+          expect { subject }.to change { Reading.count }.by(1)
+        end
+
+        it 'saves against the correct sensor' do
+          message = Message.new.decode(topic, payload)
+          expect(message.sensor).to eq(sensor)
+          expect(message.node_id).to eq(130)
+        end
+        it 'Saves a reading' do
+          Message.new.decode(topic, payload)
+          expect(Reading.last.value).to eq(20.9)
+          expect(Reading.last.room.home).to eq(home)
+        end
       end
 
-      it 'saves a reading' do
-        # byebug
-        expect { Message.new.decode(topic, payload) }.to change { Reading.count }.by(1)
+      context 'v1' do
+        let!(:topic) { "/sensors/wharehauora/#{home.id}/#{sensor.node_id}/1/1/0/0" }
+        include_examples "decodes messages"
       end
 
-      it 'saves against the correct sensor' do
-        message = Message.new.decode(topic, payload)
-        expect(message.sensor).to eq(sensor)
-        expect(message.node_id).to eq(130)
-      end
-      it 'Saves a reading' do
-        Message.new.decode(topic, payload)
-        expect(Reading.last.value).to eq(20.9)
-        expect(Reading.last.room.home).to eq(home)
+      context 'v2' do
+        let(:topic) { "/sensors/v2/#{home.gateway_mac_address}/#{sensor.mac_address}/1/1/0/0" }
+        include_examples "decodes messages"
       end
     end
   end
