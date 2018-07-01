@@ -4,11 +4,12 @@ RSpec.describe Message, type: :model do
   let(:home) { FactoryBot.create :home, gateway_mac_address: 123456789 }
 
   describe 'decode' do
+    subject { Message.new.decode(topic, payload) }
+
     let(:sensor) { FactoryBot.create :sensor, home: home }
     let(:payload) { '20.9' }
 
     context 'No rooms associated with sensor' do
-      subject { Message.new.decode(topic, payload) }
       shared_examples "decodes message" do
         it { expect { subject }.to change { Message.count }.by(1) }
         it { expect { subject }.to change { Sensor.count }.by(1) }
