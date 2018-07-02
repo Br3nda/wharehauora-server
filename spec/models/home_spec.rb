@@ -11,8 +11,11 @@ RSpec.describe Home, type: :model do
   end
   describe 'provisions user' do
     let(:home) { FactoryBot.create :home, gateway_mac_address: 'abc' }
-    before { home.provision_mqtt! }
+    before do
+      ENV['SALT'] = 'hello'
+      home.provision_mqtt!
+    end
     it { expect(home.mqtt_user.username).to eq home.gateway_mac_address }
-    it { expect(home.mqtt_user.password).to eq 'df45eeca8914b6680cebe6b41edc65a7' }
+    it { expect(home.mqtt_user.password).to eq 'd76051e1dae76d1f309598102df58d84' }
   end
 end
