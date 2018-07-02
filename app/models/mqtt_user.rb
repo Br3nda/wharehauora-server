@@ -2,7 +2,7 @@ require 'digest'
 class MqttUser < ActiveRecord::Base
   belongs_to :home
   validates :username, presence: true, uniqueness: true
-  validates :home, uniqueness: true, presence: true
+  validates :home, presence: true, uniqueness: true
 
   after_initialize :default_values
 

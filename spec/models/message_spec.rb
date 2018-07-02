@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
-  let(:home) { FactoryBot.create :home, gateway_mac_address: 123456789 }
+  let(:home) { FactoryBot.create :home, gateway_mac_address: 123_456_789 }
 
   describe 'decode' do
     subject { Message.new.decode(topic, payload) }
@@ -10,7 +10,7 @@ RSpec.describe Message, type: :model do
     let(:payload) { '20.9' }
 
     context 'No rooms associated with sensor' do
-      shared_examples "decodes message" do
+      shared_examples 'decodes message' do
         it { expect { subject }.to change { Message.count }.by(1) }
         it { expect { subject }.to change { Sensor.count }.by(1) }
         it { expect { subject }.not_to(change { Reading.count }) }
@@ -19,13 +19,13 @@ RSpec.describe Message, type: :model do
 
       context 'v1' do
         let(:topic) { "/sensors/wharehauora/#{home.id}/102/1/1/0/0" }
-        include_examples "decodes message"
-          it { expect(subject.version).to eq 'wharehauora' }
+        include_examples 'decodes message'
+        it { expect(subject.version).to eq 'wharehauora' }
       end
 
       context 'v2' do
         let(:topic) { "/sensors/v2/#{home.gateway_mac_address}/#{sensor.mac_address}/1/1/0/0" }
-        include_examples "decodes message"
+        include_examples 'decodes message'
         it { expect(subject.version).to eq 'v2' }
       end
     end
@@ -34,7 +34,7 @@ RSpec.describe Message, type: :model do
       let(:room) { FactoryBot.create :room, home: home }
       let!(:sensor) { FactoryBot.create :sensor, home: home, room: room, node_id: '130' }
 
-      shared_examples "decodes messages" do
+      shared_examples 'decodes messages' do
         it 'does not make a new sensor record' do
           expect { subject }.not_to(change { Sensor.count })
         end
@@ -57,12 +57,12 @@ RSpec.describe Message, type: :model do
 
       context 'v1' do
         let!(:topic) { "/sensors/wharehauora/#{home.id}/#{sensor.node_id}/1/1/0/0" }
-        include_examples "decodes messages"
+        include_examples 'decodes messages'
       end
 
       context 'v2' do
         let(:topic) { "/sensors/v2/#{home.gateway_mac_address}/#{sensor.mac_address}/1/1/0/0" }
-        include_examples "decodes messages"
+        include_examples 'decodes messages'
       end
     end
   end
