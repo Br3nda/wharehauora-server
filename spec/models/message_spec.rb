@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
-  let(:home) { FactoryBot.create :home, gateway_mac_address: 123_456_789 }
+  let(:home) { FactoryBot.create :home, gateway_mac_address: '123A456B789' }
 
   describe 'decode' do
     subject { Message.new.decode(topic, payload) }
