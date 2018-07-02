@@ -65,6 +65,7 @@ class HomesController < ApplicationController
       name
       is_public
       home_type_id
+      gateway_mac_address
     ]
   end
 

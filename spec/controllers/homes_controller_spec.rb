@@ -10,6 +10,12 @@ RSpec.describe HomesController, type: :controller do
   let!(:another_home) { FactoryBot.create(:home, name: "someone else's home") }
   let!(:public_home)  { FactoryBot.create(:home, name: 'public home', is_public: true) }
 
+  let(:faraday_double) { double(Faraday, basic_auth: nil, post: '') }
+  before do
+    ENV['CLOUDMQTT_URL'] = 'mqtt://bob:bobpassword@qwerty.mqttsomewhere.nz:12345/hey'
+    allow(Faraday).to receive(:new).and_return faraday_double
+  end
+
   context 'not signed in ' do
     describe 'GET index' do
       before { get :index }
