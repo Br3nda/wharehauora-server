@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Home < ActiveRecord::Base
-  after_save :provision_mqtt!
-
   belongs_to :owner, class_name: 'User'
   belongs_to :home_type
 
@@ -24,13 +22,15 @@ class Home < ActiveRecord::Base
 
   validates :name, presence: true
   validates :owner, presence: true
+  validates :gateway_mac_address, uniqueness: true
 
   def provision_mqtt!
     return if gateway_mac_address.blank?
 
     ActiveRecord::Base.transaction do
-      self.mqtt_user = MqttUser.where(home: self).first_or_initialize
-      mqtt_user.provision!
+      mu = MqttUser.where(home: self).first_or_initialize
+      mu.provision!
+      mu.save!
     end
   end
 end
