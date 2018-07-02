@@ -7,7 +7,7 @@ class MqttUser < ActiveRecord::Base
   after_initialize :default_values
 
   def provision!
-    fail "Can't provision an invalid user" unless self.valid?
+    raise "Can't provision an invalid user" unless valid?
     Mqtt.provision_user(username, password)
     Mqtt.grant_access(username, topic)
     self.provisioned_at = Time.zone.now
