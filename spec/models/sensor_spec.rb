@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Sensor, type: :model do
-  describe "sensor mac address is unique" do
+  describe 'sensor mac address is unique' do
     it do
       FactoryBot.create :sensor, mac_address: 'xyz'
       expect do
