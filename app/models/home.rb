@@ -22,7 +22,7 @@ class Home < ActiveRecord::Base
 
   validates :name, presence: true
   validates :owner, presence: true
-  validates :gateway_mac_address, uniqueness: true
+  validates :gateway_mac_address, uniqueness: true, allow_nil: true
 
   def provision_mqtt!
     return if gateway_mac_address.blank?
