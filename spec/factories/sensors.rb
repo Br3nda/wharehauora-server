@@ -2,7 +2,6 @@ FactoryBot.define do
   factory :sensor do
     mac_address { node_id }
     home
-    node_id
     sequence(:node_id, 10)
   end
 
