@@ -5,7 +5,10 @@ RSpec.feature 'Front page', type: :feature do
   let!(:public_home) { FactoryBot.create :home, home_type: home_type, is_public: true }
   let!(:private_home) { FactoryBot.create :home, home_type: home_type, is_public: false }
   let!(:public_room) { FactoryBot.create :room, home: public_home, room_type: room_type }
-  let!(:private_room) { FactoryBot.create :room, home: private_home, room_type: room_type }
+  let!(:private_room) do
+    FactoryBot.create :room, home: private_home, room_type: room_type,
+                             name: 'this is a private room'
+  end
   let(:home_type) { FactoryBot.create :home_type }
   let(:room_type) { FactoryBot.create :room_type, min_temperature: 18, max_temperature: 30 }
 

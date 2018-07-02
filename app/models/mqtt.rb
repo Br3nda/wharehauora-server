@@ -23,7 +23,7 @@ class Mqtt
     end
   end
 
-  def self.provision_mqtt_user(username, password)
+  def self.provision_user(username, password)
     faraday_conn.post do |req|
       req.url 'user'
       req.headers['Content-Type'] = 'application/json'
@@ -31,26 +31,19 @@ class Mqtt
     end
   end
 
-  def self.grant_access(username, home)
-    grant_write_access(username, home)
-    grant_read_access(username, home)
-  end
+  def self.grant_access(username, topic)
+    body = {
+      "type": 'topic',
+      "pattern": topic,
+      "read": false,
+      "write": true,
+      "username": username
+    }
 
-  def self.grant_write_access(username, home)
-    topic = "/sensors/wharehauora/#{home.id}/#"
     faraday_conn.post do |req|
-      req.url 'acl'
+      req.url 'api/acl'
       req.headers['Content-Type'] = 'application/json'
-      req.body = { username: username, topic: topic, read: false, write: true }.to_json
-    end
-  end
-
-  def self.grant_read_access(username, home)
-    topic = "/actuators/wharehauora/#{home.id}/#"
-    faraday_conn.post do |req|
-      req.url 'acl'
-      req.headers['Content-Type'] = 'application/json'
-      req.body = { username: username, topic: topic, read: true, write: false }.to_json
+      req.body = body.to_json
     end
   end
 

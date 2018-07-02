@@ -6,6 +6,9 @@
     %p
       = f.radio_button :home_type_id, ht.id
       = f.label :home_type_id, ht.name
+%p
+  = f.label :gateway_mac_address
+  = f.text_field :gateway_mac_address
 
 %fieldset
   = f.label :is_public
