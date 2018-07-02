@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :sensor do
-    node_id { rand 100..999 }
+    node_id { rand 1000..9999 }
     mac_address { node_id }
     home
   end
