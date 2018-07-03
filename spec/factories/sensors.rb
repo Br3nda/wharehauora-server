@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :sensor do
-    node_id { rand 100..999 }
     mac_address { node_id }
     home
+    sequence(:node_id, 10)
   end
 
   factory :sensor_with_messages, parent: :sensor do
