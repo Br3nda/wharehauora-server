@@ -1,26 +1,42 @@
 class Mqtt
-  def self.provision_user(username, password)
-    faraday_conn.post do |req|
-      req.url 'user'
+  def self.create_user(username, password)
+    response = faraday_conn.post do |req|
+      req.url 'api/user'
       req.headers['Content-Type'] = 'application/json'
       req.body = { username: username, password: password }.to_json
     end
+    raise "#{response.status}: #{response.body}" unless response.status == 204
   end
 
-  def self.grant_access(username, topic)
-    body = {
-      "type": 'topic',
-      "pattern": topic,
-      "read": false,
-      "write": true,
-      "username": username
-    }
+  def self.delete_user(username)
+    response = faraday_conn.delete do |req|
+      req.url "api/user/#{username}"
+      req.headers['Content-Type'] = 'application/json'
+    end
+    raise "#{response.status}: #{response.body}" unless response.status == 204
+  end
 
+  def self.update_password(username, password)
+    response = faraday_conn.post do |req|
+      req.url "api/user/#{username}"
+      req.headers['Content-Type'] = 'application/json'
+      req.body = { password: password }.to_json
+    end
+    raise "#{response.status}: #{response.body}" unless response.status == 204
+  end
+
+  def self.grant_topic_access(username, topic)
     faraday_conn.post do |req|
       req.url 'api/acl'
       req.headers['Content-Type'] = 'application/json'
-      req.body = body.to_json
+      req.body = {
+        "type": 'topic',
+        "pattern": topic,
+        "username": username,
+        "read": false, "write": true
+      }.to_json
     end
+    raise "#{response.status}: #{response.body}" unless response.status == 204
   end
 
   def self.url
@@ -35,6 +51,7 @@ class Mqtt
     creds = mqtt_api_creds
     conn = Faraday.new(url: url)
     conn.basic_auth(creds.user, creds.password)
+    # conn.basic_auth(api_key, '')
     conn
   end
 end

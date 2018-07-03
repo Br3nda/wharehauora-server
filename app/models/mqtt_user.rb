@@ -3,15 +3,21 @@ class MqttUser < ActiveRecord::Base
   belongs_to :home
   validates :username, presence: true, uniqueness: true
   validates :home, presence: true, uniqueness: true
+  validates :password, presence: true
 
   after_initialize :default_values
+  after_create :provision_user
+  after_destroy :unprovision_user
 
-  def provision!
+  def provision_user
     raise "Can't provision an invalid user" unless valid?
-    Mqtt.provision_user(username, password)
-    Mqtt.grant_access(username, topic)
-    self.provisioned_at = Time.zone.now
-    save!
+    Mqtt.create_user(username, password)
+    Mqtt.grant_topic_access(username, topic)
+    update(provisioned_at: Time.zone.now)
+  end
+
+  def unprovision_user
+    Mqtt.delete_user(username)
   end
 
   private

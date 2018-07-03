@@ -25,12 +25,10 @@ class Home < ActiveRecord::Base
   validates :gateway_mac_address, uniqueness: true, allow_nil: true
 
   def provision_mqtt!
-    return if gateway_mac_address.blank?
-
     ActiveRecord::Base.transaction do
-      mu = MqttUser.where(home: self).first_or_initialize
-      mu.provision!
-      mu.save!
+      # If we have a user and the username doesn't match, get rid of it
+      mqtt_user.delete if mqtt_user.present? && mqtt_user.username != gateway_mac_address
+      self.mqtt_user = MqttUser.first_or_create(home_id: id)
     end
   end
 end
