@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::RoomTypesController < Admin::AdminController
   before_action :set_room_type, only: %i[show edit update destroy]
 

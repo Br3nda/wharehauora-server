@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mqtt
   def self.provision_user(username, password)
     faraday_conn.post do |req|

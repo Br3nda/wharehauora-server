@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :messages do
   desc 'Subscribe to incoming sensor messages'
   task delete_old: :environment do

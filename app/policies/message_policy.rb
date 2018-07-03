@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MessagePolicy < ApplicationPolicy
   def index?
     signed_in?

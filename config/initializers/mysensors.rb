@@ -1,4 +1,5 @@
 # coding: UTF-8
+# frozen_string_literal: true
 
 # MySensors constants for version 1.5 of MySensors.
 module MySensors

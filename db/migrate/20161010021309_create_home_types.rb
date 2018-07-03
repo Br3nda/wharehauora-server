@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateHomeTypes < ActiveRecord::Migration
   def change
     create_table :home_types do |t|

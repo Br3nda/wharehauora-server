@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RequestApiSpecHelpers
   def verify_response_headers(headers)
     expect(headers['Content-Type']).to include('application/vnd.api+json')

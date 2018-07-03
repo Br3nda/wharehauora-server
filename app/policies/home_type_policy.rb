@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomeTypePolicy < ApplicationPolicy
   def index?
     true

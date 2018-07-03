@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateHomeViewers < ActiveRecord::Migration
   def change
     create_table :home_viewers do |t|

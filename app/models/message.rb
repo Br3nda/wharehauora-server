@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Message < ActiveRecord::Base
   belongs_to :sensor, counter_cache: true
   delegate :home, :home_id, to: :sensor

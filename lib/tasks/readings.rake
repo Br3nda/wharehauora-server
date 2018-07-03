@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :readings do
   desc 'Subscribe to incoming sensor messages'
   task aggregate: :environment do

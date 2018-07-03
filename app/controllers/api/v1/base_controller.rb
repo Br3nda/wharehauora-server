@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::BaseController < JSONAPI::ResourceController
   include Pundit::ResourceController
   before_action :doorkeeper_auth!

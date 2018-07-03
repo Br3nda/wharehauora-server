@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMqttUsers < ActiveRecord::Migration
   def change
     create_table :mqtt_users do |t|
