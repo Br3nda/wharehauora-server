@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Reading < ActiveRecord::Base
   belongs_to :room, counter_cache: true, touch: true
 

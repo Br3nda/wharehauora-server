@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CounterCaches < ActiveRecord::Migration
   def change
     add_column :homes, :rooms_count, :integer

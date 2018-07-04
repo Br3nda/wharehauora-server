@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RoomsHelper
   def display_temperature(room)
     display_metric room, 'temperature'

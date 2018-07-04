@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomeViewersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_home, only: %i[create index new destroy]

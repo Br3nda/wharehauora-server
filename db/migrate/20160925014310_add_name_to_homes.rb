@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNameToHomes < ActiveRecord::Migration
   def change
     add_column :homes, :name, :string

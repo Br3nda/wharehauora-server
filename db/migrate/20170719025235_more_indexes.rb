@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MoreIndexes < ActiveRecord::Migration
   def change
     add_index :readings, :key

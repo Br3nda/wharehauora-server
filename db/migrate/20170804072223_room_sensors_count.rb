@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoomSensorsCount < ActiveRecord::Migration
   def change
     add_column :rooms, :sensors_count, :integer, default: 0

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::HomeTypesController < Admin::AdminController
   before_action :set_home_type, only: %i[show edit update destroy]
 

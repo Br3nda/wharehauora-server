@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddConfirmedAtToUsers < ActiveRecord::Migration
   def change
     add_column :users, :confirmation_token, :string

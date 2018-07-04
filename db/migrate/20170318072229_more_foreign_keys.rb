@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MoreForeignKeys < ActiveRecord::Migration
   def change
     # Homes table

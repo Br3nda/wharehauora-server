@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMedianFunction < ActiveRecord::Migration
   def up
     ActiveMedian.create_function

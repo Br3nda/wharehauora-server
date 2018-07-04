@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Opendata::ReadingsController < ApplicationController
   respond_to :json
   def index

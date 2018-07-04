@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LinkMqttUserToHome < ActiveRecord::Migration
   def change
     add_column :mqtt_users, :home_id, :integer

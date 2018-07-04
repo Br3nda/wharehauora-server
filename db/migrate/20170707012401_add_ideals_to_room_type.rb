@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddIdealsToRoomType < ActiveRecord::Migration
   def change
     add_column :room_types, :min_temperature, :float
