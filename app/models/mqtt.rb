@@ -1,28 +1,6 @@
+# frozen_string_literal: true
+
 class Mqtt
-  def self.fetch_mqtt_user_list
-    response = faraday_conn.get do |req|
-      req.url 'user'
-      req.headers['Content-Type'] = 'application/json'
-    end
-
-    JSON.parse(response.body)
-  end
-
-  def self.sync_mqtt_users
-    fetch_mqtt_user_list.each do |record|
-      user = User.find_by(email: record['username'])
-      home = Home.find_by(owner: user)
-
-      # make a record of this mqtt user
-      mqtt_user = MqttUser.find_by(username: record['username'])
-      mqtt_user = MqttUser.new(username: record['username']) unless mqtt_user
-      mqtt_user.home = home
-
-      # link to our own user record
-      mqtt_user.save!
-    end
-  end
-
   def self.provision_user(username, password)
     faraday_conn.post do |req|
       req.url 'user'

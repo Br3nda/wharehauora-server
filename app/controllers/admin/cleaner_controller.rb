@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::CleanerController < Admin::AdminController
   def index
     authorize :cleaner

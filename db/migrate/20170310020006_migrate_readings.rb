@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MigrateReadings < ActiveRecord::Migration
   def up
     remove_orphaned_sensor_records

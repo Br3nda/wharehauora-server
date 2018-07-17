@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::MqttUsersController < Admin::AdminController
   def index
     authorize :mqtt_user

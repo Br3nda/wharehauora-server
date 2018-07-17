@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RatingService
   def self.rating_text(rating) # rubocop:disable Metrics/MethodLength
     case rating

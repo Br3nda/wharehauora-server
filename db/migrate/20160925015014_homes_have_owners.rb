@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomesHaveOwners < ActiveRecord::Migration
   def change
     add_column :homes, :owner_id, :integer

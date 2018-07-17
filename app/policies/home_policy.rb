@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomePolicy < ApplicationPolicy
   attr_reader :user, :home
 

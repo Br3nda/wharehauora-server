@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MqttUserPolicy < ApplicationPolicy
   def index?
     janitor?

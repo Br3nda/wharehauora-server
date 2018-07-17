@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoomService
   def self.ratings(room)
     {
