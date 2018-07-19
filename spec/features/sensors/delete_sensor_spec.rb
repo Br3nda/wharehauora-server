@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.feature 'admin lists sensors', type: :feature do
+RSpec.describe 'admin lists sensors', type: :feature do
   let(:home) do
     FactoryBot.create(:home)
   end
@@ -41,17 +41,17 @@ RSpec.feature 'admin lists sensors', type: :feature do
   end
 
   context 'signed in as a normal user' do
-    background { login_as(home.owner) }
+    before { login_as(home.owner) }
     include_examples 'can delete sensors'
   end
 
   context 'signed in as admin' do
-    background { login_as(FactoryBot.create(:admin)) }
+    before { login_as(FactoryBot.create(:admin)) }
     include_examples 'can delete sensors'
   end
 
   context 'signed in as whanau' do
-    background { login_as(whanau) }
+    before { login_as(whanau) }
     let(:sensor) { FactoryBot.create :sensor, home: home }
     before { visit "/homes/#{sensor.home.id}/sensors" }
     it { is_expected.not_to have_link 'delete' }

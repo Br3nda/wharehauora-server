@@ -6,7 +6,7 @@ RSpec.describe 'OAuth Authorization', type: :request do
   let(:oauth_application) { FactoryBot.create(:oauth_application) }
   let(:user) { FactoryBot.create(:user) }
 
-  scenario 'auth ok' do
+  it 'auth ok' do
     post '/oauth/token',
          { username: user.email, password: user.password, client_id: oauth_application.uid, grant_type: 'password' },
          'Accept' => 'application/json'
@@ -17,7 +17,7 @@ RSpec.describe 'OAuth Authorization', type: :request do
     expect(authorize_response['refresh_token']).to be_present
   end
 
-  scenario 'auth not ok' do
+  it 'auth not ok' do
     post '/oauth/token',
          { username: user.email, password: '123', client_id: oauth_application.uid, grant_type: 'password' },
          'Accept' => 'application/json'

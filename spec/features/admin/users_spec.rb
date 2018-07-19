@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Users', type: :feature do
+RSpec.describe 'Users', type: :feature do
   let!(:admin_user) { FactoryBot.create :admin }
   let!(:user) { FactoryBot.create :user }
   let!(:user_tahi) { FactoryBot.create :user }
@@ -25,12 +25,12 @@ RSpec.feature 'Users', type: :feature do
   end
 
   context 'Normal user' do
-    background { login_as(user) }
+    before { login_as(user) }
     include_examples 'cannot #index'
   end
 
   context 'Logged in as admin' do
-    background { login_as(admin_user) }
+    before { login_as(admin_user) }
     describe '#index' do
       before { visit '/admin/users' }
       it { expect(page).to have_text(user_tahi.email) }

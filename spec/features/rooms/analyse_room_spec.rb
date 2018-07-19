@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.feature 'analyse room', type: :feature do
+RSpec.describe 'analyse room', type: :feature do
   let(:whanau) do
     user = FactoryBot.create :user
     room.home.users << user
@@ -48,17 +48,17 @@ RSpec.feature 'analyse room', type: :feature do
   end
 
   context 'login as whare owner' do
-    background { login_as(room.home.owner) }
+    before { login_as(room.home.owner) }
     include_examples 'show room analysis'
   end
 
   context 'login as whanau' do
-    background { login_as(whanau) }
+    before { login_as(whanau) }
     include_examples 'show room analysis'
   end
 
   context 'login as admin' do
-    background { login_as(FactoryBot.create(:admin)) }
+    before { login_as(FactoryBot.create(:admin)) }
     include_examples 'show room analysis'
   end
 end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Rooms', type: :feature do
+RSpec.describe 'Rooms', type: :feature do
   let!(:home) { FactoryBot.create :home }
   let(:whanau) do
     user = FactoryBot.create :user
@@ -70,17 +70,17 @@ RSpec.feature 'Rooms', type: :feature do
 
   shared_examples 'Test as all user types' do
     context 'Whare owner' do
-      background { login_as(home.owner) }
+      before { login_as(home.owner) }
       include_examples 'shows room list'
     end
 
     context 'Whare owner' do
-      background { login_as(whanau) }
+      before { login_as(whanau) }
       include_examples 'shows room list'
     end
 
     context 'Admin users' do
-      background { login_as(FactoryBot.create(:admin)) }
+      before { login_as(FactoryBot.create(:admin)) }
       include_examples 'shows room list'
     end
 

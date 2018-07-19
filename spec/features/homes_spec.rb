@@ -2,20 +2,20 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Homes', type: :feature do
+RSpec.describe 'Homes', type: :feature do
   let(:user) { FactoryBot.create :user }
   let(:janitor) { FactoryBot.create :role, name: 'janitor' }
   let(:admin_user) { FactoryBot.create :user, roles: [janitor] }
   let(:home_type) { FactoryBot.create :home_type }
   let!(:home) { FactoryBot.create :home, owner_id: user.id, home_type: home_type }
   context 'Normal user' do
-    background { login_as(user) }
-    scenario 'Views their home' do
+    before { login_as(user) }
+    it 'Views their home' do
       visit "/homes/#{home.id}"
       expect(page).to have_text(home.name)
     end
 
-    scenario 'Views their friend\'s home' do
+    it 'Views their friend\'s home' do
       other_home = FactoryBot.create :home
       user.viewable_homes << other_home
       visit "/homes/#{other_home.id}"
@@ -24,8 +24,8 @@ RSpec.feature 'Homes', type: :feature do
   end
 
   context 'Admin users' do
-    background { login_as(admin_user) }
-    scenario 'Views list of homes' do
+    before { login_as(admin_user) }
+    it 'Views list of homes' do
       visit '/homes'
       expect(page).to have_text(home.name)
     end
