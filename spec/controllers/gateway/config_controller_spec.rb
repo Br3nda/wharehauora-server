@@ -8,6 +8,6 @@ RSpec.describe Gateway::ConfigController, type: :controller do
     end
     it { expect(response).to have_http_status(:success) }
     it { expect(response.body).to eq('qwerty.mqttsomewhere.nz:12345') }
-    it { expect(response.content_type).to eq 'text/plain'}
+    it { expect(response.content_type).to eq 'text/plain' }
   end
 end
