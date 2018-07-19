@@ -71,6 +71,7 @@ RSpec.describe 'assign sensors', type: :feature do
     include_examples 'home has one sensor'
     describe 'can assign to existing room' do
       let!(:existing_room) { FactoryBot.create :room, name: 'library', home: home, sensors: [] }
+
       before do
         visit "/homes/#{home.id}/rooms"
         click_link 'Assign to room'
@@ -100,6 +101,7 @@ RSpec.describe 'assign sensors', type: :feature do
       home.users << user
       user
     end
+
     before { login_as(whanau) }
     pending 'can see sensors'
     pending 'cannot assign sensors'

@@ -25,6 +25,7 @@ RSpec.describe Invitation, type: :model do
 
   context 'with a token that already exists' do
     let(:existing_invitation) { FactoryBot.create(:invitation) }
+
     before { invitation.token = existing_invitation.token }
     it { is_expected.not_to be_valid }
   end
