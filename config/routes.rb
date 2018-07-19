@@ -67,4 +67,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :mqtt_users
     post :mqtt_sync, to: 'mqtt_users#sync'
   end
+
+  namespace :gateway do
+    resources :config
+  end
 end
