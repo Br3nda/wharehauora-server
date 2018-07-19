@@ -25,6 +25,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
 
   describe '#show' do
     let(:valid_params) { { id: room.id, format: :json } }
+
     shared_examples 'can see summaries' do
       it { expect(response).to have_http_status(:success) }
     end
@@ -45,18 +46,21 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
 
       describe 'room too hot' do
         let(:create_readings) { FactoryBot.create :temperature_reading, value: 101.1, room: room }
+
         it { expect(temperature_response).to include('value' => 101.1, 'unit' => '°C') }
         it { expect(ratings_response).to include('good' => false, 'too_hot' => true, 'too_cold' => false) }
       end
 
       describe 'room too cold' do
         let(:create_readings) { FactoryBot.create :temperature_reading, value: 3.1, room: room }
+
         it { expect(temperature_response).to include('value' => 3.1, 'unit' => '°C') }
         it { expect(ratings_response).to include('good' => false, 'too_hot' => false, 'too_cold' => true) }
       end
 
       describe 'room just right' do
         let(:create_readings) { FactoryBot.create :temperature_reading, value: 20.5, room: room }
+
         it { expect(temperature_response).to include('value' => 20.5, 'unit' => '°C') }
         it { expect(ratings_response).to include('good' => true, 'too_hot' => false, 'too_cold' => false) }
       end
@@ -74,27 +78,35 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       shared_examples 'check permissions' do
         describe 'and user is not logged in ' do
           let(:user) { nil }
+
           include_examples 'can see summaries'
         end
 
         describe 'and user is logged in ' do
           describe 'as the whare owner' do
             let(:user) { owner }
+
             include_examples 'can see summaries'
             include_examples 'returns expected readings'
           end
+
           describe 'as whanau' do
             let(:user) { whanau }
+
             include_examples 'can see summaries'
             include_examples 'returns expected readings'
           end
+
           describe 'as admin' do
             let(:user) { admin }
+
             include_examples 'can see summaries'
             include_examples 'returns expected readings'
           end
+
           describe 'as a user from another home' do
             let(:user) { otheruser }
+
             include_examples 'can see summaries'
             include_examples 'returns expected readings'
           end
@@ -108,27 +120,35 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
 
       describe 'and user is not logged in ' do
         let(:user) { nil }
+
         include_examples 'cannot see summaries'
       end
 
       describe 'and user is logged in ' do
         describe 'as the whare owner' do
           let(:user) { owner }
+
           include_examples 'can see summaries'
           include_examples 'returns expected readings'
         end
+
         describe 'as whanau' do
           let(:user) { whanau }
+
           include_examples 'can see summaries'
           include_examples 'returns expected readings'
         end
+
         describe 'as admin' do
           let(:user) { admin }
+
           include_examples 'can see summaries'
           include_examples 'returns expected readings'
         end
+
         describe 'but user is not allowed to view the room' do
           let(:user) { otheruser }
+
           include_examples 'cannot see summaries'
         end
       end
@@ -154,6 +174,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     end
     subject { JSON.parse(response.body)['data'] }
     let(:attributes) { subject['attributes'] }
+
     it { expect(response).to have_http_status(:success) }
     it { expect(attributes['name']).to eq 'new room name' }
     it { expect(attributes['home-id']).to eq home.id }
@@ -171,6 +192,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
         }
       }
     end
+
     before do
       sign_in owner
       request.headers.merge! headers

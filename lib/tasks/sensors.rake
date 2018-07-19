@@ -49,11 +49,15 @@ class SensorsIngest
   def connection_options
     # Create a hash with the connection parameters from the URL
     uri = URI.parse ENV['CLOUDMQTT_URL'] || 'mqtt://localhost:1883'
+    # the Heroku managed env variable isn't SSL
+    # but we gotta be better than that!
+    port = ENV['MQTT_SSL_PORT']
     {
       remote_host: uri.host,
-      remote_port: uri.port,
+      remote_port: port,
       username: uri.user,
-      password: uri.password
+      password: uri.password,
+      ssl: true
     }
   end
 

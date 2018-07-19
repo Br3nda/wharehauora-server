@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Room, type: :model do
   let(:room) { FactoryBot.create :room }
+
   describe 'finds current temperature' do
     before do
       FactoryBot.create :reading, key: 'temperature', value: 20, room: room
@@ -12,6 +13,7 @@ RSpec.describe Room, type: :model do
     end
     it { expect(room.temperature).to eq(21) }
   end
+
   describe 'finds current humidity' do
     before do
       FactoryBot.create :reading, key: 'humidity', value: 100, room: room
@@ -57,6 +59,7 @@ RSpec.describe Room, type: :model do
 
   describe 'room_type has min and max temperature set' do
     let(:room_type) { FactoryBot.create :room_type, min_temperature: 18.1, max_temperature: 25.9 }
+
     before do
       room.room_type = room_type
       room.save!
@@ -67,12 +70,14 @@ RSpec.describe Room, type: :model do
       it { expect(room.too_cold?).to eq(true) }
       # it { expect(room.too_hot?).to eq(false) }
     end
+
     describe 'temp is good' do
       before { FactoryBot.create :reading, key: 'temperature', value: 19.2, room: room }
       it { expect(room.good?).to eq(true) }
       it { expect(room.too_cold?).to eq(false) }
       it { expect(room.too_hot?).to eq(false) }
     end
+
     describe 'temp is too hot:35' do
       before { FactoryBot.create :reading, key: 'temperature', value: 35, room: room }
       it { expect(room.good?).to eq(false) }

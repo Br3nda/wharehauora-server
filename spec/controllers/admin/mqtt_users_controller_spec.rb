@@ -21,6 +21,7 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
       before { get :index }
       it { expect(response).to redirect_to(new_user_session_path) }
     end
+
     describe 'PUT create' do
       before { put :create }
       it { expect(response).to redirect_to(new_user_session_path) }
@@ -33,6 +34,7 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
       before { get :index }
       it { expect(response).to redirect_to(root_path) }
     end
+
     describe 'POST create,' do
       before { post :create, home_id: home.id }
       it { expect(response).to redirect_to(root_path) }
@@ -49,6 +51,7 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
       before { get :index }
       it { expect(response).to redirect_to(root_path) }
     end
+
     describe 'POST create,' do
       before { post :create, home_id: home.id }
       it { expect(response).to redirect_to(root_path) }
@@ -61,6 +64,7 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
       before { get :index }
       it { expect(response).to have_http_status(:success) }
     end
+
     describe 'POST create,' do
       before { post :create, home_id: home.id }
       it { expect(response).to redirect_to(admin_mqtt_users_path) }

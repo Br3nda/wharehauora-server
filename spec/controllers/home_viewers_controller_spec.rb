@@ -17,10 +17,12 @@ RSpec.describe HomeViewersController, type: :controller do
       before { get :index }
       it { expect(response).to redirect_to(new_user_session_path) }
     end
+
     describe 'GET new' do
       before { get :new, home_id: home.to_param }
       it { expect(response).to redirect_to(new_user_session_path) }
     end
+
     describe 'DELETE' do
       it do
         expect do
@@ -37,12 +39,14 @@ RSpec.describe HomeViewersController, type: :controller do
       before { get :index, home_id: home.to_param }
       it { expect(response).to have_http_status(:success) }
     end
+
     describe 'GET new' do
       before { get :new, home_id: home.to_param }
       it { expect(response).to have_http_status(:success) }
       it { expect(response).to render_template(:new) }
       it { expect(assigns(:home)).to eq(home) }
     end
+
     describe 'DELETE' do
       before { home.users << my_friend }
       it do
@@ -61,12 +65,14 @@ RSpec.describe HomeViewersController, type: :controller do
       before { get :index, home_id: home.to_param }
       it { expect(response).to have_http_status(:success) }
     end
+
     describe 'GET new' do
       before { get :new, home_id: home.to_param }
       it { expect(response).to have_http_status(:success) }
       it { expect(response).to render_template(:new) }
       it { expect(assigns(:home)).to eq(home) }
     end
+
     describe 'DELETE' do
       before { home.users << my_friend }
       it do

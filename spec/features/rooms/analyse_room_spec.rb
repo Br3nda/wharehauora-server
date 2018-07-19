@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.feature 'analyse room', type: :feature do
+RSpec.describe 'analyse room', type: :feature do
   let(:whanau) do
     user = FactoryBot.create :user
     room.home.users << user
@@ -23,24 +23,28 @@ RSpec.feature 'analyse room', type: :feature do
 
       context 'room with no readings' do
         let(:room) { FactoryBot.create :room }
+
         include_examples 'can see room details'
         it { is_expected.to have_text 'No recent readings' }
       end
 
       context 'room with temperature' do
         let(:room) { FactoryBot.create :room, temperature: 10.0 }
+
         it { is_expected.to have_text '10.0°C' }
         include_examples 'can see room details'
       end
 
       context 'room with humidity' do
         let(:room) { FactoryBot.create :room, humidity: 75.4 }
+
         it { is_expected.to have_text '75.4%' }
         include_examples 'can see room details'
       end
 
       context 'room with dewpoint' do
         let(:room) { FactoryBot.create :room, dewpoint: 7.6 }
+
         it { is_expected.to have_text '7.6°C' }
         include_examples 'can see room details'
       end
@@ -48,17 +52,17 @@ RSpec.feature 'analyse room', type: :feature do
   end
 
   context 'login as whare owner' do
-    background { login_as(room.home.owner) }
+    before { login_as(room.home.owner) }
     include_examples 'show room analysis'
   end
 
   context 'login as whanau' do
-    background { login_as(whanau) }
+    before { login_as(whanau) }
     include_examples 'show room analysis'
   end
 
   context 'login as admin' do
-    background { login_as(FactoryBot.create(:admin)) }
+    before { login_as(FactoryBot.create(:admin)) }
     include_examples 'show room analysis'
   end
 end

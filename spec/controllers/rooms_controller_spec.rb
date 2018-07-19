@@ -19,6 +19,7 @@ RSpec.describe RoomsController, type: :controller do
         it { expect(response).not_to have_http_status(:success) }
       end
     end
+
     context 'user is signed in as owner' do
       before { sign_in user }
 
@@ -37,11 +38,12 @@ RSpec.describe RoomsController, type: :controller do
 
           context '1 unassigned_sensors' do
             let!(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
+
             it { expect(assigns(:unassigned_sensors)).to eq([sensor]) }
           end
 
           context '30 unassigned_sensors' do
-            before { 30.times { FactoryBot.create(:sensor, home: home, room: nil) } }
+            before { FactoryBot.create_list(:sensor, 30, home: home, room: nil) }
             it { expect(assigns(:unassigned_sensors).size).to eq 30 }
           end
         end
@@ -98,6 +100,7 @@ RSpec.describe RoomsController, type: :controller do
           before { get :show, home_id: home.id, id: room.to_param }
           it { expect(response).to have_http_status(:not_found) }
         end
+
         describe '#edit' do
           before { get :edit, home_id: home.id, id: room.to_param }
           it { expect(response).to have_http_status(:not_found) }
@@ -109,6 +112,7 @@ RSpec.describe RoomsController, type: :controller do
   context 'No other whanau' do
     include_examples 'Test as all user types'
   end
+
   context 'Homes with lots of Whanau' do
     before { FactoryBot.create_list(:home_viewer, 7, home: home) }
     it { expect(home.users.size).to eq(7) }
