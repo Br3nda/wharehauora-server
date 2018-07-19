@@ -42,7 +42,7 @@ RSpec.describe RoomsController, type: :controller do
           end
 
           context '30 unassigned_sensors' do
-            before { 30.times { FactoryBot.create(:sensor, home: home, room: nil) } }
+            before { FactoryBot.create_list(:sensor, 30, home: home, room: nil) }
             it { expect(assigns(:unassigned_sensors).size).to eq 30 }
           end
         end

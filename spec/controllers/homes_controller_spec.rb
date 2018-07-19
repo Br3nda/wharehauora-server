@@ -101,7 +101,7 @@ RSpec.describe HomesController, type: :controller do
 
       describe 'lots of sensors' do
         before do
-          15.times { FactoryBot.create(:room, home: home) }
+          FactoryBot.create_list(:room, 15, home: home)
           get :show, id: home.id
         end
         it { expect(response).to have_http_status(:success) }
@@ -174,7 +174,7 @@ RSpec.describe HomesController, type: :controller do
 
       describe 'my home lots of rooms' do
         before do
-          15.times { FactoryBot.create(:room, home: home) }
+          FactoryBot.create_list(:room, 15, home: home)
           get :show, id: home.id
         end
         it { expect(response).to have_http_status(:success) }
