@@ -23,24 +23,28 @@ RSpec.describe 'analyse room', type: :feature do
 
       context 'room with no readings' do
         let(:room) { FactoryBot.create :room }
+
         include_examples 'can see room details'
         it { is_expected.to have_text 'No recent readings' }
       end
 
       context 'room with temperature' do
         let(:room) { FactoryBot.create :room, temperature: 10.0 }
+
         it { is_expected.to have_text '10.0°C' }
         include_examples 'can see room details'
       end
 
       context 'room with humidity' do
         let(:room) { FactoryBot.create :room, humidity: 75.4 }
+
         it { is_expected.to have_text '75.4%' }
         include_examples 'can see room details'
       end
 
       context 'room with dewpoint' do
         let(:room) { FactoryBot.create :room, dewpoint: 7.6 }
+
         it { is_expected.to have_text '7.6°C' }
         include_examples 'can see room details'
       end

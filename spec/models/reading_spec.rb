@@ -32,6 +32,7 @@ RSpec.describe Reading, type: :model do
     let!(:reading) { FactoryBot.create :reading, room: room, key: 'temperature', value: 99 }
     let!(:mould_reading) { FactoryBot.create :reading, room: room, key: 'mould', value: 99 }
     let!(:humidity_reading) { FactoryBot.create :reading, room: room, key: 'humidity', value: 99 }
+
     it 'belongs to a room' do
       expect(reading.room).to eq(room)
       expect(room.readings.first).to eq(reading)

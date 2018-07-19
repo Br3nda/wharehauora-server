@@ -21,12 +21,14 @@ RSpec.describe Message, type: :model do
 
       context 'v1' do
         let(:topic) { "/sensors/wharehauora/#{home.id}/102/1/1/0/0" }
+
         include_examples 'decodes message'
         it { expect(subject.version).to eq 'wharehauora' }
       end
 
       context 'v2' do
         let(:topic) { "/sensors/v2/#{home.gateway_mac_address}/#{sensor.mac_address}/1/1/0/0" }
+
         include_examples 'decodes message'
         it { expect(subject.version).to eq 'v2' }
       end
@@ -59,11 +61,13 @@ RSpec.describe Message, type: :model do
 
       context 'v1' do
         let!(:topic) { "/sensors/wharehauora/#{home.id}/#{sensor.node_id}/1/1/0/0" }
+
         include_examples 'decodes messages'
       end
 
       context 'v2' do
         let(:topic) { "/sensors/v2/#{home.gateway_mac_address}/#{sensor.mac_address}/1/1/0/0" }
+
         include_examples 'decodes messages'
       end
     end

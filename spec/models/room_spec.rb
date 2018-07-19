@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Room, type: :model do
   let(:room) { FactoryBot.create :room }
+
   describe 'finds current temperature' do
     before do
       FactoryBot.create :reading, key: 'temperature', value: 20, room: room
@@ -58,6 +59,7 @@ RSpec.describe Room, type: :model do
 
   describe 'room_type has min and max temperature set' do
     let(:room_type) { FactoryBot.create :room_type, min_temperature: 18.1, max_temperature: 25.9 }
+
     before do
       room.room_type = room_type
       room.save!

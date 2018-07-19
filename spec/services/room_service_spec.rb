@@ -22,6 +22,7 @@ RSpec.describe RoomService, type: :model do
     describe 'too cold' do
       let(:room) { FactoryBot.create :room, temperature: 18.1, humidity: 10.1, room_type: room_type }
       let(:room_type) { FactoryBot.create :room_type, min_temperature: 26, max_temperature: 31 }
+
       it { is_expected.to include(too_hot: false) }
       it { is_expected.to include(too_cold: true) }
     end
@@ -29,12 +30,14 @@ RSpec.describe RoomService, type: :model do
     describe 'ok' do
       let(:room) { FactoryBot.create :room, temperature: 25.1, humidity: 10.1, room_type: room_type }
       let(:room_type) { FactoryBot.create :room_type }
+
       it { is_expected.to include(too_damp: false) }
     end
 
     describe 'too damp' do
       let(:room) { FactoryBot.create :room, temperature: 1.1, humidity: 109.1, room_type: room_type }
       let(:room_type) { FactoryBot.create :room_type }
+
       it { is_expected.to include(too_damp: true) }
     end
   end
