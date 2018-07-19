@@ -6,6 +6,7 @@ RSpec.describe ReadingsController, type: :controller do
   let(:user) { FactoryBot.create :user }
   let(:home) { FactoryBot.create :home, owner: user }
   let(:valid_params) { { home_id: home.id, key: 'temperature', day: '2017-01-01' } }
+
   context 'Not signed in' do
     describe 'GET index' do
       before { get :index, valid_params }

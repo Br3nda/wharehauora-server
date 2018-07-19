@@ -8,6 +8,7 @@ RSpec.describe 'Homes', type: :feature do
   let(:admin_user) { FactoryBot.create :user, roles: [janitor] }
   let(:home_type) { FactoryBot.create :home_type }
   let!(:home) { FactoryBot.create :home, owner_id: user.id, home_type: home_type }
+
   context 'Normal user' do
     before { login_as(user) }
     it 'Views their home' do

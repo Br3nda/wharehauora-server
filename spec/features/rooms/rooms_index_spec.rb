@@ -51,17 +51,20 @@ RSpec.describe 'Rooms', type: :feature do
 
         describe 'room has one temperature reading' do
           let(:room) { FactoryBot.create :room, temperature: 44.4, home: home, room_type: room_type }
+
           before { visit home_rooms_path(room.home.id) }
           include_examples 'show home and room'
         end
 
         describe 'room is too cold' do
           let(:room) { FactoryBot.create :room, temperature: 15.1, home: home, room_type: room_type }
+
           include_examples 'show home and room'
         end
 
         describe 'room is too hot' do
           let(:room) { FactoryBot.create :room, temperature: 45.2, home: home, room_type: room_type }
+
           include_examples 'show home and room'
         end
       end
@@ -93,6 +96,7 @@ RSpec.describe 'Rooms', type: :feature do
 
       describe 'Can see public home' do
         let(:public_home) { FactoryBot.create :public_home }
+
         before(:each) { visit home_rooms_path(public_home.id) }
         it { is_expected.to have_text(public_home.name) }
       end

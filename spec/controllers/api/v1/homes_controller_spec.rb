@@ -17,6 +17,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
 
   context 'OAuth authenticated ' do
     let!(:application) { FactoryBot.create(:oauth_application) }
+
     subject { JSON.parse response.body }
 
     describe 'GET #index' do
@@ -33,6 +34,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       shared_examples 'response includes my home' do
         describe 'response includes my home' do
           let(:matching_home) { subject['data'].select { |home| home['id'] == my_home.id.to_s }.first }
+
           it { expect(matching_home).to include('id' => my_home.id.to_s) }
           it { expect(matching_home['attributes']).to include('name' => my_home.name) }
         end
@@ -40,6 +42,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       shared_examples 'response includes public homes' do
         describe 'response includes public home' do
           let(:matching_home) { subject['data'].select { |home| home['id'] == public_home.id.to_s }.first }
+
           it { expect(matching_home).to include('id' => public_home.id.to_s) }
           it { expect(matching_home['attributes']).to include('name' => public_home.name) }
         end
@@ -85,6 +88,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
     end
     subject { JSON.parse(response.body)['data'] }
     let(:attributes) { subject['attributes'] }
+
     it { expect(response).to have_http_status(:success) }
     it { expect(attributes['name']).to eq 'home home home name' }
     it { expect(Home.last.owner.id).to eq owner.id }
@@ -104,6 +108,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
         }
       }
     end
+
     before do
       sign_in owner
       request.headers.merge! headers

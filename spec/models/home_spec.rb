@@ -14,6 +14,7 @@ RSpec.describe Home, type: :model do
 
   describe 'provisions user' do
     let(:home) { FactoryBot.create :home, gateway_mac_address: 'abc' }
+
     before do
       ENV['SALT'] = 'hello'
       home.provision_mqtt!

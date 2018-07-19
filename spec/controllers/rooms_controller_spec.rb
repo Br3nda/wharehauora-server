@@ -38,6 +38,7 @@ RSpec.describe RoomsController, type: :controller do
 
           context '1 unassigned_sensors' do
             let!(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
+
             it { expect(assigns(:unassigned_sensors)).to eq([sensor]) }
           end
 
