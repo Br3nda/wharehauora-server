@@ -83,16 +83,19 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
             include_examples 'can see summaries'
             include_examples 'returns expected readings'
           end
+
           describe 'as whanau' do
             let(:user) { whanau }
             include_examples 'can see summaries'
             include_examples 'returns expected readings'
           end
+
           describe 'as admin' do
             let(:user) { admin }
             include_examples 'can see summaries'
             include_examples 'returns expected readings'
           end
+
           describe 'as a user from another home' do
             let(:user) { otheruser }
             include_examples 'can see summaries'
@@ -117,16 +120,19 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
           include_examples 'can see summaries'
           include_examples 'returns expected readings'
         end
+
         describe 'as whanau' do
           let(:user) { whanau }
           include_examples 'can see summaries'
           include_examples 'returns expected readings'
         end
+
         describe 'as admin' do
           let(:user) { admin }
           include_examples 'can see summaries'
           include_examples 'returns expected readings'
         end
+
         describe 'but user is not allowed to view the room' do
           let(:user) { otheruser }
           include_examples 'cannot see summaries'

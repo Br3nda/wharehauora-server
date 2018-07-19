@@ -23,10 +23,12 @@ RSpec.describe HomesController, type: :controller do
       before { get :index }
       it { expect(response).to redirect_to(new_user_session_path) }
     end
+
     describe 'GET new' do
       before { get :new }
       it { expect(response).to redirect_to(new_user_session_path) }
     end
+
     pending 'PUT create'
 
     describe 'DELETE destroy' do
@@ -34,10 +36,12 @@ RSpec.describe HomesController, type: :controller do
         before { delete :destroy, id: home.id }
         it { expect(response).to redirect_to(new_user_session_path) }
       end
+
       describe "someone else's home" do
         before { delete :destroy, id: another_home.id }
         it { expect(response).to redirect_to(new_user_session_path) }
       end
+
       describe 'public home' do
         before { delete :destroy, id: public_home.id }
         it { expect(response).to redirect_to(new_user_session_path) }
@@ -77,10 +81,12 @@ RSpec.describe HomesController, type: :controller do
         before { delete :destroy, id: home.id }
         it { expect(response).to redirect_to(homes_path) }
       end
+
       describe "someone else's home" do
         before { delete :destroy, id: another_home.id }
         it { expect(response).to have_http_status(:not_found) }
       end
+
       describe 'public home' do
         before { delete :destroy, id: public_home.id }
         it { expect(response).to redirect_to(root_path) }
@@ -92,6 +98,7 @@ RSpec.describe HomesController, type: :controller do
         before { get :show, id: home.id }
         it { expect(response).to have_http_status(:success) }
       end
+
       describe 'lots of sensors' do
         before do
           15.times { FactoryBot.create(:room, home: home) }
@@ -111,6 +118,7 @@ RSpec.describe HomesController, type: :controller do
         it { expect(assigns(:home).id).to eq public_home.id }
       end
     end
+
     describe '#update' do
       before { patch :update, id: home.to_param, home: { name: 'New home name' } }
       it { expect(response).to redirect_to(home) }
@@ -144,11 +152,13 @@ RSpec.describe HomesController, type: :controller do
         it { expect(response).to redirect_to(homes_path) }
         it { expect(assigns(:home).id).to eq home.id }
       end
+
       describe "someone else's home" do
         before { delete :destroy, id: another_home.id }
         it { expect(response).to redirect_to(homes_path) }
         it { expect(assigns(:home).id).to eq another_home.id }
       end
+
       describe 'public home' do
         before { delete :destroy, id: public_home.id }
         it { expect(response).to redirect_to(homes_path) }
@@ -161,6 +171,7 @@ RSpec.describe HomesController, type: :controller do
         before { get :show, id: home.id }
         it { expect(response).to have_http_status(:success) }
       end
+
       describe 'my home lots of rooms' do
         before do
           15.times { FactoryBot.create(:room, home: home) }

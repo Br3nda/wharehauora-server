@@ -20,6 +20,7 @@ RSpec.describe ReadingsController, type: :controller do
       describe 'no readings yet' do
         it { expect(response).to have_http_status(:success) }
       end
+
       describe 'has readings' do
         before do
           5.times do

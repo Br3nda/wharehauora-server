@@ -11,6 +11,7 @@ RSpec.describe Home, type: :model do
       end.to raise_error ActiveRecord::RecordInvalid
     end
   end
+
   describe 'provisions user' do
     let(:home) { FactoryBot.create :home, gateway_mac_address: 'abc' }
     before do

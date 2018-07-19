@@ -29,11 +29,13 @@ RSpec.describe 'admin lists sensors', type: :feature do
       let(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
       include_examples 'sensor was deleted'
     end
+
     context 'assigned sensor' do
       let(:room) { FactoryBot.create :room, home: home }
       let(:sensor) { FactoryBot.create :sensor, home: home, room: room }
       include_examples 'sensor was deleted'
     end
+
     context 'sensor with messages' do
       let(:sensor) { FactoryBot.create :sensor_with_messages, home: home }
       include_examples 'sensor was deleted'

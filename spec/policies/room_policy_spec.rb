@@ -95,6 +95,7 @@ describe RoomPolicy do
       include_examples 'can see the room'
       include_examples 'forbidden to edit the room'
     end
+
     context 'another user, not whanau' do
       let(:user) { other_user }
       include_examples 'can see the room'

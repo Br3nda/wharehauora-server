@@ -16,6 +16,7 @@ RSpec.describe SensorsController, type: :controller do
       before { get :show, id: sensor.id }
       it { expect(response).to redirect_to(new_user_session_path) }
     end
+
     describe 'delete' do
       before { delete :destroy, id: sensor.id }
       it { expect(response).to redirect_to(new_user_session_path) }

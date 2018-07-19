@@ -15,6 +15,7 @@ RSpec.describe WelcomeController, type: :controller do
         before { get :index }
         it { expect(response).to have_http_status(:success) }
       end
+
       context 'lots of sensor data' do
         let!(:readings) do
           [
@@ -30,6 +31,7 @@ RSpec.describe WelcomeController, type: :controller do
       end
     end
   end
+
   context 'user is signed in' do
     before do
       sign_in user

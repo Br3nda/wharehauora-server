@@ -20,21 +20,26 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
       before { get :index }
       include_examples 'redirect to login'
     end
+
     describe 'GET show' do
       before { get :show, id: home_type.to_param }
     end
+
     describe 'GET new' do
       before { get :new, valid_params.to_param   }
       include_examples 'redirect to login'
     end
+
     describe 'PUT create' do
       before { put :create }
       include_examples 'redirect to login'
     end
+
     describe 'GET edit' do
       before { get :edit, id: home_type.to_param }
       include_examples 'redirect to login'
     end
+
     describe 'DELETE destroy' do
       before { delete :destroy, id: home_type.id }
       include_examples 'redirect to login'
@@ -47,47 +52,58 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
       before { get :index }
       include_examples 'redirect to home'
     end
+
     describe 'GET show' do
       before { get :show, id: home_type.to_param }
     end
+
     describe 'GET new' do
       before { get :new, valid_params.to_param   }
       include_examples 'redirect to home'
     end
+
     describe 'PUT create' do
       before { put :create }
       include_examples 'redirect to home'
     end
+
     describe 'GET edit' do
       before { get :edit, id: home_type.to_param }
       include_examples 'redirect to home'
     end
+
     describe 'DELETE destroy' do
       before { delete :destroy, id: home_type.id }
       include_examples 'redirect to home'
     end
   end
+
   context 'signed in as admin' do
     before { sign_in admin_user }
     describe 'GET index' do
       before { get :index }
       it { expect(response).to have_http_status(:success) }
     end
+
     describe 'GET show' do
       before { get :show, id: home_type.to_param }
     end
+
     describe 'GET new' do
       before { get :new, home_type: valid_params }
       it { expect(response).to have_http_status(:success) }
     end
+
     describe 'PUT create,' do
       before { put :create, home_type: valid_params }
       it { expect(response).to redirect_to(admin_home_types_path) }
     end
+
     describe 'GET edit' do
       before { get :edit, id: home_type.to_param }
       it { expect(response).to have_http_status(:success) }
     end
+
     describe 'DELETE destroy' do
       before { delete :destroy, id: home_type.id }
       it { expect(response).to redirect_to(admin_home_types_path) }

@@ -102,6 +102,7 @@ RSpec.describe 'Rooms', type: :feature do
   context 'No other whanau' do
     include_examples 'Test as all user types'
   end
+
   context 'Homes with lots of Whanau' do
     before { FactoryBot.create_list(:home_viewer, 7, home: home) }
     it { expect(home.users.size).to eq(7) }
