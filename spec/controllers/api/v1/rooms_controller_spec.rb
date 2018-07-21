@@ -172,6 +172,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       request.headers.merge! headers
       post :create, data: body
     end
+
     subject { JSON.parse(response.body)['data'] }
     let(:attributes) { subject['attributes'] }
 
@@ -198,6 +199,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       request.headers.merge! headers
       patch :update, id: room.to_param, data: body
     end
+
     subject { JSON.parse(response.body)['data'] }
     it { expect(Room.find(room.id).name).to eq 'new room name' }
     it { expect(response).to have_http_status(:success) }

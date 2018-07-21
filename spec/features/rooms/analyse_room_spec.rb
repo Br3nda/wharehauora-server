@@ -53,16 +53,19 @@ RSpec.describe 'analyse room', type: :feature do
 
   context 'login as whare owner' do
     before { login_as(room.home.owner) }
+
     include_examples 'show room analysis'
   end
 
   context 'login as whanau' do
     before { login_as(whanau) }
+
     include_examples 'show room analysis'
   end
 
   context 'login as admin' do
     before { login_as(FactoryBot.create(:admin)) }
+
     include_examples 'show room analysis'
   end
 end

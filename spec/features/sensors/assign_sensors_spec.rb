@@ -26,6 +26,7 @@ RSpec.describe 'assign sensors', type: :feature do
       fill_in 'sensor_room_name', with: 'room of oarsum'
       click_button 'Save'
     end
+
     it { is_expected.to have_text 'room of oarsum' }
     it { is_expected.not_to have_text 'new sensors detected' }
     it { is_expected.to have_link 'Analyse' }
@@ -35,6 +36,7 @@ RSpec.describe 'assign sensors', type: :feature do
     describe 'can see sensors' do
       context 'with 1 unassigned sensor in home' do
         before { visit "/homes/#{sensor.home_id}/rooms" }
+
         include_examples 'home has one sensor'
         it { expect(home.sensors.size).to eq 1 }
         include_examples 'new sensors detected and assignable'
@@ -42,6 +44,7 @@ RSpec.describe 'assign sensors', type: :feature do
 
       context 'with no sensors in home' do
         before { visit "/homes/#{home.id}/rooms" }
+
         describe 'no sensors detected' do
           it { is_expected.not_to have_text 'new sensors detected' }
           it { is_expected.not_to have_link 'Assign to room' }
@@ -59,6 +62,7 @@ RSpec.describe 'assign sensors', type: :feature do
         fill_in 'sensor_room_name', with: 'room of oarsum'
         click_button 'Save'
       end
+
       describe 'no sensors displayed' do
         it { is_expected.not_to have_text 'new sensors detected' }
         it { is_expected.to have_text 'room of oarsum' }
@@ -78,6 +82,7 @@ RSpec.describe 'assign sensors', type: :feature do
         choose "sensor_room_id_#{existing_room.id}"
         click_button 'Save'
       end
+
       it { is_expected.not_to have_text 'new sensors detected' }
       it { is_expected.to have_text existing_room.name }
       it { is_expected.to have_link 'Analyse' }
@@ -88,6 +93,7 @@ RSpec.describe 'assign sensors', type: :feature do
 
   context 'signed in as a normal user' do
     before { login_as(home.owner) }
+
     include_examples 'can see sensors'
     describe 'can assign sensors' do
       include_examples 'can assign to new room'
@@ -103,12 +109,14 @@ RSpec.describe 'assign sensors', type: :feature do
     end
 
     before { login_as(whanau) }
+
     pending 'can see sensors'
     pending 'cannot assign sensors'
   end
 
   context 'signed in as admin' do
     before { login_as(FactoryBot.create(:admin)) }
+
     include_examples 'can see sensors'
     describe 'can assign sensors' do
       include_examples 'can assign to new room'

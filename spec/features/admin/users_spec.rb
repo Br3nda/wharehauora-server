@@ -12,6 +12,7 @@ RSpec.describe 'Users', type: :feature do
   shared_examples 'cannot #index' do
     describe '#index' do
       before { visit '/admin/users' }
+
       it { expect(page).not_to have_text(user_tahi.email) }
       it { expect(page).not_to have_text(user_rua.email) }
       it { expect(page).not_to have_text(user_toru.email) }
@@ -26,13 +27,16 @@ RSpec.describe 'Users', type: :feature do
 
   context 'Normal user' do
     before { login_as(user) }
+
     include_examples 'cannot #index'
   end
 
   context 'Logged in as admin' do
     before { login_as(admin_user) }
+
     describe '#index' do
       before { visit '/admin/users' }
+
       it { expect(page).to have_text(user_tahi.email) }
       it { expect(page).to have_text(user_rua.email) }
       it { expect(page).to have_text(user_toru.email) }
@@ -43,6 +47,7 @@ RSpec.describe 'Users', type: :feature do
         visit '/admin/users'
         click_link user.email
       end
+
       it { is_expected.to have_text('Editing User') }
     end
 
@@ -53,6 +58,7 @@ RSpec.describe 'Users', type: :feature do
         fill_in :user_email, with: 'hiria@example.com'
         click_button 'save'
       end
+
       it { is_expected.to have_text 'hiria@example.com' }
     end
 
@@ -62,6 +68,7 @@ RSpec.describe 'Users', type: :feature do
         click_link user.email
         click_button 'delete'
       end
+
       it { is_expected.not_to have_text user.email }
     end
   end

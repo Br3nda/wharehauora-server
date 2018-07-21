@@ -56,6 +56,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       describe 'home owner' do
         include_examples 'token belongs to home owner'
         before { get :index, format: :json, access_token: token.token }
+
         it { expect(response.status).to eq 200 }
         include_examples 'response includes my home'
         include_examples 'response includes public homes'
@@ -64,6 +65,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
 
       context 'invalid access token' do
         before { get :index, format: :json }
+
         include_examples 'response includes public homes'
         include_examples 'response does not includes private homes'
       end
@@ -86,6 +88,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       request.headers.merge! headers
       post :create, data: body
     end
+
     subject { JSON.parse(response.body)['data'] }
     let(:attributes) { subject['attributes'] }
 
@@ -114,6 +117,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       request.headers.merge! headers
       patch :update, id: home.to_param, data: body
     end
+
     subject { JSON.parse(response.body)['data'] }
     it { expect(Home.find(home.id).name).to eq 'new home name' }
     it { expect(response).to have_http_status(:success) }

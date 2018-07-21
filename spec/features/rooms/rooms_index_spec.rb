@@ -15,16 +15,19 @@ RSpec.describe 'Rooms', type: :feature do
   shared_examples 'shows room list' do
     context 'home has no rooms' do
       before(:each) { visit home_rooms_path(home.id) }
+
       it { is_expected.to have_text(home.name) }
       it { is_expected.to have_text('This whare has no monitored rooms.') }
     end
 
     context 'home has 100 rooms' do
       before(:each) { visit home_rooms_path(home.id) }
+
       before do
         FactoryBot.create_list :room, 100, home: home
         visit home_rooms_path(home.id)
       end
+
       it { is_expected.to have_text(home.rooms.order(:name).first.name) }
     end
 
@@ -53,6 +56,7 @@ RSpec.describe 'Rooms', type: :feature do
           let(:room) { FactoryBot.create :room, temperature: 44.4, home: home, room_type: room_type }
 
           before { visit home_rooms_path(room.home.id) }
+
           include_examples 'show home and room'
         end
 
@@ -74,22 +78,26 @@ RSpec.describe 'Rooms', type: :feature do
   shared_examples 'Test as all user types' do
     context 'Whare owner' do
       before { login_as(home.owner) }
+
       include_examples 'shows room list'
     end
 
     context 'Whare owner' do
       before { login_as(whanau) }
+
       include_examples 'shows room list'
     end
 
     context 'Admin users' do
       before { login_as(FactoryBot.create(:admin)) }
+
       include_examples 'shows room list'
     end
 
     context 'Not Logged in' do
       describe 'Cannot see private home' do
         before(:each) { visit home_rooms_path(home.id) }
+
         it { is_expected.not_to have_text(home.name) }
         it { is_expected.not_to have_text('This whare has no monitored rooms.') }
       end
@@ -98,6 +106,7 @@ RSpec.describe 'Rooms', type: :feature do
         let(:public_home) { FactoryBot.create :public_home }
 
         before(:each) { visit home_rooms_path(public_home.id) }
+
         it { is_expected.to have_text(public_home.name) }
       end
     end
@@ -109,6 +118,7 @@ RSpec.describe 'Rooms', type: :feature do
 
   context 'Homes with lots of Whanau' do
     before { FactoryBot.create_list(:home_viewer, 7, home: home) }
+
     it { expect(home.users.size).to eq(7) }
     include_examples 'Test as all user types'
   end

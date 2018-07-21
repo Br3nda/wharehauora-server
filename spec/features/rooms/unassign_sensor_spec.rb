@@ -19,23 +19,28 @@ RSpec.describe 'Room', type: :feature do
         visit room_path(room.id)
         click_link 'remove from room'
       end
+
       it { is_expected.not_to have_text 'remove from room' }
     end
   end
 
   context 'login as whare owner' do
     before { login_as(room.home.owner) }
+
     include_examples 'unassign sensor from a room'
   end
 
   context 'login as admin' do
     before { login_as(FactoryBot.create(:admin)) }
+
     include_examples 'unassign sensor from a room'
   end
 
   context 'login as whanau' do
     before { login_as(whanau) }
+
     before(:each) { visit room_path(room.id) }
+
     it { is_expected.not_to have_text 'remove from room' }
   end
 end
