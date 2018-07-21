@@ -245,4 +245,3 @@ module MySensors
     ST_IMAGE = 5  # Image
   end
 end
-
