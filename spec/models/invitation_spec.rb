@@ -10,6 +10,7 @@ RSpec.describe Invitation, type: :model do
 
   describe '#to_param' do
     subject(:id) { invitation.to_param }
+
     it { is_expected.to eq invitation.token }
   end
 

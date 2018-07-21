@@ -25,6 +25,7 @@ RSpec.describe 'Whare Types', type: :feature do
 
   context 'Logged in as admin' do
     subject { page }
+
     before { login_as(admin_user) }
 
     it 'Admin sees home_types list' do

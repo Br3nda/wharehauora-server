@@ -174,6 +174,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     end
 
     subject { JSON.parse(response.body)['data'] }
+
     let(:attributes) { subject['attributes'] }
 
     it { expect(response).to have_http_status(:success) }
@@ -201,6 +202,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     end
 
     subject { JSON.parse(response.body)['data'] }
+
     it { expect(Room.find(room.id).name).to eq 'new room name' }
     it { expect(response).to have_http_status(:success) }
   end

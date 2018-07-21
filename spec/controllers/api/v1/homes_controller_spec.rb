@@ -90,6 +90,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
     end
 
     subject { JSON.parse(response.body)['data'] }
+
     let(:attributes) { subject['attributes'] }
 
     it { expect(response).to have_http_status(:success) }
@@ -119,6 +120,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
     end
 
     subject { JSON.parse(response.body)['data'] }
+
     it { expect(Home.find(home.id).name).to eq 'new home name' }
     it { expect(response).to have_http_status(:success) }
     it { expect(subject['attributes']['home-type-id']).to eq(home_type.id) }

@@ -16,6 +16,7 @@ RSpec.describe InvitationsController, type: :controller do
   context 'not signed in ' do
     describe 'GET show' do
       subject { response }
+
       before { get :show, id: invitation.to_param }
 
       it { is_expected.to redirect_to(new_user_session_path) }
@@ -23,6 +24,7 @@ RSpec.describe InvitationsController, type: :controller do
 
     describe 'POST create' do
       subject { response }
+
       before { post :create, home_id: home.to_param }
 
       it { is_expected.to redirect_to(new_user_session_path) }
