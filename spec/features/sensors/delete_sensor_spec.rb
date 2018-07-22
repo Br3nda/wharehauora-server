@@ -13,7 +13,6 @@ RSpec.describe 'admin lists sensors', type: :feature do
     user
   end
 
-
   shared_examples 'sensor was deleted' do
     it 'sensor was deleted' do
       is_expected.not_to have_text sensor.node_id

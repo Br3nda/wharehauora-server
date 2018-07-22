@@ -90,7 +90,6 @@ RSpec.describe 'assign sensors', type: :feature do
     end
   end
 
-
   context 'signed in as a normal user' do
     before { login_as(home.owner) }
 

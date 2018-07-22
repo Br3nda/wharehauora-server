@@ -20,7 +20,6 @@ RSpec.describe 'Users', type: :feature do
     end
   end
 
-
   context 'not signed in' do
     include_examples 'cannot #index'
   end

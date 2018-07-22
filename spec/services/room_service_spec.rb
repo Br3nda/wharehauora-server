@@ -47,7 +47,6 @@ RSpec.describe RoomService, type: :model do
     let(:room) { FactoryBot.create :room, temperature: 1.1, humidity: 86.1, room_type: room_type }
     let(:room_type) { FactoryBot.create :room_type }
 
-
     describe 'temperature' do
       it { expect(subject['temperature']).to include(value: 1.1) }
     end

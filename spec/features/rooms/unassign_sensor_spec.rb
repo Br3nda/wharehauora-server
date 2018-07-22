@@ -10,7 +10,6 @@ RSpec.describe 'Room', type: :feature do
     user
   end
 
-
   let(:room) { FactoryBot.create :room_with_sensors }
 
   shared_examples 'unassign sensor from a room' do

@@ -14,7 +14,6 @@ RSpec.describe 'admin sensors in a home', type: :feature do
     user
   end
 
-
   shared_examples 'lists sensors' do
     describe 'shows list of sensors in home' do
       before { visit "/homes/#{home.id}/sensors" }

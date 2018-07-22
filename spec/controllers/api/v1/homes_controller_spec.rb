@@ -19,7 +19,6 @@ RSpec.describe Api::V1::HomesController, type: :controller do
     subject { JSON.parse response.body }
     let!(:application) { FactoryBot.create(:oauth_application) }
 
-
     describe 'GET #index' do
       shared_examples 'token belongs to home owner' do
         let!(:token) do
@@ -90,7 +89,6 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       post :create, data: body
     end
 
-
     let(:attributes) { subject['attributes'] }
 
     it { expect(response).to have_http_status(:success) }
@@ -119,7 +117,6 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       request.headers.merge! headers
       patch :update, id: home.to_param, data: body
     end
-
 
     it { expect(Home.find(home.id).name).to eq 'new home name' }
     it { expect(response).to have_http_status(:success) }

@@ -174,7 +174,6 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       post :create, data: body
     end
 
-
     let(:attributes) { subject['attributes'] }
 
     it { expect(response).to have_http_status(:success) }
@@ -201,7 +200,6 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       request.headers.merge! headers
       patch :update, id: room.to_param, data: body
     end
-
 
     it { expect(Room.find(room.id).name).to eq 'new room name' }
     it { expect(response).to have_http_status(:success) }

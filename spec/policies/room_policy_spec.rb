@@ -13,7 +13,6 @@ describe RoomPolicy do
   end
   let(:other_user) { FactoryBot.create :user }
 
-
   shared_examples 'can see the room' do
     it { is_expected.to permit_action(:show) }
   end

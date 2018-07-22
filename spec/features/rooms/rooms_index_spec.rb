@@ -11,7 +11,6 @@ RSpec.describe 'Rooms', type: :feature do
     user
   end
 
-
   shared_examples 'shows room list' do
     context 'home has no rooms' do
       before { visit home_rooms_path(home.id) }
