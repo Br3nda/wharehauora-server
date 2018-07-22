@@ -29,7 +29,7 @@ RSpec.describe HomeViewersController, type: :controller do
       it do
         expect do
           delete :destroy, id: my_friend.to_param, home_id: home.id
-        end.not_to(change { HomeViewer.count })
+        end.not_to(change(HomeViewer, :count))
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe HomeViewersController, type: :controller do
       it do
         expect do
           delete :destroy, id: my_friend.to_param, home_id: home.id
-        end.to change { HomeViewer.count }.by(-1)
+        end.to change(HomeViewer, :count).by(-1)
         expect(response).to redirect_to(home_home_viewers_path(home))
         expect(assigns(:home)).to eq(home)
       end
@@ -88,7 +88,7 @@ RSpec.describe HomeViewersController, type: :controller do
       it do
         expect do
           delete :destroy, id: my_friend.to_param, home_id: home.id
-        end.to change { HomeViewer.count }.by(-1)
+        end.to change(HomeViewer, :count).by(-1)
         expect(response).to redirect_to(home_home_viewers_path(home))
         expect(assigns(:home)).to eq(home)
       end

@@ -61,13 +61,13 @@ RSpec.describe Admin::CleanerController, type: :controller do
     describe 'delete rooms' do
       before { FactoryBot.create :room }
 
-      it { expect { delete :rooms }.to change { Room.count }.by(-1) }
+      it { expect { delete :rooms }.to change(Room, :count).by(-1) }
     end
 
     describe 'delete sensors' do
       before { FactoryBot.create :sensor, node_id: 1 }
 
-      it { expect { delete :sensors }.to change { Sensor.count }.by(-1) }
+      it { expect { delete :sensors }.to change(Sensor, :count).by(-1) }
     end
   end
 end
