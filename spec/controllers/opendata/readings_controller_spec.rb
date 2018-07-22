@@ -11,12 +11,14 @@ RSpec.describe Opendata::ReadingsController, type: :controller do
   context 'Not signed in' do
     describe 'GET index' do
       before { get :index, valid_params }
+
       it { expect(response).to have_http_status(:success) }
     end
   end
 
   context 'Signed in as home owner' do
     before { sign_in user }
+
     describe 'GET index' do
       describe 'no readings yet' do
         it { expect(response).to have_http_status(:success) }
@@ -37,6 +39,7 @@ RSpec.describe Opendata::ReadingsController, type: :controller do
           end
           get :index, valid_params
         end
+
         it { expect(response).to have_http_status(:success) }
         it 'finds readings, organised by room types' do
           expected_value = [[Time.zone.parse(day), 10.0]]

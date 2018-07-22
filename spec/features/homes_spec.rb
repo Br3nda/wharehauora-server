@@ -11,6 +11,7 @@ RSpec.describe 'Homes', type: :feature do
 
   context 'Normal user' do
     before { login_as(user) }
+
     it 'Views their home' do
       visit "/homes/#{home.id}"
       expect(page).to have_text(home.name)
@@ -26,6 +27,7 @@ RSpec.describe 'Homes', type: :feature do
 
   context 'Admin users' do
     before { login_as(admin_user) }
+
     it 'Views list of homes' do
       visit '/homes'
       expect(page).to have_text(home.name)

@@ -16,6 +16,7 @@ RSpec.describe 'Whare Types', type: :feature do
 
   context 'Normal user' do
     before { login_as(user) }
+
     it 'requests whare type admin page' do
       visit '/admin/home_types'
       expect(page).not_to have_text('whare types')
@@ -24,7 +25,9 @@ RSpec.describe 'Whare Types', type: :feature do
 
   context 'Logged in as admin' do
     subject { page }
+
     before { login_as(admin_user) }
+
     it 'Admin sees home_types list' do
       visit '/admin/home_types'
       expect(page).to have_text('Cake whare')

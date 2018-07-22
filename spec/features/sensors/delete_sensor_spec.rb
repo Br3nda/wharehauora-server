@@ -25,6 +25,7 @@ RSpec.describe 'admin lists sensors', type: :feature do
       visit "/homes/#{sensor.home.id}/sensors"
       click_link 'delete'
     end
+
     context 'unassigned sensor' do
       let(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
 
@@ -47,19 +48,23 @@ RSpec.describe 'admin lists sensors', type: :feature do
 
   context 'signed in as a normal user' do
     before { login_as(home.owner) }
+
     include_examples 'can delete sensors'
   end
 
   context 'signed in as admin' do
     before { login_as(FactoryBot.create(:admin)) }
+
     include_examples 'can delete sensors'
   end
 
   context 'signed in as whanau' do
     before { login_as(whanau) }
+
     let(:sensor) { FactoryBot.create :sensor, home: home }
 
     before { visit "/homes/#{sensor.home.id}/sensors" }
+
     it { is_expected.not_to have_link 'delete' }
   end
 end

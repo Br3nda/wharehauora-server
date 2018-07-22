@@ -17,6 +17,7 @@ RSpec.describe 'Widget management', type: :feature do
 
   context 'Normal user' do
     before { login_as(user) }
+
     it 'requests room type admin page' do
       visit '/admin/room_types'
       expect(page).not_to have_text('Room types')
@@ -25,6 +26,7 @@ RSpec.describe 'Widget management', type: :feature do
 
   context 'Logged in as admin' do
     before { login_as(admin_user) }
+
     it 'Admin sees room_types list' do
       visit '/admin/room_types'
       expect(page).to have_text('Cake room')
