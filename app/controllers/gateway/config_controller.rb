@@ -5,7 +5,6 @@
 # Leaves out all the devise and ssl
 class Gateway::ConfigController < ActionController::Base
   def show
-    skip_authorization
     @server = Mqtt.mqtt_api_creds.hostname
     @port = Mqtt.mqtt_api_creds.port
     render inline: "#{@server}:#{@port}"
