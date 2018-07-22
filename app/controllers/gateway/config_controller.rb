@@ -1,8 +1,12 @@
-class Gateway::ConfigController < ApplicationController
+# frozen_string_literal: true
+
+####
+#### Note, not inheriting from Application Controller
+# Leaves out all the devise and ssl
+class Gateway::ConfigController < ActionController::Base
   def show
-    skip_authorization
     @server = Mqtt.mqtt_api_creds.hostname
-    @port = ENV['MQTT_SSL_PORT']
+    @port = Mqtt.mqtt_api_creds.port
     render inline: "#{@server}:#{@port}"
   end
 end

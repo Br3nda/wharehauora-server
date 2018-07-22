@@ -13,6 +13,7 @@ RSpec.describe WelcomeController, type: :controller do
     describe 'GET index' do
       context 'no sensor data' do
         before { get :index }
+
         it { expect(response).to have_http_status(:success) }
       end
 
@@ -28,6 +29,7 @@ RSpec.describe WelcomeController, type: :controller do
         end
 
         before { get :index }
+
         it { expect(response).to have_http_status(:success) }
       end
     end
@@ -40,6 +42,7 @@ RSpec.describe WelcomeController, type: :controller do
 
     describe 'GET index' do
       before { get :index }
+
       it { expect(response).to have_http_status(:success) }
     end
   end

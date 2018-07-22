@@ -11,6 +11,7 @@ RSpec.describe Room, type: :model do
       FactoryBot.create :reading, key: 'temperature', value: 15, room: room
       FactoryBot.create :reading, key: 'temperature', value: 21, room: room
     end
+
     it { expect(room.temperature).to eq(21) }
   end
 
@@ -20,6 +21,7 @@ RSpec.describe Room, type: :model do
       FactoryBot.create :reading, key: 'humidity', value: 65, room: room
       FactoryBot.create :reading, key: 'humidity', value: 71, room: room
     end
+
     it { expect(room.humidity).to eq(71) }
   end
 
@@ -34,6 +36,7 @@ RSpec.describe Room, type: :model do
 
   describe 'has old reading' do
     before { FactoryBot.create :reading, key: 'humidity', value: 0, room: room, created_at: 3.hours.ago }
+
     it { expect(room.current?('temperature')).to eq(false) }
     it { expect(room.current?('humidity')).to eq(false) }
     pending 'good?'
@@ -42,6 +45,7 @@ RSpec.describe Room, type: :model do
 
   describe 'has current readings' do
     before { FactoryBot.create :reading, key: 'humidity', value: 0, room: room }
+
     it { expect(room.current?('humidity')).to eq(true) }
     pending 'good?'
   end
@@ -51,6 +55,7 @@ RSpec.describe Room, type: :model do
       Timecop.freeze
       FactoryBot.create :temperature_reading, created_at: 5.minutes.ago, room: room
     end
+
     it { expect(room.age_of_last_reading('temperature')).to be_within(0.0001).of(5 * 60) }
     after do
       Timecop.return
@@ -64,8 +69,10 @@ RSpec.describe Room, type: :model do
       room.room_type = room_type
       room.save!
     end
+
     describe 'temp is too cold: 2.1' do
       before { FactoryBot.create :reading, key: 'temperature', value: 2.1, room: room }
+
       it { expect(room.good?).to eq(false) }
       it { expect(room.too_cold?).to eq(true) }
       # it { expect(room.too_hot?).to eq(false) }
@@ -73,6 +80,7 @@ RSpec.describe Room, type: :model do
 
     describe 'temp is good' do
       before { FactoryBot.create :reading, key: 'temperature', value: 19.2, room: room }
+
       it { expect(room.good?).to eq(true) }
       it { expect(room.too_cold?).to eq(false) }
       it { expect(room.too_hot?).to eq(false) }
@@ -80,6 +88,7 @@ RSpec.describe Room, type: :model do
 
     describe 'temp is too hot:35' do
       before { FactoryBot.create :reading, key: 'temperature', value: 35, room: room }
+
       it { expect(room.good?).to eq(false) }
       it { expect(room.too_hot?).to eq(true) }
     end

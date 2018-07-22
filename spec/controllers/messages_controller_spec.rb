@@ -11,12 +11,14 @@ RSpec.describe MessagesController, type: :controller do
   context 'Not signed in' do
     describe 'GET index' do
       before { get :index, valid_params }
+
       it { expect(response).not_to have_http_status(:success) }
     end
   end
 
   context 'Signed in as home owner' do
     before { sign_in user }
+
     describe 'GET index' do
       before do
         @message_one = FactoryBot.create :message, sensor: sensor
@@ -24,6 +26,7 @@ RSpec.describe MessagesController, type: :controller do
 
         get :index, valid_params
       end
+
       it { expect(response).to have_http_status(:success) }
       it { expect(assigns(:messages).last).to eq(@message_one) }
       it { expect(assigns(:messages).first).to eq(@message_two) }

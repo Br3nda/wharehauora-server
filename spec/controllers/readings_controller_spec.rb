@@ -10,14 +10,17 @@ RSpec.describe ReadingsController, type: :controller do
   context 'Not signed in' do
     describe 'GET index' do
       before { get :index, valid_params }
+
       it { expect(response).not_to have_http_status(:success) }
     end
   end
 
   context 'Signed in as home owner' do
     before { sign_in user }
+
     describe 'GET index' do
       before { get :index, valid_params }
+
       describe 'no readings yet' do
         it { expect(response).to have_http_status(:success) }
       end
@@ -32,6 +35,7 @@ RSpec.describe ReadingsController, type: :controller do
             end
           end
         end
+
         it { expect(response).to have_http_status(:success) }
       end
     end

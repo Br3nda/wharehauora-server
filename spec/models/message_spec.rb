@@ -13,9 +13,9 @@ RSpec.describe Message, type: :model do
 
     context 'No rooms associated with sensor' do
       shared_examples 'decodes message' do
-        it { expect { subject }.to change { Message.count }.by(1) }
-        it { expect { subject }.to change { Sensor.count }.by(1) }
-        it { expect { subject }.not_to(change { Reading.count }) }
+        it { expect { subject }.to change(Message, :count).by(1) }
+        it { expect { subject }.to change(Sensor, :count).by(1) }
+        it { expect { subject }.not_to(change(Reading, :count)) }
         it { expect(subject.sensor.home).to eq(home) }
       end
 
@@ -40,11 +40,11 @@ RSpec.describe Message, type: :model do
 
       shared_examples 'decodes messages' do
         it 'does not make a new sensor record' do
-          expect { subject }.not_to(change { Sensor.count })
+          expect { subject }.not_to(change(Sensor, :count))
         end
 
         it 'saves a reading' do
-          expect { subject }.to change { Reading.count }.by(1)
+          expect { subject }.to change(Reading, :count).by(1)
         end
 
         it 'saves against the correct sensor' do

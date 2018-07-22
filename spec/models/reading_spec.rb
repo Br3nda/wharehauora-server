@@ -44,6 +44,7 @@ RSpec.describe Reading, type: :model do
     before do
       FactoryBot.create_list :reading, 10, key: 'test'
     end
+
     it 'finds temperature' do
       expect(Reading.temperature.first).to eq(reading)
     end

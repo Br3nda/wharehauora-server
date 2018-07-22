@@ -10,16 +10,19 @@ RSpec.describe Invitation, type: :model do
 
   describe '#to_param' do
     subject(:id) { invitation.to_param }
+
     it { is_expected.to eq invitation.token }
   end
 
   context 'with a blank email' do
     before { invitation.email = nil }
+
     it { is_expected.not_to be_valid }
   end
 
   context 'with a blank token' do
     before { invitation.token = nil }
+
     it { is_expected.not_to be_valid }
   end
 
@@ -27,6 +30,7 @@ RSpec.describe Invitation, type: :model do
     let(:existing_invitation) { FactoryBot.create(:invitation) }
 
     before { invitation.token = existing_invitation.token }
+
     it { is_expected.not_to be_valid }
   end
 

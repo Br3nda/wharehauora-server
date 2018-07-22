@@ -16,13 +16,17 @@ RSpec.describe InvitationsController, type: :controller do
   context 'not signed in ' do
     describe 'GET show' do
       subject { response }
+
       before { get :show, id: invitation.to_param }
+
       it { is_expected.to redirect_to(new_user_session_path) }
     end
 
     describe 'POST create' do
       subject { response }
+
       before { post :create, home_id: home.to_param }
+
       it { is_expected.to redirect_to(new_user_session_path) }
     end
 
@@ -31,7 +35,7 @@ RSpec.describe InvitationsController, type: :controller do
         expect(invitation).to be_present
         expect do
           delete :destroy, id: invitation.to_param, home_id: home.id
-        end.not_to(change { Invitation.count })
+        end.not_to(change(Invitation, :count))
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -42,6 +46,7 @@ RSpec.describe InvitationsController, type: :controller do
 
     describe 'GET show' do
       before { get :show, id: invitation.to_param }
+
       it { expect(response).to have_http_status(:success) }
     end
 
@@ -59,7 +64,7 @@ RSpec.describe InvitationsController, type: :controller do
       it 'creates a home viewer' do
         expect do
           post :decline, id: invitation.to_param
-        end.not_to(change { home.home_viewers })
+        end.not_to(change(home, :home_viewers))
         expect(invitation.reload).to be_declined
         expect(response).to redirect_to(root_path)
       end

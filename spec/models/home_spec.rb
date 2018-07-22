@@ -19,6 +19,7 @@ RSpec.describe Home, type: :model do
       ENV['SALT'] = 'hello'
       home.provision_mqtt!
     end
+
     it { expect(home.mqtt_user.username).to eq home.gateway_mac_address }
     it { expect(home.mqtt_user.password).to eq 'd76051e1dae76d1f309598102df58d84' }
   end
