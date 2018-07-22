@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Room', type: :feature do
+  subject { page }
   let(:whanau) do
     user = FactoryBot.create :user
     room.home.users << user
     user
   end
 
-  subject { page }
 
   let(:room) { FactoryBot.create :room_with_sensors }
 

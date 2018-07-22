@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'admin lists sensors', type: :feature do
+  subject { page }
   let(:home) do
     FactoryBot.create(:home)
   end
@@ -12,7 +13,6 @@ RSpec.describe 'admin lists sensors', type: :feature do
     user
   end
 
-  subject { page }
 
   shared_examples 'sensor was deleted' do
     it 'sensor was deleted' do

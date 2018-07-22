@@ -16,9 +16,9 @@ RSpec.describe Api::V1::HomesController, type: :controller do
   let!(:user) { FactoryBot.create :user }
 
   context 'OAuth authenticated ' do
+    subject { JSON.parse response.body }
     let!(:application) { FactoryBot.create(:oauth_application) }
 
-    subject { JSON.parse response.body }
 
     describe 'GET #index' do
       shared_examples 'token belongs to home owner' do
@@ -73,6 +73,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
   end
 
   describe '#create' do
+    subject { JSON.parse(response.body)['data'] }
     let(:owner) { FactoryBot.create :user }
     let(:body) do
       {
@@ -89,7 +90,6 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       post :create, data: body
     end
 
-    subject { JSON.parse(response.body)['data'] }
 
     let(:attributes) { subject['attributes'] }
 
@@ -99,6 +99,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
   end
 
   describe '#update' do
+    subject { JSON.parse(response.body)['data'] }
     let(:home) { FactoryBot.create :home }
     let(:home_type) { FactoryBot.create :home_type }
     let(:owner) { home.owner }
@@ -119,7 +120,6 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       patch :update, id: home.to_param, data: body
     end
 
-    subject { JSON.parse(response.body)['data'] }
 
     it { expect(Home.find(home.id).name).to eq 'new home name' }
     it { expect(response).to have_http_status(:success) }

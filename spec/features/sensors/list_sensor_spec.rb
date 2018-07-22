@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'admin sensors in a home', type: :feature do
+  subject { page }
   let(:home) do
     FactoryBot.create(:home_with_sensors, sensors_count: 15)
   end
@@ -13,7 +14,6 @@ RSpec.describe 'admin sensors in a home', type: :feature do
     user
   end
 
-  subject { page }
 
   shared_examples 'lists sensors' do
     describe 'shows list of sensors in home' do

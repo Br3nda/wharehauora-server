@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Rooms', type: :feature do
+  subject { page }
   let!(:home) { FactoryBot.create :home }
   let(:whanau) do
     user = FactoryBot.create :user
@@ -10,7 +11,6 @@ RSpec.describe 'Rooms', type: :feature do
     user
   end
 
-  subject { page }
 
   shared_examples 'shows room list' do
     context 'home has no rooms' do
