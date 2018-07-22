@@ -39,7 +39,7 @@ RSpec.describe 'Room', type: :feature do
   context 'login as whanau' do
     before { login_as(whanau) }
 
-    before(:each) { visit room_path(room.id) }
+    before { visit room_path(room.id) }
 
     it { is_expected.not_to have_text 'remove from room' }
   end

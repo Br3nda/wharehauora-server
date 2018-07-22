@@ -14,14 +14,14 @@ RSpec.describe 'Rooms', type: :feature do
 
   shared_examples 'shows room list' do
     context 'home has no rooms' do
-      before(:each) { visit home_rooms_path(home.id) }
+      before { visit home_rooms_path(home.id) }
 
       it { is_expected.to have_text(home.name) }
       it { is_expected.to have_text('This whare has no monitored rooms.') }
     end
 
     context 'home has 100 rooms' do
-      before(:each) { visit home_rooms_path(home.id) }
+      before { visit home_rooms_path(home.id) }
 
       before do
         FactoryBot.create_list :room, 100, home: home
@@ -32,7 +32,7 @@ RSpec.describe 'Rooms', type: :feature do
     end
 
     context 'home with 1 room' do
-      before(:each) { visit home_rooms_path(room.home.id) }
+      before { visit home_rooms_path(room.home.id) }
 
       let(:room_type) do
         FactoryBot.create :room_type, min_temperature: 20.0, max_temperature: 40
@@ -96,7 +96,7 @@ RSpec.describe 'Rooms', type: :feature do
 
     context 'Not Logged in' do
       describe 'Cannot see private home' do
-        before(:each) { visit home_rooms_path(home.id) }
+        before { visit home_rooms_path(home.id) }
 
         it { is_expected.not_to have_text(home.name) }
         it { is_expected.not_to have_text('This whare has no monitored rooms.') }
@@ -105,7 +105,7 @@ RSpec.describe 'Rooms', type: :feature do
       describe 'Can see public home' do
         let(:public_home) { FactoryBot.create :public_home }
 
-        before(:each) { visit home_rooms_path(public_home.id) }
+        before { visit home_rooms_path(public_home.id) }
 
         it { is_expected.to have_text(public_home.name) }
       end
