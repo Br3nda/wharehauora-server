@@ -9,6 +9,6 @@ class CreateHomeViewers < ActiveRecord::Migration
     end
     add_foreign_key :home_viewers, :users
     add_foreign_key :home_viewers, :homes
-    add_index :home_viewers, [:user_id, :home_id], unique: true
+    add_index :home_viewers, %i[user_id home_id], unique: true
   end
 end

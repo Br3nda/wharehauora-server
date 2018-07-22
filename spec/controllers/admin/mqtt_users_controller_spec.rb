@@ -19,24 +19,29 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
   context 'not signed in ' do
     describe 'GET index' do
       before { get :index }
+
       it { expect(response).to redirect_to(new_user_session_path) }
     end
 
     describe 'PUT create' do
       before { put :create }
+
       it { expect(response).to redirect_to(new_user_session_path) }
     end
   end
 
   context 'signed in as home owner' do
     before { sign_in home.owner }
+
     describe 'GET index' do
       before { get :index }
+
       it { expect(response).to redirect_to(root_path) }
     end
 
     describe 'POST create,' do
       before { post :create, home_id: home.id }
+
       it { expect(response).to redirect_to(root_path) }
     end
   end
@@ -47,26 +52,32 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
       home.users << user
       sign_in user
     end
+
     describe 'GET index' do
       before { get :index }
+
       it { expect(response).to redirect_to(root_path) }
     end
 
     describe 'POST create,' do
       before { post :create, home_id: home.id }
+
       it { expect(response).to redirect_to(root_path) }
     end
   end
 
   context 'signed in as admin' do
     before { sign_in admin_user }
+
     describe 'GET index' do
       before { get :index }
+
       it { expect(response).to have_http_status(:success) }
     end
 
     describe 'POST create,' do
       before { post :create, home_id: home.id }
+
       it { expect(response).to redirect_to(admin_mqtt_users_path) }
     end
   end
