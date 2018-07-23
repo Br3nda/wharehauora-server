@@ -25,7 +25,6 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
   end
 
-
   context 'user is signed in' do
     before { sign_in user }
 
