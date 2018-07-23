@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'assign sensors', type: :feature do
   subject { page }
+
   let(:home) do
     FactoryBot.create :home, name: 'Toku whare whanau'
   end

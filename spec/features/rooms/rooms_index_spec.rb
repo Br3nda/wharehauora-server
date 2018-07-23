@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Rooms', type: :feature do
   subject { page }
+
   let!(:home) { FactoryBot.create :home }
   let(:whanau) do
     user = FactoryBot.create :user

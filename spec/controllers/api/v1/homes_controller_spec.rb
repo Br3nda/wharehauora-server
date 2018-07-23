@@ -17,6 +17,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
 
   context 'OAuth authenticated ' do
     subject { JSON.parse response.body }
+
     let!(:application) { FactoryBot.create(:oauth_application) }
 
     describe 'GET #index' do
@@ -73,6 +74,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
 
   describe '#create' do
     subject { JSON.parse(response.body)['data'] }
+
     let(:owner) { FactoryBot.create :user }
     let(:body) do
       {
@@ -98,6 +100,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
 
   describe '#update' do
     subject { JSON.parse(response.body)['data'] }
+
     let(:home) { FactoryBot.create :home }
     let(:home_type) { FactoryBot.create :home_type }
     let(:owner) { home.owner }

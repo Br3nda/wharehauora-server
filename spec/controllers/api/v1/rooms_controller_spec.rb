@@ -157,6 +157,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
 
   describe '#create' do
     subject { JSON.parse(response.body)['data'] }
+
     let(:home) { FactoryBot.create :home, owner: owner }
     let(:owner) { FactoryBot.create :user }
     let(:body) do
@@ -184,6 +185,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
 
   describe '#update' do
     subject { JSON.parse(response.body)['data'] }
+
     let(:room) { FactoryBot.create :room, room_type: room_type }
     let(:body) do
       {
