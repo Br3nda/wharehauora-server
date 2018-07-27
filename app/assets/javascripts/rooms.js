@@ -11,7 +11,7 @@ function setupRoomDataReloader(room_id) {
 
 function getRoomData(room_id) {
   var url = '/api/v1/rooms/' + room_id + '.json';
-  $.get( url )
+  $.get(url)
     .done((response) => {
       updateRoomDisplay(room_id, response.data);
     })
