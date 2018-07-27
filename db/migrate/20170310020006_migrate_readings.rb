@@ -39,7 +39,7 @@ class MigrateReadings < ActiveRecord::Migration
 
     # Migrate existing data
     Sensor.all.each do |sensor|
-      room_name = sensor.room_name ? sensor.room_name : 'new room'
+      room_name = sensor.room_name || 'new room'
       room = Room.new
       room.home_id = sensor.home_id
       room.name = room_name
