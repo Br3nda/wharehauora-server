@@ -37,14 +37,14 @@ function updateRoomDisplay(room_id, data) {
     var div = '#room-' + room_id + '-' + key + '-';
     if (reading) {
 
-      // show the value
+      // Show the value
       $(div + 'value').text(reading.value + reading.unit);
 
-      // show the timestamp of the readings
+      // Show the timestamp of the readings
       $(div +'timestamp').attr('datetime', reading.timestamp);
       jQuery(div +'timestamp').timeago();
 
-      // mark whether this reading is current or old
+      // Mark whether this reading is current or old
       var current_reading_div = $('#room-' + room_id + '-no-' + key);
       if(reading.current) current_reading_div.hide();
       else current_reading_div.show();
