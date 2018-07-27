@@ -10,12 +10,12 @@ function setupRoomDataReloader(room_id) {
 function getRoomData(room_id) {
   var url = '/api/v1/rooms/' + room_id + '.json';
   $.get( url )
-  .done(function(response) {
-    updateRoomDisplay(room_id, response.data);
-  })
-  .fail(function(response, data) {
-    displayErrorForRoom(room_id);
-  });
+    .done(function(response) {
+      updateRoomDisplay(room_id, response.data);
+    })
+    .fail(function(response, data) {
+      displayErrorForRoom(room_id);
+    });
 }
 
 
