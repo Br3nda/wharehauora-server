@@ -48,8 +48,7 @@ function updateRoomDisplay(room_id, data) {
       var current_reading_div = $('#room-' + room_id + '-no-' + key);
       if(reading.current) current_reading_div.hide();
       else current_reading_div.show();
-    }
-    else {
+    } else {
       $(div + 'value').text('??');
       $(div +'timestamp').text('No data');
     }
