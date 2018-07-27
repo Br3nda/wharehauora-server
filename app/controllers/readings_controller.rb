@@ -27,7 +27,7 @@ class ReadingsController < ApplicationController
     data_by_room = {}
     @readings.each do |reading|
       created_at, room_id, room_name, reading_value = reading
-      room_name = 'un-named room' unless room_name
+      room_name ||= 'un-named room'
       data_by_room[room_id] = { 'name' => room_name, 'data' => [] } unless data_by_room[room_id]
       data_by_room[room_id]['data'] << [created_at, reading_value.round(2)]
     end
