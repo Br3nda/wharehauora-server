@@ -27,8 +27,9 @@ class HomesController < ApplicationController
   end
 
   def create
-    @home = Home.new(home_params.merge(owner_id: current_user.id))
+    @home = Home.new(home_params)
     authorize @home
+    invite_new_owner
     @home.save
     respond_with(@home)
   end
@@ -52,22 +53,29 @@ class HomesController < ApplicationController
 
   private
 
+  def invite_new_owner
+    if current_user.janitor?
+      owner = User.find_by(owner_params)
+      if owner
+        @home.owner = owner
+      else
+        @home.owner = User.invite!(owner_params)
+      end
+      fail unless @home.owner
+    end
+  end
+
   def parse_dates
     @day = params[:day]
     @day = Time.zone.today if @day.blank?
   end
 
   def home_params
-    params[:home].permit(permitted_home_params)
+    params.require(:home).permit(:name, :is_public, :home_type_id, :gateway_mac_address)
   end
 
-  def permitted_home_params
-    %i[
-      name
-      is_public
-      home_type_id
-      gateway_mac_address
-    ]
+  def owner_params
+    params.require('owner').permit('email')
   end
 
   def set_home
