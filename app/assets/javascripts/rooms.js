@@ -43,8 +43,8 @@ function updateRoomDisplay(room_id, data) {
       $(div + 'value').text(reading.value + reading.unit);
 
       // Show the timestamp of the readings
-      $(div + 'timestamp').attr('datetime', reading.timestamp);
-      jQuery(div + 'timestamp').timeago();
+      $(div +'timestamp').attr('datetime', reading.timestamp);
+      jQuery(div +'timestamp').timeago();
 
       // Mark whether this reading is current or old
       var current_reading_div = $('#room-' + room_id + '-no-' + key);
@@ -52,7 +52,7 @@ function updateRoomDisplay(room_id, data) {
       else {current_reading_div.show();}
     } else {
       $(div + 'value').text('??');
-      $(div + 'timestamp').text('No data');
+      $(div +'timestamp').text('No data');
     }
   });
 
