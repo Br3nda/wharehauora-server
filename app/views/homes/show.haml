@@ -2,6 +2,14 @@
 
 %h2= @home.name
 
+- if policy(:mqtt_user).create? && @home.mqtt_user.blank?
+  %p
+    %strong MQTT user not provisioned yet
+  - if @home.gateway_mac_address.present?
+    %p
+      = link_to 'Provision', admin_mqtt_users_path(home_id: @home.id),
+        method: 'post', class: 'pure-button'
+
 - unless @home.rooms.empty?
   %h3 #{@day} Readings
   %form.pure-form
@@ -10,7 +18,6 @@
       = date_field_tag :day, @day
     %button.pure-button.pure-button-primary
       Search
-
   .pure-g
     - @keys.each do |key|
       .pure-u-1.pure-u-md-1-2
