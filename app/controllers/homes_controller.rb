@@ -61,7 +61,8 @@ class HomesController < ApplicationController
       else
         @home.owner = User.invite!(owner_params)
       end
-      fail unless @home.owner
+    else
+      @home.owner = current_user
     end
   end
 
