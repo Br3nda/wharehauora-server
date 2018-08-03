@@ -40,9 +40,9 @@ class HomesController < ApplicationController
   end
 
   def update
-    @home.update(home_params)
-    @home.save!
-    @home.provision_mqtt! if @home.gateway_mac_address.present?
+    if @home.update(home_params)
+      @home.provision_mqtt! if @home.gateway_mac_address.present?
+    end
     respond_with(@home)
   end
 
