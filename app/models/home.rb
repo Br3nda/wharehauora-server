@@ -25,7 +25,7 @@ class Home < ActiveRecord::Base
   before_validation :fix_gateway_address
   validates :gateway_mac_address, uniqueness: true,
                                   allow_blank: true,
-                                  format: { with: /\A[A-F0-9]*\z/, message: 'should have only uppercase letters A-F and numbers' }
+                                  format: { with: /\A[A-F0-9]*\z/, message: 'should have only letters A-F and numbers' }
 
   def provision_mqtt!
     return if gateway_mac_address.blank?
