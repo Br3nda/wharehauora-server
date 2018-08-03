@@ -92,6 +92,7 @@ RSpec.describe HomesController, type: :controller do
         it { expect(subject.name).to eq 'My new home' }
         it { expect(subject.owner).to eq user }
       end
+
       describe 'creating a home for someone else' do
         let(:params) do
           {
