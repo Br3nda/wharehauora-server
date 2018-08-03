@@ -56,11 +56,11 @@ class HomesController < ApplicationController
   def invite_new_owner
     if current_user.janitor?
       owner = User.find_by(owner_params)
-      if owner
-        @home.owner = owner
-      else
-        @home.owner = User.invite!(owner_params)
-      end
+      @home.owner = if owner
+                      owner
+                    else
+                      User.invite!(owner_params)
+                    end
     else
       @home.owner = current_user
     end

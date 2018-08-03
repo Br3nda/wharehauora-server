@@ -22,7 +22,10 @@ class Home < ActiveRecord::Base
 
   validates :name, presence: true
   validates :owner, presence: true
-  validates :gateway_mac_address, uniqueness: true, allow_blank: true
+  before_validation :fix_gateway_address
+  validates :gateway_mac_address, uniqueness: true,
+                                  allow_blank: true,
+                                  format: { with: /\A[A-F0-9]*\z/, message: 'should have only uppercase letters A-F and numbers' }
 
   def provision_mqtt!
     return if gateway_mac_address.blank?
@@ -32,5 +35,12 @@ class Home < ActiveRecord::Base
       mu.provision!
       mu.save!
     end
+  end
+
+  private
+
+  def fix_gateway_address
+    return if gateway_mac_address.blank?
+    self.gateway_mac_address = gateway_mac_address.gsub(/\s/, '').delete(':').upcase
   end
 end
