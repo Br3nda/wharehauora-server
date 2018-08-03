@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'admin lists sensors', type: :feature do
+  subject { page }
+
   let(:home) do
     FactoryBot.create(:home)
   end
@@ -12,8 +14,6 @@ RSpec.describe 'admin lists sensors', type: :feature do
     user
   end
 
-  subject { page }
-
   shared_examples 'sensor was deleted' do
     it 'sensor was deleted' do
       is_expected.not_to have_text sensor.node_id
@@ -21,7 +21,7 @@ RSpec.describe 'admin lists sensors', type: :feature do
   end
 
   shared_examples 'can delete sensors' do
-    before(:each) do
+    before do
       visit "/homes/#{sensor.home.id}/sensors"
       click_link 'delete'
     end

@@ -22,7 +22,7 @@ class Admin::UsersController < Admin::AdminController
     @user.update!(user_params)
     @user.confirm
     redirect_to admin_users_path
-  rescue
+  rescue StandardError
     render :edit, @user
   end
 

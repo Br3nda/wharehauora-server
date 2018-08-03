@@ -10,12 +10,12 @@ function setupRoomDataReloader(room_id) {
 function getRoomData(room_id) {
   var url = '/api/v1/rooms/' + room_id + '.json';
   $.get( url )
-  .done(function(response) {
-    updateRoomDisplay(room_id, response.data);
-  })
-  .fail(function(response, data) {
-    displayErrorForRoom(room_id);
-  });
+    .done(function(response) {
+      updateRoomDisplay(room_id, response.data);
+    })
+    .fail(function(response, data) {
+      displayErrorForRoom(room_id);
+    });
 }
 
 
@@ -37,19 +37,18 @@ function updateRoomDisplay(room_id, data) {
     var div = '#room-' + room_id + '-' + key + '-';
     if (reading) {
 
-      // show the value
+      // Show the value
       $(div + 'value').text(reading.value + reading.unit);
 
-      // show the timestamp of the readings
+      // Show the timestamp of the readings
       $(div +'timestamp').attr('datetime', reading.timestamp);
       jQuery(div +'timestamp').timeago();
 
-      // mark whether this reading is current or old
+      // Mark whether this reading is current or old
       var current_reading_div = $('#room-' + room_id + '-no-' + key);
       if(reading.current) current_reading_div.hide();
       else current_reading_div.show();
-    }
-    else {
+    } else {
       $(div + 'value').text('??');
       $(div +'timestamp').text('No data');
     }

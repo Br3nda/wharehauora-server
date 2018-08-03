@@ -156,6 +156,8 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
   end
 
   describe '#create' do
+    subject { JSON.parse(response.body)['data'] }
+
     let(:home) { FactoryBot.create :home, owner: owner }
     let(:owner) { FactoryBot.create :user }
     let(:body) do
@@ -173,8 +175,6 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       post :create, data: body
     end
 
-    subject { JSON.parse(response.body)['data'] }
-
     let(:attributes) { subject['attributes'] }
 
     it { expect(response).to have_http_status(:success) }
@@ -184,6 +184,8 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
   end
 
   describe '#update' do
+    subject { JSON.parse(response.body)['data'] }
+
     let(:room) { FactoryBot.create :room, room_type: room_type }
     let(:body) do
       {
@@ -200,8 +202,6 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       request.headers.merge! headers
       patch :update, id: room.to_param, data: body
     end
-
-    subject { JSON.parse(response.body)['data'] }
 
     it { expect(Room.find(room.id).name).to eq 'new room name' }
     it { expect(response).to have_http_status(:success) }

@@ -3,11 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'assign sensors', type: :feature do
+  subject { page }
+
   let(:home) do
     FactoryBot.create :home, name: 'Toku whare whanau'
   end
 
-  shared_examples 'home has one sensor' do
+  shared_context 'home has one sensor' do
     let!(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
   end
 
@@ -88,8 +90,6 @@ RSpec.describe 'assign sensors', type: :feature do
       it { is_expected.to have_link 'Analyse' }
     end
   end
-
-  subject { page }
 
   context 'signed in as a normal user' do
     before { login_as(home.owner) }

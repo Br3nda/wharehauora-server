@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe RoomPolicy do
+  subject { described_class.new(user, room) }
+
   let(:admin) { FactoryBot.create :admin }
   let(:owner) { room.home.owner }
   let(:whanau) do
@@ -11,8 +13,6 @@ describe RoomPolicy do
     u
   end
   let(:other_user) { FactoryBot.create :user }
-
-  subject { described_class.new(user, room) }
 
   shared_examples 'can see the room' do
     it { is_expected.to permit_action(:show) }

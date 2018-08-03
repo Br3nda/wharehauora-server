@@ -32,7 +32,7 @@ class ApplicationPolicy
   end
 
   def janitor?
-    user && user.role?('janitor')
+    user&.role?('janitor')
   end
 
   def signed_in?

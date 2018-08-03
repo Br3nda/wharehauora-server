@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :feature do
+  subject { page }
+
   let!(:admin_user) { FactoryBot.create :admin }
   let!(:user) { FactoryBot.create :user }
   let!(:user_tahi) { FactoryBot.create :user }
@@ -18,8 +20,6 @@ RSpec.describe 'Users', type: :feature do
       it { expect(page).not_to have_text(user_toru.email) }
     end
   end
-
-  subject { page }
 
   context 'not signed in' do
     include_examples 'cannot #index'

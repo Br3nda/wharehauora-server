@@ -8,11 +8,11 @@ class HomePolicy < ApplicationPolicy
   end
 
   def create?
-    owner? ||  janitor?
+    signed_in?
   end
 
   def new?
-    signed_in? || janitor?
+    signed_in?
   end
 
   def edit?
