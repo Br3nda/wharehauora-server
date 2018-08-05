@@ -4,14 +4,14 @@ class Admin::UsersController < Admin::AdminController
   before_action :set_user, only: %i[show edit update destroy]
 
   def index
-    authorize(:user)
-    @users = policy_scope(User.all.order(:email).page(params[:page]))
+    authorize :user
+    @users = policy_scope User.all.order(:email).page(params[:page])
   end
 
   def new
-    authorize(:user)
+    authorize :user
     @user = User.new
-    authorize(@user)
+    authorize @user
   end
 
   def edit
@@ -21,14 +21,14 @@ class Admin::UsersController < Admin::AdminController
   def update
     @user.update!(user_params)
     @user.confirm
-    redirect_to(admin_users_path)
+    redirect_to admin_users_path
   rescue StandardError
-    render(:edit, @user)
+    render :edit, @user
   end
 
   def destroy
     @user.destroy
-    redirect_to(admin_users_path)
+    redirect_to admin_users_path
   end
 
   private
@@ -41,6 +41,6 @@ class Admin::UsersController < Admin::AdminController
 
   def set_user
     @user = User.find(params[:id])
-    authorize(@user)
+    authorize @user
   end
 end

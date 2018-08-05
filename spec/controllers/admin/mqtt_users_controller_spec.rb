@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require('rails_helper')
+require 'rails_helper'
 
-RSpec.describe(Admin::MqttUsersController, type: :controller) do
+RSpec.describe Admin::MqttUsersController, type: :controller do
   include Devise::Test
   let(:home) { FactoryBot.create(:home) }
   let(:mqtt_user) { FactoryBot.create(:mqtt_user, home: home) }
@@ -13,20 +13,20 @@ RSpec.describe(Admin::MqttUsersController, type: :controller) do
 
   before do
     ENV['CLOUDMQTT_URL'] = 'mqtt://bob:bobpassword@qwerty.mqttsomewhere.nz:12345/hey'
-    allow(Faraday).to(receive(:new).and_return(faraday_double))
+    allow(Faraday).to receive(:new).and_return faraday_double
   end
 
   context 'not signed in ' do
     describe 'GET index' do
       before { get :index }
 
-      it { expect(response).to(redirect_to(new_user_session_path)) }
+      it { expect(response).to redirect_to(new_user_session_path) }
     end
 
     describe 'PUT create' do
       before { put :create }
 
-      it { expect(response).to(redirect_to(new_user_session_path)) }
+      it { expect(response).to redirect_to(new_user_session_path) }
     end
   end
 
@@ -36,19 +36,19 @@ RSpec.describe(Admin::MqttUsersController, type: :controller) do
     describe 'GET index' do
       before { get :index }
 
-      it { expect(response).to(redirect_to(root_path)) }
+      it { expect(response).to redirect_to(root_path) }
     end
 
     describe 'POST create,' do
       before { post :create, home_id: home.id }
 
-      it { expect(response).to(redirect_to(root_path)) }
+      it { expect(response).to redirect_to(root_path) }
     end
   end
 
   context 'signed in as whanau' do
     before do
-      user = FactoryBot.create(:user)
+      user = FactoryBot.create :user
       home.users << user
       sign_in user
     end
@@ -56,13 +56,13 @@ RSpec.describe(Admin::MqttUsersController, type: :controller) do
     describe 'GET index' do
       before { get :index }
 
-      it { expect(response).to(redirect_to(root_path)) }
+      it { expect(response).to redirect_to(root_path) }
     end
 
     describe 'POST create,' do
       before { post :create, home_id: home.id }
 
-      it { expect(response).to(redirect_to(root_path)) }
+      it { expect(response).to redirect_to(root_path) }
     end
   end
 
@@ -72,13 +72,13 @@ RSpec.describe(Admin::MqttUsersController, type: :controller) do
     describe 'GET index' do
       before { get :index }
 
-      it { expect(response).to(have_http_status(:success)) }
+      it { expect(response).to have_http_status(:success) }
     end
 
     describe 'POST create,' do
       before { post :create, home_id: home.id }
 
-      it { expect(response).to(redirect_to(admin_mqtt_users_path)) }
+      it { expect(response).to redirect_to(admin_mqtt_users_path) }
     end
   end
 end

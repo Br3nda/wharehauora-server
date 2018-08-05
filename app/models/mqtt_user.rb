@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require('digest')
+require 'digest'
 class MqttUser < ActiveRecord::Base
   belongs_to :home
   validates :username, presence: true, uniqueness: true
@@ -9,7 +9,7 @@ class MqttUser < ActiveRecord::Base
   after_initialize :default_values
 
   def provision!
-    raise("Can't provision an invalid user") unless valid?
+    raise "Can't provision an invalid user" unless valid?
 
     Mqtt.provision_user(username, password)
     Mqtt.grant_access(username, topic)

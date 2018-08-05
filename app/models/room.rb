@@ -31,15 +31,15 @@ class Room < ActiveRecord::Base
   end
 
   def temperature
-    single_current_metric('temperature')
+    single_current_metric 'temperature'
   end
 
   def humidity
-    single_current_metric('humidity')
+    single_current_metric 'humidity'
   end
 
   def dewpoint
-    single_current_metric('dewpoint')
+    single_current_metric 'dewpoint'
   end
 
   def below_dewpoint?
@@ -57,7 +57,7 @@ class Room < ActiveRecord::Base
   end
 
   def mould
-    single_current_metric('mould')
+    single_current_metric 'mould'
   end
 
   def good?
@@ -125,8 +125,8 @@ class Room < ActiveRecord::Base
   end
 
   def calculate_dewpoint
-    temp_c = single_current_metric('temperature')
-    humidity = single_current_metric('humidity')
+    temp_c = single_current_metric 'temperature'
+    humidity = single_current_metric 'humidity'
     return unless temp_c && humidity
 
     l = Math.log(humidity / 100.0)

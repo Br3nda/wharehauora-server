@@ -3,12 +3,12 @@
 class CreateHomeViewers < ActiveRecord::Migration
   def change
     create_table :home_viewers do |t|
-      t.integer(:user_id)
-      t.integer(:home_id)
-      t.timestamps(null: false)
+      t.integer :user_id
+      t.integer :home_id
+      t.timestamps null: false
     end
-    add_foreign_key(:home_viewers, :users)
-    add_foreign_key(:home_viewers, :homes)
-    add_index(:home_viewers, %i[user_id home_id], unique: true)
+    add_foreign_key :home_viewers, :users
+    add_foreign_key :home_viewers, :homes
+    add_index :home_viewers, %i[user_id home_id], unique: true
   end
 end

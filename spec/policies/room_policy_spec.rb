@@ -1,44 +1,44 @@
 # frozen_string_literal: true
 
-require('rails_helper')
+require 'rails_helper'
 
 describe RoomPolicy do
   subject { described_class.new(user, room) }
 
-  let(:admin) { FactoryBot.create(:admin) }
+  let(:admin) { FactoryBot.create :admin }
   let(:owner) { room.home.owner }
   let(:whanau) do
-    u = FactoryBot.create(:user)
+    u = FactoryBot.create :user
     room.home.users << u
     u
   end
-  let(:other_user) { FactoryBot.create(:user) }
+  let(:other_user) { FactoryBot.create :user }
 
   shared_examples 'can see the room' do
-    it { is_expected.to(permit_action(:show)) }
+    it { is_expected.to permit_action(:show) }
   end
 
   shared_examples 'forbidden to see the room' do
-    it { is_expected.to(forbid_action(:show)) }
+    it { is_expected.to forbid_action(:show) }
   end
 
   shared_examples 'can edit the room' do
-    it { is_expected.to(permit_action(:edit)) }
-    it { is_expected.to(permit_action(:update)) }
+    it { is_expected.to permit_action(:edit) }
+    it { is_expected.to permit_action(:update) }
   end
 
   shared_examples 'forbidden to edit the room' do
-    it { is_expected.to(forbid_action(:edit)) }
-    it { is_expected.to(forbid_action(:update)) }
+    it { is_expected.to forbid_action(:edit) }
+    it { is_expected.to forbid_action(:update) }
     include_examples 'forbidden to delete the room'
   end
 
   shared_examples 'forbidden to delete the room' do
-    it { is_expected.to(forbid_action(:destroy)) }
+    it { is_expected.to forbid_action(:destroy) }
   end
 
   shared_examples 'can delete the room' do
-    it { is_expected.to(permit_action(:destroy)) }
+    it { is_expected.to permit_action(:destroy) }
   end
 
   shared_examples 'home owner can see and edit room' do
@@ -71,7 +71,7 @@ describe RoomPolicy do
   end
 
   context 'private room' do
-    let(:room) { FactoryBot.create(:room) }
+    let(:room) { FactoryBot.create :room }
 
     context 'a visitor' do
       let(:user) { nil }
@@ -93,7 +93,7 @@ describe RoomPolicy do
   end
 
   context 'public room' do
-    let(:room) { FactoryBot.create(:public_room) }
+    let(:room) { FactoryBot.create :public_room }
 
     context 'a visitor' do
       let(:user) { nil }

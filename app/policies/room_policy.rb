@@ -61,6 +61,6 @@ class RoomPolicy < ApplicationPolicy
   end
 
   def whanau?
-    record.home.users.include?(user)
+    record.home.users.include? user
   end
 end

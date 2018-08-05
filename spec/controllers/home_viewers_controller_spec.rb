@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require('rails_helper')
+require 'rails_helper'
 
-RSpec.describe(HomeViewersController, type: :controller) do
+RSpec.describe HomeViewersController, type: :controller do
   include Devise::Test::ControllerHelpers
   let(:user) { FactoryBot.create(:user) }
   let(:my_friend) { FactoryBot.create(:user) }
@@ -16,13 +16,13 @@ RSpec.describe(HomeViewersController, type: :controller) do
     describe 'GET index' do
       before { get :index }
 
-      it { expect(response).to(redirect_to(new_user_session_path)) }
+      it { expect(response).to redirect_to(new_user_session_path) }
     end
 
     describe 'GET new' do
       before { get :new, home_id: home.to_param }
 
-      it { expect(response).to(redirect_to(new_user_session_path)) }
+      it { expect(response).to redirect_to(new_user_session_path) }
     end
 
     describe 'DELETE' do
@@ -30,7 +30,7 @@ RSpec.describe(HomeViewersController, type: :controller) do
         expect do
           delete :destroy, id: my_friend.to_param, home_id: home.id
         end.not_to(change(HomeViewer, :count))
-        expect(response).to(redirect_to(new_user_session_path))
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -41,15 +41,15 @@ RSpec.describe(HomeViewersController, type: :controller) do
     describe 'GET index' do
       before { get :index, home_id: home.to_param }
 
-      it { expect(response).to(have_http_status(:success)) }
+      it { expect(response).to have_http_status(:success) }
     end
 
     describe 'GET new' do
       before { get :new, home_id: home.to_param }
 
-      it { expect(response).to(have_http_status(:success)) }
-      it { expect(response).to(render_template(:new)) }
-      it { expect(assigns(:home)).to(eq(home)) }
+      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to render_template(:new) }
+      it { expect(assigns(:home)).to eq(home) }
     end
 
     describe 'DELETE' do
@@ -58,9 +58,9 @@ RSpec.describe(HomeViewersController, type: :controller) do
       it do
         expect do
           delete :destroy, id: my_friend.to_param, home_id: home.id
-        end.to(change(HomeViewer, :count).by(-1))
-        expect(response).to(redirect_to(home_home_viewers_path(home)))
-        expect(assigns(:home)).to(eq(home))
+        end.to change(HomeViewer, :count).by(-1)
+        expect(response).to redirect_to(home_home_viewers_path(home))
+        expect(assigns(:home)).to eq(home)
       end
     end
   end
@@ -71,15 +71,15 @@ RSpec.describe(HomeViewersController, type: :controller) do
     describe 'GET index' do
       before { get :index, home_id: home.to_param }
 
-      it { expect(response).to(have_http_status(:success)) }
+      it { expect(response).to have_http_status(:success) }
     end
 
     describe 'GET new' do
       before { get :new, home_id: home.to_param }
 
-      it { expect(response).to(have_http_status(:success)) }
-      it { expect(response).to(render_template(:new)) }
-      it { expect(assigns(:home)).to(eq(home)) }
+      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to render_template(:new) }
+      it { expect(assigns(:home)).to eq(home) }
     end
 
     describe 'DELETE' do
@@ -88,9 +88,9 @@ RSpec.describe(HomeViewersController, type: :controller) do
       it do
         expect do
           delete :destroy, id: my_friend.to_param, home_id: home.id
-        end.to(change(HomeViewer, :count).by(-1))
-        expect(response).to(redirect_to(home_home_viewers_path(home)))
-        expect(assigns(:home)).to(eq(home))
+        end.to change(HomeViewer, :count).by(-1)
+        expect(response).to redirect_to(home_home_viewers_path(home))
+        expect(assigns(:home)).to eq(home)
       end
     end
   end

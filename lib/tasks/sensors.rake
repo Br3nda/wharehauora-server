@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require('mqtt')
-require('uri')
+require 'mqtt'
+require 'uri'
 
 namespace :sensors do
   desc 'Subscribe to incoming sensor messages'
@@ -27,7 +27,7 @@ class SensorsIngest
         begin
           Message.new.decode(topic, message)
         rescue ActiveRecord::RecordNotFound => e
-          puts(e)
+          puts e
         end
       end
     end
@@ -48,7 +48,7 @@ class SensorsIngest
 
   def connection_options
     # Create a hash with the connection parameters from the URL
-    uri = URI.parse(ENV['CLOUDMQTT_URL'] || 'mqtt://localhost:1883')
+    uri = URI.parse ENV['CLOUDMQTT_URL'] || 'mqtt://localhost:1883'
     # the Heroku managed env variable isn't SSL
     # but we gotta be better than that!
     port = ENV['MQTT_SSL_PORT']
@@ -70,7 +70,7 @@ class SensorsIngest
                           child_sensor_id: (message_type == MySensors::SetReq::V_HUM ? 0 : 1),
                           message_type: message_type)
     message.save!
-    puts("home #{sensor.home_id} sensors #{sensor.id} value: #{value}")
+    puts "home #{sensor.home_id} sensors #{sensor.id} value: #{value}"
   end
 
   def fake_temperature(sensor)

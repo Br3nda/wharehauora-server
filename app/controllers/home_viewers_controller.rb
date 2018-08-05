@@ -5,7 +5,7 @@ class HomeViewersController < ApplicationController
   before_action :set_home, only: %i[create index new destroy]
 
   def index
-    authorize(@home, :edit?)
+    authorize @home, :edit?
     @viewers = policy_scope(HomeViewer)
                .includes(:user)
                .where(home_id: params[:home_id])
@@ -14,16 +14,16 @@ class HomeViewersController < ApplicationController
   end
 
   def new
-    authorize(@home, :edit?)
+    authorize @home, :edit?
     @new_viewer = Invitation.new
   end
 
   def destroy
-    authorize(@home, :edit?)
+    authorize @home, :edit?
     viewer = @home.home_viewers.find_by!(user_id: params[:id])
     viewer.destroy
   ensure
-    redirect_to(home_home_viewers_path(@home))
+    redirect_to home_home_viewers_path(@home)
   end
 
   private

@@ -31,6 +31,6 @@ class User < ActiveRecord::Base
   end
 
   def janitor?
-    role?('janitor')
+    role? 'janitor'
   end
 end

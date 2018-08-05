@@ -8,14 +8,14 @@ class ReadingsController < ApplicationController
     set_home
     set_room
     assemble_readings(@home, @room, params[:key])
-    render(json: @data)
+    render json: @data
   end
 
   private
 
   def set_home
     @home = policy_scope(Home).find(params[:home_id])
-    authorize(@home)
+    authorize @home
   end
 
   def set_room

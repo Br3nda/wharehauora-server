@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require('rails_helper')
+require 'rails_helper'
 
-RSpec.describe(WelcomeController, type: :controller) do
+RSpec.describe WelcomeController, type: :controller do
   include Devise::Test::ControllerHelpers
   let(:user) { FactoryBot.create(:user) }
   let(:home_type) { FactoryBot.create(:home_type) }
@@ -14,7 +14,7 @@ RSpec.describe(WelcomeController, type: :controller) do
       context 'no sensor data' do
         before { get :index }
 
-        it { expect(response).to(have_http_status(:success)) }
+        it { expect(response).to have_http_status(:success) }
       end
 
       context 'lots of sensor data' do
@@ -30,7 +30,7 @@ RSpec.describe(WelcomeController, type: :controller) do
 
         before { get :index }
 
-        it { expect(response).to(have_http_status(:success)) }
+        it { expect(response).to have_http_status(:success) }
       end
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe(WelcomeController, type: :controller) do
     describe 'GET index' do
       before { get :index }
 
-      it { expect(response).to(have_http_status(:success)) }
+      it { expect(response).to have_http_status(:success) }
     end
   end
 end

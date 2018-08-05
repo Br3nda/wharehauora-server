@@ -6,7 +6,7 @@ class Opendata::ReadingsController < ApplicationController
     skip_policy_scope
     skip_authorization
     assemble_readings(params[:key], params[:day])
-    render(json: @data)
+    render json: @data
   end
 
   private

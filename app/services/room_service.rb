@@ -16,7 +16,7 @@ class RoomService
   def self.readings(room)
     readings = {}
     %w[temperature humidity dewpoint].each do |key|
-      readings[key] = reading_data(room, key)
+      readings[key] = reading_data room, key
     end
     readings
   end

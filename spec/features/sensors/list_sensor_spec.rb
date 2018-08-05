@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require('rails_helper')
+require 'rails_helper'
 
-RSpec.describe('admin sensors in a home', type: :feature) do
+RSpec.describe 'admin sensors in a home', type: :feature do
   subject { page }
 
   let(:home) do
@@ -10,7 +10,7 @@ RSpec.describe('admin sensors in a home', type: :feature) do
   end
 
   let(:whanau) do
-    user = FactoryBot.create(:user)
+    user = FactoryBot.create :user
     home.users << user
     user
   end
@@ -19,10 +19,10 @@ RSpec.describe('admin sensors in a home', type: :feature) do
     describe 'shows list of sensors in home' do
       before { visit "/homes/#{home.id}/sensors" }
 
-      it { is_expected.to(have_text(home.name)) }
-      it { is_expected.to(have_text(home.sensors.first.node_id)) }
-      it { is_expected.to(have_text(home.sensors.second.node_id)) }
-      it { is_expected.to(have_text(home.sensors.last.node_id)) }
+      it { is_expected.to have_text home.name }
+      it { is_expected.to have_text home.sensors.first.node_id }
+      it { is_expected.to have_text home.sensors.second.node_id }
+      it { is_expected.to have_text home.sensors.last.node_id }
     end
   end
 

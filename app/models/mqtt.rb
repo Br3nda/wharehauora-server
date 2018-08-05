@@ -3,7 +3,7 @@
 class Mqtt
   def self.provision_user(username, password)
     faraday_conn.post do |req|
-      req.url('user')
+      req.url 'user'
       req.headers['Content-Type'] = 'application/json'
       req.body = { username: username, password: password }.to_json
     end
@@ -19,7 +19,7 @@ class Mqtt
     }
 
     faraday_conn.post do |req|
-      req.url('api/acl')
+      req.url 'api/acl'
       req.headers['Content-Type'] = 'application/json'
       req.body = body.to_json
     end
