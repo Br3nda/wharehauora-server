@@ -87,6 +87,7 @@ RSpec.describe HomesController, type: :controller do
 
     describe 'PUT create' do
       subject { assigns(:home) }
+
       describe 'Creating a home' do
         before { put :create, { home: { name: 'My new home' } } }
 
