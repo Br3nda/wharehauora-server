@@ -19,10 +19,12 @@ RSpec.describe Home, type: :model do
       let(:mac) { 'abc' }
       it { is_expected.to eq 'ABC' }
     end
+
     describe 'lower case' do
       let(:mac) { 'a b c' }
       it { is_expected.to eq 'ABC' }
     end
+
     describe 'lower case' do
       let(:mac) { 'a:b:c' }
       it { is_expected.to eq 'ABC' }
