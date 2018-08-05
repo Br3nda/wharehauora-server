@@ -14,19 +14,23 @@ RSpec.describe Home, type: :model do
 
   describe 'fixes gateway_mac_address' do
     let(:home) { FactoryBot.create :home, gateway_mac_address: mac }
+
     subject { home.gateway_mac_address }
     describe 'lower case' do
       let(:mac) { 'abc' }
+
       it { is_expected.to eq 'ABC' }
     end
 
     describe 'lower case' do
       let(:mac) { 'a b c' }
+
       it { is_expected.to eq 'ABC' }
     end
 
     describe 'lower case' do
       let(:mac) { 'a:b:c' }
+
       it { is_expected.to eq 'ABC' }
     end
   end

@@ -100,6 +100,7 @@ RSpec.describe HomesController, type: :controller do
             owner: { email: 'bob@example.com' }
           }
         end
+
         before { put :create, params }
         it { expect(subject.name).to eq "Bob\'s home" }
         it { expect(subject.owner).to eq user }
