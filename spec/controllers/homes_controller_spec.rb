@@ -89,6 +89,7 @@ RSpec.describe HomesController, type: :controller do
       subject { assigns(:home) }
       describe 'Creating a home' do
         before { put :create, { home: { name: 'My new home' } } }
+
         it { expect(subject.name).to eq 'My new home' }
         it { expect(subject.owner).to eq user }
       end
@@ -102,6 +103,7 @@ RSpec.describe HomesController, type: :controller do
         end
 
         before { put :create, params }
+
         it { expect(subject.name).to eq "Bob\'s home" }
         it { expect(subject.owner).to eq user }
       end
