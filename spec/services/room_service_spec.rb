@@ -10,7 +10,7 @@ RSpec.describe(RoomService, type: :model) do
 
     describe 'too hot' do
       let(:room)      { FactoryBot.create(:room, temperature: 38.1, humidity: 10.1, room_type: room_type) }
-      let(:room_type) { FactoryBot.create(:room_type, min_temperature: 20, max_temperature: 25) }
+      let(:room_type) { FactoryBot.create(:room_type, min_temperature: 20, max_temperature: 25)           }
 
       it { is_expected.to(include(min_temperature: 20.0)) }
       it { is_expected.to(include(max_temperature: 25.0)) }

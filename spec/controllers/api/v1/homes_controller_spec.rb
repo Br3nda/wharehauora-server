@@ -10,8 +10,8 @@ RSpec.describe(Api::V1::HomesController, type: :controller) do
     }
   end
   let!(:my_home)      { FactoryBot.create(:home, owner: user) }
-  let!(:public_home)  { FactoryBot.create(:public_home) }
-  let!(:private_home) { FactoryBot.create(:home) }
+  let!(:public_home)  { FactoryBot.create(:public_home)       }
+  let!(:private_home) { FactoryBot.create(:home)              }
 
   let!(:user) { FactoryBot.create(:user) }
 
@@ -103,7 +103,7 @@ RSpec.describe(Api::V1::HomesController, type: :controller) do
 
     let(:home) { FactoryBot.create(:home) }
     let(:home_type) { FactoryBot.create(:home_type) }
-    let(:owner)     { home.owner }
+    let(:owner)     { home.owner                    }
     let(:body) do
       {
         "type": 'homes',

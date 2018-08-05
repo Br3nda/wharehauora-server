@@ -3,8 +3,8 @@
 require('rails_helper')
 
 RSpec.describe('Whānau', type: :feature) do
-  let(:user)   { FactoryBot.create(:user) }
-  let(:friend) { FactoryBot.create(:user) }
+  let(:user)   { FactoryBot.create(:user)                    }
+  let(:friend) { FactoryBot.create(:user)                    }
   let(:home)   { FactoryBot.create(:home, owner_id: user.id) }
 
   context 'With a whānau member' do
