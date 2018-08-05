@@ -4,11 +4,11 @@ require('rails_helper')
 
 RSpec.describe(HomeViewersController, type: :controller) do
   include Devise::Test::ControllerHelpers
-  let(:user) { FactoryBot.create(:user) }
-  let(:my_friend) { FactoryBot.create(:user) }
-  let(:admin_role) { FactoryBot.create(:role, name: 'janitor') }
-  let(:admin_user) { FactoryBot.create(:user, roles: [admin_role]) }
-  let!(:home) { FactoryBot.create(:home, owner_id: user.id) }
+  let(:user)          { FactoryBot.create(:user) }
+  let(:my_friend)     { FactoryBot.create(:user) }
+  let(:admin_role)    { FactoryBot.create(:role, name: 'janitor') }
+  let(:admin_user)    { FactoryBot.create(:user, roles: [admin_role]) }
+  let!(:home)         { FactoryBot.create(:home, owner_id: user.id) }
   let!(:another_home) { FactoryBot.create(:home, name: "someone else's home") }
   let!(:public_home)  { FactoryBot.create(:home, name: 'public home', is_public: true) }
 
