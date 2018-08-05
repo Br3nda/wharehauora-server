@@ -13,9 +13,9 @@ RSpec.describe Home, type: :model do
   end
 
   describe 'fixes gateway_mac_address' do
+    subject { home.gateway_mac_address }
     let(:home) { FactoryBot.create :home, gateway_mac_address: mac }
 
-    subject { home.gateway_mac_address }
 
     describe 'lower case' do
       let(:mac) { 'abc' }
