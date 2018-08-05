@@ -3,9 +3,9 @@
 require('rails_helper')
 
 RSpec.describe(Reading, type: :model) do
-  let(:home_type) { FactoryBot.create(:home_type, name: 'Whare')               }
-  let(:room_type) { FactoryBot.create(:room_type, name: 'Ruma')                }
-  let(:home)      { FactoryBot.create(:home, home_type: home_type)             }
+  let(:home_type) { FactoryBot.create(:home_type, name: 'Whare') }
+  let(:room_type) { FactoryBot.create(:room_type, name: 'Ruma') }
+  let(:home)      { FactoryBot.create(:home, home_type: home_type) }
   let(:room)      { FactoryBot.create(:room, home: home, room_type: room_type) }
 
   describe 'medians' do
@@ -30,7 +30,7 @@ RSpec.describe(Reading, type: :model) do
 
   describe 'data relationships' do
     let!(:reading) { FactoryBot.create(:reading, room: room, key: 'temperature', value: 99) }
-    let!(:mould_reading)    { FactoryBot.create(:reading, room: room, key: 'mould', value: 99)    }
+    let!(:mould_reading)    { FactoryBot.create(:reading, room: room, key: 'mould', value: 99) }
     let!(:humidity_reading) { FactoryBot.create(:reading, room: room, key: 'humidity', value: 99) }
 
     it 'belongs to a room' do

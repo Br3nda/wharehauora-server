@@ -8,9 +8,9 @@ RSpec.describe(RoomsController, type: :controller) do
   let(:bedroom) { FactoryBot.create(:room_type, name: 'bedroom') }
 
   let(:user) { FactoryBot.create(:user) }
-  let(:home)   { FactoryBot.create(:home, owner_id: user.id)              }
+  let(:home)   { FactoryBot.create(:home, owner_id: user.id) }
   let(:room)   { FactoryBot.create(:room, home: home, room_type: bedroom) }
-  let(:sensor) { FactoryBot.create(:sensor, room: room, node_id: '1100')  }
+  let(:sensor) { FactoryBot.create(:sensor, room: room, node_id: '1100') }
 
   shared_examples 'Test as all user types' do
     context 'Not signed in' do

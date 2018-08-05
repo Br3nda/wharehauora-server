@@ -4,9 +4,9 @@ require('rails_helper')
 
 RSpec.describe(Admin::MqttUsersController, type: :controller) do
   include Devise::Test
-  let(:home)       { FactoryBot.create(:home)                  }
+  let(:home)       { FactoryBot.create(:home) }
   let(:mqtt_user)  { FactoryBot.create(:mqtt_user, home: home) }
-  let(:admin_user) { FactoryBot.create(:admin)                 }
+  let(:admin_user) { FactoryBot.create(:admin) }
 
   let(:valid_params) { { name: Faker.name } }
   let(:faraday_double) { double(Faraday, basic_auth: nil, post: '') }
