@@ -8,7 +8,7 @@ namespace :sensors do
   task ingest: :environment do
     begin
       SensorsIngest.new.process
-    rescue Exception => e # rubocop:disable Lint/RescueException
+    rescue Exception => e
       Raygun.track_exception(e) if Rails.env.production?
       raise
     end
