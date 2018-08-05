@@ -5,8 +5,8 @@ require('rails_helper')
 RSpec.describe(Api::V1::RoomsController, type: :controller) do
   let(:headers) do
     {
-      'Accept' => 'application/vnd.api+json',
-      'Content-Type' => 'application/vnd.api+json'
+      :Accept => 'application/vnd.api+json',
+      :"Content-Type" => 'application/vnd.api+json'
     }
   end
   let(:room_type) { FactoryBot.create(:room_type, min_temperature: 10, max_temperature: 30) }
@@ -42,27 +42,27 @@ RSpec.describe(Api::V1::RoomsController, type: :controller) do
       let(:dewpoint_response)    { readings_response['dewpoint']             }
       let(:ratings_response)     { subject['data']['attributes']['ratings']  }
 
-      it { expect(subject['data']['attributes']).to(include('name' => room.name)) }
+      it { expect(subject['data']['attributes']).to(include(:name => room.name)) }
 
       describe 'room too hot' do
         let(:create_readings) { FactoryBot.create(:temperature_reading, value: 101.1, room: room) }
 
-        it { expect(temperature_response).to(include('value' => 101.1, 'unit' => '°C')) }
-        it { expect(ratings_response).to(include('good' => false, 'too_hot' => true, 'too_cold' => false)) }
+        it { expect(temperature_response).to(include(:value => 101.1, :unit => '°C')) }
+        it { expect(ratings_response).to(include(:good => false, :too_hot => true, :too_cold => false)) }
       end
 
       describe 'room too cold' do
         let(:create_readings) { FactoryBot.create(:temperature_reading, value: 3.1, room: room) }
 
-        it { expect(temperature_response).to(include('value' => 3.1, 'unit' => '°C')) }
-        it { expect(ratings_response).to(include('good' => false, 'too_hot' => false, 'too_cold' => true)) }
+        it { expect(temperature_response).to(include(:value => 3.1, :unit => '°C')) }
+        it { expect(ratings_response).to(include(:good => false, :too_hot => false, :too_cold => true)) }
       end
 
       describe 'room just right' do
         let(:create_readings) { FactoryBot.create(:temperature_reading, value: 20.5, room: room) }
 
-        it { expect(temperature_response).to(include('value' => 20.5, 'unit' => '°C')) }
-        it { expect(ratings_response).to(include('good' => true, 'too_hot' => false, 'too_cold' => false)) }
+        it { expect(temperature_response).to(include(:value => 20.5, :unit => '°C')) }
+        it { expect(ratings_response).to(include(:good => true, :too_hot => false, :too_cold => false)) }
       end
     end
 
