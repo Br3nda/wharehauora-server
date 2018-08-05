@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require('rails_helper')
 
-RSpec.describe Api::V1::RoomsController, type: :controller do
+RSpec.describe(Api::V1::RoomsController, type: :controller) do
   let(:headers) do
     {
       'Accept' => 'application/vnd.api+json',
       'Content-Type' => 'application/vnd.api+json'
     }
   end
-  let(:room_type) { FactoryBot.create :room_type, min_temperature: 10, max_temperature: 30 }
+  let(:room_type) { FactoryBot.create(:room_type, min_temperature: 10, max_temperature: 30) }
   let(:owner) { room.home.owner }
-  let(:admin) { FactoryBot.create :admin }
+  let(:admin) { FactoryBot.create(:admin) }
   let(:whanau) do
-    whanau = FactoryBot.create :user
+    whanau = FactoryBot.create(:user)
     room.home.users << whanau
     whanau
   end
 
-  let(:otheruser) { FactoryBot.create :user }
+  let(:otheruser) { FactoryBot.create(:user) }
 
   # do nothing normally. Contexts below can add readings
   let(:create_readings) {}
@@ -27,10 +27,10 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     let(:valid_params) { { id: room.id, format: :json } }
 
     shared_examples 'can see summaries' do
-      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to(have_http_status(:success)) }
     end
     shared_examples 'cannot see summaries' do
-      it { expect(response).not_to have_http_status(:success) }
+      it { expect(response).not_to(have_http_status(:success)) }
     end
 
     shared_examples 'returns expected readings' do
@@ -42,38 +42,38 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
       let(:dewpoint_response) { readings_response['dewpoint'] }
       let(:ratings_response) { subject['data']['attributes']['ratings'] }
 
-      it { expect(subject['data']['attributes']).to include('name' => room.name) }
+      it { expect(subject['data']['attributes']).to(include('name' => room.name)) }
 
       describe 'room too hot' do
-        let(:create_readings) { FactoryBot.create :temperature_reading, value: 101.1, room: room }
+        let(:create_readings) { FactoryBot.create(:temperature_reading, value: 101.1, room: room) }
 
-        it { expect(temperature_response).to include('value' => 101.1, 'unit' => '°C') }
-        it { expect(ratings_response).to include('good' => false, 'too_hot' => true, 'too_cold' => false) }
+        it { expect(temperature_response).to(include('value' => 101.1, 'unit' => '°C')) }
+        it { expect(ratings_response).to(include('good' => false, 'too_hot' => true, 'too_cold' => false)) }
       end
 
       describe 'room too cold' do
-        let(:create_readings) { FactoryBot.create :temperature_reading, value: 3.1, room: room }
+        let(:create_readings) { FactoryBot.create(:temperature_reading, value: 3.1, room: room) }
 
-        it { expect(temperature_response).to include('value' => 3.1, 'unit' => '°C') }
-        it { expect(ratings_response).to include('good' => false, 'too_hot' => false, 'too_cold' => true) }
+        it { expect(temperature_response).to(include('value' => 3.1, 'unit' => '°C')) }
+        it { expect(ratings_response).to(include('good' => false, 'too_hot' => false, 'too_cold' => true)) }
       end
 
       describe 'room just right' do
-        let(:create_readings) { FactoryBot.create :temperature_reading, value: 20.5, room: room }
+        let(:create_readings) { FactoryBot.create(:temperature_reading, value: 20.5, room: room) }
 
-        it { expect(temperature_response).to include('value' => 20.5, 'unit' => '°C') }
-        it { expect(ratings_response).to include('good' => true, 'too_hot' => false, 'too_cold' => false) }
+        it { expect(temperature_response).to(include('value' => 20.5, 'unit' => '°C')) }
+        it { expect(ratings_response).to(include('good' => true, 'too_hot' => false, 'too_cold' => false)) }
       end
     end
 
     before do
       create_readings
-      sign_in user unless user.nil?
+      sign_in(user) unless user.nil?
       get :show, valid_params
     end
 
     describe 'When room is in a public home' do
-      let(:room) { FactoryBot.create :public_room, room_type: room_type }
+      let(:room) { FactoryBot.create(:public_room, room_type: room_type) }
 
       shared_examples 'check permissions' do
         describe 'and user is not logged in ' do
@@ -115,8 +115,8 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     end
 
     describe 'when room is private' do
-      let(:room) { FactoryBot.create :room, room_type: room_type }
-      let!(:readings) { FactoryBot.create_list :reading, 100, room: room }
+      let(:room) { FactoryBot.create(:room, room_type: room_type) }
+      let!(:readings) { FactoryBot.create_list(:reading, 100, room: room) }
 
       describe 'and user is not logged in ' do
         let(:user) { nil }
@@ -158,8 +158,8 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
   describe '#create' do
     subject { JSON.parse(response.body)['data'] }
 
-    let(:home) { FactoryBot.create :home, owner: owner }
-    let(:owner) { FactoryBot.create :user }
+    let(:home) { FactoryBot.create(:home, owner: owner) }
+    let(:owner) { FactoryBot.create(:user) }
     let(:body) do
       {
         "type": 'rooms',
@@ -171,22 +171,22 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     end
     before do
       sign_in owner
-      request.headers.merge! headers
+      request.headers.merge!(headers)
       post :create, data: body
     end
 
     let(:attributes) { subject['attributes'] }
 
-    it { expect(response).to have_http_status(:success) }
-    it { expect(attributes['name']).to eq 'new room name' }
-    it { expect(attributes['home-id']).to eq home.id }
-    it { expect(Room.last.owner.id).to eq owner.id }
+    it { expect(response).to(have_http_status(:success)) }
+    it { expect(attributes['name']).to(eq('new room name')) }
+    it { expect(attributes['home-id']).to(eq(home.id)) }
+    it { expect(Room.last.owner.id).to(eq(owner.id)) }
   end
 
   describe '#update' do
     subject { JSON.parse(response.body)['data'] }
 
-    let(:room) { FactoryBot.create :room, room_type: room_type }
+    let(:room) { FactoryBot.create(:room, room_type: room_type) }
     let(:body) do
       {
         "type": 'rooms',
@@ -199,11 +199,11 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
 
     before do
       sign_in owner
-      request.headers.merge! headers
+      request.headers.merge!(headers)
       patch :update, id: room.to_param, data: body
     end
 
-    it { expect(Room.find(room.id).name).to eq 'new room name' }
-    it { expect(response).to have_http_status(:success) }
+    it { expect(Room.find(room.id).name).to(eq('new room name')) }
+    it { expect(response).to(have_http_status(:success)) }
   end
 end

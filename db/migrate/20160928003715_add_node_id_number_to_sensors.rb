@@ -2,6 +2,6 @@
 
 class AddNodeIdNumberToSensors < ActiveRecord::Migration
   def change
-    add_column :sensors, :node_id, :integer
+    add_column(:sensors, :node_id, :integer)
   end
 end

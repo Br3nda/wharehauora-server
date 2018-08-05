@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require('rails_helper')
 
-RSpec.describe RoomsController, type: :controller do
+RSpec.describe(RoomsController, type: :controller) do
   include Devise::Test::ControllerHelpers
 
   let(:bedroom) { FactoryBot.create(:room_type, name: 'bedroom') }
@@ -17,7 +17,7 @@ RSpec.describe RoomsController, type: :controller do
       describe 'GET show' do
         before { get :show, home_id: room.home.id, id: room.id }
 
-        it { expect(response).not_to have_http_status(:success) }
+        it { expect(response).not_to(have_http_status(:success)) }
       end
     end
 
@@ -27,27 +27,27 @@ RSpec.describe RoomsController, type: :controller do
       describe 'GET index' do
         before { get :index, home_id: room.home.id }
 
-        it { expect(response).to have_http_status(:success) }
+        it { expect(response).to(have_http_status(:success)) }
 
         context 'one room' do
           it 'Only finds our one room' do
-            expect(assigns(:rooms)).to eq([room])
+            expect(assigns(:rooms)).to(eq([room]))
           end
 
           context 'no unassigned_sensors' do
-            it { expect(assigns(:unassigned_sensors)).to eq([]) }
+            it { expect(assigns(:unassigned_sensors)).to(eq([])) }
           end
 
           context '1 unassigned_sensors' do
-            let!(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
+            let!(:sensor) { FactoryBot.create(:sensor, home: home, room: nil) }
 
-            it { expect(assigns(:unassigned_sensors)).to eq([sensor]) }
+            it { expect(assigns(:unassigned_sensors)).to(eq([sensor])) }
           end
 
           context '30 unassigned_sensors' do
             before { FactoryBot.create_list(:sensor, 30, home: home, room: nil) }
 
-            it { expect(assigns(:unassigned_sensors).size).to eq 30 }
+            it { expect(assigns(:unassigned_sensors).size).to(eq(30)) }
           end
         end
       end
@@ -55,7 +55,7 @@ RSpec.describe RoomsController, type: :controller do
       describe 'GET show' do
         before { get :show, home_id: room.home.id, id: room.id }
 
-        it { expect(response).to have_http_status(:success) }
+        it { expect(response).to(have_http_status(:success)) }
       end
 
       describe '#update' do
@@ -64,12 +64,12 @@ RSpec.describe RoomsController, type: :controller do
                          room: { name: 'Living room' }
         end
 
-        it { expect(response).to redirect_to home_rooms_path(home) }
+        it { expect(response).to(redirect_to(home_rooms_path(home))) }
       end
     end
 
     context 'user is signed in as whānau' do
-      let(:whanau) { FactoryBot.create :user }
+      let(:whanau) { FactoryBot.create(:user) }
 
       before do
         home.users << whanau
@@ -79,7 +79,7 @@ RSpec.describe RoomsController, type: :controller do
       describe 'GET show' do
         before { get :show, home_id: room.home.id, id: room.id }
 
-        it { expect(response).to have_http_status(:success) }
+        it { expect(response).to(have_http_status(:success)) }
       end
 
       describe '#update' do
@@ -88,7 +88,7 @@ RSpec.describe RoomsController, type: :controller do
                          room: { name: 'Living room' }
         end
 
-        it { expect(response).to have_http_status(:redirect) }
+        it { expect(response).to(have_http_status(:redirect)) }
       end
     end
 
@@ -102,19 +102,19 @@ RSpec.describe RoomsController, type: :controller do
         describe '#index' do
           before { get :index, home_id: home.id }
 
-          it { expect(response).to have_http_status(:not_found) }
+          it { expect(response).to(have_http_status(:not_found)) }
         end
 
         describe '#show' do
           before { get :show, home_id: home.id, id: room.to_param }
 
-          it { expect(response).to have_http_status(:not_found) }
+          it { expect(response).to(have_http_status(:not_found)) }
         end
 
         describe '#edit' do
           before { get :edit, home_id: home.id, id: room.to_param }
 
-          it { expect(response).to have_http_status(:not_found) }
+          it { expect(response).to(have_http_status(:not_found)) }
         end
       end
     end
@@ -127,7 +127,7 @@ RSpec.describe RoomsController, type: :controller do
   context 'Homes with lots of Whanau' do
     before { FactoryBot.create_list(:home_viewer, 7, home: home) }
 
-    it { expect(home.users.size).to eq(7) }
+    it { expect(home.users.size).to(eq(7)) }
     include_examples 'Test as all user types'
   end
 end

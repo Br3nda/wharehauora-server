@@ -2,7 +2,7 @@
 
 module ReadingsHelper
   def display_reading(reading)
-    unit = UnitsService.unit_for reading.key
+    unit = UnitsService.unit_for(reading.key)
     value = reading.value
     return '??' if value.nil?
 

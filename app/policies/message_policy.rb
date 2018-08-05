@@ -10,7 +10,7 @@ class MessagePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       query = scope.joins_home
-      if user.role? 'janitor'
+      if user.role?('janitor')
         query
       elsif user
         query.where('owner_id = ? OR is_public = true', user.id)
@@ -25,10 +25,10 @@ class MessagePolicy < ApplicationPolicy
   end
 
   def whanau?
-    record.sensor.home.users.include? user
+    record.sensor.home.users.include?(user)
   end
 
   def janitor?
-    user.role? 'janitor'
+    user.role?('janitor')
   end
 end

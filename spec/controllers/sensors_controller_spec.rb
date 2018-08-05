@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-RSpec.describe SensorsController, type: :controller do
+require('rails_helper')
+RSpec.describe(SensorsController, type: :controller) do
   include Devise::Test::ControllerHelpers
 
   let(:bedroom) { FactoryBot.create(:room_type, name: 'bedroom') }
@@ -15,13 +15,13 @@ RSpec.describe SensorsController, type: :controller do
     describe 'GET show' do
       before { get :show, id: sensor.id }
 
-      it { expect(response).to redirect_to(new_user_session_path) }
+      it { expect(response).to(redirect_to(new_user_session_path)) }
     end
 
     describe 'delete' do
       before { delete :destroy, id: sensor.id }
 
-      it { expect(response).to redirect_to(new_user_session_path) }
+      it { expect(response).to(redirect_to(new_user_session_path)) }
     end
   end
 
@@ -31,22 +31,22 @@ RSpec.describe SensorsController, type: :controller do
     describe 'GET index' do
       before { get :index, home_id: home.id }
 
-      it { expect(response).to have_http_status(:success) }
-      it { expect(assigns(:sensors)).to eq([sensor]) }
-      it { expect(assigns(:home)).to eq(home) }
+      it { expect(response).to(have_http_status(:success)) }
+      it { expect(assigns(:sensors)).to(eq([sensor])) }
+      it { expect(assigns(:home)).to(eq(home)) }
     end
 
     describe 'GET show' do
       before { get :show, home_id: home.id, id: sensor.id }
 
-      it { expect(response).to have_http_status(:success) }
-      it { expect(assigns(:sensor)).to eq(sensor) }
+      it { expect(response).to(have_http_status(:success)) }
+      it { expect(assigns(:sensor)).to(eq(sensor)) }
     end
 
     describe 'delete' do
       before { delete :destroy, id: sensor.id }
 
-      it { expect(response).to redirect_to(home_sensors_path(sensor.home)) }
+      it { expect(response).to(redirect_to(home_sensors_path(sensor.home))) }
     end
   end
 end

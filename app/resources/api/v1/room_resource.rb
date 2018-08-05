@@ -46,7 +46,7 @@ module Api
       end
 
       def room_cache(key)
-        yield Rails.cache.fetch("#{@model.cache_key}/#{key}/#{@model.updated_at}", expires_in: 60.minutes)
+        yield(Rails.cache.fetch("#{@model.cache_key}/#{key}/#{@model.updated_at}", expires_in: 60.minutes))
       end
     end
   end

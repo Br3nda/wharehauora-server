@@ -5,6 +5,6 @@ class MqttUserController < ApplicationController
 
   def index
     @home = policy_scope(Home).find(params[:home_id])
-    authorize @home
+    authorize(@home)
   end
 end

@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found
-    render file: 'public/404', status: :not_found, layout: false
+    render(file: 'public/404', status: :not_found, layout: false)
   end
 
   def set_my_homes

@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require('rails_helper')
 
-RSpec.describe 'Room', type: :feature do
+RSpec.describe('Room', type: :feature) do
   subject { page }
 
   let(:whanau) do
-    user = FactoryBot.create :user
+    user = FactoryBot.create(:user)
     room.home.users << user
     user
   end
 
-  let(:room) { FactoryBot.create :room_with_sensors }
+  let(:room) { FactoryBot.create(:room_with_sensors) }
 
   shared_examples 'unassign sensor from a room' do
     describe 'unassign sensor from a room' do
@@ -20,7 +20,7 @@ RSpec.describe 'Room', type: :feature do
         click_link 'remove from room'
       end
 
-      it { is_expected.not_to have_text 'remove from room' }
+      it { is_expected.not_to(have_text('remove from room')) }
     end
   end
 
@@ -41,6 +41,6 @@ RSpec.describe 'Room', type: :feature do
 
     before { visit room_path(room.id) }
 
-    it { is_expected.not_to have_text 'remove from room' }
+    it { is_expected.not_to(have_text('remove from room')) }
   end
 end

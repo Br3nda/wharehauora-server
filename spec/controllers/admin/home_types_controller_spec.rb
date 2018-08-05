@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require('rails_helper')
 
-RSpec.describe Admin::HomeTypesController, type: :controller do
+RSpec.describe(Admin::HomeTypesController, type: :controller) do
   include Devise::Test
   shared_examples 'redirect to login' do
-    it { expect(response).to redirect_to(new_user_session_path) }
+    it { expect(response).to(redirect_to(new_user_session_path)) }
   end
   shared_examples 'redirect to home' do
-    it { expect(response).to redirect_to(root_path) }
+    it { expect(response).to(redirect_to(root_path)) }
   end
   let(:home_type) { FactoryBot.create(:home_type) }
   let(:user) { FactoryBot.create(:user) }
@@ -96,7 +96,7 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
     describe 'GET index' do
       before { get :index }
 
-      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to(have_http_status(:success)) }
     end
 
     describe 'GET show' do
@@ -106,25 +106,25 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
     describe 'GET new' do
       before { get :new, home_type: valid_params }
 
-      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to(have_http_status(:success)) }
     end
 
     describe 'PUT create,' do
       before { put :create, home_type: valid_params }
 
-      it { expect(response).to redirect_to(admin_home_types_path) }
+      it { expect(response).to(redirect_to(admin_home_types_path)) }
     end
 
     describe 'GET edit' do
       before { get :edit, id: home_type.to_param }
 
-      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to(have_http_status(:success)) }
     end
 
     describe 'DELETE destroy' do
       before { delete :destroy, id: home_type.id }
 
-      it { expect(response).to redirect_to(admin_home_types_path) }
+      it { expect(response).to(redirect_to(admin_home_types_path)) }
     end
   end
 end

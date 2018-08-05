@@ -7,7 +7,7 @@ class SensorsController < ApplicationController
 
   def index
     @home = policy_scope(Home).find(params[:home_id])
-    authorize @home
+    authorize(@home)
     @sensors = @home.sensors
                     .includes(:room)
                     .order(:node_id)
@@ -16,7 +16,7 @@ class SensorsController < ApplicationController
 
   def destroy
     @sensor.destroy!
-    redirect_to home_sensors_path(@sensor.home)
+    redirect_to(home_sensors_path(@sensor.home))
   end
 
   def show
@@ -29,27 +29,27 @@ class SensorsController < ApplicationController
 
   def update
     if sensor_params_contains_room?
-      @sensor.create_room! room_params
+      @sensor.create_room!(room_params)
       @sensor.save!
     else
       @sensor.update!(sensor_params)
     end
-    redirect_to home_rooms_path @sensor.home
+    redirect_to(home_rooms_path(@sensor.home))
   end
 
   def unassign
     @sensor = policy_scope(Sensor).find(params[:sensor_id])
-    authorize @sensor
+    authorize(@sensor)
     room = @sensor.room
-    @sensor.update! room: nil
-    respond_with room
+    @sensor.update!(room: nil)
+    respond_with(room)
   end
 
   private
 
   def set_sensor
     @sensor = policy_scope(Sensor).find(params[:id])
-    authorize @sensor
+    authorize(@sensor)
   end
 
   def sensor_params

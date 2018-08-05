@@ -7,7 +7,7 @@ class RoomsController < ApplicationController
   respond_to :html
 
   def index
-    authorize @home
+    authorize(@home)
     @rooms = @home.rooms.order(:name).paginate(page: params[:page])
     @unassigned_sensors = @home.sensors.where(room_id: nil)
     respond_with(@rooms)
@@ -25,7 +25,7 @@ class RoomsController < ApplicationController
 
   def update
     @room.update(room_params)
-    redirect_to home_rooms_path(@home)
+    redirect_to(home_rooms_path(@home))
   end
 
   def destroy
@@ -35,19 +35,19 @@ class RoomsController < ApplicationController
         @room.destroy
       end
     end
-    redirect_to home_rooms_path(@room.home)
+    redirect_to(home_rooms_path(@room.home))
   end
 
   private
 
   def set_home
     @home = @room ? @room.home : policy_scope(Home).find(params[:home_id])
-    authorize @home
+    authorize(@home)
   end
 
   def set_room
     @room = policy_scope(Room).find(params[:id])
-    authorize @room
+    authorize(@room)
   end
 
   def room_params

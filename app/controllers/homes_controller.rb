@@ -6,7 +6,7 @@ class HomesController < ApplicationController
   respond_to :html
 
   def index
-    authorize :home
+    authorize(:home)
     @homes = policy_scope(Home)
              .includes(:home_type, :owner)
              .order(:name)
@@ -21,14 +21,14 @@ class HomesController < ApplicationController
   end
 
   def new
-    authorize :home
+    authorize(:home)
     @home = Home.new
     respond_with(@home)
   end
 
   def create
     @home = Home.new(home_params)
-    authorize @home
+    authorize(@home)
     invite_new_owner
     @home.save
     respond_with(@home)
@@ -77,6 +77,6 @@ class HomesController < ApplicationController
 
   def set_home
     @home = policy_scope(Home).find(params[:id])
-    authorize @home
+    authorize(@home)
   end
 end

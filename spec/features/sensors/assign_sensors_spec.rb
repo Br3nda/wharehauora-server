@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require('rails_helper')
 
-RSpec.describe 'assign sensors', type: :feature do
+RSpec.describe('assign sensors', type: :feature) do
   subject { page }
 
   let(:home) do
-    FactoryBot.create :home, name: 'Toku whare whanau'
+    FactoryBot.create(:home, name: 'Toku whare whanau')
   end
 
   shared_context 'home has one sensor' do
-    let!(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
+    let!(:sensor) { FactoryBot.create(:sensor, home: home, room: nil) }
   end
 
   shared_examples 'new sensors detected and assignable' do
     describe 'sensor is displayed' do
-      it { is_expected.to have_text 'new sensors detected' }
-      it { is_expected.to have_link 'Assign to room' }
-      it { is_expected.to have_text sensor.node_id }
+      it { is_expected.to(have_text('new sensors detected')) }
+      it { is_expected.to(have_link('Assign to room')) }
+      it { is_expected.to(have_text(sensor.node_id)) }
     end
   end
 
@@ -29,9 +29,9 @@ RSpec.describe 'assign sensors', type: :feature do
       click_button 'Save'
     end
 
-    it { is_expected.to have_text 'room of oarsum' }
-    it { is_expected.not_to have_text 'new sensors detected' }
-    it { is_expected.to have_link 'Analyse' }
+    it { is_expected.to(have_text('room of oarsum')) }
+    it { is_expected.not_to(have_text('new sensors detected')) }
+    it { is_expected.to(have_link('Analyse')) }
   end
 
   shared_examples 'can see sensors' do
@@ -40,7 +40,7 @@ RSpec.describe 'assign sensors', type: :feature do
         before { visit "/homes/#{sensor.home_id}/rooms" }
 
         include_examples 'home has one sensor'
-        it { expect(home.sensors.size).to eq 1 }
+        it { expect(home.sensors.size).to(eq(1)) }
         include_examples 'new sensors detected and assignable'
       end
 
@@ -48,8 +48,8 @@ RSpec.describe 'assign sensors', type: :feature do
         before { visit "/homes/#{home.id}/rooms" }
 
         describe 'no sensors detected' do
-          it { is_expected.not_to have_text 'new sensors detected' }
-          it { is_expected.not_to have_link 'Assign to room' }
+          it { is_expected.not_to(have_text('new sensors detected')) }
+          it { is_expected.not_to(have_link('Assign to room')) }
         end
       end
     end
@@ -66,9 +66,9 @@ RSpec.describe 'assign sensors', type: :feature do
       end
 
       describe 'no sensors displayed' do
-        it { is_expected.not_to have_text 'new sensors detected' }
-        it { is_expected.to have_text 'room of oarsum' }
-        it { is_expected.to have_link 'Analyse' }
+        it { is_expected.not_to(have_text('new sensors detected')) }
+        it { is_expected.to(have_text('room of oarsum')) }
+        it { is_expected.to(have_link('Analyse')) }
       end
     end
   end
@@ -76,7 +76,7 @@ RSpec.describe 'assign sensors', type: :feature do
   shared_examples 'can assign to existing room' do
     include_examples 'home has one sensor'
     describe 'can assign to existing room' do
-      let!(:existing_room) { FactoryBot.create :room, name: 'library', home: home, sensors: [] }
+      let!(:existing_room) { FactoryBot.create(:room, name: 'library', home: home, sensors: []) }
 
       before do
         visit "/homes/#{home.id}/rooms"
@@ -85,9 +85,9 @@ RSpec.describe 'assign sensors', type: :feature do
         click_button 'Save'
       end
 
-      it { is_expected.not_to have_text 'new sensors detected' }
-      it { is_expected.to have_text existing_room.name }
-      it { is_expected.to have_link 'Analyse' }
+      it { is_expected.not_to(have_text('new sensors detected')) }
+      it { is_expected.to(have_text(existing_room.name)) }
+      it { is_expected.to(have_link('Analyse')) }
     end
   end
 
@@ -103,7 +103,7 @@ RSpec.describe 'assign sensors', type: :feature do
 
   context 'signed in as whanau' do
     let(:whanau) do
-      user = FactoryBot.create :user
+      user = FactoryBot.create(:user)
       home.users << user
       user
     end

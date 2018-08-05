@@ -9,32 +9,32 @@ class InvitationsController < ApplicationController
   def show; end
 
   def create
-    authorize @home, :edit?
+    authorize(@home, :edit?)
     @invitation = @home.invitations.create!(
       inviter: current_user,
       email: params[:invitation][:email]
     )
     InvitationMailer.invitation_email(@invitation).deliver_now
-    redirect_to home_home_viewers_path(@home)
+    redirect_to(home_home_viewers_path(@home))
   end
 
   def accept
     @home = @invitation.home
     @home.home_viewers.create!(user: current_user)
     @invitation.accepted!
-    redirect_to home_path(@home)
+    redirect_to(home_path(@home))
   end
 
   def decline
     @home = @invitation.home
     @invitation.declined!
-    redirect_to root_path
+    redirect_to(root_path)
   end
 
   def destroy
-    authorize @home, :edit?
+    authorize(@home, :edit?)
     @invitation.destroy if @invitation.present?
-    redirect_to home_home_viewers_path(@home)
+    redirect_to(home_home_viewers_path(@home))
   end
 
   private

@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require('rails_helper')
 
-RSpec.describe 'admin lists sensors', type: :feature do
+RSpec.describe('admin lists sensors', type: :feature) do
   subject { page }
 
   let(:home) do
     FactoryBot.create(:home)
   end
   let(:whanau) do
-    user = FactoryBot.create :user
+    user = FactoryBot.create(:user)
     home.users << user
     user
   end
 
   shared_examples 'sensor was deleted' do
     it 'sensor was deleted' do
-      is_expected.not_to have_text sensor.node_id
+      is_expected.not_to(have_text(sensor.node_id))
     end
   end
 
@@ -27,20 +27,20 @@ RSpec.describe 'admin lists sensors', type: :feature do
     end
 
     context 'unassigned sensor' do
-      let(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
+      let(:sensor) { FactoryBot.create(:sensor, home: home, room: nil) }
 
       include_examples 'sensor was deleted'
     end
 
     context 'assigned sensor' do
-      let(:room) { FactoryBot.create :room, home: home }
-      let(:sensor) { FactoryBot.create :sensor, home: home, room: room }
+      let(:room) { FactoryBot.create(:room, home: home) }
+      let(:sensor) { FactoryBot.create(:sensor, home: home, room: room) }
 
       include_examples 'sensor was deleted'
     end
 
     context 'sensor with messages' do
-      let(:sensor) { FactoryBot.create :sensor_with_messages, home: home }
+      let(:sensor) { FactoryBot.create(:sensor_with_messages, home: home) }
 
       include_examples 'sensor was deleted'
     end
@@ -61,10 +61,10 @@ RSpec.describe 'admin lists sensors', type: :feature do
   context 'signed in as whanau' do
     before { login_as(whanau) }
 
-    let(:sensor) { FactoryBot.create :sensor, home: home }
+    let(:sensor) { FactoryBot.create(:sensor, home: home) }
 
     before { visit "/homes/#{sensor.home.id}/sensors" }
 
-    it { is_expected.not_to have_link 'delete' }
+    it { is_expected.not_to(have_link('delete')) }
   end
 end

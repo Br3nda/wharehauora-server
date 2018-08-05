@@ -1,42 +1,42 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require('rails_helper')
 
-RSpec.describe Message, type: :model do
-  let(:home) { FactoryBot.create :home, gateway_mac_address: '123A456B789' }
+RSpec.describe(Message, type: :model) do
+  let(:home) { FactoryBot.create(:home, gateway_mac_address: '123A456B789') }
 
   describe 'decode' do
     subject { Message.new.decode(topic, payload) }
 
-    let(:sensor) { FactoryBot.create :sensor, home: home }
+    let(:sensor) { FactoryBot.create(:sensor, home: home) }
     let(:payload) { '20.9' }
 
     context 'No rooms associated with sensor' do
       shared_examples 'decodes message' do
-        it { expect { subject }.to change(Message, :count).by(1) }
-        it { expect { subject }.to change(Sensor, :count).by(1) }
+        it { expect { subject }.to(change(Message, :count).by(1)) }
+        it { expect { subject }.to(change(Sensor, :count).by(1)) }
         it { expect { subject }.not_to(change(Reading, :count)) }
-        it { expect(subject.sensor.home).to eq(home) }
+        it { expect(subject.sensor.home).to(eq(home)) }
       end
 
       context 'v1' do
         let(:topic) { "/sensors/wharehauora/#{home.id}/102/1/1/0/0" }
 
         include_examples 'decodes message'
-        it { expect(subject.version).to eq 'wharehauora' }
+        it { expect(subject.version).to(eq('wharehauora')) }
       end
 
       context 'v2' do
         let(:topic) { "/sensors/v2/#{home.gateway_mac_address}/#{sensor.mac_address}/1/1/0/0" }
 
         include_examples 'decodes message'
-        it { expect(subject.version).to eq 'v2' }
+        it { expect(subject.version).to(eq('v2')) }
       end
     end
 
     context 'when sensor is allocated to a room' do
-      let(:room) { FactoryBot.create :room, home: home }
-      let!(:sensor) { FactoryBot.create :sensor, home: home, room: room, node_id: '130' }
+      let(:room) { FactoryBot.create(:room, home: home) }
+      let!(:sensor) { FactoryBot.create(:sensor, home: home, room: room, node_id: '130') }
 
       shared_examples 'decodes messages' do
         it 'does not make a new sensor record' do
@@ -44,18 +44,18 @@ RSpec.describe Message, type: :model do
         end
 
         it 'saves a reading' do
-          expect { subject }.to change(Reading, :count).by(1)
+          expect { subject }.to(change(Reading, :count).by(1))
         end
 
         it 'saves against the correct sensor' do
           message = Message.new.decode(topic, payload)
-          expect(message.sensor).to eq(sensor)
-          expect(message.node_id).to eq(130)
+          expect(message.sensor).to(eq(sensor))
+          expect(message.node_id).to(eq(130))
         end
         it 'Saves a reading' do
           Message.new.decode(topic, payload)
-          expect(Reading.last.value).to eq(20.9)
-          expect(Reading.last.room.home).to eq(home)
+          expect(Reading.last.value).to(eq(20.9))
+          expect(Reading.last.room.home).to(eq(home))
         end
       end
 

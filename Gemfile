@@ -1,71 +1,71 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source('https://rubygems.org')
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.8'
+gem('rails', '~> 4.2.8')
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem('sass-rails', '~> 5.0')
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem('uglifier', '>= 1.3.0')
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
-gem 'rails-timeago', '~> 2.0'
+gem('jquery-rails')
+gem('rails-timeago', '~> 2.0')
 
-gem 'jsonapi-resources'
-gem 'pundit-resources'
+gem('jsonapi-resources')
+gem('pundit-resources')
 
 # # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Postgresql as the database for Active Record
-gem 'pg', '< 1.0.0'
+gem('pg', '< 1.0.0')
 
 # for logins
-gem 'devise'
-gem 'devise_invitable', '~> 1.7.0'
+gem('devise')
+gem('devise_invitable', '~> 1.7.0')
 
 # soft delete of records
-gem 'paranoia', '~> 2.2'
+gem('paranoia', '~> 2.2')
 
 # roles and permissions
-gem 'pundit'
+gem('pundit')
 
 # templating
-gem 'haml-rails'
+gem('haml-rails')
 
-gem 'purecss-rails'
+gem('purecss-rails')
 
 # icons
-gem 'font-awesome-rails'
+gem('font-awesome-rails')
 
 # listens for incoming sensor readings on mqtt
-gem 'mqtt'
+gem('mqtt')
 
-gem 'will_paginate'
+gem('will_paginate')
 
 # pretty charts
-gem 'chartkick'
+gem('chartkick')
 
 # pagination
-gem 'kaminari'
+gem('kaminari')
 
 # email
-gem 'sendgrid-ruby'
+gem('sendgrid-ruby')
 
-gem 'active_median'
+gem('active_median')
 
-gem 'momentjs-rails'
+gem('momentjs-rails')
 
 # OAuth for API
-gem 'doorkeeper'
+gem('doorkeeper')
 
 # Rest/http library
-gem 'faraday'
+gem('faraday')
 
-gem 'rack-cors', require: 'rack/cors'
+gem('rack-cors', require: 'rack/cors')
 
 group :production do
   # for heroku
@@ -117,5 +117,5 @@ group :test do
   gem 'pundit-matchers', '~> 1.3.0'
   gem 'timecop'
 end
-gem 'nokogiri', '>= 1.8.1'
-gem 'rails-html-sanitizer', '>= 1.0.4'
+gem('nokogiri', '>= 1.8.1')
+gem('rails-html-sanitizer', '>= 1.0.4')

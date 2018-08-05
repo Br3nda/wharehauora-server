@@ -28,7 +28,7 @@ class ApplicationPolicy
   end
 
   def whanau?
-    record.joins_home.home.users.include? user
+    record.joins_home.home.users.include?(user)
   end
 
   def janitor?
