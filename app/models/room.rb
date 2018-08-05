@@ -87,7 +87,7 @@ class Room < ActiveRecord::Base
   end
 
   def age_of_last_reading(key)
-    return unless readings.where(key: key).size.positive?
+    return nil unless readings.where(key: key).size.positive?
 
     Time.current - last_reading_timestamp(key)
   end
