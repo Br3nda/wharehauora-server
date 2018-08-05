@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do
+Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   devise_for :users
   use_doorkeeper do
     # OAuth applications must be created using rake tasks `rake oauth:application`
