@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::CleanerController, type: :controller do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user)       { FactoryBot.create(:user) }
   let(:admin_role) { FactoryBot.create(:role, name: 'janitor') }
   let(:admin_user) { FactoryBot.create(:user, roles: [admin_role]) }
 

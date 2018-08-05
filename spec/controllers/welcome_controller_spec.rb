@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe WelcomeController, type: :controller do
   include Devise::Test::ControllerHelpers
-  let(:user) { FactoryBot.create(:user) }
+  let(:user)      { FactoryBot.create(:user) }
   let(:home_type) { FactoryBot.create(:home_type) }
-  let(:home) { FactoryBot.create(:home, home_type: home_type) }
-  let(:room) { FactoryBot.create(:room, home: home) }
+  let(:home)      { FactoryBot.create(:home, home_type: home_type) }
+  let(:room)      { FactoryBot.create(:room, home: home) }
 
   context 'user is not sign in' do
     describe 'GET index' do

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'OAuth Authorization', type: :request do
   let(:oauth_application) { FactoryBot.create(:oauth_application) }
-  let(:user) { FactoryBot.create(:user) }
+  let(:user)              { FactoryBot.create(:user) }
 
   it 'auth ok' do
     post '/oauth/token',
