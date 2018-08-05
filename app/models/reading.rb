@@ -26,6 +26,7 @@ class Reading < ActiveRecord::Base
 
   def too_cold?
     return unless room&.room_type && room.room_type.min_temperature
+
     value < room.room_type.min_temperature
   end
 

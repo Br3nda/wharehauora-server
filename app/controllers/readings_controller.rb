@@ -45,6 +45,7 @@ class ReadingsController < ApplicationController
   def date_filter(query)
     return query.where('readings.created_at >= ?', params[:start]) if params[:start]
     return query.where('readings.created_at::date = ?', params[:day]) if params[:day]
+
     query
   end
 

@@ -13,6 +13,7 @@ class Api::V1::BaseController < JSONAPI::ResourceController
 
   def current_user
     return current_resource_owner if doorkeeper_token
+
     super
   end
 

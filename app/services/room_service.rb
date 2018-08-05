@@ -24,6 +24,7 @@ class RoomService
   def self.reading_data(room, key)
     reading = room.most_recent_reading(key)
     return unless reading
+
     {
       value: format('%.1f', reading.value).to_f,
       unit: reading.unit,

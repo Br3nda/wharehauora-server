@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
 
   def set_my_homes
     return unless current_user
+
     @my_homes = current_user.homes
   end
 end

@@ -22,6 +22,7 @@ class Sensor < ActiveRecord::Base
 
   def same_home_as_room
     return true if room_id.blank?
+
     room.home_id == home_id
   end
 end

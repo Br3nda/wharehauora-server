@@ -41,6 +41,7 @@ class Home < ActiveRecord::Base
 
   def fix_gateway_address
     return if gateway_mac_address.blank?
+
     self.gateway_mac_address = gateway_mac_address.gsub(/\s/, '').delete(':').upcase
   end
 end

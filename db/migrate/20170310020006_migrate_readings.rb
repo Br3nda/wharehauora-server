@@ -28,6 +28,7 @@ class MigrateReadings < ActiveRecord::Migration
   def remove_orphaned_sensor_records
     newest_home = Home.all.order(:id).last
     return unless newest_home
+
     sensors = Sensor.where('home_id > ?', newest_home.id)
     sensors.delete_all if sensors.count
   end
