@@ -10,8 +10,8 @@ RSpec.describe(Api::V1::RoomsController, type: :controller) do
     }
   end
   let(:room_type) { FactoryBot.create(:room_type, min_temperature: 10, max_temperature: 30) }
-  let(:owner)     { room.home.owner }
-  let(:admin)     { FactoryBot.create(:admin) }
+  let(:owner) { room.home.owner }
+  let(:admin) { FactoryBot.create(:admin) }
   let(:whanau) do
     whanau = FactoryBot.create(:user)
     room.home.users << whanau
@@ -36,11 +36,11 @@ RSpec.describe(Api::V1::RoomsController, type: :controller) do
     shared_examples 'returns expected readings' do
       subject { JSON.parse(response.body) }
 
-      let(:readings_response)    { subject['data']['attributes']['readings'] }
+      let(:readings_response) { subject['data']['attributes']['readings'] }
       let(:temperature_response) { readings_response['temperature'] }
-      let(:humidity_response)    { readings_response['humidity'] }
-      let(:dewpoint_response)    { readings_response['dewpoint'] }
-      let(:ratings_response)     { subject['data']['attributes']['ratings'] }
+      let(:humidity_response) { readings_response['humidity'] }
+      let(:dewpoint_response) { readings_response['dewpoint'] }
+      let(:ratings_response) { subject['data']['attributes']['ratings'] }
 
       it { expect(subject['data']['attributes']).to(include('name' => room.name)) }
 
@@ -115,7 +115,7 @@ RSpec.describe(Api::V1::RoomsController, type: :controller) do
     end
 
     describe 'when room is private' do
-      let(:room)      { FactoryBot.create(:room, room_type: room_type) }
+      let(:room) { FactoryBot.create(:room, room_type: room_type) }
       let!(:readings) { FactoryBot.create_list(:reading, 100, room: room) }
 
       describe 'and user is not logged in ' do
@@ -158,7 +158,7 @@ RSpec.describe(Api::V1::RoomsController, type: :controller) do
   describe '#create' do
     subject { JSON.parse(response.body)['data'] }
 
-    let(:home)  { FactoryBot.create(:home, owner: owner) }
+    let(:home) { FactoryBot.create(:home, owner: owner) }
     let(:owner) { FactoryBot.create(:user) }
     let(:body) do
       {
