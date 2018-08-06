@@ -6,7 +6,7 @@ describe RoomPolicy do
   subject { described_class.new(user, room) }
 
   let(:admin) { FactoryBot.create :admin }
-  let(:owner) { room.home.owner          }
+  let(:owner) { room.home.owner }
   let(:whanau) do
     u = FactoryBot.create :user
     room.home.users << u
