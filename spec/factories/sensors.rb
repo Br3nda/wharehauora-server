@@ -7,6 +7,12 @@ FactoryBot.define do
     sequence(:node_id, 10)
   end
 
+  factory :unassigned_sensor, parent: :sensor do
+    after(:create) do |sensor|
+      sensor.update(room: nil)
+    end
+  end
+
   factory :sensor_with_messages, parent: :sensor do
     transient do
       messages_count { 250 }

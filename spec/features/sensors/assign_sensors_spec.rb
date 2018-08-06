@@ -9,8 +9,8 @@ RSpec.describe 'assign sensors', type: :feature do
     FactoryBot.create :home, name: 'Toku whare whanau'
   end
 
-  shared_context 'home has one sensor' do
-    let!(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
+  shared_context 'home has one unassigned sensor' do
+    let!(:sensor) { FactoryBot.create :unassigned_sensor, home: home }
   end
 
   shared_examples 'new sensors detected and assignable' do
@@ -39,7 +39,7 @@ RSpec.describe 'assign sensors', type: :feature do
       context 'with 1 unassigned sensor in home' do
         before { visit "/homes/#{sensor.home_id}/rooms" }
 
-        include_examples 'home has one sensor'
+        include_examples 'home has one unassigned sensor'
         it { expect(home.sensors.size).to eq 1 }
         include_examples 'new sensors detected and assignable'
       end
@@ -56,7 +56,7 @@ RSpec.describe 'assign sensors', type: :feature do
   end
 
   shared_examples 'can assign to new room' do
-    include_examples 'home has one sensor'
+    include_examples 'home has one unassigned sensor'
     describe 'can assign to a new room' do
       before do
         visit "/homes/#{home.id}/rooms"
@@ -74,7 +74,7 @@ RSpec.describe 'assign sensors', type: :feature do
   end
 
   shared_examples 'can assign to existing room' do
-    include_examples 'home has one sensor'
+    include_examples 'home has one unassigned sensor'
     describe 'can assign to existing room' do
       let!(:existing_room) { FactoryBot.create :room, name: 'library', home: home, sensors: [] }
 
