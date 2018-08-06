@@ -16,7 +16,7 @@ class Opendata::ReadingsController < ApplicationController
     readings_by_room_type(key, day).each do |reading|
       part, value = reading
       room_type, timestamp = part
-      @readings[room_type] = { name: room_type, data: [] } unless @readings[room_type]
+      @readings[room_type] = { :name => room_type, :data => [] } unless @readings[room_type]
       @readings[room_type]['data'] << [timestamp, value]
     end
     @data = flatten_readings_for_kickchart(@readings)
