@@ -46,7 +46,7 @@ RSpec.describe Opendata::ReadingsController, type: :controller do
 
           expect(assigns(:data).count).to eq(5)
           @room_types.each do |rt|
-            expect(assigns(:data)).to include(:name => rt.name, :data => expected_value)
+            expect(assigns(:data)).to include(name: rt.name, data: expected_value)
           end
         end
       end
