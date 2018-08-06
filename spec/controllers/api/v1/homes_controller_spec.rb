@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Api::V1::HomesController, type: :controller do
   let(:headers) do
     {
-      :Accept => 'application/vnd.api+json',
-      :"Content-Type" => 'application/vnd.api+json'
+      'Accept' => 'application/vnd.api+json',
+      'Content-Type' => 'application/vnd.api+json'
     }
   end
   let!(:my_home)      { FactoryBot.create(:home, owner: user) }
@@ -35,16 +35,16 @@ RSpec.describe Api::V1::HomesController, type: :controller do
         describe 'response includes my home' do
           let(:matching_home) { subject['data'].select { |home| home['id'] == my_home.id.to_s }.first }
 
-          it { expect(matching_home).to include(:id => my_home.id.to_s) }
-          it { expect(matching_home['attributes']).to include(:name => my_home.name) }
+          it { expect(matching_home).to include('id' => my_home.id.to_s) }
+          it { expect(matching_home['attributes']).to include('name' => my_home.name) }
         end
       end
       shared_examples 'response includes public homes' do
         describe 'response includes public home' do
           let(:matching_home) { subject['data'].select { |home| home['id'] == public_home.id.to_s }.first }
 
-          it { expect(matching_home).to include(:id => public_home.id.to_s) }
-          it { expect(matching_home['attributes']).to include(:name => public_home.name) }
+          it { expect(matching_home).to include('id' => public_home.id.to_s) }
+          it { expect(matching_home['attributes']).to include('name' => public_home.name) }
         end
       end
       shared_examples 'response does not includes private homes' do

@@ -12,8 +12,8 @@ module RequestApiSpecHelpers
 
   def jsonapi_request_headers
     {
-      :"Content-type" => JSONAPI::MEDIA_TYPE,
-      :Accept => JSONAPI::MEDIA_TYPE
+      'Content-type' => JSONAPI::MEDIA_TYPE,
+      'Accept' => JSONAPI::MEDIA_TYPE
     }
   end
 end
