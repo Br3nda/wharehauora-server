@@ -13,8 +13,9 @@ RSpec.describe Sensor, type: :model do
   end
 
   describe 'on creation' do
+    it { expect(FactoryBot.create(:sensor, room_id: nil).room_id).not_to be nil }
+    it { expect(FactoryBot.create(:unassigned_sensor, room_id: nil).room_id).to eq nil }
     describe 'with no room associated' do
-      it { expect(FactoryBot.create(:sensor, room_id: nil).room_id).not_to be nil }
       it 'sets a name' do
         expect(FactoryBot.create(:sensor, room_id: nil).room.name).not_to be nil
       end
