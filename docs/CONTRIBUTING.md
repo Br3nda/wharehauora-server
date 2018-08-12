@@ -1,6 +1,6 @@
 # Contributing to Whare Hauora (server edition)
 
-First of, thank you for taking the time to contribute 🎉! We really appreciate it!
+First off, thank you for taking the time to contribute 🎉! We really appreciate it!
 
 We are trying to get better at welcoming newcomers 🚧 and will keep working on this contributing guideline until is all shiny and magical and explains everything you need to know ✨. While we get there, here are a few things you can have a look at:
 
@@ -11,7 +11,7 @@ We are trying to get better at welcoming newcomers 🚧 and will keep working on
 
 If you are keen to help, jump into an issue and ask away, we'll answer as soon as we can. We also have a [Slack team](wharehauora.slack.com) to communicate, if you want to jump in there just ask one of our contributors for access.
 
-We need help with all kinds of tasks, it doesn't have to be code! Documentation, design, contributing guidelines (Inception alert!), testing, repository organization or any other idea are welcome.
+We need help with all kinds of tasks, it doesn't have to be code! Documentation, design, contributing guidelines, testing, repository organization or any other idea are welcome.
 
 ## TODOs for this guidelines
 * Explain in more detail what kind of help is needed (peer review, documentation)
