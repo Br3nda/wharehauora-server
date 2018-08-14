@@ -1,9 +1,9 @@
 Whare Hauora Server
 ===================
 
-Serves a REST api for the Whare Hauora Android application
+Serves a REST api for the Whare Hauora Android application.
 
-Host user sign up, and password resets for end users
+Host user sign up, and password resets for end users.
 
 
 Status
@@ -23,18 +23,27 @@ https://github.com/WhareHauora/wharehauora-server/wiki
 Installation
 ============
 
+## Prerequisites
+
+You need to have these set up in your machine:
+* Ruby 2.4.1
+* Postgres
+
+Or there's now a [vagrant box](https://www.vagrantup.com/intro/getting-started/) available with Ruby + Postgres installed already to make it easy to set up a dev environment. You'll be able to access the server in http://127.0.0.1:3000/. Read the [Vagrantfile](Vagrantfile.md) comments for installation help.
+
+
 To set up a development environment
 -----------------------------------
 
-1. make your own fork, and clone
+1. make your own fork, and clone  
   `git clone [repo]`
 
 1. `cd wharehauora-server`
 
-1. Add project upstream
+1. Add project upstream  
   `git remote add upstream git@github.com:WhareHauora/wharehauora-server.git`
 
-1. Set up environment variables
+1. Set up environment variables  
   `cp env-example .env`
 
 1. `bundle install`

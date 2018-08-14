@@ -88,6 +88,7 @@ Vagrant.configure("2") do |config|
       # curl -sSL https://get.rvm.io | sudo bash -s stable
       # sudo usermod -a -G rvm `whoami`
       ## relogin to the server (you can logout and login to vagrant ssh again)
+      #  cd /vagrant
       #  rvm install 2.4.1
       #  gem install bundler --no-rdoc --no-ri
       #  gem install pkg-config
@@ -95,5 +96,6 @@ Vagrant.configure("2") do |config|
       #  rake db:create db:migrate
       ## https://putshello.wordpress.com/2015/03/03/easy-rails-with-vagrant-virtualbox-on-windows/
       #  bundle exec rails s -b 0.0.0.0
+      ## server is running now in your browser http://127.0.0.1:3000/
   SHELL
 end
