@@ -9,7 +9,7 @@ function setupRoomDataReloader(room_id) {
 
 function getRoomData(room_id) {
   let url = '/api/v1/rooms/' + room_id + '.json';
-  $.get( url )
+  $.get(url)
     .done(function(response) {
       updateRoomDisplay(room_id, response.data);
     })
