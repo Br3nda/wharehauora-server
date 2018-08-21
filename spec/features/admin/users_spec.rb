@@ -6,10 +6,10 @@ RSpec.describe 'Users', type: :feature do
   subject { page }
 
   let!(:admin_user) { FactoryBot.create :admin }
-  let!(:user)       { FactoryBot.create :user }
-  let!(:user_tahi)  { FactoryBot.create :user }
-  let!(:user_rua)   { FactoryBot.create :user }
-  let!(:user_toru)  { FactoryBot.create :user }
+  let!(:user)       { FactoryBot.create :user  }
+  let!(:user_tahi)  { FactoryBot.create :user  }
+  let!(:user_rua)   { FactoryBot.create :user  }
+  let!(:user_toru)  { FactoryBot.create :user  }
 
   shared_examples 'cannot #index' do
     describe '#index' do
