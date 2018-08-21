@@ -9,7 +9,7 @@ FactoryBot.define do
 
   factory :sensor_with_messages, parent: :sensor do
     transient do
-      messages_count 250
+      messages_count { 250 }
     end
     after(:create) do |sensor, evaluator|
       create_list(:message, evaluator.messages_count, sensor: sensor)

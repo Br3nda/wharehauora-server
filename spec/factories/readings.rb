@@ -3,17 +3,17 @@
 FactoryBot.define do
   factory :reading do
     room
-    key 'temperature'
-    value 21.2
+    key { 'temperature' }
+    value { 21.2 }
   end
 
   factory :temperature_reading, parent: :reading do
-    key 'temperature'
+    key { 'temperature' }
   end
   factory :humidity_reading, parent: :reading do
-    key 'humidity'
+    key { 'humidity' }
   end
   factory :dewpoint_reading, parent: :reading do
-    key 'dewpoint'
+    key { 'dewpoint' }
   end
 end

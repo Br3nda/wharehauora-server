@@ -7,9 +7,9 @@ FactoryBot.define do
     room_type
 
     transient do
-      temperature nil
-      humidity nil
-      dewpoint nil
+      temperature { nil }
+      humidity { nil }
+      dewpoint { nil }
     end
 
     after(:create) do |room, evaluator|
