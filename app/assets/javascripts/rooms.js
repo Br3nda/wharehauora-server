@@ -36,7 +36,6 @@ function updateRoomDisplay(room_id, data) {
     let reading = readings[key];
     let div = '#room-' + room_id + '-' + key + '-';
     if (reading) {
-
       // Show the value
       $(div + 'value').text(reading.value + reading.unit);
 
