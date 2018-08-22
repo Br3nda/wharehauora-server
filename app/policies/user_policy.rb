@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserPolicy < ApplicationPolicy
   def index?
     janitor?
@@ -26,6 +28,7 @@ class UserPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       return scope.all if janitor?
+
       # return scope.where(id: user.id) if user.present?
       scope.none
     end

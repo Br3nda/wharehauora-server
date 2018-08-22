@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SensorsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_sensor, only: %i[show edit destroy update]

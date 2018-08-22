@@ -1,11 +1,9 @@
 = render 'homes/nav', home: @home
-%h2 Set up
-
-
+%h2 DEBUG
 
 - if @home.mqtt_user
   %p
-    Here are your credentials to set up a WhareGateway in
+    Here is the user+pass for your gateway.
     = @home.name
 
   %p
@@ -15,6 +13,7 @@
     Password:
     %b= @home.mqtt_user.password
 - else
-  %p Your home has not been provisioned yet.
+  %p Gateway mqtt user has not been provisioned yet
 
--# http://192.168.4.1
+- if @home.gateway_mac_address.blank?
+  %p Cannot provision home with no mac address set

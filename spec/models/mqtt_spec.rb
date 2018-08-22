@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Mqtt, type: :model do
   before { ENV['CLOUDMQTT_URL'] = 'mqtt://bob:bobpassword@qwerty.mqttsomewhere.nz:12345/hey' }
+
   it 'makes a faraday_conn' do
     expect(Mqtt.faraday_conn).to be_a(Faraday::Connection)
   end

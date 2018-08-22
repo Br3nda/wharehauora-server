@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoomsController < ApplicationController
   before_action :set_room, only: %i[show edit destroy update]
   before_action :set_home, only: %i[index edit update]

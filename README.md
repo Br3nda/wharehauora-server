@@ -16,7 +16,7 @@ Status
 [ ![AwesomeCode Status for WhareHauora/wharehauora-server](https://awesomecode.io/projects/5f56562b-9317-4405-b45d-ec5b7a9b05f5/status)](https://awesomecode.io/projects/57)
 
 
-Want to contribute? Info on current work is on our wiki
+Want to contribute? Please give our [contributing guideliness](docs/CONTRIBUTING.md) a read. Info on current work is on our wiki
 https://github.com/WhareHauora/wharehauora-server/wiki
 
 

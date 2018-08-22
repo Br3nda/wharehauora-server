@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'simplecov'
 require 'coveralls'
 Coveralls.wear!
@@ -114,11 +116,11 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = 'tests.db'
 
   if Bullet.enable?
-    config.before(:each) do
+    config.before do
       Bullet.start_request
     end
 
-    config.after(:each) do
+    config.after do
       Bullet.perform_out_of_channel_notifications if Bullet.notification?
       Bullet.end_request
     end

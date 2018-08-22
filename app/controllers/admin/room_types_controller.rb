@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::RoomTypesController < Admin::AdminController
   before_action :set_room_type, only: %i[show edit update destroy]
 
@@ -27,7 +29,7 @@ class Admin::RoomTypesController < Admin::AdminController
 
   def destroy
     ActiveRecord::Base.transaction do
-      Room.where(room_type: @room_type).update_all(room_type_id: nil) # rubocop:disable Rails/SkipsModelValidations
+      Room.where(room_type: @room_type).update_all(room_type_id: nil)
       @room_type.destroy
     end
     redirect_to admin_room_types_path

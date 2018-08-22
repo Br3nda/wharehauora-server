@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Message < ActiveRecord::Base
   belongs_to :sensor, counter_cache: true
   delegate :home, :home_id, to: :sensor
@@ -61,8 +63,10 @@ class Message < ActiveRecord::Base
 
   def save_dewpoint
     return unless sensor.room && key == 'temperature'
+
     dewpoint = sensor.room.calculate_dewpoint
     return if dewpoint.nil?
+
     Reading.create!(room: sensor.room,
                     value: dewpoint,
                     key: 'dewpoint')

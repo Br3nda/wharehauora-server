@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :room do
     name { Faker::Hipster.word }
@@ -5,9 +7,9 @@ FactoryBot.define do
     room_type
 
     transient do
-      temperature nil
-      humidity nil
-      dewpoint nil
+      temperature { nil }
+      humidity { nil }
+      dewpoint { nil }
     end
 
     after(:create) do |room, evaluator|

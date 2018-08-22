@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SensorPolicy < ApplicationPolicy
   def show?
     owner? || janitor? || whanau?

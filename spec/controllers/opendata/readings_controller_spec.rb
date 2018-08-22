@@ -1,24 +1,29 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Opendata::ReadingsController, type: :controller do
-  let(:user) { FactoryBot.create :user }
-  let(:home) { FactoryBot.create :home, owner: user }
-  let(:valid_params) { { key: 'temperature', day: day } }
-  let(:day) { '2017-01-01' }
+  let(:user)         { FactoryBot.create :user              }
+  let(:home)         { FactoryBot.create :home, owner: user }
+  let(:valid_params) { { key: 'temperature', day: day }     }
+  let(:day)          { '2017-01-01'                         }
 
   context 'Not signed in' do
     describe 'GET index' do
       before { get :index, valid_params }
+
       it { expect(response).to have_http_status(:success) }
     end
   end
 
   context 'Signed in as home owner' do
     before { sign_in user }
+
     describe 'GET index' do
       describe 'no readings yet' do
         it { expect(response).to have_http_status(:success) }
       end
+
       describe 'has readings' do
         before do
           @readings = []
@@ -34,6 +39,7 @@ RSpec.describe Opendata::ReadingsController, type: :controller do
           end
           get :index, valid_params
         end
+
         it { expect(response).to have_http_status(:success) }
         it 'finds readings, organised by room types' do
           expected_value = [[Time.zone.parse(day), 10.0]]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomePolicy < ApplicationPolicy
   attr_reader :user, :home
 
@@ -6,11 +8,11 @@ class HomePolicy < ApplicationPolicy
   end
 
   def create?
-    owner? ||  janitor?
+    signed_in?
   end
 
   def new?
-    signed_in? || janitor?
+    signed_in?
   end
 
   def edit?
@@ -33,12 +35,14 @@ class HomePolicy < ApplicationPolicy
     def resolve
       return scope.is_public? if user.nil?
       return scope.all if user.present? && user.role?('janitor')
+
       my_homes_only
     end
 
     def my_homes_only
       homes = my_home_ids
       return scope.where('is_public=true OR owner_id = ? or id in (?)', user.id, homes) if homes.count.positive?
+
       scope.where('is_public=true OR owner_id = ? ', user.id)
     end
 

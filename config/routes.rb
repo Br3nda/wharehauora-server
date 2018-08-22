@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
+Rails.application.routes.draw do
   devise_for :users
   use_doorkeeper do
     # OAuth applications must be created using rake tasks `rake oauth:application`
@@ -39,8 +39,8 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   namespace :api do
     namespace :v1 do
-      jsonapi_resources :home_types, only: [:index, :show]
-      jsonapi_resources :room_types, only: [:index, :show]
+      jsonapi_resources :home_types, only: %i[index show]
+      jsonapi_resources :room_types, only: %i[index show]
       jsonapi_resources :users
       jsonapi_resources :sensors
       jsonapi_resources :readings, only: [:show]
@@ -66,5 +66,9 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     resources :room_types
     resources :mqtt_users
     post :mqtt_sync, to: 'mqtt_users#sync'
+  end
+
+  namespace :gateway do
+    resources :config
   end
 end

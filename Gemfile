@@ -25,6 +25,7 @@ gem 'pg', '< 1.0.0'
 
 # for logins
 gem 'devise'
+gem 'devise_invitable', '~> 1.7.0'
 
 # soft delete of records
 gem 'paranoia', '~> 2.2'

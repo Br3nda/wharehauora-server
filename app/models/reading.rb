@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Reading < ActiveRecord::Base
   belongs_to :room, counter_cache: true, touch: true
 
@@ -23,7 +25,8 @@ class Reading < ActiveRecord::Base
   }
 
   def too_cold?
-    return unless room && room.room_type && room.room_type.min_temperature
+    return unless room&.room_type && room.room_type.min_temperature
+
     value < room.room_type.min_temperature
   end
 

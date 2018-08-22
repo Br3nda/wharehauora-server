@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::UsersController < Admin::AdminController
   before_action :set_user, only: %i[show edit update destroy]
 
@@ -20,7 +22,7 @@ class Admin::UsersController < Admin::AdminController
     @user.update!(user_params)
     @user.confirm
     redirect_to admin_users_path
-  rescue
+  rescue StandardError
     render :edit, @user
   end
 

@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 class Api::V1::BaseController < JSONAPI::ResourceController
+  force_ssl if Rails.env.production?
   include Pundit::ResourceController
   before_action :doorkeeper_auth!
 
@@ -10,6 +13,7 @@ class Api::V1::BaseController < JSONAPI::ResourceController
 
   def current_user
     return current_resource_owner if doorkeeper_token
+
     super
   end
 
