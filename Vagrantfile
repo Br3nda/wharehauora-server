@@ -73,16 +73,18 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-   sudo apt-get update -y
-   sudo apt-get install nodejs -y
-   sudo ln -sf /usr/bin/nodejs /usr/local/bin/node
-   sudo apt install postgresql postgresql-contrib libpq-dev -y    # for postgres
-   sudo -u postgres createuser vagrant -s                         # permissions for postgres
+    # first installation of requirements, this will run only once even if you change this file
+    # installing ruby + postgres
+    sudo apt-get update -y
+    sudo apt-get install nodejs -y
+    sudo ln -sf /usr/bin/nodejs /usr/local/bin/node
+    sudo apt install postgresql postgresql-contrib libpq-dev -y    # for postgres
+    sudo -u postgres createuser vagrant -s                         # permissions for postgres
 
-   # And then install rvm https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/ownserver/nginx/oss/install_language_runtime.html
-   # and get the server running!
-   # This is commented out to make my life easier (not a Vagrant expert)
-   # but as soon as you log into vagrant, you can run this commands and it should give you a working environment
+    # And then install rvm (https://www.phusionpassenger.com/library/walkthroughs/deploy/ruby/ownserver/nginx/oss/install_language_runtime.html)
+    # and get the server running!
+    # This is commented out to make my life easier (not a Vagrant expert)
+    # but as soon as you log into vagrant, you can run this commands and it should give you a working environment
       # cd /vagrant
       # gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
       # curl -sSL https://get.rvm.io | sudo bash -s stable

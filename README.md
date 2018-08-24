@@ -23,17 +23,21 @@ https://github.com/WhareHauora/wharehauora-server/wiki
 Installation
 ============
 
-## Prerequisites
+There are two ways to set up a dev environment:
+1. Installing all dependencies (Ruby + Postgres + Bundler) in your machine
+2. Using a pre-build vagrant box
+
+You only need to pick one of these.
+
+## Option one: Ruby + Bundler in your machine
+
+### Pre-requisites
 
 You need to have these set up in your machine:
 * Ruby 2.4.1
 * Postgres
 
-Or there's now a [vagrant box](https://www.vagrantup.com/intro/getting-started/) available with Ruby + Postgres installed already to make it easy to set up a dev environment. You'll be able to access the server in http://127.0.0.1:3000/. Read the [Vagrantfile](Vagrantfile.md) comments for installation help.
-
-
-To set up a development environment
------------------------------------
+### To set up a development environment
 
 1. make your own fork, and clone  
   `git clone [repo]`
@@ -52,6 +56,60 @@ To set up a development environment
 
 1. `bundle exec rails s`
 
+
+## Option two: Vagrant
+
+### Pre-requisites
+
+You need to have these set up in your machine:
+* [Vagrant](https://www.vagrantup.com/)
+* [VirtualBox](https://www.virtualbox.org/)
+
+There's a Vagrant file available with automatic provisioning of Ruby + Postgres to make it easy to set up a dev environment. 
+
+### To set up a development environment
+
+1. Outside of the Vagrant box, make your own fork and clone the repo
+````
+git clone [repo]
+cd wharehauora-server
+git remote add upstream git@github.com:WhareHauora/wharehauora-server.git
+cp env-example .env
+````
+
+2. Download and provision the box (it will take a while to download, but only the first time)  
+  ` vagrant up`
+
+3. Access the vagrant box  
+  `vagrant ssh`  
+
+4. Only in the first installation of the box, run these instructions step by step to install a few other requirements. These instructions are also commented out in the [Vagrant file](Vagrantfile) right at the end if you want to have a deeper look.
+````
+cd /vagrant     # this is where your code is synced to
+
+# install rvm
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+curl -sSL https://get.rvm.io | sudo bash -s stable
+sudo usermod -a -G rvm `whoami`
+````
+
+5. Log out and log in again to vagrant ssh.
+````
+ cd /vagrant
+ rvm install 2.4.1
+ gem install bundler --no-rdoc --no-ri
+ gem install pkg-config
+ bundle install
+ rake db:create db:migrate
+````
+
+5. Run the server after everything is installed  
+  `bundle exec rails s -b 0.0.0.0`
+
+6. The server will be running now in your machine's browser at http://127.0.0.1:3000/
+
+
+## Populate and fake data
 
 To populate to your database with some records to work with:
 
