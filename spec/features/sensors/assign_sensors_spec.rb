@@ -5,9 +5,7 @@ require 'rails_helper'
 RSpec.describe 'assign sensors', type: :feature do
   subject { page }
 
-  let(:home) do
-    FactoryBot.create :home, name: 'Toku whare whanau'
-  end
+  let(:home) { FactoryBot.create :home, name: 'Toku whare whanau' }
 
   shared_context 'home has one unassigned sensor' do
     let!(:sensor) { FactoryBot.create :unassigned_sensor, home: home }

@@ -9,7 +9,7 @@ FactoryBot.define do
 
   factory :unassigned_sensor, parent: :sensor do
     after(:create) do |sensor|
-      sensor.update(room: nil)
+      sensor.update(room_id: nil)
     end
   end
 
