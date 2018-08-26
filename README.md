@@ -37,7 +37,7 @@ You only need to pick one of these:
 
 You need to have these set up in your machine:
 
-* Ruby 2.4.1
+* Ruby (See the file `.ruby-version` for the exact version)
 * Postgres
 
 #### To set up a development environment
