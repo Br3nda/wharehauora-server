@@ -58,3 +58,4 @@ bower.json
 # Ignore vagrant
 .vagrant
 ubuntu-bionic-18.04-cloudimg-console.log
+/public/assets/*

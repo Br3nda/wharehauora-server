@@ -16,3 +16,4 @@
 //= require chartkick
 //= require_tree .
 //= require moment
+//= require serviceworker-companion

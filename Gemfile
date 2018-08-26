@@ -67,6 +67,9 @@ gem 'faraday'
 
 gem 'rack-cors', require: 'rack/cors'
 
+gem 'webpush'
+gem 'serviceworker-rails'
+
 group :production do
   # for heroku
   # gem 'newrelic_rpm'

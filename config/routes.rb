@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
+  post '/subscribe' => 'subscriptions#create'
+
   resources :homes do
     resources :rooms
     resources :home_viewers, except: %i[create update]
