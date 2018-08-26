@@ -9,7 +9,7 @@ Host user sign up, and password resets for end users.
 [![Coverage Status](https://coveralls.io/repos/github/WhareHauora/wharehauora-server/badge.svg?branch=master)](https://coveralls.io/github/WhareHauora/wharehauora-server?branch=master)
 [![Code Climate](https://codeclimate.com/github/WhareHauora/wharehauora-server/badges/gpa.svg)](https://codeclimate.com/github/WhareHauora/wharehauora-server)
 [![Issue Count](https://codeclimate.com/github/WhareHauora/wharehauora-server/badges/issue_count.svg)](https://codeclimate.com/github/WhareHauora/wharehauora-server)
-[![Stories in Ready](https://badge.waffle.io/WhareHauora/wharehauora-server.png?label=ready&title=Ready)](https://waffle.io/WhareHauora/wharehauora-server)
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/WhareHauora/wharehauora-server.svg?columns=all)](https://waffle.io/WhareHauora/wharehauora-server)
 [![AwesomeCode Status for WhareHauora/wharehauora-server](https://awesomecode.io/projects/5f56562b-9317-4405-b45d-ec5b7a9b05f5/status)](https://awesomecode.io/projects/57)
 
 Want to contribute? Please give our
