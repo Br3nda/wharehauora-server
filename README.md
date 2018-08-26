@@ -3,6 +3,13 @@
 Serves a REST api for the Whare Hauora Android application.
 Host user sign up, and password resets for end users.
 
+
+## Contributing
+
+Whare Hauora would love Rails Devs contributing to this. To find somewhere to look, have a look at Sprint backload in Waffle:
+https://waffle.io/WhareHauora/wharehauora-server
+
+
 ## Status
 
 [![Build Status](https://travis-ci.org/WhareHauora/wharehauora-server.svg?branch=master)](https://travis-ci.org/WhareHauora/wharehauora-server)
