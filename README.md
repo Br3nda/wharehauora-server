@@ -6,7 +6,7 @@ Host user sign up, and password resets for end users.
 
 ## Contributing
 
-Whare Hauora would love Rails Devs contributing to this. To find somewhere to look, have a look at Sprint backload in Waffle:
+Whare Hauora would love Rails Devs contributing to this. To find somewhere to work on, have a look at Sprint backload in Waffle:
 https://waffle.io/WhareHauora/wharehauora-server
 
 
