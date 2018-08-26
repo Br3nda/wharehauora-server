@@ -24,7 +24,7 @@ RSpec.describe Message, type: :model do
 
         include_examples 'decodes message'
         it { expect(subject.version).to eq 'wharehauora' }
-        it { expect(subject.sensor.node_id).to eq 120}
+        it { expect(subject.sensor.node_id).to eq 120 }
       end
 
       context 'v2' do
@@ -32,7 +32,7 @@ RSpec.describe Message, type: :model do
 
         include_examples 'decodes message'
         it { expect(subject.version).to eq 'v2' }
-        it { expect(subject.sensor.mac_address).to eq 'ABC123'}
+        it { expect(subject.sensor.mac_address).to eq 'ABC123' }
       end
     end
 
