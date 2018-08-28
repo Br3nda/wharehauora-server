@@ -54,8 +54,8 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       end
 
       describe 'home owner' do
-        include_examples 'token belongs to home owner'
         before { get :index, format: :json, access_token: token.token }
+        include_examples 'token belongs to home owner'
 
         it { expect(response.status).to eq 200 }
         include_examples 'response includes my home'
