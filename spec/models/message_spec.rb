@@ -37,7 +37,7 @@ RSpec.describe Message, type: :model do
     end
 
     context 'when sensor is allocated to a room' do
-      let(:room) { FactoryBot.create :room, home: home }
+      let(:room)    { FactoryBot.create :room, home: home }
       let!(:sensor) { FactoryBot.create :sensor, home: home, room: room, node_id: '130' }
 
       shared_examples 'decodes messages' do
