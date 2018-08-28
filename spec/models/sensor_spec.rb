@@ -24,6 +24,7 @@ RSpec.describe Sensor, type: :model do
 
     describe 'with an associated room' do
       let!(:room) { FactoryBot.create(:room) }
+
       it { expect { FactoryBot.create(:sensor, room: room) }.not_to change(Room, :count) }
     end
   end
