@@ -44,7 +44,6 @@ RSpec.describe Reading, type: :model do
       expect(reading.home).to eq(home)
     end
 
-
     it 'finds temperature' do
       expect(Reading.temperature.first).to eq(reading)
     end
