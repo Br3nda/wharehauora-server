@@ -10,10 +10,10 @@ function setupRoomDataReloader(room_id) {
 function getRoomData(room_id) {
   var url = '/api/v1/rooms/' + room_id + '.json';
   $.get(url)
-    .done(function(response) {
+    .done(function (response) {
       updateRoomDisplay(room_id, response.data);
     })
-    .fail(function(response, data) {
+    .fail(function (response, data) {
       displayErrorForRoom(room_id);
     });
 }
@@ -21,7 +21,7 @@ function getRoomData(room_id) {
 
 function displayErrorForRoom(room_id, data) {
   var keys = ['temperature', 'humidity', 'dewpoint'];
-  keys.forEach(function(key, index) {
+  keys.forEach(function (key, index) {
     var div = '#room-' + room_id + '-' + key + '-';
     $(div + 'value').text('ERROR');
   });
@@ -32,7 +32,7 @@ function updateRoomDisplay(room_id, data) {
 
   var readings = data.attributes.readings;
 
-  keys.forEach(function(key, index) {
+  keys.forEach(function (key, index) {
     var reading = readings[key];
     var div = '#room-' + room_id + '-' + key + '-';
     if (reading) {
