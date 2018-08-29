@@ -36,6 +36,7 @@ RSpec.describe Reading, type: :model do
     before do
       FactoryBot.create_list :reading, 10, key: 'test'
     end
+
     it 'belongs to a room' do
       expect(reading.room).to eq(room)
       expect(room.readings.first).to eq(reading)

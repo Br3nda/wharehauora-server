@@ -59,6 +59,7 @@ RSpec.describe Room, type: :model do
     after do
       Timecop.return
     end
+
     it { expect(room.age_of_last_reading('temperature')).to be_within(0.0001).of(5 * 60) }
   end
 
