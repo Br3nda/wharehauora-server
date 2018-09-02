@@ -56,10 +56,11 @@ RSpec.describe Room, type: :model do
       FactoryBot.create :temperature_reading, created_at: 5.minutes.ago, room: room
     end
 
-    it { expect(room.age_of_last_reading('temperature')).to be_within(0.0001).of(5 * 60) }
     after do
       Timecop.return
     end
+
+    it { expect(room.age_of_last_reading('temperature')).to be_within(0.0001).of(5 * 60) }
   end
 
   describe 'room_type has min and max temperature set' do
