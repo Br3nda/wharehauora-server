@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     resources :room_types
     resources :mqtt_users
     post :mqtt_sync, to: 'mqtt_users#sync'
+    post 'push' => 'push#create'
   end
 
   namespace :gateway do
