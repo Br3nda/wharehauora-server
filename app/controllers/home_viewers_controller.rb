@@ -27,7 +27,6 @@ class HomeViewersController < ApplicationController
 
   def destroy
     authorize @home, :edit?
-    byebug
     viewer = @home.home_viewers.find_by!(user_id: params[:id])
     viewer.destroy
   ensure
