@@ -4,12 +4,12 @@ require 'rails_helper'
 RSpec.describe HomesController, type: :controller do
   include Devise::Test::ControllerHelpers
 
-  let(:user) { FactoryBot.create(:user) }
-  let(:admin_role) { FactoryBot.create(:role, name: 'janitor') }
-  let(:admin_user) { FactoryBot.create(:user, roles: [admin_role]) }
-  let!(:home) { FactoryBot.create(:home, owner_id: user.id) }
-  let!(:room) { FactoryBot.create(:room, home: home) }
-  let!(:another_home) { FactoryBot.create(:home, name: "someone else's home") }
+  let(:user)          { FactoryBot.create(:user)                                       }
+  let(:admin_role)    { FactoryBot.create(:role, name: 'janitor')                      }
+  let(:admin_user)    { FactoryBot.create(:user, roles: [admin_role])                  }
+  let!(:home)         { FactoryBot.create(:home, owner_id: user.id)                    }
+  let!(:room)         { FactoryBot.create(:room, home: home)                           }
+  let!(:another_home) { FactoryBot.create(:home, name: "someone else's home")          }
   let!(:public_home)  { FactoryBot.create(:home, name: 'public home', is_public: true) }
 
   let(:faraday_double) { double(Faraday, basic_auth: nil, post: '') }
@@ -87,11 +87,14 @@ RSpec.describe HomesController, type: :controller do
 
     describe 'PUT create' do
       subject { assigns(:home) }
+
       describe 'Creating a home' do
-        before { put :create, { home: { name: 'My new home' } } }
+        before { put :create, home: { name: 'My new home' } }
+
         it { expect(subject.name).to eq 'My new home' }
         it { expect(subject.owner).to eq user }
       end
+
       describe 'creating a home for someone else' do
         let(:params) do
           {
@@ -99,7 +102,9 @@ RSpec.describe HomesController, type: :controller do
             owner: { email: 'bob@example.com' }
           }
         end
+
         before { put :create, params }
+
         it { expect(subject.name).to eq "Bob\'s home" }
         it { expect(subject.owner).to eq user }
       end

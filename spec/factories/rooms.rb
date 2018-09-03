@@ -7,9 +7,9 @@ FactoryBot.define do
     room_type
 
     transient do
-      temperature nil
-      humidity nil
-      dewpoint nil
+      temperature { nil }
+      humidity { nil }
+      dewpoint { nil }
     end
 
     after(:create) do |room, evaluator|
@@ -37,7 +37,9 @@ FactoryBot.define do
     end
   end
 
-  factory :room_with_sensors, parent: :room do
-    sensors { create_list(:sensor_with_messages, 1, home: home) }
+  factory :room_with_sensors, parent: :room do |_room|
+    after(:create) do |room|
+      sensors = create_list(:sensor, 1, home: room.home, room: room)
+    end
   end
 end

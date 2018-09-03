@@ -8,34 +8,36 @@ RSpec.describe Message, type: :model do
   describe 'decode' do
     subject { Message.new.decode(topic, payload) }
 
-    let(:sensor) { FactoryBot.create :sensor, home: home }
     let(:payload) { '20.9' }
 
-    context 'No rooms associated with sensor' do
+    context 'no sensor exists yet' do
       shared_examples 'decodes message' do
         it { expect { subject }.to change(Message, :count).by(1) }
+        it { expect { subject }.to change(Reading, :count).by(1) }
         it { expect { subject }.to change(Sensor, :count).by(1) }
-        it { expect { subject }.not_to(change(Reading, :count)) }
+        it { expect { subject }.to change(Room, :count).by(1) }
         it { expect(subject.sensor.home).to eq(home) }
       end
 
       context 'v1' do
-        let(:topic) { "/sensors/wharehauora/#{home.id}/102/1/1/0/0" }
+        let(:topic) { "/sensors/wharehauora/#{home.id}/120/1/1/0/0" }
 
         include_examples 'decodes message'
         it { expect(subject.version).to eq 'wharehauora' }
+        it { expect(subject.sensor.node_id).to eq 120 }
       end
 
       context 'v2' do
-        let(:topic) { "/sensors/v2/#{home.gateway_mac_address}/#{sensor.mac_address}/1/1/0/0" }
+        let(:topic) { "/sensors/v2/#{home.gateway_mac_address}/ABC123/1/1/0/0" }
 
         include_examples 'decodes message'
         it { expect(subject.version).to eq 'v2' }
+        it { expect(subject.sensor.mac_address).to eq 'ABC123' }
       end
     end
 
     context 'when sensor is allocated to a room' do
-      let(:room) { FactoryBot.create :room, home: home }
+      let(:room)    { FactoryBot.create :room, home: home                               }
       let!(:sensor) { FactoryBot.create :sensor, home: home, room: room, node_id: '130' }
 
       shared_examples 'decodes messages' do

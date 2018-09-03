@@ -8,9 +8,9 @@ RSpec.describe RoomsController, type: :controller do
   let(:bedroom) { FactoryBot.create(:room_type, name: 'bedroom') }
 
   let(:user) { FactoryBot.create(:user) }
-  let(:home) { FactoryBot.create(:home, owner_id: user.id) }
-  let(:room) { FactoryBot.create(:room, home: home, room_type: bedroom) }
-  let(:sensor) { FactoryBot.create(:sensor, room: room, node_id: '1100') }
+  let(:home)   { FactoryBot.create(:home, owner_id: user.id)              }
+  let(:room)   { FactoryBot.create(:room, home: home, room_type: bedroom) }
+  let(:sensor) { FactoryBot.create(:sensor, room: room, node_id: '1100')  }
 
   shared_examples 'Test as all user types' do
     context 'Not signed in' do
@@ -39,13 +39,13 @@ RSpec.describe RoomsController, type: :controller do
           end
 
           context '1 unassigned_sensors' do
-            let!(:sensor) { FactoryBot.create :sensor, home: home, room: nil }
+            let!(:sensor) { FactoryBot.create :unassigned_sensor, home: home, room: nil }
 
             it { expect(assigns(:unassigned_sensors)).to eq([sensor]) }
           end
 
           context '30 unassigned_sensors' do
-            before { FactoryBot.create_list(:sensor, 30, home: home, room: nil) }
+            before { FactoryBot.create_list(:unassigned_sensor, 30, home: home, room: nil) }
 
             it { expect(assigns(:unassigned_sensors).size).to eq 30 }
           end

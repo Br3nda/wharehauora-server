@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Sensor < ActiveRecord::Base
+  before_create :create_room
   belongs_to :home, counter_cache: true
   validates :home, presence: true
   validate :same_home_as_room
@@ -22,6 +23,13 @@ class Sensor < ActiveRecord::Base
 
   def same_home_as_room
     return true if room_id.blank?
+
     room.home_id == home_id
+  end
+
+  private
+
+  def create_room
+    self.room = Room.create(name: mac_address, home: home) if room_id.blank?
   end
 end

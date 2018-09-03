@@ -12,6 +12,30 @@ RSpec.describe Home, type: :model do
     end
   end
 
+  describe 'fixes gateway_mac_address' do
+    subject { home.gateway_mac_address }
+
+    let(:home) { FactoryBot.create :home, gateway_mac_address: mac }
+
+    describe 'lower case' do
+      let(:mac) { 'abc' }
+
+      it { is_expected.to eq 'ABC' }
+    end
+
+    describe 'lower case' do
+      let(:mac) { 'a b c' }
+
+      it { is_expected.to eq 'ABC' }
+    end
+
+    describe 'lower case' do
+      let(:mac) { 'a:b:c' }
+
+      it { is_expected.to eq 'ABC' }
+    end
+  end
+
   describe 'provisions user' do
     let(:home) { FactoryBot.create :home, gateway_mac_address: 'abc' }
 
@@ -21,6 +45,6 @@ RSpec.describe Home, type: :model do
     end
 
     it { expect(home.mqtt_user.username).to eq home.gateway_mac_address }
-    it { expect(home.mqtt_user.password).to eq 'd76051e1dae76d1f309598102df58d84' }
+    it { expect(home.mqtt_user.password).to eq '29b4c341f18e7d0fd94edc0602e5e135' }
   end
 end

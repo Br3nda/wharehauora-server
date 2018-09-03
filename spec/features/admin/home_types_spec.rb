@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Whare Types', type: :feature do
-  let(:admin_user) { FactoryBot.create(:admin) }
-  let(:user) { FactoryBot.create :user }
-  let!(:existing) { FactoryBot.create(:home_type, name: 'Cake whare') }
+  let(:admin_user) { FactoryBot.create(:admin)                         }
+  let(:user)       { FactoryBot.create :user                           }
+  let!(:existing)  { FactoryBot.create(:home_type, name: 'Cake whare') }
 
   context 'not signed in' do
     it 'requests whare type admin page' do

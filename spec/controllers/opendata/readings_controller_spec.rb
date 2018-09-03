@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Opendata::ReadingsController, type: :controller do
-  let(:user) { FactoryBot.create :user }
-  let(:home) { FactoryBot.create :home, owner: user }
-  let(:valid_params) { { key: 'temperature', day: day } }
-  let(:day) { '2017-01-01' }
+  let(:user)         { FactoryBot.create :user              }
+  let(:home)         { FactoryBot.create :home, owner: user }
+  let(:valid_params) { { key: 'temperature', day: day }     }
+  let(:day)          { '2017-01-01'                         }
 
   context 'Not signed in' do
     describe 'GET index' do

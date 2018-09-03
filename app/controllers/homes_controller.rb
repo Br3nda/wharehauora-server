@@ -40,9 +40,9 @@ class HomesController < ApplicationController
   end
 
   def update
-    @home.update(home_params)
-    @home.save!
-    @home.provision_mqtt! if @home.gateway_mac_address.present?
+    if @home.update(home_params)
+      @home.provision_mqtt! if @home.gateway_mac_address.present?
+    end
     respond_with(@home)
   end
 
@@ -56,11 +56,7 @@ class HomesController < ApplicationController
   def invite_new_owner
     if current_user.janitor?
       owner = User.find_by(owner_params)
-      if owner
-        @home.owner = owner
-      else
-        @home.owner = User.invite!(owner_params)
-      end
+      @home.owner = owner || User.invite!(owner_params)
     else
       @home.owner = current_user
     end
