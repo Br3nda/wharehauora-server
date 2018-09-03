@@ -10,12 +10,11 @@ class HomeViewersController < ApplicationController
                .includes(:user)
                .where(home_id: params[:home_id])
                .page(params[:page])
-    @invitations = @home.invitations.pending
   end
 
   def new
     authorize @home, :edit?
-    @home_viewer = Invitation.new
+    @home_viewer = HomeViewer.new
   end
 
   def create
