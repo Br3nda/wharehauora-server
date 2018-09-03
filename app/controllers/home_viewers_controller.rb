@@ -32,7 +32,6 @@ class HomeViewersController < ApplicationController
     redirect_to home_home_viewers_path(@home)
   end
 
-
   private
 
   def set_home
