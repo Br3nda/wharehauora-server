@@ -19,37 +19,21 @@ class HomeViewersController < ApplicationController
   end
 
   def create
-    byebug
     authorize @home, :edit?
-    @invitation = @home.invitations.create!(
-      inviter: current_user,
-      email: viewer_params[:email]
-    )
-    InvitationMailer.invitation_email(@invitation).deliver_now
+    whanau_member = User.find_by(home_viewer_params) || User.invite!(home_viewer_params)
+    @home.users << whanau_member unless @home.users.where(id: whanau_member.id).size.positive?
     redirect_to home_home_viewers_path(@home)
   end
 
   def destroy
     authorize @home, :edit?
+    byebug
     viewer = @home.home_viewers.find_by!(user_id: params[:id])
     viewer.destroy
   ensure
     redirect_to home_home_viewers_path(@home)
   end
 
-
-  def accept
-    @home = @invitation.home
-    @home.home_viewers.create!(user: current_user)
-    @invitation.accepted!
-    redirect_to home_path(@home)
-  end
-
-  def decline
-    @home = @invitation.home
-    @invitation.declined!
-    redirect_to root_path
-  end
 
   private
 
@@ -59,7 +43,7 @@ class HomeViewersController < ApplicationController
 
   def invite_user; end
 
-  def viewer_params
+  def home_viewer_params
     params.require(:invitation).permit(permitted_params)
   end
 

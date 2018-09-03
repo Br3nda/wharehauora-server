@@ -12,10 +12,7 @@ Rails.application.routes.draw do
 
   resources :homes do
     resources :rooms
-    resources :home_viewers do
-      get :accept
-      # post :decline
-    end
+    resources :home_viewers
     resources :sensors
     resources :readings
     resources :mqtt_user
