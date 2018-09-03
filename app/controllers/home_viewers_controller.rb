@@ -14,7 +14,6 @@ class HomeViewersController < ApplicationController
 
   def new
     authorize @home, :edit?
-    @home_viewer = HomeViewer.new
   end
 
   def create
@@ -41,7 +40,7 @@ class HomeViewersController < ApplicationController
   def invite_user; end
 
   def home_viewer_params
-    params.require(:invitation).permit(permitted_params)
+    params.require(:user).permit(permitted_params)
   end
 
   def permitted_params

@@ -3,7 +3,7 @@
 %h2
   = @home.name
 
-= form_for @home_viewer, url: { action: 'create' }, class: 'pure-form' do |f|
+= form_for User.new, url: { action: 'create' }, class: 'pure-form' do |f|
   = hidden_field_tag :home_id, @home.id
   %form.pure-form
     %fieldset
