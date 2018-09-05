@@ -18,8 +18,6 @@ class User < ActiveRecord::Base
   has_many :viewable_homes, class_name: 'Home', source: :home, through: :home_viewers
   has_many :owned_homes, class_name: 'Home', foreign_key: :owner_id
 
-  has_many :invitations, inverse_of: :inviter, foreign_key: :inviter_id, dependent: :destroy
-
   acts_as_paranoid # soft deletes, sets deleted_at column
 
   def homes
