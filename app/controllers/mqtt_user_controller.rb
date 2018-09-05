@@ -6,5 +6,6 @@ class MqttUserController < ApplicationController
   def index
     @home = policy_scope(Home).find(params[:home_id])
     authorize @home
+    @gateway = Gateway.find_by(mac_address: @home.gateway_mac_address) if @home.gateway_mac_address.present?
   end
 end

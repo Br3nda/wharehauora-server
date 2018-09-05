@@ -23,20 +23,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
---
--- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
-
-
 SET search_path = public, pg_catalog;
 
 --
@@ -82,6 +68,38 @@ CREATE AGGREGATE median(anyelement) (
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: gateways; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE gateways (
+    id integer NOT NULL,
+    mac_address text,
+    version text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: gateways_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE gateways_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gateways_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE gateways_id_seq OWNED BY gateways.id;
+
 
 --
 -- Name: home_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
@@ -702,6 +720,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY gateways ALTER COLUMN id SET DEFAULT nextval('gateways_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY home_types ALTER COLUMN id SET DEFAULT nextval('home_types_id_seq'::regclass);
 
 
@@ -815,6 +840,14 @@ ALTER TABLE ONLY user_roles ALTER COLUMN id SET DEFAULT nextval('user_roles_id_s
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: gateways_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY gateways
+    ADD CONSTRAINT gateways_pkey PRIMARY KEY (id);
 
 
 --
@@ -1122,13 +1155,6 @@ CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
--- Name: index_users_on_id_and_deleted_at; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_users_on_id_and_deleted_at ON users USING btree (id, deleted_at);
-
-
---
 -- Name: index_users_on_invitation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1355,11 +1381,11 @@ INSERT INTO schema_migrations (version) VALUES ('20170812022839');
 
 INSERT INTO schema_migrations (version) VALUES ('20170822215700');
 
-INSERT INTO schema_migrations (version) VALUES ('20170913005055');
-
 INSERT INTO schema_migrations (version) VALUES ('20180619034843');
 
 INSERT INTO schema_migrations (version) VALUES ('20180701090246');
 
 INSERT INTO schema_migrations (version) VALUES ('20180801051352');
+
+INSERT INTO schema_migrations (version) VALUES ('20180905092840');
 

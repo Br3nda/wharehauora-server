@@ -15,5 +15,15 @@
 - else
   %p Gateway mqtt user has not been provisioned yet
 
+
 - if @home.gateway_mac_address.blank?
   %p Cannot provision home with no mac address set
+
+
+- if @gateway.present?
+  %p
+    Gateway last known reboot/connection:
+    %b= @gateway.updated_at.localtime
+  %p
+    Gateway software version:
+    %b= @gateway.version
