@@ -17,8 +17,7 @@ class Gateway::ConfigController < ActionController::Base
   def record_request
     gateway = Gateway.find_or_create_by(mac_address: params[:id])
     if params[:version].present?
-      gateway.version = params[:version]
-      gateway.save!
+      gateway.update!(version: params[:version], updated_at: Time.now)
     end
   end
 end
