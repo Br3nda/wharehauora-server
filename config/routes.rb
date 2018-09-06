@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   devise_for :users
+
   use_doorkeeper do
     # OAuth applications must be created using rake tasks `rake oauth:application`
     skip_controllers :applications, :authorized_applications
@@ -11,18 +12,10 @@ Rails.application.routes.draw do
 
   resources :homes do
     resources :rooms
-    resources :home_viewers, except: %i[create update]
-    resources :invitations, only: %i[create destroy]
+    resources :home_viewers
     resources :sensors
     resources :readings
     resources :mqtt_user
-  end
-
-  resources :invitations, only: :show do
-    member do
-      post :accept
-      post :decline
-    end
   end
 
   resources :rooms
