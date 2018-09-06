@@ -1,6 +1,5 @@
 class Admin::PushController < ApplicationController
   def create
-    byebug
     # Webpush.payload_send(
     #   message: 'hello',
     #   endpoint: params[:subscription][:endpoint],
