@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateGateways < ActiveRecord::Migration
   def change
     create_table :gateways do |t|
