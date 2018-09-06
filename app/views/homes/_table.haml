@@ -24,7 +24,7 @@
         %td
           = home.home_type&.name
         %td
-          = home.owner.email if home.owner.present?
+          = home.owner&.email
         %td
           - if home.rooms.size.positive?
             = link_to("#{home.rooms.size} rooms", home_rooms_path(home))
