@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe MessagesController, type: :controller do
   let(:user)         { FactoryBot.create :user                           }
   let(:home)         { FactoryBot.create :home, owner: user              }
-  let(:sensor)       { FactoryBot.create :sensor, home: home, node_id: 1 }
+  let(:sensor)       { FactoryBot.create :sensor, home: home, node_id: 1, room_id: nil }
   let(:valid_params) { { sensor_id: sensor.id }                          }
 
   context 'Not signed in' do

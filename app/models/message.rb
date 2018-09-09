@@ -58,7 +58,7 @@ class Message < ApplicationRecord
   end
 
   def save_reading
-    Reading.create!(room: sensor.room, value: payload.to_f, key: key) if sensor.room
+    Reading.create!(room: sensor.room, value: payload.to_f, key: key) if sensor.room_id.present?
   end
 
   def save_dewpoint
