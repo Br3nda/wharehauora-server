@@ -40,7 +40,7 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
     end
 
     describe 'POST create,' do
-      before { post :create, home_id: home.id }
+      before { post :create, params: { home_id: home.id } }
 
       it { expect(response).to redirect_to(root_path) }
     end
@@ -60,7 +60,7 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
     end
 
     describe 'POST create,' do
-      before { post :create, home_id: home.id }
+      before { post :create, params: { home_id: home.id } }
 
       it { expect(response).to redirect_to(root_path) }
     end
@@ -76,7 +76,7 @@ RSpec.describe Admin::MqttUsersController, type: :controller do
     end
 
     describe 'POST create,' do
-      before { post :create, home_id: home.id }
+      before { post :create, params: { home_id: home.id } }
 
       it { expect(response).to redirect_to(admin_mqtt_users_path) }
     end

@@ -24,11 +24,11 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
     end
 
     describe 'GET show' do
-      before { get :show, id: home_type.to_param }
+      before { get :show, params: { id: home_type.id } }
     end
 
     describe 'GET new' do
-      before { get :new, valid_params.to_param   }
+      before { get :new, params: valid_params }
 
       include_examples 'redirect to login'
     end
@@ -40,13 +40,13 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
     end
 
     describe 'GET edit' do
-      before { get :edit, id: home_type.to_param }
+      before { get :edit, params: { id: home_type.id } }
 
       include_examples 'redirect to login'
     end
 
     describe 'DELETE destroy' do
-      before { delete :destroy, id: home_type.id }
+      before { delete :destroy, params: { id: home_type.id } }
 
       include_examples 'redirect to login'
     end
@@ -62,11 +62,11 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
     end
 
     describe 'GET show' do
-      before { get :show, id: home_type.to_param }
+      before { get :show, params: { id: home_type.id } }
     end
 
     describe 'GET new' do
-      before { get :new, valid_params.to_param   }
+      before { get :new, params: valid_params }
 
       include_examples 'redirect to home'
     end
@@ -78,13 +78,13 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
     end
 
     describe 'GET edit' do
-      before { get :edit, id: home_type.to_param }
+      before { get :edit, params: { id: home_type.id } }
 
       include_examples 'redirect to home'
     end
 
     describe 'DELETE destroy' do
-      before { delete :destroy, id: home_type.id }
+      before { delete :destroy, params: { id: home_type.id } }
 
       include_examples 'redirect to home'
     end
@@ -100,29 +100,29 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
     end
 
     describe 'GET show' do
-      before { get :show, id: home_type.to_param }
+      before { get :show, id: home_type.id }
     end
 
     describe 'GET new' do
-      before { get :new, home_type: valid_params }
+      before { get :new, params: { home_type: valid_params } }
 
       it { expect(response).to have_http_status(:success) }
     end
 
     describe 'PUT create,' do
-      before { put :create, home_type: valid_params }
+      before { put :create, params: { home_type: valid_params } }
 
       it { expect(response).to redirect_to(admin_home_types_path) }
     end
 
     describe 'GET edit' do
-      before { get :edit, id: home_type.to_param }
+      before { get :edit, params: { id: home_type.id } }
 
       it { expect(response).to have_http_status(:success) }
     end
 
     describe 'DELETE destroy' do
-      before { delete :destroy, id: home_type.id }
+      before { delete :destroy, params: { id: home_type.id } }
 
       it { expect(response).to redirect_to(admin_home_types_path) }
     end

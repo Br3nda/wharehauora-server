@@ -7,7 +7,7 @@ class Sensor < ApplicationRecord
   validate :same_home_as_room
   validates :mac_address, uniqueness: true, allow_nil: true
 
-  belongs_to :room, counter_cache: true
+  belongs_to :room, counter_cache: true, optional: true
 
   has_many :messages, dependent: :destroy
 

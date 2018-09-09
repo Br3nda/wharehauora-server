@@ -69,6 +69,10 @@ gem 'faraday'
 
 gem 'rack-cors', require: 'rack/cors'
 
+gem 'nokogiri', '>= 1.8.1'
+gem 'rails-html-sanitizer', '>= 1.0.4'
+
+
 group :production do
   # for heroku
   # gem 'newrelic_rpm'
@@ -118,6 +122,5 @@ end
 group :test do
   gem 'pundit-matchers', '~> 1.3.0'
   gem 'timecop'
+  gem 'rails-controller-testing'
 end
-gem 'nokogiri', '>= 1.8.1'
-gem 'rails-html-sanitizer', '>= 1.0.4'

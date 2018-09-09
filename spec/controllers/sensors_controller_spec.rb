@@ -13,13 +13,13 @@ RSpec.describe SensorsController, type: :controller do
 
   context 'Not signed in' do
     describe 'GET show' do
-      before { get :show, id: sensor.id }
+      before { get :show, params: { id: sensor.id } }
 
       it { expect(response).to redirect_to(new_user_session_path) }
     end
 
     describe 'delete' do
-      before { delete :destroy, id: sensor.id }
+      before { delete :destroy, params: { id: sensor.id } }
 
       it { expect(response).to redirect_to(new_user_session_path) }
     end
@@ -29,7 +29,7 @@ RSpec.describe SensorsController, type: :controller do
     before { sign_in user }
 
     describe 'GET index' do
-      before { get :index, home_id: home.id }
+      before { get :index, params: { home_id: home.id } }
 
       it { expect(response).to have_http_status(:success) }
       it { expect(assigns(:sensors)).to eq([sensor]) }
@@ -37,14 +37,14 @@ RSpec.describe SensorsController, type: :controller do
     end
 
     describe 'GET show' do
-      before { get :show, home_id: home.id, id: sensor.id }
+      before { get :show, params: { home_id: home.id, id: sensor.id } }
 
       it { expect(response).to have_http_status(:success) }
       it { expect(assigns(:sensor)).to eq(sensor) }
     end
 
     describe 'delete' do
-      before { delete :destroy, id: sensor.id }
+      before { delete :destroy, params: { id: sensor.id } }
 
       it { expect(response).to redirect_to(home_sensors_path(sensor.home)) }
     end
