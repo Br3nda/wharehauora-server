@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Room < ActiveRecord::Base
+class Room < ApplicationRecord
   belongs_to :home, counter_cache: true
   belongs_to :room_type
 

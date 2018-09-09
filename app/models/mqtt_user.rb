@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'digest'
-class MqttUser < ActiveRecord::Base
+class MqttUser < ApplicationRecord
   belongs_to :home
   validates :username, presence: true, uniqueness: true
   validates :home, presence: true, uniqueness: true

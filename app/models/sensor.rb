@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Sensor < ActiveRecord::Base
+class Sensor < ApplicationRecord
   before_create :create_room
   belongs_to :home, counter_cache: true
   validates :home, presence: true

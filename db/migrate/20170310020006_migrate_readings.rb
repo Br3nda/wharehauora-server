@@ -94,7 +94,7 @@ class MigrateReadings < ActiveRecord::Migration
     end
   end
 
-  class OldReading < ActiveRecord::Base
+  class OldReading < ApplicationRecord
     belongs_to :sensor
     # belongs_to :home, through: :sensor
     # t.integer  "sensor_id"
