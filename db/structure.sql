@@ -1,10 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 10.5 (Ubuntu 10.5-0ubuntu0.18.04)
--- Dumped by pg_dump version 10.5 (Ubuntu 10.5-0ubuntu0.18.04)
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -72,6 +65,18 @@ CREATE AGGREGATE public.median(anyelement) (
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
 
 --
 -- Name: gateways; Type: TABLE; Schema: public; Owner: -
@@ -676,8 +681,8 @@ CREATE TABLE public.users (
     invitation_sent_at timestamp without time zone,
     invitation_accepted_at timestamp without time zone,
     invitation_limit integer,
-    invited_by_id integer,
     invited_by_type character varying,
+    invited_by_id integer,
     invitations_count integer DEFAULT 0
 );
 
@@ -822,6 +827,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
 -- Name: gateways gateways_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -931,6 +944,14 @@ ALTER TABLE ONLY public.room_types
 
 ALTER TABLE ONLY public.rooms
     ADD CONSTRAINT rooms_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
 
 --
@@ -1147,13 +1168,6 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
-
-
---
 -- Name: sensors fk_rails_2df398b927; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1279,79 +1293,44 @@ ALTER TABLE ONLY public.homes
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20160922042938');
+INSERT INTO "schema_migrations" (version) VALUES
+('20160922042938'),
+('20160922043308'),
+('20160922043312'),
+('20160922044007'),
+('20160925014310'),
+('20160925014902'),
+('20160925015014'),
+('20160925063312'),
+('20160928003715'),
+('20160928030123'),
+('20160928054557'),
+('20160928054744'),
+('20161010002942'),
+('20161010015255'),
+('20161010021309'),
+('20161203031122'),
+('20161217062517'),
+('20161217212517'),
+('20170310013556'),
+('20170310020006'),
+('20170316212835'),
+('20170318072229'),
+('20170323214453'),
+('20170324011548'),
+('20170416021403'),
+('20170519023216'),
+('20170707012401'),
+('20170719025235'),
+('20170725084656'),
+('20170801095409'),
+('20170804072223'),
+('20170812022839'),
+('20170822215700'),
+('20180619034843'),
+('20180701090246'),
+('20180801051352'),
+('20180903100937'),
+('20180905092840');
 
-INSERT INTO schema_migrations (version) VALUES ('20160922043308');
-
-INSERT INTO schema_migrations (version) VALUES ('20160922043312');
-
-INSERT INTO schema_migrations (version) VALUES ('20160922044007');
-
-INSERT INTO schema_migrations (version) VALUES ('20160925014310');
-
-INSERT INTO schema_migrations (version) VALUES ('20160925014902');
-
-INSERT INTO schema_migrations (version) VALUES ('20160925015014');
-
-INSERT INTO schema_migrations (version) VALUES ('20160925063312');
-
-INSERT INTO schema_migrations (version) VALUES ('20160928003715');
-
-INSERT INTO schema_migrations (version) VALUES ('20160928030123');
-
-INSERT INTO schema_migrations (version) VALUES ('20160928054557');
-
-INSERT INTO schema_migrations (version) VALUES ('20160928054744');
-
-INSERT INTO schema_migrations (version) VALUES ('20161010002942');
-
-INSERT INTO schema_migrations (version) VALUES ('20161010015255');
-
-INSERT INTO schema_migrations (version) VALUES ('20161010021309');
-
-INSERT INTO schema_migrations (version) VALUES ('20161203031122');
-
-INSERT INTO schema_migrations (version) VALUES ('20161217062517');
-
-INSERT INTO schema_migrations (version) VALUES ('20161217212517');
-
-INSERT INTO schema_migrations (version) VALUES ('20170310013556');
-
-INSERT INTO schema_migrations (version) VALUES ('20170310020006');
-
-INSERT INTO schema_migrations (version) VALUES ('20170316212835');
-
-INSERT INTO schema_migrations (version) VALUES ('20170318072229');
-
-INSERT INTO schema_migrations (version) VALUES ('20170323214453');
-
-INSERT INTO schema_migrations (version) VALUES ('20170324011548');
-
-INSERT INTO schema_migrations (version) VALUES ('20170416021403');
-
-INSERT INTO schema_migrations (version) VALUES ('20170519023216');
-
-INSERT INTO schema_migrations (version) VALUES ('20170707012401');
-
-INSERT INTO schema_migrations (version) VALUES ('20170719025235');
-
-INSERT INTO schema_migrations (version) VALUES ('20170725084656');
-
-INSERT INTO schema_migrations (version) VALUES ('20170801095409');
-
-INSERT INTO schema_migrations (version) VALUES ('20170804072223');
-
-INSERT INTO schema_migrations (version) VALUES ('20170812022839');
-
-INSERT INTO schema_migrations (version) VALUES ('20170822215700');
-
-INSERT INTO schema_migrations (version) VALUES ('20180619034843');
-
-INSERT INTO schema_migrations (version) VALUES ('20180701090246');
-
-INSERT INTO schema_migrations (version) VALUES ('20180801051352');
-
-INSERT INTO schema_migrations (version) VALUES ('20180903100937');
-
-INSERT INTO schema_migrations (version) VALUES ('20180905092840');
 
