@@ -10,7 +10,7 @@ RSpec.describe MessagesController, type: :controller do
 
   context 'Not signed in' do
     describe 'GET index' do
-      before { get :index, valid_params }
+      before { get :index, params: valid_params }
 
       it { expect(response).not_to have_http_status(:success) }
     end
@@ -24,7 +24,7 @@ RSpec.describe MessagesController, type: :controller do
         @message_one = FactoryBot.create :message, sensor: sensor
         @message_two = FactoryBot.create :message, sensor: sensor
 
-        get :index, valid_params
+        get :index, params: valid_params
       end
 
       it { expect(response).to have_http_status(:success) }
