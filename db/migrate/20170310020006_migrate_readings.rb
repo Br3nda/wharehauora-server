@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MigrateReadings < ActiveRecord::Migration
+class MigrateReadings < ActiveRecord::Migration[4.2]
   def up
     remove_orphaned_sensor_records
     add_column :rooms, :room_type_id, :integer

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateSensors < ActiveRecord::Migration
+class CreateSensors < ActiveRecord::Migration[4.2]
   def change
     create_table :sensors do |t|
       t.references :room

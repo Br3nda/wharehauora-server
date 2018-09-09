@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MoreIndexes < ActiveRecord::Migration
+class MoreIndexes < ActiveRecord::Migration[4.2]
   def change
     add_index :readings, :key
     add_index :readings, %i[key room_id]

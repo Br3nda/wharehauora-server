@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DeviseInvitableAddToUsers < ActiveRecord::Migration
+class DeviseInvitableAddToUsers < ActiveRecord::Migration[4.2]
   def up
     change_table :users do |t|
       t.string     :invitation_token

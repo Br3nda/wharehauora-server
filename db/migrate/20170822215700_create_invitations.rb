@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateInvitations < ActiveRecord::Migration
+class CreateInvitations < ActiveRecord::Migration[4.2]
   def change
     create_table :invitations do |t|
       t.belongs_to :inviter, null: false, references: :users

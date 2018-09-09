@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RoomSensorsCount < ActiveRecord::Migration
+class RoomSensorsCount < ActiveRecord::Migration[4.2]
   def change
     add_column :rooms, :sensors_count, :integer, default: 0
     Room.find_each do |room|
