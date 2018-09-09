@@ -5,6 +5,8 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 5.0.0.rc2', '< 5.1'
 
+gem 'listen'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -60,7 +62,7 @@ gem 'active_median'
 gem 'momentjs-rails'
 
 # OAuth for API
-gem 'doorkeeper'
+gem 'doorkeeper', '4.2.6'
 
 # Rest/http library
 gem 'faraday'
