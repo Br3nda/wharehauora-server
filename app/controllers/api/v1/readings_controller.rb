@@ -4,7 +4,7 @@ class Api::V1::ReadingsController < ApplicationController
   respond_to :json
 
   def index
-    @room = policy_scope(Room).find_by(id: params[:room_id])
+    @room = Room.find_by(id: params[:room_id])
     authorize @room, :show?
     @readings = {}
     %w[temperature humidity dewpoint].each do |key|
@@ -14,8 +14,8 @@ class Api::V1::ReadingsController < ApplicationController
   end
 
   def readings(week_start, key)
-    Reading.where(key: key, room: @room).by_week(week_start)
-           .group("date_trunc('hour', readings.created_at)")
-           .median(:value)
+    policy_scope(Reading).where(key: key, room: @room).by_week(week_start)
+                         .group("date_trunc('hour', readings.created_at)")
+                         .median(:value)
   end
 end
