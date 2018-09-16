@@ -99,7 +99,7 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
       before { get :index }
 
       it { is_expected.to have_http_status(:success) }
-      it { expect(assigns(:home_types)).to eq([home_type])}
+      it { expect(assigns(:home_types)).to eq([home_type]) }
     end
 
     describe 'GET new' do
@@ -119,7 +119,7 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
       before { get :edit, params: { id: home_type.id } }
 
       it { is_expected.to have_http_status(:success) }
-      it { expect(assigns(:home_type)).to eq(home_type)}
+      it { expect(assigns(:home_type)).to eq(home_type) }
     end
 
     describe 'DELETE destroy' do
