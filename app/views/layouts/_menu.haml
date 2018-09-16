@@ -4,9 +4,11 @@
     %h6 Menu
     %a.x{href: "#"}
       %img.svg{alt: "close", src: image_tag(image_url('icon/x.svg'))}/
+
   .nav
     - if user_signed_in?
       - current_user.homes.each do |home|
+        %h6= home.name
         %ul.nav-links
           %li
             = link_to 'Dashboard', home_rooms_path(home), class: 'current'
@@ -14,7 +16,7 @@
         %h6 Rooms
         
         %ul.nav-links
-          - home.rooms.each do |room|
+          - home.rooms.order(:name).each do |room|
             %li
               = link_to room_path(room) do
                 = room.name
@@ -39,8 +41,9 @@
           = link_to 'Sign up', new_user_registration_path
         %li
           = link_to 'Sign in', new_user_session_path
-  -# %footer
-  -#   %select.lang-picker
-  -#     %option{"data-iconurl" => "/img/icon/lang-eng.svg", value: "English"} English
-  -#     %option{"data-iconurl" => "/img/icon/lang-mri.svg", value: "Te Reo Māori"} Te Reo M&#x101;ori
-  -#     %option{"data-iconurl" => "/img/icon/lang-smo.svg", value: "Samoan"} Samoan
+
+  %footer
+    %select.lang-picker
+      %option{"data-iconurl" => image_url('icon/lang-eng.svg'), value: "English"} English
+      %option{"data-iconurl" => image_url('icon/lang-mri.svg'), value: "Te Reo Māori"} Te Reo Māori
+      %option{"data-iconurl" => image_url('icon/lang-smo.svg'), value: "Samoan"} Samoan
