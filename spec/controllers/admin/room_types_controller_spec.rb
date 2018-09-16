@@ -28,7 +28,7 @@ RSpec.describe Admin::RoomTypesController, type: :controller do
     end
 
     describe 'GET new' do
-      before { get :new, params: valid_params   }
+      before { get :new, params: valid_params }
 
       include_examples 'redirect to login'
     end
@@ -66,7 +66,7 @@ RSpec.describe Admin::RoomTypesController, type: :controller do
     end
 
     describe 'GET new' do
-      before { get :new, params: valid_params   }
+      before { get :new, params: valid_params }
 
       include_examples 'redirect to home'
     end

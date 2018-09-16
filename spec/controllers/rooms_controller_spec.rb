@@ -61,7 +61,7 @@ RSpec.describe RoomsController, type: :controller do
       describe '#update' do
         before do
           patch :update, params: { home_id: room.home.id, id: room.to_param,
-                         room: { name: 'Living room' } }
+                                   room: { name: 'Living room' } }
         end
 
         it { expect(response).to redirect_to home_rooms_path(home) }
@@ -85,7 +85,7 @@ RSpec.describe RoomsController, type: :controller do
       describe '#update' do
         before do
           patch :update, params: { home_id: room.home.id, id: room.to_param,
-                         room: { name: 'Living room' } }
+                                   room: { name: 'Living room' } }
         end
 
         it { expect(response).to have_http_status(:redirect) }
