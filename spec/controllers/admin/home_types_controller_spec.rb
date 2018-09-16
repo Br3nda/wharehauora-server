@@ -11,6 +11,7 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
     it { is_expected.to redirect_to(root_path) }
   end
   subject { response }
+
   let!(:home_type)    { FactoryBot.create(:home_type)                 }
   let(:user)          { FactoryBot.create(:user)                      }
   let(:admin_role)    { FactoryBot.create(:role, name: 'janitor')     }
@@ -104,6 +105,7 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
 
     describe 'GET new' do
       before { get :new, params: { home_type: valid_params } }
+
       it { is_expected.to have_http_status(:success) }
     end
 

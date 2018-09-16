@@ -6,6 +6,7 @@ RSpec.describe 'OAuth Authorization', type: :request do
   let(:oauth_application)  { FactoryBot.create(:oauth_application) }
   let(:user)               { FactoryBot.create(:user)              }
   let(:authorize_response) { JSON.parse(response.body)             }
+
   before { post '/oauth/token', params: auth_creds }
 
   describe 'auth ok' do
