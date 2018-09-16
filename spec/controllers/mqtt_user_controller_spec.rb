@@ -10,6 +10,7 @@ RSpec.describe MqttUserController, type: :controller do
 
   describe 'GET index' do
     before { get :index, home_id: home.id }
+
     it { expect(assigns(:home)).to eq home }
     it { expect(assigns(:gateway)).to eq gateway }
     it { expect(gateway.mac_address).to eq home.gateway_mac_address }
