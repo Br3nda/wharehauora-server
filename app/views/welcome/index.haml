@@ -26,9 +26,12 @@
     One "gateway" unit, placed in the centre of the home will gather up all
     readings, and send to Whare Hauora for analysis.
 
-  / = render 'livedemo', homes: @public_homes
+  = render 'livedemo', homes: @public_homes
 
-  %h3 Compare your home against robust health standards.
+
+%section.card
+  %header
+    %h2 Compare your home against robust health standards.
 
   %p
     Within days, we'll create a summary of the home environment, as it
@@ -48,19 +51,21 @@
 
   -# = render "medians", temperatures: @temperature
 
-%h2 There are some people we wish to thank.
+%section.card
+  %header
+    %h2 There are some people we wish to thank.
 
-%h3
-  = link_to 'Rabid Technologies', 'http://rabid.co.nz'
+  %h3
+    = link_to 'Rabid Technologies', 'http://rabid.co.nz'
 
-%p
-  Whare Hauora wouldn't exist without the huge support of RabidTechnologies, who have allowed
-  their staff to work on the app, for free, during work hours. Rabid allow staff to donate up to 20%
-  of their work time to charities, and several Rabid staff have chosen Whare Hauora to contribute to
+  %p
+    Whare Hauora wouldn't exist without the huge support of RabidTechnologies, who have allowed
+    their staff to work on the app, for free, during work hours. Rabid allow staff to donate up to 20%
+    of their work time to charities, and several Rabid staff have chosen Whare Hauora to contribute to
 
-%h3
-  = link_to 'OSHPark', 'http://oshpark.com'
+  %h3
+    = link_to 'OSHPark', 'http://oshpark.com'
 
-%p
-  OSHPark print pretty purple circuit boards.
-  OshPark have donated free PCB printing for several of our prototype runs.
+  %p
+    OSHPark print pretty purple circuit boards.
+    OshPark have donated free PCB printing for several of our prototype runs.
