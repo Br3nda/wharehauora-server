@@ -97,7 +97,7 @@
 
 - if @rooms.size.positive?
   .conditions-tables.summary-grid
-    - @rooms.includes(:room_type).order(:name).each do |room|
+    - @rooms.order(:name).includes(:room_type).order(:name).each do |room|
       = render 'rooms/card', room: room
   = paginate(@rooms)
 - else
