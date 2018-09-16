@@ -10,7 +10,7 @@ RSpec.describe Opendata::ReadingsController, type: :controller do
 
   context 'Not signed in' do
     describe 'GET index' do
-      before { get :index, valid_params }
+      before { get :index, params: valid_params }
 
       it { expect(response).to have_http_status(:success) }
     end
@@ -37,7 +37,7 @@ RSpec.describe Opendata::ReadingsController, type: :controller do
               @readings << FactoryBot.create(:reading, room: room, key: 'humidity', value: 10, created_at: day)
             end
           end
-          get :index, valid_params
+          get :index, params: valid_params
         end
 
         it { expect(response).to have_http_status(:success) }
