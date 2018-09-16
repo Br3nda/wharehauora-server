@@ -1,5 +1,90 @@
 -# = render 'homes/nav', home: @home
 
+
+%h1=@home.name
+.summary-grid
+  %section.card.summary
+    %header
+      %h2 Living Room
+      %h4 Living Space
+      %a.head-action{href: "#"}
+        %img.svg{alt: "edit", src: image_url("icon/edit.svg")}/
+    .readings
+      .reading.temp-low-1a
+        %span.vis
+          %span.loader
+        %span.value 17.3°C
+        %span.label Temperature
+        %span.time 5 minutes ago
+      .reading.hum-mid-a
+        %span.vis
+          %span.loader
+        %span.value 31.6%
+        %span.label Humidity
+        %span.time 5 minutes ago
+    %footer.grade-high
+      %p Slightly too cool, but otherwise healthy.
+      %a.btn{href: "room-detail1.html"}
+        %img.svg{alt: "icon", src: image_url('icon/btn-analyse.svg')}>/
+        Analyse
+  %section.card.summary
+    %header
+      %h2 Master Bedroom
+      %h4 Sleeping / Bedroom
+      %a.head-action{href: "#"}
+        %img.svg{alt: "edit", src: image_url("icon/edit.svg")}/
+    .readings
+      .reading.temp-high-2a
+        %span.vis
+          %span.loader
+        %span.value 27.0°C
+        %span.label Temperature
+        %span.time 5 minutes ago
+      .reading.hum-high-2a
+        %span.vis
+          %span.loader
+        %span.value 80.6%
+        %span.label Humidity
+        %span.time 5 minutes ago
+    %footer.grade-mid
+      %p
+        Too hot and humid for sleeping.
+        %br/
+        = succeed "." do
+          %a.underline{href: "#"} Learn how to fix this
+      %a.btn{href: "room-detail2.html"}
+        %img.svg{alt: "icon", src: "./img/icon/btn-analyse.svg"}>/
+        Analyse
+  %section.card.summary
+    %header
+      %h2 Kid’s Room
+      %h4 Sleeping / Bedroom
+      %a.head-action{href: "#"}
+        %img.svg{alt: "edit", src: image_url("icon/edit.svg")}/
+    .readings
+      .reading.temp-low-2a
+        %span.vis
+          %span.loader
+        %span.value 15.9°C
+        %span.label Temperature
+        %span.time 5 minutes ago
+      .reading.hum-mid-a
+        %span.vis
+          %span.loader
+        %span.value 34.5%
+        %span.label Humidity
+        %span.time 5 minutes ago
+    %footer.grade-low
+      %p
+        Too cold for children to be sleeping.
+        %br/
+        = succeed "." do
+          %a.underline{href: "#"} Learn how to fix this
+      %a.btn{href: "room-detail3.html"}
+        %img.svg{alt: "icon", src: "./img/icon/btn-analyse.svg"}>/
+        Analyse
+
+
 - if policy(@home).edit? && @unassigned_sensors.size.positive?
   %h2.warning
     = fa_icon 'warning'
@@ -20,3 +105,4 @@
 - else
   %p This whare has no monitored rooms.
   %p Activate sensors in your home, and they will appear here.
+

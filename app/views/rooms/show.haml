@@ -6,7 +6,8 @@
   = @room.name
   - if policy(@room).edit?
     = link_to edit_room_path(@room) do
-      = fa_icon 'edit'
+      %img.svg{alt: "edit", src: image_url("icon/edit.svg")}/
+      
 %h3= @room.room_type&.name
 
 .conditions-tables.pure-g
