@@ -1,11 +1,12 @@
 -# = render 'homes/nav', home: @room.home
 
 
-- if policy(@room).edit?
-  = link_to edit_room_path(@room) do
-    = fa_icon 'edit'
     
-%h2= @room.name
+%h2
+  = @room.name
+  - if policy(@room).edit?
+    = link_to edit_room_path(@room) do
+      = fa_icon 'edit'
 %h3= @room.room_type&.name
 
 .conditions-tables.pure-g
