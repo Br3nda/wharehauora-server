@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.0.0.rc2', '< 5.1'
+gem 'rails', '5.1.6'
 
 gem 'listen'
 
@@ -17,7 +17,7 @@ gem 'jquery-rails'
 gem 'rails-timeago', '~> 2.0'
 
 gem 'jsonapi-resources'
-gem 'pundit-resources'
+gem 'pundit-resources', github: 'wharehauora/pundit-resources', branch: 'rails-5.1'
 
 # # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
