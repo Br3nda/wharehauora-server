@@ -18,7 +18,6 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
   let(:admin_user)    { FactoryBot.create(:user, roles: [admin_role]) }
   let(:valid_params)  { { name: Faker.name }                          }
 
-
   context 'not signed in ' do
     describe 'GET index' do
       before { get :index }
