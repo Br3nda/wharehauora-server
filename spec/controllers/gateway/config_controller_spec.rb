@@ -19,6 +19,6 @@ RSpec.describe Gateway::ConfigController, type: :controller do
   it do
     expect do
       post :show, id: 'abc', version: 'hello', format: :text
-    end.to change { Gateway.count }.by(1)
+    end.to change(Gateway, :count).by(1)
   end
 end
