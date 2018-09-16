@@ -62,7 +62,7 @@ RSpec.describe RoomsController, type: :controller do
         before do
           patch :update, params: {
             home_id: room.home.id, id: room.to_param,
-            room: { name: 'Living room' } 
+            room: { name: 'Living room' }
 }
         end
 
@@ -88,7 +88,7 @@ RSpec.describe RoomsController, type: :controller do
         before do
           patch :update, params: {
             home_id: room.home.id, id: room.to_param,
-            room: { name: 'Living room' } 
+            room: { name: 'Living room' }
 }
         end
 
