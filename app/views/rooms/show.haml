@@ -1,22 +1,22 @@
 -# = render 'homes/nav', home: @room.home
 
 
-    
-%h2
-  = @room.name
-  - if policy(@room).edit?
-    = link_to edit_room_path(@room) do
-      %img.svg{alt: "edit", src: image_url("icon/edit.svg")}/
-      
-%h3= @room.room_type&.name
+= link_to home_path(@room.home), class: 'back' do
+  %img.svg{:alt => "back", :src => image_url("icon/back.svg")}/
+%h1= @room.home.name
 
-.conditions-tables.pure-g
-  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-    = render 'rating', room: @room
-  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-    = render 'temperature', room: @room
-  .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-    = render 'dewpoint', room: @room
+%section.card
+  %header
+    %h2
+      = @room.name
+      - if policy(@room).edit?
+        = link_to edit_room_path(@room) do
+          %img.svg{alt: "edit", src: image_url("icon/edit.svg")}/
+    %h4= @room.room_type.name if @room.room_type.present?
+
+  = render 'rating', room: @room
+  = render 'temperature', room: @room
+  = render 'dewpoint', room: @room
 
   .pure-u-1.pure-u-md-1-2.pure-u-lg-1-4
     .conditions-table
