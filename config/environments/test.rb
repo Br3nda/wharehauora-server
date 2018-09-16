@@ -55,4 +55,5 @@ Rails.application.configure do
   end
 
   ENV['CLOUDMQTT_URL'] = 'mqtt://bob:bobpassword@qwerty.mqttsomewhere.nz:12345/hey'
+  config.action_controller.default_url_options = { host: 'test.host' }
 end
