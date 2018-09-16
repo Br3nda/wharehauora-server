@@ -30,6 +30,6 @@ class Sensor < ApplicationRecord
   private
 
   def create_room
-    self.room = Room.create(name: mac_address, home: home) if room_id.blank?
+    self.room = Room.create!(name: mac_address, home: home) if room_id.blank?
   end
 end
