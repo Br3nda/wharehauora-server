@@ -36,38 +36,38 @@ RSpec.describe HomesController, type: :controller do
 
     describe 'DELETE destroy' do
       describe 'my home' do
-        before { delete :destroy, id: home.id }
+        before { delete :destroy, params: { id: home.id } }
 
         it { expect(response).to redirect_to(new_user_session_path) }
       end
 
       describe "someone else's home" do
-        before { delete :destroy, id: another_home.id }
+        before { delete :destroy, params: { id: another_home.id } }
 
         it { expect(response).to redirect_to(new_user_session_path) }
       end
 
       describe 'public home' do
-        before { delete :destroy, id: public_home.id }
+        before { delete :destroy, params: { id: public_home.id } }
 
         it { expect(response).to redirect_to(new_user_session_path) }
       end
     end
 
     describe 'GET show for a public home' do
-      before { get :show, id: public_home.to_param }
+      before { get :show, params: { id: public_home.to_param } }
 
       it { expect(response).to have_http_status(:success) }
     end
 
     describe 'GET show for a private home' do
-      before { get :show, id: another_home.to_param }
+      before { get :show, params: { id: another_home.to_param } }
 
       it { expect(response).to have_http_status(:not_found) }
     end
 
     describe 'GET edit for a home' do
-      before { get :edit, id: home.to_param }
+      before { get :edit, params: { id: home.to_param } }
 
       it { expect(response).to redirect_to(new_user_session_path) }
     end
@@ -89,7 +89,7 @@ RSpec.describe HomesController, type: :controller do
       subject { assigns(:home) }
 
       describe 'Creating a home' do
-        before { put :create, home: { name: 'My new home' } }
+        before { put :create, params: { home: { name: 'My new home' } } }
 
         it { expect(subject.name).to eq 'My new home' }
         it { expect(subject.owner).to eq user }
@@ -103,7 +103,7 @@ RSpec.describe HomesController, type: :controller do
           }
         end
 
-        before { put :create, params }
+        before { put :create, params: params }
 
         it { expect(subject.name).to eq "Bob\'s home" }
         it { expect(subject.owner).to eq user }
@@ -112,19 +112,19 @@ RSpec.describe HomesController, type: :controller do
 
     describe 'DELETE destroy' do
       describe 'my home' do
-        before { delete :destroy, id: home.id }
+        before { delete :destroy, params: { id: home.id } }
 
         it { expect(response).to redirect_to(homes_path) }
       end
 
       describe "someone else's home" do
-        before { delete :destroy, id: another_home.id }
+        before { delete :destroy, params: { id: another_home.id } }
 
         it { expect(response).to have_http_status(:not_found) }
       end
 
       describe 'public home' do
-        before { delete :destroy, id: public_home.id }
+        before { delete :destroy, params: { id: public_home.id } }
 
         it { expect(response).to redirect_to(root_path) }
       end
@@ -132,7 +132,7 @@ RSpec.describe HomesController, type: :controller do
 
     describe 'GET show' do
       describe 'no sensors' do
-        before { get :show, id: home.id }
+        before { get :show, params: { id: home.id } }
 
         it { expect(response).to have_http_status(:success) }
       end
@@ -140,20 +140,20 @@ RSpec.describe HomesController, type: :controller do
       describe 'lots of sensors' do
         before do
           FactoryBot.create_list(:room, 15, home: home)
-          get :show, id: home.id
+          get :show, params: { id: home.id }
         end
 
         it { expect(response).to have_http_status(:success) }
       end
 
       describe "someone else's home" do
-        before { get :show, id: another_home.id }
+        before { get :show, params: { id: another_home.id } }
 
         it { expect(response).to have_http_status(:not_found) }
       end
 
       describe 'public home' do
-        before { get :show, id: public_home.to_param }
+        before { get :show, params: { id: public_home.to_param } }
 
         it { expect(response).to have_http_status(:success) }
         it { expect(assigns(:home).id).to eq public_home.id }
@@ -161,13 +161,13 @@ RSpec.describe HomesController, type: :controller do
     end
 
     describe '#update' do
-      before { patch :update, id: home.to_param, home: { name: 'New home name' } }
+      before { patch :update, params: { id: home.to_param, home: { name: 'New home name' } } }
 
       it { expect(response).to redirect_to(home) }
     end
 
     describe "GET edit for someone else's home" do
-      before { get :edit, id: another_home.to_param }
+      before { get :edit, params: { id: another_home.to_param } }
 
       it { expect(response).to have_http_status(:not_found) }
     end
@@ -194,21 +194,21 @@ RSpec.describe HomesController, type: :controller do
 
     describe 'DELETE destroy' do
       describe 'my home' do
-        before { delete :destroy, id: home.id }
+        before { delete :destroy, params: { id: home.id } }
 
         it { expect(response).to redirect_to(homes_path) }
         it { expect(assigns(:home).id).to eq home.id }
       end
 
       describe "someone else's home" do
-        before { delete :destroy, id: another_home.id }
+        before { delete :destroy, params: { id: another_home.id } }
 
         it { expect(response).to redirect_to(homes_path) }
         it { expect(assigns(:home).id).to eq another_home.id }
       end
 
       describe 'public home' do
-        before { delete :destroy, id: public_home.id }
+        before { delete :destroy, params: { id: public_home.id } }
 
         it { expect(response).to redirect_to(homes_path) }
         it { expect(assigns(:home).id).to eq public_home.id }
@@ -217,7 +217,7 @@ RSpec.describe HomesController, type: :controller do
 
     describe 'GET show' do
       describe 'my home no rooms' do
-        before { get :show, id: home.id }
+        before { get :show, params: { id: home.id } }
 
         it { expect(response).to have_http_status(:success) }
       end
@@ -225,20 +225,20 @@ RSpec.describe HomesController, type: :controller do
       describe 'my home lots of rooms' do
         before do
           FactoryBot.create_list(:room, 15, home: home)
-          get :show, id: home.id
+          get :show, params: { id: home.id }
         end
 
         it { expect(response).to have_http_status(:success) }
       end
 
       describe "someone else's home" do
-        before { get :show, id: another_home.id }
+        before { get :show, params: { id: another_home.id } }
 
         it { expect(response).to have_http_status(:success) }
       end
 
       describe 'public home' do
-        before { get :show, id: public_home.to_param }
+        before { get :show, params: { id: public_home.to_param } }
 
         it { expect(response).to have_http_status(:success) }
         it { expect(assigns(:home).id).to eq public_home.id }
@@ -246,13 +246,13 @@ RSpec.describe HomesController, type: :controller do
     end
 
     describe '#update' do
-      before { patch :update, id: home.to_param, home: { name: 'New home name' } }
+      before { patch :update, params: { id: home.to_param, home: { name: 'New home name' } } }
 
       it { expect(response).to redirect_to(home) }
     end
 
     describe "GET edit for someone else's home" do
-      before { get :edit, id: another_home.to_param }
+      before { get :edit, params: { id: another_home.to_param } }
 
       it { expect(response).to have_http_status(:success) }
     end

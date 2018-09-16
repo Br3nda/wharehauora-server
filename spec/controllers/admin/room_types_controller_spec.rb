@@ -24,11 +24,11 @@ RSpec.describe Admin::RoomTypesController, type: :controller do
     end
 
     describe 'GET show' do
-      before { get :show, id: room_type.to_param }
+      before { get :show, params: { id: room_type } }
     end
 
     describe 'GET new' do
-      before { get :new, valid_params.to_param   }
+      before { get :new, params: valid_params }
 
       include_examples 'redirect to login'
     end
@@ -40,13 +40,13 @@ RSpec.describe Admin::RoomTypesController, type: :controller do
     end
 
     describe 'GET edit' do
-      before { get :edit, id: room_type.to_param }
+      before { get :edit, params: { id: room_type } }
 
       include_examples 'redirect to login'
     end
 
     describe 'DELETE destroy' do
-      before { delete :destroy, id: room_type.id }
+      before { delete :destroy, params: { id: room_type.id } }
 
       include_examples 'redirect to login'
     end
@@ -62,11 +62,11 @@ RSpec.describe Admin::RoomTypesController, type: :controller do
     end
 
     describe 'GET show' do
-      before { get :show, id: room_type.to_param }
+      before { get :show, params: { id: room_type } }
     end
 
     describe 'GET new' do
-      before { get :new, valid_params.to_param   }
+      before { get :new, params: valid_params }
 
       include_examples 'redirect to home'
     end
@@ -78,13 +78,13 @@ RSpec.describe Admin::RoomTypesController, type: :controller do
     end
 
     describe 'GET edit' do
-      before { get :edit, id: room_type.to_param }
+      before { get :edit, params: { id: room_type } }
 
       include_examples 'redirect to home'
     end
 
     describe 'DELETE destroy' do
-      before { delete :destroy, id: room_type.id }
+      before { delete :destroy, params: { id: room_type.id } }
 
       include_examples 'redirect to home'
     end
@@ -100,29 +100,29 @@ RSpec.describe Admin::RoomTypesController, type: :controller do
     end
 
     describe 'GET show' do
-      before { get :show, id: room_type.to_param }
+      before { get :show, params: { id: room_type } }
     end
 
     describe 'GET new' do
-      before { get :new, room_type: valid_params }
+      before { get :new, params: { room_type: valid_params } }
 
       it { expect(response).to have_http_status(:success) }
     end
 
     describe 'PUT create,' do
-      before { put :create, room_type: valid_params }
+      before { put :create, params: { room_type: valid_params } }
 
       it { expect(response).to redirect_to(admin_room_types_path) }
     end
 
     describe 'GET edit' do
-      before { get :edit, id: room_type.to_param }
+      before { get :edit, params: { id: room_type } }
 
       it { expect(response).to have_http_status(:success) }
     end
 
     describe 'DELETE destroy' do
-      before { delete :destroy, id: room_type.id }
+      before { delete :destroy, params: { id: room_type.id } }
 
       it { expect(response).to redirect_to(admin_room_types_path) }
     end

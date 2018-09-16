@@ -15,7 +15,7 @@ RSpec.describe RoomsController, type: :controller do
   shared_examples 'Test as all user types' do
     context 'Not signed in' do
       describe 'GET show' do
-        before { get :show, home_id: room.home.id, id: room.id }
+        before { get :show, params: { home_id: room.home.id, id: room.id } }
 
         it { expect(response).not_to have_http_status(:success) }
       end
@@ -25,7 +25,7 @@ RSpec.describe RoomsController, type: :controller do
       before { sign_in user }
 
       describe 'GET index' do
-        before { get :index, home_id: room.home.id }
+        before { get :index, params: { home_id: room.home.id } }
 
         it { expect(response).to have_http_status(:success) }
 
@@ -53,15 +53,15 @@ RSpec.describe RoomsController, type: :controller do
       end
 
       describe 'GET show' do
-        before { get :show, home_id: room.home.id, id: room.id }
+        before { get :show, params: { home_id: room.home.id, id: room.id } }
 
         it { expect(response).to have_http_status(:success) }
       end
 
       describe '#update' do
         before do
-          patch :update, home_id: room.home.id, id: room.to_param,
-                         room: { name: 'Living room' }
+          patch :update, params: { home_id: room.home.id, id: room.to_param,
+                                   room: { name: 'Living room' } }
         end
 
         it { expect(response).to redirect_to home_rooms_path(home) }
@@ -77,15 +77,15 @@ RSpec.describe RoomsController, type: :controller do
       end
 
       describe 'GET show' do
-        before { get :show, home_id: room.home.id, id: room.id }
+        before { get :show, params: { home_id: room.home.id, id: room.id } }
 
         it { expect(response).to have_http_status(:success) }
       end
 
       describe '#update' do
         before do
-          patch :update, home_id: room.home.id, id: room.to_param,
-                         room: { name: 'Living room' }
+          patch :update, params: { home_id: room.home.id, id: room.to_param,
+                                   room: { name: 'Living room' } }
         end
 
         it { expect(response).to have_http_status(:redirect) }
@@ -100,19 +100,19 @@ RSpec.describe RoomsController, type: :controller do
         let(:room) { FactoryBot.create(:room, home: home) }
 
         describe '#index' do
-          before { get :index, home_id: home.id }
+          before { get :index, params: { home_id: home.id } }
 
           it { expect(response).to have_http_status(:not_found) }
         end
 
         describe '#show' do
-          before { get :show, home_id: home.id, id: room.to_param }
+          before { get :show, params: { home_id: home.id, id: room.to_param } }
 
           it { expect(response).to have_http_status(:not_found) }
         end
 
         describe '#edit' do
-          before { get :edit, home_id: home.id, id: room.to_param }
+          before { get :edit, params: { home_id: home.id, id: room.to_param } }
 
           it { expect(response).to have_http_status(:not_found) }
         end

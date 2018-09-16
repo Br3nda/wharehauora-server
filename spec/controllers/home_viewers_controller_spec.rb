@@ -20,7 +20,7 @@ RSpec.describe HomeViewersController, type: :controller do
     end
 
     describe 'GET new' do
-      before { get :new, home_id: home.to_param }
+      before { get :new, params: { home_id: home.to_param } }
 
       it { expect(response).to redirect_to(new_user_session_path) }
     end
@@ -28,7 +28,7 @@ RSpec.describe HomeViewersController, type: :controller do
     describe 'DELETE' do
       it do
         expect do
-          delete :destroy, id: my_friend.to_param, home_id: home.id
+          delete :destroy, params: { id: my_friend.to_param, home_id: home.id }
         end.not_to(change(HomeViewer, :count))
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -39,13 +39,13 @@ RSpec.describe HomeViewersController, type: :controller do
     before { sign_in user }
 
     describe 'GET index' do
-      before { get :index, home_id: home.to_param }
+      before { get :index, params: { home_id: home.to_param } }
 
       it { expect(response).to have_http_status(:success) }
     end
 
     describe 'GET new' do
-      before { get :new, home_id: home.to_param }
+      before { get :new, params: { home_id: home.to_param } }
 
       it { expect(response).to have_http_status(:success) }
       it { expect(response).to render_template(:new) }
@@ -57,7 +57,7 @@ RSpec.describe HomeViewersController, type: :controller do
 
       it do
         expect do
-          delete :destroy, id: my_friend.to_param, home_id: home.id
+          delete :destroy, params: { id: my_friend.to_param, home_id: home.id }
         end.to change(HomeViewer, :count).by(-1)
         expect(response).to redirect_to(home_home_viewers_path(home))
         expect(assigns(:home)).to eq(home)
@@ -69,13 +69,13 @@ RSpec.describe HomeViewersController, type: :controller do
     before { sign_in admin_user }
 
     describe 'GET index' do
-      before { get :index, home_id: home.to_param }
+      before { get :index, params: { home_id: home.to_param } }
 
       it { expect(response).to have_http_status(:success) }
     end
 
     describe 'GET new' do
-      before { get :new, home_id: home.to_param }
+      before { get :new, params: { home_id: home.to_param } }
 
       it { expect(response).to have_http_status(:success) }
       it { expect(response).to render_template(:new) }
@@ -87,7 +87,7 @@ RSpec.describe HomeViewersController, type: :controller do
 
       it do
         expect do
-          delete :destroy, id: my_friend.to_param, home_id: home.id
+          delete :destroy, params: { id: my_friend.to_param, home_id: home.id }
         end.to change(HomeViewer, :count).by(-1)
         expect(response).to redirect_to(home_home_viewers_path(home))
         expect(assigns(:home)).to eq(home)

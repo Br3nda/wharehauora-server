@@ -69,7 +69,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     before do
       create_readings
       sign_in user unless user.nil?
-      get :show, valid_params
+      get :show, params: valid_params
     end
 
     describe 'When room is in a public home' do
@@ -172,7 +172,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     before do
       sign_in owner
       request.headers.merge! headers
-      post :create, data: body
+      post :create, params: { data: body }
     end
 
     let(:attributes) { subject['attributes'] }
@@ -200,7 +200,7 @@ RSpec.describe Api::V1::RoomsController, type: :controller do
     before do
       sign_in owner
       request.headers.merge! headers
-      patch :update, id: room.to_param, data: body
+      patch :update, params: { id: room.to_param, data: body }
     end
 
     it { expect(Room.find(room.id).name).to eq 'new room name' }

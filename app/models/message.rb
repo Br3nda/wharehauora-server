@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Message < ActiveRecord::Base
+class Message < ApplicationRecord
   belongs_to :sensor, counter_cache: true
   delegate :home, :home_id, to: :sensor
 
@@ -58,7 +58,7 @@ class Message < ActiveRecord::Base
   end
 
   def save_reading
-    Reading.create!(room: sensor.room, value: payload.to_f, key: key) if sensor.room
+    Reading.create!(room: sensor.room, value: payload.to_f, key: key) if sensor.room_id.present?
   end
 
   def save_dewpoint

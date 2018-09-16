@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateMqttUsers < ActiveRecord::Migration
+class CreateMqttUsers < ActiveRecord::Migration[4.2]
   def change
     create_table :mqtt_users do |t|
       t.references :user

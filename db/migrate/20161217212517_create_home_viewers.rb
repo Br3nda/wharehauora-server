@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateHomeViewers < ActiveRecord::Migration
+class CreateHomeViewers < ActiveRecord::Migration[4.2]
   def change
     create_table :home_viewers do |t|
       t.integer :user_id

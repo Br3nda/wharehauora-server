@@ -9,7 +9,7 @@ RSpec.describe MqttUserController, type: :controller do
   before { sign_in home.owner }
 
   describe 'GET index' do
-    before { get :index, home_id: home.id }
+    before { get :index, params: { home_id: home.id } }
 
     it { expect(assigns(:home)).to eq home }
     it { expect(assigns(:gateway)).to eq gateway }

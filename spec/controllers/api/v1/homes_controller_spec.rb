@@ -54,7 +54,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
       end
 
       describe 'home owner' do
-        before { get :index, format: :json, access_token: token.token }
+        before { get :index, format: :json, params: { access_token: token.token } }
 
         include_examples 'token belongs to home owner'
 
@@ -89,7 +89,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
     before do
       sign_in owner
       request.headers.merge! headers
-      post :create, data: body
+      post :create, params: { data: body }
     end
 
     let(:attributes) { subject['attributes'] }
@@ -119,7 +119,7 @@ RSpec.describe Api::V1::HomesController, type: :controller do
     before do
       sign_in owner
       request.headers.merge! headers
-      patch :update, id: home.to_param, data: body
+      patch :update, params: { id: home.to_param, data: body }
     end
 
     it { expect(Home.find(home.id).name).to eq 'new home name' }
