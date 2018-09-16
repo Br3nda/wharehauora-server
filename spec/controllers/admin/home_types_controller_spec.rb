@@ -11,10 +11,10 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
     it { is_expected.to redirect_to(root_path) }
   end
   let!(:home_type)    { FactoryBot.create(:home_type)                }
-  let(:user)         { FactoryBot.create(:user)                      }
-  let(:admin_role)   { FactoryBot.create(:role, name: 'janitor')     }
-  let(:admin_user)   { FactoryBot.create(:user, roles: [admin_role]) }
-  let(:valid_params) { { name: Faker.name }                          }
+  let(:user)          { FactoryBot.create(:user)                      }
+  let(:admin_role)    { FactoryBot.create(:role, name: 'janitor')     }
+  let(:admin_user)    { FactoryBot.create(:user, roles: [admin_role]) }
+  let(:valid_params)  { { name: Faker.name }                          }
 
   subject { response }
 
