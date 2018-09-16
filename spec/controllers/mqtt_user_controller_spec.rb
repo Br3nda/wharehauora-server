@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe MqttUserController, type: :controller do
   let(:home)    { FactoryBot.create :home, gateway_mac_address: gateway.mac_address }
-  let(:gateway) { FactoryBot.create :gateway, mac_address: '123' }
+  let(:gateway) { FactoryBot.create :gateway, mac_address: '123'                    }
 
   before { sign_in home.owner }
 
