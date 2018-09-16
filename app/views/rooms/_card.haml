@@ -27,7 +27,7 @@
   %header
     %h2= room.name
     %h4= room.room_type.name if room.room_type.present?
-    %a.head-action{href: "#"}
+    = link_to edit_room_path(room), class: 'head-action' do
       %img.svg{alt: "edit", src: image_url("icon/edit.svg")}/
   .readings
     .reading.temp-low-1a
