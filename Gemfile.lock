@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/wharehauora/pundit-resources.git
+  remote: https://github.com/wharehauora/pundit-resources
   revision: 9b59d45999eaa2df8fade43f74e8ccecf5dfc193
   branch: rails-5.1
   specs:
