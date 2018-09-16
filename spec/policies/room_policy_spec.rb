@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe RoomPolicy do
-  let(:admin) { FactoryGirl.create :admin }
-  let(:owner) { room.home.owner }
+  subject { described_class.new(user, room) }
+
+  let(:admin) { FactoryBot.create :admin }
+  let(:owner) { room.home.owner          }
   let(:whanau) do
-    u = FactoryGirl.create :user
+    u = FactoryBot.create :user
     room.home.users << u
     u
   end
-  let(:other_user) { FactoryGirl.create :user }
-
-  subject { described_class.new(user, room) }
+  let(:other_user) { FactoryBot.create :user }
 
   shared_examples 'can see the room' do
     it { is_expected.to permit_action(:show) }
@@ -42,6 +44,7 @@ describe RoomPolicy do
   shared_examples 'home owner can see and edit room' do
     context 'home owner' do
       let(:user) { owner }
+
       include_examples 'can see the room'
       include_examples 'can edit the room'
       include_examples 'can delete the room'
@@ -51,6 +54,7 @@ describe RoomPolicy do
   shared_examples 'admin can do everything' do
     context 'admin' do
       let(:user) { admin }
+
       include_examples 'can see the room'
       include_examples 'can edit the room'
       include_examples 'can delete the room'
@@ -60,22 +64,25 @@ describe RoomPolicy do
   shared_examples 'whanau can view but not edit' do
     context 'whanau' do
       let(:user) { whanau }
+
       include_examples 'can see the room'
       include_examples 'forbidden to edit the room'
     end
   end
 
   context 'private room' do
-    let(:room) { FactoryGirl.create :room }
+    let(:room) { FactoryBot.create :room }
 
     context 'a visitor' do
       let(:user) { nil }
+
       include_examples 'forbidden to see the room'
       include_examples 'forbidden to edit the room'
     end
 
     context 'another user, not whanau' do
       let(:user) { other_user }
+
       include_examples 'forbidden to see the room'
       include_examples 'forbidden to edit the room'
     end
@@ -86,15 +93,18 @@ describe RoomPolicy do
   end
 
   context 'public room' do
-    let(:room) { FactoryGirl.create :public_room }
+    let(:room) { FactoryBot.create :public_room }
 
     context 'a visitor' do
       let(:user) { nil }
+
       include_examples 'can see the room'
       include_examples 'forbidden to edit the room'
     end
+
     context 'another user, not whanau' do
       let(:user) { other_user }
+
       include_examples 'can see the room'
       include_examples 'forbidden to edit the room'
     end

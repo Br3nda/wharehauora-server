@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class Home < ActiveRecord::Base
+class Home < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  belongs_to :home_type
+  belongs_to :home_type, optional: true
 
   has_one :mqtt_user
 
@@ -22,11 +22,26 @@ class Home < ActiveRecord::Base
 
   validates :name, presence: true
   validates :owner, presence: true
+  before_validation :fix_gateway_address
+  validates :gateway_mac_address, uniqueness: true,
+                                  allow_blank: true,
+                                  format: { with: /\A[A-F0-9]*\z/, message: 'should have only letters A-F and numbers' }
 
   def provision_mqtt!
+    return if gateway_mac_address.blank?
+
     ActiveRecord::Base.transaction do
-      self.mqtt_user = MqttUser.where(home: self).first_or_initialize
-      mqtt_user.provision!
+      mu = MqttUser.where(home: self).first_or_initialize
+      mu.provision!
+      mu.save!
     end
+  end
+
+  private
+
+  def fix_gateway_address
+    return if gateway_mac_address.blank?
+
+    self.gateway_mac_address = gateway_mac_address.gsub(/\s/, '').delete(':').upcase
   end
 end

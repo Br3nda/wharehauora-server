@@ -22,7 +22,7 @@
           = link_to edit_room_path(@room), class: 'pure-menu-link' do
             edit room
             = fa_icon 'edit'
-      - if policy(home).edit?
+      - if current_user.janitor?
         %li.pure-menu-item
           = link_to home_mqtt_user_index_path(home), class: 'pure-menu-link' do
-            setup
+            gateway

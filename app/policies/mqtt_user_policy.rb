@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MqttUserPolicy < ApplicationPolicy
   def index?
     janitor?
@@ -13,12 +15,12 @@ class MqttUserPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.all if user && user.role?('janitor')
+      scope.all if user&.role?('janitor')
       scope.none
     end
   end
 
   def janitor?
-    user && user.role?('janitor')
+    user&.role?('janitor')
   end
 end

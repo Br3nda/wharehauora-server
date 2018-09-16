@@ -1,35 +1,42 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Reading, type: :model do
-  let(:home_type) { FactoryGirl.create :home_type, name: 'Whare' }
-  let(:room_type) { FactoryGirl.create :room_type, name: 'Ruma' }
-  let(:home) { FactoryGirl.create :home, home_type: home_type }
-  let(:room) { FactoryGirl.create :room, home: home, room_type: room_type }
+  let(:home_type) { FactoryBot.create :home_type, name: 'Whare'               }
+  let(:room_type) { FactoryBot.create :room_type, name: 'Ruma'                }
+  let(:home)      { FactoryBot.create :home, home_type: home_type             }
+  let(:room)      { FactoryBot.create :room, home: home, room_type: room_type }
 
   describe 'medians' do
     before do
       10.times do
-        FactoryGirl.create :reading, room: room, key: 'temperature', value: 20
-        FactoryGirl.create :reading, room: room, key: 'happiness', value: 100
-        FactoryGirl.create :reading, room: room, key: 'temperature', value: 15
+        FactoryBot.create :reading, room: room, key: 'temperature', value: 20
+        FactoryBot.create :reading, room: room, key: 'happiness', value: 100
+        FactoryBot.create :reading, room: room, key: 'temperature', value: 15
       end
-      FactoryGirl.create :reading, room: room, key: 'temperature', value: 15
+      FactoryBot.create :reading, room: room, key: 'temperature', value: 15
     end
 
     it 'calculates the median temperature' do
       expect(Reading.temperature.median(:value)).to eq(15)
 
-      FactoryGirl.create :reading, room: room, key: 'temperature', value: 1000
-      FactoryGirl.create :reading, room: room, key: 'temperature', value: 5000
+      FactoryBot.create :reading, room: room, key: 'temperature', value: 1000
+      FactoryBot.create :reading, room: room, key: 'temperature', value: 5000
 
       expect(Reading.temperature.median(:value)).to eq(20.0)
     end
   end
 
   describe 'data relationships' do
-    let!(:reading) { FactoryGirl.create :reading, room: room, key: 'temperature', value: 99 }
-    let!(:mould_reading) { FactoryGirl.create :reading, room: room, key: 'mould', value: 99 }
-    let!(:humidity_reading) { FactoryGirl.create :reading, room: room, key: 'humidity', value: 99 }
+    let!(:reading) { FactoryBot.create :reading, room: room, key: 'temperature', value: 99 }
+    let!(:mould_reading)    { FactoryBot.create :reading, room: room, key: 'mould', value: 99    }
+    let!(:humidity_reading) { FactoryBot.create :reading, room: room, key: 'humidity', value: 99 }
+
+    before do
+      FactoryBot.create_list :reading, 10, key: 'test'
+    end
+
     it 'belongs to a room' do
       expect(reading.room).to eq(room)
       expect(room.readings.first).to eq(reading)
@@ -38,11 +45,6 @@ RSpec.describe Reading, type: :model do
       expect(reading.home).to eq(home)
     end
 
-    before do
-      10.times do
-        FactoryGirl.create :reading, key: 'test'
-      end
-    end
     it 'finds temperature' do
       expect(Reading.temperature.first).to eq(reading)
     end

@@ -1,4 +1,6 @@
-class MigrateReadings < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class MigrateReadings < ActiveRecord::Migration[4.2]
   def up
     remove_orphaned_sensor_records
     add_column :rooms, :room_type_id, :integer
@@ -26,18 +28,19 @@ class MigrateReadings < ActiveRecord::Migration
   def remove_orphaned_sensor_records
     newest_home = Home.all.order(:id).last
     return unless newest_home
+
     sensors = Sensor.where('home_id > ?', newest_home.id)
     sensors.delete_all if sensors.count
   end
 
   def migrate_sensor_records
-    orphaned_query = "home_id IS NULL OR home_id NOT IN (SELECT id FROM homes)"
+    orphaned_query = 'home_id IS NULL OR home_id NOT IN (SELECT id FROM homes)'
     Sensor.where(orphaned_query).delete_all
     Room.where(orphaned_query).delete_all
 
     # Migrate existing data
     Sensor.all.each do |sensor|
-      room_name = sensor.room_name ? sensor.room_name : 'new room'
+      room_name = sensor.room_name || 'new room'
       room = Room.new
       room.home_id = sensor.home_id
       room.name = room_name
@@ -50,7 +53,7 @@ class MigrateReadings < ActiveRecord::Migration
   end
 
   def migrate_reading_records
-    OldReading.where("sensor_id IS NULL OR sensor_id NOT IN (SELECT id FROM sensors)").delete_all
+    OldReading.where('sensor_id IS NULL OR sensor_id NOT IN (SELECT id FROM sensors)').delete_all
     count = OldReading.count
     num_per_batch = 500
     batches = count / num_per_batch
@@ -91,7 +94,7 @@ class MigrateReadings < ActiveRecord::Migration
     end
   end
 
-  class OldReading < ActiveRecord::Base
+  class OldReading < ApplicationRecord
     belongs_to :sensor
     # belongs_to :home, through: :sensor
     # t.integer  "sensor_id"

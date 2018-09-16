@@ -1,4 +1,6 @@
-class CreateRoomTypes < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateRoomTypes < ActiveRecord::Migration[4.2]
   def change
     create_table :room_types do |t|
       t.text :name, null: false

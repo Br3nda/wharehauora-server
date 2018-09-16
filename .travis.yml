@@ -4,15 +4,11 @@ bundler_args: "--without development"
 sudo: false
 cache: bundler
 before_script:
-  - gem install brakeman bundler-audit
-  - bundle-audit update
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - RAILS_ENV=test bundle exec rake db:create db:migrate
-script:
-  - brakeman --run-all-checks --exit-on-warn --format plain .
-  - bundle-audit
   - ./cc-test-reporter before-build
-  - bundle exec rspec spec
+script:
+  - bundle exec rspec
 after_success:
   - ./cc-test-reporter after-build --id $CC_TEST_REPORTER_ID

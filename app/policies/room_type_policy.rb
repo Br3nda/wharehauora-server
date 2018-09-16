@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class RoomTypePolicy < ApplicationPolicy
   def index?
-    janitor?
+    true
   end
 
   def new?
@@ -16,7 +18,7 @@ class RoomTypePolicy < ApplicationPolicy
   end
 
   def show?
-    janitor?
+    true
   end
 
   def update?

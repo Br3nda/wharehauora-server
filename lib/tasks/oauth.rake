@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 namespace :oauth do
   USAGE = 'rake oauth:application name=[YOUR APP NAME] redirect_uri=[YOUR REDIRECT URI,
-           defaults to "urn:ietf:wg:oauth:2.0:oob"'.freeze
+           defaults to "urn:ietf:wg:oauth:2.0:oob"'
   desc 'Create a Doorkeeper application for use with OAuth'
   task application: :environment do
     app_name = ENV['name'] || raise("Please specify the name of the OAuth application: #{USAGE}")

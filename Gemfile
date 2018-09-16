@@ -3,7 +3,9 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.8'
+gem 'rails', '5.1.6'
+
+gem 'listen'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -17,7 +19,7 @@ gem 'rails-timeago', '~> 2.0'
 gem 'modernizr-rails'
 
 gem 'jsonapi-resources'
-gem 'pundit-resources'
+gem 'pundit-resources', git: 'https://github.com/wharehauora/pundit-resources', branch: 'rails-5.1'
 
 # # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
@@ -27,6 +29,7 @@ gem 'pg', '< 1.0.0'
 
 # for logins
 gem 'devise'
+gem 'devise_invitable', '~> 1.7.0'
 
 # soft delete of records
 gem 'paranoia', '~> 2.2'
@@ -59,10 +62,15 @@ gem 'active_median'
 gem 'momentjs-rails'
 
 # OAuth for API
-gem 'doorkeeper'
+gem 'doorkeeper', '4.2.6'
 
 # Rest/http library
 gem 'faraday'
+
+gem 'rack-cors', require: 'rack/cors'
+
+gem 'nokogiri', '>= 1.8.1'
+gem 'rails-html-sanitizer', '>= 1.0.4'
 
 group :production do
   # for heroku
@@ -87,7 +95,7 @@ group :development, :test do
   gem 'rspec-rails'
 
   # content generators
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
 
   # Code coverage analysis
@@ -108,12 +116,10 @@ group :development do
   gem 'spring'
 
   gem 'letter_opener'
-
-  gem 'overcommit' # linter
 end
 
 group :test do
   gem 'pundit-matchers', '~> 1.3.0'
+  gem 'rails-controller-testing'
   gem 'timecop'
 end
-gem 'nokogiri', '>= 1.8.1'

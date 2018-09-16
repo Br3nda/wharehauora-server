@@ -1,13 +1,15 @@
-FactoryGirl.define do
+# frozen_string_literal: true
+
+FactoryBot.define do
   factory :room do
     name { Faker::Hipster.word }
     home
     room_type
 
     transient do
-      temperature nil
-      humidity nil
-      dewpoint nil
+      temperature { nil }
+      humidity { nil }
+      dewpoint { nil }
     end
 
     after(:create) do |room, evaluator|
@@ -18,7 +20,7 @@ FactoryGirl.define do
   end
 
   factory :public_room, parent: :room do
-    home { FactoryGirl.create(:public_home) }
+    home { FactoryBot.create(:public_home) }
   end
 
   factory :room_with_readings, parent: :room do
@@ -35,7 +37,9 @@ FactoryGirl.define do
     end
   end
 
-  factory :room_with_sensors, parent: :room do
-    sensors { create_list(:sensor_with_messages, 1, home: home) }
+  factory :room_with_sensors, parent: :room do |_room|
+    after(:create) do |room|
+      sensors = create_list(:sensor, 1, home: room.home, room: room)
+    end
   end
 end

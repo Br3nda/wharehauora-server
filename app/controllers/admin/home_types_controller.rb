@@ -1,5 +1,6 @@
-class Admin::HomeTypesController < ApplicationController
-  before_action :authenticate_user!
+# frozen_string_literal: true
+
+class Admin::HomeTypesController < Admin::AdminController
   before_action :set_home_type, only: %i[show edit update destroy]
 
   def index
@@ -31,7 +32,7 @@ class Admin::HomeTypesController < ApplicationController
     ActiveRecord::Base.transaction do
       Home.where(
         home_type_id: @home_type.id
-      ).update_all(home_type_id: nil) # rubocop:disable Rails/SkipsModelValidations
+      ).update_all(home_type_id: nil)
       @home_type.destroy
     end
     redirect_to admin_home_types_path

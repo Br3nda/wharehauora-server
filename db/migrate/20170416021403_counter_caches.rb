@@ -1,6 +1,7 @@
-class CounterCaches < ActiveRecord::Migration
-  def change
+# frozen_string_literal: true
 
+class CounterCaches < ActiveRecord::Migration[4.2]
+  def change
     add_column :homes, :rooms_count, :integer
     add_column :homes, :sensors_count, :integer
 

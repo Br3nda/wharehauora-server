@@ -1,4 +1,6 @@
-class CreateHomeTypes < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateHomeTypes < ActiveRecord::Migration[4.2]
   def change
     create_table :home_types do |t|
       t.text :name, null: false

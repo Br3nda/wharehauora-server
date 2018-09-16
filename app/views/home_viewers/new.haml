@@ -3,7 +3,8 @@
 %h2
   = @home.name
 
-= form_for @new_viewer, url: home_invitations_path(@home) do |f|
+= form_for User.new, url: { action: 'create' }, class: 'pure-form' do |f|
+  = hidden_field_tag :home_id, @home.id
   %form.pure-form
     %fieldset
       = f.label :user, 'Email'

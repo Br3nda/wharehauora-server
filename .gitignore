@@ -55,5 +55,7 @@ bower.json
 # Ignore Byebug command history file.
 .byebug_history
 
-# Precompiled assets
 public/assets/**
+
+# Ignore vagrant
+.vagrant

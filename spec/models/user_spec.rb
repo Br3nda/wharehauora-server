@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin_role) { FactoryGirl.create(:role, name: 'admin') }
+  let(:user)       { FactoryBot.create(:user)                }
+  let(:admin_role) { FactoryBot.create(:role, name: 'admin') }
 
   describe '#role?' do
     it 'checks if the user has a specific role' do

@@ -1,27 +1,30 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'OAuth Authorization', type: :request do
-  let(:oauth_application) { FactoryGirl.create(:oauth_application) }
-  let(:user) { FactoryGirl.create(:user) }
+  let(:oauth_application)  { FactoryBot.create(:oauth_application) }
+  let(:user)               { FactoryBot.create(:user)              }
+  let(:authorize_response) { JSON.parse(response.body)             }
 
-  scenario 'auth ok' do
-    post '/oauth/token',
-         { username: user.email, password: user.password, client_id: oauth_application.uid, grant_type: 'password' },
-         'Accept' => 'application/json'
+  before { post '/oauth/token', params: auth_creds }
 
-    expect(response.status).to eq 200
-    authorize_response = JSON.parse(response.body)
-    expect(authorize_response['access_token']).to be_present
-    expect(authorize_response['refresh_token']).to be_present
+  describe 'auth ok' do
+    let(:auth_creds) do
+      { username: user.email, password: user.password, client_id: oauth_application.uid, grant_type: 'password', format: :json }
+    end
+
+    it { expect(response.status).to eq 200 }
+    it { expect(authorize_response['access_token']).to be_present }
+    it { expect(authorize_response['refresh_token']).to be_present }
   end
 
-  scenario 'auth not ok' do
-    post '/oauth/token',
-         { username: user.email, password: '123', client_id: oauth_application.uid, grant_type: 'password' },
-         'Accept' => 'application/json'
+  describe 'auth not ok' do
+    let(:auth_creds) do
+      { username: user.email, password: '123', client_id: oauth_application.uid, grant_type: 'password', format: :json }
+    end
 
-    expect(response.status).to eq 401
-    authorize_response = JSON.parse(response.body)
-    expect(authorize_response['error']).to eq 'Invalid Email or password.'
+    it { expect(response.status).to eq 401 }
+    it { expect(authorize_response['error']).to eq 'Invalid Email or password.' }
   end
 end

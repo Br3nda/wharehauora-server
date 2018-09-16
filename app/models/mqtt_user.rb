@@ -1,34 +1,34 @@
-class MqttUser < ActiveRecord::Base
+# frozen_string_literal: true
+
+require 'digest'
+class MqttUser < ApplicationRecord
   belongs_to :home
   validates :username, presence: true, uniqueness: true
-  validates :home, uniqueness: true
+  validates :home, presence: true, uniqueness: true
 
   after_initialize :default_values
 
   def provision!
-    Mqtt.provision_mqtt_user username, password
-    Mqtt.grant_access(username, home)
+    raise "Can't provision an invalid user" unless valid?
 
+    Mqtt.provision_user(username, password)
+    Mqtt.grant_access(username, topic)
     self.provisioned_at = Time.zone.now
     save!
   end
 
   private
 
+  def topic
+    "/sensors/v2/#{home.gateway_mac_address}/#"
+  end
+
   def default_values
-    self.username = new_username if username.nil?
-    self.password = new_password if password.nil?
+    self.username = home.gateway_mac_address
+    self.password = Digest::MD5.hexdigest("#{home.gateway_mac_address}#{salt}")
   end
 
-  def new_username
-    "whare#{home.id}"
-  end
-
-  def new_password
-    "#{random_password 3}-#{random_password 3}-#{random_password 3}"
-  end
-
-  def random_password(length)
-    (0...length).map { (65 + rand(26)).chr }.join
+  def salt
+    ENV['SALT']
   end
 end

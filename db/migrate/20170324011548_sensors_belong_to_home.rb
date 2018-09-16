@@ -1,4 +1,6 @@
-class SensorsBelongToHome < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class SensorsBelongToHome < ActiveRecord::Migration[4.2]
   def change
     add_column :sensors, :home_id, :int
     Sensor.all.each do |sensor|

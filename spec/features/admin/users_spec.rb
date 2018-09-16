@@ -1,36 +1,42 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.feature 'Users', type: :feature do
-  let!(:admin_user) { FactoryGirl.create :admin }
-  let!(:user) { FactoryGirl.create :user }
-  let!(:user_tahi) { FactoryGirl.create :user }
-  let!(:user_rua) { FactoryGirl.create :user }
-  let!(:user_toru) { FactoryGirl.create :user }
+RSpec.describe 'Users', type: :feature do
+  subject { page }
+
+  let!(:admin_user) { FactoryBot.create :admin }
+  let!(:user)       { FactoryBot.create :user  }
+  let!(:user_tahi)  { FactoryBot.create :user  }
+  let!(:user_rua)   { FactoryBot.create :user  }
+  let!(:user_toru)  { FactoryBot.create :user  }
 
   shared_examples 'cannot #index' do
     describe '#index' do
       before { visit '/admin/users' }
+
       it { expect(page).not_to have_text(user_tahi.email) }
       it { expect(page).not_to have_text(user_rua.email) }
       it { expect(page).not_to have_text(user_toru.email) }
     end
   end
 
-  subject { page }
-
   context 'not signed in' do
     include_examples 'cannot #index'
   end
 
   context 'Normal user' do
-    background { login_as(user) }
+    before { login_as(user) }
+
     include_examples 'cannot #index'
   end
 
   context 'Logged in as admin' do
-    background { login_as(admin_user) }
+    before { login_as(admin_user) }
+
     describe '#index' do
       before { visit '/admin/users' }
+
       it { expect(page).to have_text(user_tahi.email) }
       it { expect(page).to have_text(user_rua.email) }
       it { expect(page).to have_text(user_toru.email) }
@@ -41,6 +47,7 @@ RSpec.feature 'Users', type: :feature do
         visit '/admin/users'
         click_link user.email
       end
+
       it { is_expected.to have_text('Editing User') }
     end
 
@@ -51,6 +58,7 @@ RSpec.feature 'Users', type: :feature do
         fill_in :user_email, with: 'hiria@example.com'
         click_button 'save'
       end
+
       it { is_expected.to have_text 'hiria@example.com' }
     end
 
@@ -60,6 +68,7 @@ RSpec.feature 'Users', type: :feature do
         click_link user.email
         click_button 'delete'
       end
+
       it { is_expected.not_to have_text user.email }
     end
   end

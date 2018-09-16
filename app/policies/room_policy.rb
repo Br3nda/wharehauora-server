@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RoomPolicy < ApplicationPolicy
   def edit?
     owner? || janitor?
@@ -19,12 +21,17 @@ class RoomPolicy < ApplicationPolicy
     show?
   end
 
+  def create?
+    owner? || janitor?
+  end
+
   private
 
   class Scope < Scope
     def resolve
       return janitor_scope if janitor?
       return user_scope if user.present?
+
       public_scope
     end
 

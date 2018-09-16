@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'mqtt'
 require 'uri'
 
@@ -6,7 +8,7 @@ namespace :sensors do
   task ingest: :environment do
     begin
       SensorsIngest.new.process
-    rescue Exception => e # rubocop:disable Lint/RescueException
+    rescue Exception => e
       Raygun.track_exception(e) if Rails.env.production?
       raise
     end
@@ -23,7 +25,7 @@ class SensorsIngest
       c.get('/sensors/#') do |topic, message|
         puts "#{topic} #{message}"
         begin
-          Message.decode(topic, message)
+          Message.new.decode(topic, message)
         rescue ActiveRecord::RecordNotFound => e
           puts e
         end
@@ -47,11 +49,15 @@ class SensorsIngest
   def connection_options
     # Create a hash with the connection parameters from the URL
     uri = URI.parse ENV['CLOUDMQTT_URL'] || 'mqtt://localhost:1883'
+    # the Heroku managed env variable isn't SSL
+    # but we gotta be better than that!
+    port = ENV['MQTT_SSL_PORT']
     {
       remote_host: uri.host,
-      remote_port: uri.port,
+      remote_port: port,
       username: uri.user,
-      password: uri.password
+      password: uri.password,
+      ssl: true
     }
   end
 

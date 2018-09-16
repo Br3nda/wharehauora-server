@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
+
   include Pundit
+  force_ssl if Rails.env.production?
   before_action :set_my_homes
   after_action :verify_authorized, unless: :devise_controller?
   after_action :verify_policy_scoped, only: :index
-
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
@@ -29,6 +28,7 @@ class ApplicationController < ActionController::Base
 
   def set_my_homes
     return unless current_user
+
     @my_homes = current_user.homes
   end
 end

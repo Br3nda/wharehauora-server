@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationPolicy
   attr_reader :user, :record
 
@@ -15,7 +17,7 @@ class ApplicationPolicy
     end
 
     def janitor?
-      user.role? 'janitor'
+      user.present? && user.role?('janitor')
     end
   end
 
@@ -30,7 +32,7 @@ class ApplicationPolicy
   end
 
   def janitor?
-    user && user.role?('janitor')
+    user&.role?('janitor')
   end
 
   def signed_in?

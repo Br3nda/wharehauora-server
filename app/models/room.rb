@@ -1,6 +1,8 @@
-class Room < ActiveRecord::Base
+# frozen_string_literal: true
+
+class Room < ApplicationRecord
   belongs_to :home, counter_cache: true
-  belongs_to :room_type
+  belongs_to :room_type, optional: true
 
   has_many :readings
   has_many :sensors
@@ -22,6 +24,7 @@ class Room < ActiveRecord::Base
   def rating
     number = 100
     return '?' unless enough_info_to_perform_rating?
+
     number -= 15 if too_cold?
     number -= 40 if below_dewpoint?
     rating_letter(number)
@@ -41,6 +44,7 @@ class Room < ActiveRecord::Base
 
   def below_dewpoint?
     return false if temperature.nil? || dewpoint.nil?
+
     Rails.cache.fetch("#{cache_key}/below_dewpoint?", expires_in: 1.minute) do
       temperature < dewpoint
     end
@@ -48,6 +52,7 @@ class Room < ActiveRecord::Base
 
   def near_dewpoint?
     return false if temperature.nil? || dewpoint.nil?
+
     (temperature - 2) < dewpoint
   end
 
@@ -59,6 +64,7 @@ class Room < ActiveRecord::Base
     Rails.cache.fetch("#{cache_key}/good?", expires_in: 5.minutes) do
       return false unless enough_info_to_perform_rating?
       return false if below_dewpoint? || too_cold? || too_hot?
+
       true
     end
   end
@@ -81,7 +87,8 @@ class Room < ActiveRecord::Base
   end
 
   def age_of_last_reading(key)
-    return nil unless readings.where(key: key).size.positive?
+    return unless readings.where(key: key).size.positive?
+
     Time.current - last_reading_timestamp(key)
   end
 
@@ -109,6 +116,7 @@ class Room < ActiveRecord::Base
     return 'B' if number > 75
     return 'C' if number > 50
     return 'D' if number > 25
+
     'F'
   end
 
@@ -120,6 +128,7 @@ class Room < ActiveRecord::Base
     temp_c = single_current_metric 'temperature'
     humidity = single_current_metric 'humidity'
     return unless temp_c && humidity
+
     l = Math.log(humidity / 100.0)
     m = 17.27 * temp_c
     n = 237.3 + temp_c

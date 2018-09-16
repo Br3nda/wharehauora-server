@@ -1,20 +1,43 @@
 = render 'homes/nav', home: @home
-%h2 Set up
+%h2 DEBUG
 
 
 
-- if @home.mqtt_user
-  %p
-    Here are your credentials to set up a WhareGateway in
-    = @home.name
+.conditions-tables.pure-g
+  .conditions-table.conditions-table-good.pure-u-1-1
+    .conditions-table-header
+      %h2 Gateway Version
+      %span.conditions-table-current
+        %div
+          - if @gateway.present?
+            = @gateway.version
+          - else
+            unknown
+    - if @gateway.present?
+      %ul.conditions-table-list
+        %li
+          first connection
+          = timeago_tag @gateway.created_at, limit: 365.days.ago
+          = @gateway.created_at.localtime
+        %li
+          last connection
+          = timeago_tag @gateway.updated_at, limit: 365.days.ago
+          = @gateway.updated_at.localtime
 
-  %p
-    Username:
-    %b= @home.mqtt_user.username
-  %p
-    Password:
-    %b= @home.mqtt_user.password
-- else
-  %p Your home has not been provisioned yet.
 
--# http://192.168.4.1
+    - if @home.mqtt_user
+      %p
+        Username:
+        %b= @home.mqtt_user.username
+      %p
+        Password:
+        %b= @home.mqtt_user.password
+    - else
+      %p Gateway mqtt user has not been provisioned yet
+
+
+    - if @home.gateway_mac_address.blank?
+      %p Cannot provision home with no mac address set
+
+    - unless @gateway.present?
+      %p No known successful connections from gateway

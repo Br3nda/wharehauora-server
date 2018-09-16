@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomeViewersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_home, only: %i[create index new destroy]
@@ -8,12 +10,17 @@ class HomeViewersController < ApplicationController
                .includes(:user)
                .where(home_id: params[:home_id])
                .page(params[:page])
-    @invitations = @home.invitations.pending
   end
 
   def new
     authorize @home, :edit?
-    @new_viewer = Invitation.new
+  end
+
+  def create
+    authorize @home, :edit?
+    whanau_member = User.find_by(home_viewer_params) || User.invite!(home_viewer_params)
+    @home.users << whanau_member unless @home.users.where(id: whanau_member.id).size.positive?
+    redirect_to home_home_viewers_path(@home)
   end
 
   def destroy
@@ -32,8 +39,8 @@ class HomeViewersController < ApplicationController
 
   def invite_user; end
 
-  def viewer_params
-    params[:viewer].permit(permitted_params)
+  def home_viewer_params
+    params.require(:user).permit(permitted_params)
   end
 
   def permitted_params

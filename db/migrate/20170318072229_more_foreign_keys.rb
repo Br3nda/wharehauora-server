@@ -1,4 +1,6 @@
-class MoreForeignKeys < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class MoreForeignKeys < ActiveRecord::Migration[4.2]
   def change
     # Homes table
     add_foreign_key :homes, :home_types

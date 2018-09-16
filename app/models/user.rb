@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
@@ -17,8 +17,6 @@ class User < ActiveRecord::Base
   has_many :home_viewers, dependent: :destroy
   has_many :viewable_homes, class_name: 'Home', source: :home, through: :home_viewers
   has_many :owned_homes, class_name: 'Home', foreign_key: :owner_id
-
-  has_many :invitations, inverse_of: :inviter, foreign_key: :inviter_id, dependent: :destroy
 
   acts_as_paranoid # soft deletes, sets deleted_at column
 
