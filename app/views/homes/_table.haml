@@ -34,12 +34,10 @@
             = link_to("#{home.sensors.size} sensors", home_sensors_path(home))
         %td
           - if policy(home).edit?
-            = link_to edit_home_path(home) do
+            = link_to edit_home_path(home), class: 'btn' do
               = fa_icon 'edit'
           - if policy(home).destroy?
-            = link_to home_path(home),
-              method: :delete, data: { confirm: 'delete this home?' },
-              class: 'pure-button xsmall' do
+            = link_to home_path(home), method: :delete, data: { confirm: 'delete this home?' }, class: 'btn' do
               delete
               = fa_icon 'trash'
 
