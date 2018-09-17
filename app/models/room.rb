@@ -11,6 +11,7 @@ class Room < ApplicationRecord
   has_one :owner, through: :home
 
   validates :home, presence: true
+  validates :name, presence: true
 
   scope(:with_no_readings, -> { includes(:readings).where(readings: { id: nil }) })
   scope(:with_no_sensors, -> { includes(:sensors).where(sensors: { id: nil }) })
