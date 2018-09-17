@@ -16,7 +16,7 @@ RSpec.describe 'admin lists sensors', type: :feature do
 
   shared_examples 'sensor was deleted' do
     it 'sensor was deleted' do
-      is_expected.not_to have_text sensor.node_id
+      is_expected.not_to have_link sensor.node_id, href: sensor_path(sensor)
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe 'admin lists sensors', type: :feature do
     end
 
     context 'assigned sensor' do
-      let(:room) { FactoryBot.create :room, home: home }
+      let(:room) { FactoryBot.create :room, name: 'he ruma pai', home: home }
       let(:sensor) { FactoryBot.create :sensor, home: home, room: room }
 
       include_examples 'sensor was deleted'
