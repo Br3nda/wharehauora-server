@@ -10,18 +10,19 @@
           = fa_icon 'warning'
           = message
 
-.pure-u-1-1
-  %fieldset
-    %h4= f.label :name
+%ul.form-row
+
+
+  %li 
+    = f.label :name
     = f.text_field :name, type: 'text', placeholder: 'Name of home'
 
-  %fieldset
-    %h4= f.label :home_type
+  %li
+    = f.label :home_type
     - HomeType.all.each do |ht|
       %p
         = f.radio_button :home_type_id, ht.id
         = f.label :home_type_id, ht.name
-.pure-u-1-1
-  %fieldset
-    %h4= f.label :gateway_mac_address
+  %li
+    = f.label :gateway_mac_address
     = f.text_field :gateway_mac_address
