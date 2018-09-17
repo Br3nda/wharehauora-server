@@ -8,7 +8,7 @@
   Each account has write-only access
 
 %p
-  = button_to admin_mqtt_sync_path, class: 'pure-button' do
+  = button_to admin_mqtt_sync_path, class: 'btn' do
     Sync with MQTT server
 
 %table.pure-table
@@ -34,4 +34,4 @@
         %td
           - if home.gateway_mac_address.present?
             = link_to 'Provision', admin_mqtt_users_path(home_id: home.id),
-              method: 'post', class: 'pure-button'
+              method: 'post', class: 'btn'

@@ -6,6 +6,6 @@
       = form_for @home_type, url: { action: 'update' } do |f|
         = render 'form', f: f, home_type: @home_type
         %fieldset
-          %button.pure-button.pure-button-primary Save
+          %button.btn.btn-primary Save
           = link_to 'Delete', admin_home_type_path(@home_type),
-            method: :delete, class: 'pure-button'
+            method: :delete, class: 'btn'

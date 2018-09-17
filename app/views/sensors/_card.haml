@@ -8,7 +8,7 @@
     first detected
     = time_ago_in_words sensor.created_at
     ago
-    = link_to edit_sensor_path(sensor), class: 'button-analyze pure-button' do
+    = link_to edit_sensor_path(sensor), class: 'button-analyze btn' do
       Assign to room
   - else
     .conditions-table-header
@@ -31,7 +31,7 @@
     - if policy(sensor).unassign?
       %p
         = link_to sensor_unassign_path(sensor),
-          class: 'pure-button button-warning xsmall', method: :delete,
+          class: 'btn button-warning xsmall', method: :delete,
           data: { confirm: 'remove sensor from this room?' } do
           remove from room
           = fa_icon 'trash'

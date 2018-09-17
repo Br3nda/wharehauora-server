@@ -8,12 +8,12 @@
       %label
         = check_box_tag 'user[role_ids][]', r.id, f.object.roles.include?(r)
         = r.friendly_name
-    %button.pure-button.pure-button-primary
+    %button.btn.btn-primary
       save
 
 %p
   = link_to 'cancel', admin_users_path
 
-  = button_to admin_user_path(@user), method: :delete, class: 'pure-button button-warning' do
+  = button_to admin_user_path(@user), method: :delete, class: 'btn button-warning' do
     delete
     = fa_icon 'trash'

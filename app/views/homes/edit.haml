@@ -3,5 +3,5 @@
     %h3 My Whare
   = form_for @home, url: { action: 'update' } do |f|
     = render 'form', f: f, home_types: @home_types
-    %button.pure-button.pure-button-primary Save
-    = link_to 'Delete', home_path(@home), method: :delete, class: 'pure-button'
+    %button.btn.btn-primary Save
+    = link_to 'Delete', home_path(@home), method: :delete, class: 'btn'
