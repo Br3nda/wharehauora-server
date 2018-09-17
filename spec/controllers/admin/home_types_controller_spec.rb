@@ -27,6 +27,8 @@ RSpec.describe Admin::HomeTypesController, type: :controller do
 
     describe 'GET show' do
       before { get :show, params: { id: home_type.id } }
+
+      include_examples 'redirect to login'
     end
 
     describe 'GET new' do
