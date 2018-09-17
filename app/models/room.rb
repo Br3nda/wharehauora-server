@@ -57,6 +57,10 @@ class Room < ApplicationRecord
     (temperature - 2) < dewpoint
   end
 
+  def dry?
+    !below_dewpoint? && !near_dewpoint?
+  end
+
   def mould
     single_current_metric 'mould'
   end
@@ -76,6 +80,10 @@ class Room < ApplicationRecord
 
   def too_hot?
     (temperature > room_type.max_temperature) if enough_info_to_perform_rating?
+  end
+
+  def comfortable?
+    !too_hot? && !too_cold?
   end
 
   def sensor?

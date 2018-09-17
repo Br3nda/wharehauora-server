@@ -4,17 +4,17 @@ class RatingService
   def self.rating_text(rating)
     case rating
     when 'A'
-      'excellent'
+      'Excellent'
     when 'B'
-      'good'
+      'Good'
     when 'C'
-      'barely acceptable'
+      'Barely acceptable'
     when 'D'
-      'bad'
+      'Bad'
     when 'F'
-      'very bad'
+      'Very bad'
     else
-      'unknown'
+      'Unknown'
     end
   end
 end
