@@ -35,6 +35,16 @@
         -#   %a{href: "./help.html"} Help
         %li
         = link_to 'Logout', destroy_user_session_path, method: :delete
+      - if current_user.janitor?
+        %h6 Admin
+        %ul.nav-links
+          %li= link_to 'Whare', homes_path
+          %li= link_to 'Whare Types', admin_home_types_path
+          %li=link_to 'Room Types', admin_room_types_path
+          %li=link_to 'Users', admin_users_path
+          %li=link_to 'MQTT', admin_mqtt_users_path
+          %li=link_to 'Messages', messages_path
+
     - else
       %ul.nav-links
         %li
