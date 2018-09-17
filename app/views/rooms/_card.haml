@@ -30,22 +30,23 @@
     = link_to edit_room_path(room), class: 'head-action' do
       %img.svg{alt: "edit", src: image_url("icon/edit.svg")}/
   .readings
-    .reading.temp-low-1a
+    .reading{class: temperature_reading_class(room)}
       %span.vis
         %span.loader
       %span.value{ id: "room-#{room.id}-temperature-value" }
-        = render 'layouts/spinner'
+        -# = render 'layouts/spinner'
+        = display_temperature room
       %span.label Temperature
       %span.time
-        %time.timeago{ datetime: '', id: "room-#{room.id}-temperature-timestamp" }
-    .reading.hum-mid-a
+        -# %time.timeago{ datetime: '', id: "room-#{room.id}-temperature-timestamp" }
+    .reading{class: humidity_reading_class(room)}
       %span.vis
         %span.loader
       %span.value{ id: "room-#{room.id}-humidity-value" }
-        = render 'layouts/spinner'
+        = display_humidity room
       %span.label Humidity
       %span.time
-        %time.timeago{ datetime: '', id: "room-#{room.id}-humidity-timestamp" }
+        -# %time.timeago{ datetime: '', id: "room-#{room.id}-humidity-timestamp" }
   %footer.grade-high{ class: "room-#{room.id}-list" }
     %p{ id: "room-#{room.id}-too-cold" } Too cold #{fa_icon 'frown-o'}
     %p{ id: "room-#{room.id}-too-hot" } Too hot #{fa_icon 'frown-o'}
