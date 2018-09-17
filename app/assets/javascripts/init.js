@@ -4,10 +4,10 @@ $(function () {
     Vars
   ///////////////////////////////// */
   
-  var bp_xl = 1600;
-  var bp_lg = 1200;
-  var bp_md = 900;
-  var bp_sm = 700;
+  // var bp_xl = 1600;
+  // var bp_lg = 1200;
+  // var bp_md = 900;
+  // var bp_sm = 700;
 
   /* /////////////////////////////////
     Modernizr + Detetizr
