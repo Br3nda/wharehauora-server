@@ -14,13 +14,13 @@
         %span.loader
       %span.value= display_temperature(room)
       %span.label Temperature
-      %span.time #{time_ago_in_words room.last_reading_timestamp('temperature')} ago
+      %span.time= reading_age_in_words(room, 'temperature')
     .reading{class: humidity_reading_class(room)}
       %span.vis
         %span.loader
       %span.value= display_humidity(room)
       %span.label Humidity
-      %span.time #{time_ago_in_words room.last_reading_timestamp('humidity')} ago
+      %span.time= reading_age_in_words(room, 'temperature')
   %footer{class: room_class(room)}
     %p
       - if room.comfortable?
