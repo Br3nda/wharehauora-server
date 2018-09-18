@@ -21,27 +21,3 @@
     %img.svg{alt: "icon", src: image_url("icon/btn-add.svg")}>/
     Add whānau
 = link_to 'add someone to whare', new_home_home_viewer_path(@home), class: 'btn'
-
-/= render 'homes/nav', home: @home
-
-/%h2= @home.name
-
-/%h3 Whānau
-
--# .pure-menu.pure-menu-horizontal
--#   %ul.pure-menu-list
--#     %li.pure-menu-item
--#       = link_to 'add someone to whare', new_home_home_viewer_path(@home), class: 'btn'
-
--# - if @home.users.present?
--#   %h3 Users
--#   %table.pure-table
--#     %thead
--#       %tr
--#         %th.sortable Email
--#         %th Actions
--#     %tbody
--#       = render partial: 'home_viewer', collection: @home.home_viewers
-
--# - else
--#   %p No whānau
