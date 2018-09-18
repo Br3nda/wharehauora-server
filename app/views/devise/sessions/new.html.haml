@@ -1,10 +1,6 @@
-%h1 Nau mai, haere mai
-
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
   %header.header
-    %a.logo{:href => "./"} Whare Hauora
-    %h1.lg Kia ora
-    %h4.lg Login to start using Whare Hauora
+    =link_to 'Whare Hauora', root_path, class: 'logo'
   %section.card.pre-log
     .img{style: "background-image: url(\"#{image_path('placeholder-illy2.jpg')}\")"}
     .text
