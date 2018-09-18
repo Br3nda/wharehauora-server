@@ -1,13 +1,12 @@
-%h2 Add flatmates, whānau or someone else to your whare
+%section.card
+  %header
+    %h2 Add flatmates, whānau or someone else to your whare
 
-%h2
-  = @home.name
-
-= form_for User.new, url: { action: 'create' }, class: 'pure-form' do |f|
-  = hidden_field_tag :home_id, @home.id
-  %form.pure-form
-    %fieldset
-      = f.label :user, 'Email'
-      = f.email_field :email
-    %fieldset
-      %button.btn.btn-primary{ type: 'submit' } Add
+  = form_for User.new, url: { action: 'create' }, class: 'pure-form' do |f|
+    = hidden_field_tag :home_id, @home.id
+    %ul.form-row
+      %li
+        = f.label :user, 'Email'
+        = f.email_field :email
+      %li
+        %button.btn{ type: 'submit' } Add
