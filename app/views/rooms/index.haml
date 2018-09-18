@@ -1,7 +1,7 @@
 -# = render 'homes/nav', home: @home
 
-
 %h1=@home.name
+
 -# .summary-grid
 -#   %section.card.summary
 -#     %header
@@ -85,20 +85,39 @@
 -#         Analyse
 
 
-- if policy(@home).edit? && @unassigned_sensors.size.positive?
-  %h2.warning
-    = fa_icon 'warning'
-    new sensors detected
+-# - if policy(@home).edit? && @unassigned_sensors.size.positive?
+-#   %h2.warning
+-#     = fa_icon 'warning'
+-#     new sensors detected
 
-  .conditions-tables.pure-g
-    - @unassigned_sensors.each do |sensor|
-      .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-        = render 'sensors/card', sensor: sensor
+- if @unassigned_sensors.size.positive?
+  %section.card.alert
+    %header
+      %h2.secondary New sensors found
+      -# %a.head-action{href: "#"}
+      -#   %img.svg{alt: "close", src: "./img/icon/x.svg"}/
+    %ul.sensor-alerts
+      - @unassigned_sensors.each do |sensor|
+        %li
+          %span.sensor
+            - if sensor.mac_address.present?
+              = sensor.mac_address
+            - else
+              = sensor.node_id
+          %span.time First detected #{time_ago_in_words sensor.created_at} ago
+          = link_to(edit_sensor_path(sensor), class: 'btn small', "data-mfp-src" => "#assign-sensor") do
+            Assign to room
+    -# %footer
+    -#   %p
+    -#     %a.underline{href: "#"} Dismiss alert
+    -#     and don't show again.
+
 
 - if @rooms.size.positive?
-  .conditions-tables.summary-grid
+  .summary-grid
     - @rooms.order(:name).includes(:room_type).order(:name).each do |room|
       = render 'rooms/card', room: room
+
   = paginate(@rooms)
 - else
   %p This whare has no monitored rooms.
