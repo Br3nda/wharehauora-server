@@ -7,27 +7,15 @@
     %table
       %tbody
         - @home.home_viewers.each do |home_viewer|
-          %tr
+          %tr{ 'data-home-viewer-id' => home_viewer.id }
             %td.unbreak= home_viewer.user.email
             %td.actions
-              %a.table-action.del{href: "#"}
-                %img.svg{alt: "remove", src: "./img/icon/del.svg"}/
+              = link_to home_home_viewer_path(home_viewer.home, home_viewer.user),
+        method: :delete, data: { confirm: 'Really remove this whānau member?' } do
+                %img.svg{alt: "remove", src: image_url("icon/del.svg")}/
         %tr.spacer
           %td{colspan: "100"}
-        %tr
-          %td.unbreak brenda@wallace.net.nz
-          %td.actions
-            %a.table-action.del{href: "#"}
-              %img.svg{alt: "remove", src: "./img/icon/del.svg"}/
-        %tr.spacer
-          %td{colspan: "100"}
-        %tr
-          %td.unbreak hiriaterangi@gmail.com
-          %td.actions
-            %a.table-action.del{href: "#"}
-              %img.svg{alt: "remove", src: "./img/icon/del.svg"}/
-        %tr.spacer
-          %td{colspan: "100"}
+       
   -# %a.btn-add.append-table.open-modal{"data-mfp-src" => "#add-whanau", href: "#"}
   = link_to new_home_home_viewer_path(@home), class: 'btn-add append-table' do
     %img.svg{alt: "icon", src: image_url("icon/btn-add.svg")}>/
