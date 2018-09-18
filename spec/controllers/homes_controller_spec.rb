@@ -57,7 +57,7 @@ RSpec.describe HomesController, type: :controller do
     describe 'GET show for a public home' do
       before { get :show, params: { id: public_home.to_param } }
 
-      it { expect(response).to have_http_status(:success) }
+      it { expect(response).to have_http_status(:redirect) }
     end
 
     describe 'GET show for a private home' do
@@ -134,7 +134,7 @@ RSpec.describe HomesController, type: :controller do
       describe 'no sensors' do
         before { get :show, params: { id: home.id } }
 
-        it { expect(response).to have_http_status(:success) }
+        it { expect(response).to have_http_status(:redirect) }
       end
 
       describe 'lots of sensors' do
@@ -143,7 +143,7 @@ RSpec.describe HomesController, type: :controller do
           get :show, params: { id: home.id }
         end
 
-        it { expect(response).to have_http_status(:success) }
+        it { expect(response).to have_http_status(:redirect) }
       end
 
       describe "someone else's home" do
@@ -155,7 +155,7 @@ RSpec.describe HomesController, type: :controller do
       describe 'public home' do
         before { get :show, params: { id: public_home.to_param } }
 
-        it { expect(response).to have_http_status(:success) }
+        it { expect(response).to have_http_status(:redirect) }
         it { expect(assigns(:home).id).to eq public_home.id }
       end
     end
@@ -219,7 +219,7 @@ RSpec.describe HomesController, type: :controller do
       describe 'my home no rooms' do
         before { get :show, params: { id: home.id } }
 
-        it { expect(response).to have_http_status(:success) }
+        it { expect(response).to have_http_status(:redirect) }
       end
 
       describe 'my home lots of rooms' do
@@ -228,19 +228,19 @@ RSpec.describe HomesController, type: :controller do
           get :show, params: { id: home.id }
         end
 
-        it { expect(response).to have_http_status(:success) }
+        it { expect(response).to have_http_status(:redirect) }
       end
 
       describe "someone else's home" do
         before { get :show, params: { id: another_home.id } }
 
-        it { expect(response).to have_http_status(:success) }
+        it { expect(response).to have_http_status(:redirect) }
       end
 
       describe 'public home' do
         before { get :show, params: { id: public_home.to_param } }
 
-        it { expect(response).to have_http_status(:success) }
+        it { expect(response).to have_http_status(:redirect) }
         it { expect(assigns(:home).id).to eq public_home.id }
       end
     end
