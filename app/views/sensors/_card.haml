@@ -15,10 +15,11 @@
     %dd
       - if sensor.messages.size.positive?
         #{time_ago_in_words sensor.last_message} ago
-    %dt Battery
-    %dd 76%
-    %dt Software
-    %dd v2.1
+    -# %dt Battery
+    -# %dd 76%
+    - if sensor.home.gateway.present?
+      %dt Software
+      %dd=sensor.home.gateway.version
     - if policy(sensor).unassign? && sensor.room.present?
       .right-action
         = link_to sensor_unassign_path(sensor),
