@@ -1,6 +1,0 @@
-%h2.conditions-page-title Live demo data
-- homes.each do |home|
-  .conditions-tables.pure-g
-    - home.rooms.order(:name).limit(3).includes(:room_type).each do |room|
-      .pure-u-1.pure-u-md-1-2.pure-u-lg-1-3
-        = render 'rooms/card', room: room
