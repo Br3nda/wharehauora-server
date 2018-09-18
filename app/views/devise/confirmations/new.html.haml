@@ -1,19 +1,15 @@
-%h2
-  Resend confirmation instructions
+= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+  %section.card
+    %header
+      %h2 Resend confirmation instructions
 
-= form_for(resource, as: resource_name, url: confirmation_path(resource_name),
-  html: { method: :post }) do |f|
+    = devise_error_messages!
+    %ul.form-row
+      %li
+        = f.label :email
+        = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
 
-  = devise_error_messages!
+    %footer
+      = f.submit 'Resend confirmation instructions'
 
-  .field
-    = f.label :email
-    %br
-    = f.email_field :email, autofocus: true,
-      value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
-
-
-  .actions
-    = f.submit 'Resend confirmation instructions'
-
-= render 'devise/shared/links'
+= render "devise/shared/links"
