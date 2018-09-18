@@ -25,7 +25,7 @@ module RoomsHelper
 
   def reading_age_in_words(room, key)
     return unless room.readings.where(key: key).size.positive?
-    "#{time_ago_in_words room.last_reading_timestamp('temperature')} ago"
+    "#{time_ago_in_words room.last_reading_timestamp(key)} ago"
   end
 
   def temperature_reading_class(room)
