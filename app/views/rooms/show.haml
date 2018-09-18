@@ -43,17 +43,15 @@
       - if @room.dry?
         %li Comfortable humidity
         %li Acceptable dewpoint
-        %li
-          Temp is well above dewpoint
+        %li Temp is well above dewpoint
         %a.i.tooltip{href: "#", title: ""}
-        %h6 Dewpoint
+      
+        %h6 Dewpoint #{display_dewpoint(@room)}
         %p When the temperature in this room falls below #{display_dewpoint(@room)} moisture begins to form on surfaces, leading to mould growth.
-        %p
-          %a{href: "#"}
-            Click for more info
-            %img.svg{alt: "info", src: image_path("icon/i.svg")}/
-    %li Room appears healthy, warm,  dry
-
+        -# %p
+        -#   %a{href: "#"}
+        -#     Click for more info
+        -#     %img.svg{alt: "info", src: image_path("icon/i.svg")}/
 
 
 %section.card
@@ -64,21 +62,17 @@
     room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60
 
 %section.card
-  %header
-    %h2 sensors in this room
   - @room.sensors.each do |sensor|
-    .pure-u-1.pure-u-md-1-3.pure-u-lg-1-3
-      = render 'sensors/card', sensor: sensor
+    = render 'sensors/card', sensor: sensor
 
 
 %section.card
   %header
-    %h3 Readings
-  %ul.conditions-table-list
+    %h2 Readings
+  %table
     - @readings.each do |reading|
-      %li
-        = display_reading reading
-        = reading.key
-        %br
-        = timeago_tag reading.created_at, nojs: true, limit: 100.days.ago
+      %tr
+        %td= display_reading reading
+        %td= reading.key
+        %td= timeago_tag reading.created_at, nojs: true, limit: 100.days.ago
 
