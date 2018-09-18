@@ -23,13 +23,11 @@
             = f.label :remember_me
         %li
           -# %a.btn.submit{:href => "#"} Login
-          .btn
-            = f.submit 'Log in'
+          = f.submit 'Log in'
       %footer
-        %p.right= render 'devise/shared/links'
-        -# %p.left
-        -#   %a.underline{:href => "./forgot-password.html"} Forgot password?
-        -# %p.right
-        -#   Don’t have an account?
-        -#   %a.underline{:href => "./sign-up.html"} Sign up
-
+        -# %p.right= render 'devise/shared/links'
+        %p.left
+          = link_to 'Forgot your password?', new_password_path(resource_name), class: 'underline'
+        %p.right
+          Don’t have an account?
+          = link_to 'Sign up', new_registration_path(resource_name), class: 'underline'
