@@ -1,10 +1,9 @@
 -# = render 'homes/nav', home: @room.home
 
 %h1.sm
-  %a.back{href: "#"}>
+  = link_to home_rooms_path(@room.home), class: 'back' do
     %img.svg{alt: "back", src: image_path("icon/back.svg")}/
   = @room.home.name
-
 
 %section.card.report
   %header
@@ -13,19 +12,19 @@
     %a.head-action{href: "#"}
       %img.svg{alt: "edit", src: image_path("icon/edit.svg")}/
   .readings
-    .reading.temp-mid-a
+    .reading{class: temperature_reading_class(@room)}
       %span.vis
         %span.loader
       %span.value= display_temperature(@room)
       %span.label Temperature
       %span.time 5 minutes ago
-    .reading.hum-mid-a
+    .reading{class: humidity_reading_class(@room)}
       %span.vis
         %span.loader
       %span.value= display_humidity(@room)
       %span.label Humidity
       %span.time 5 minutes ago
-    .reading.dew-mid
+    .reading{class: dewpoint_reading_class(@room)}
       %span.vis
         %span.loader
       %span.value= display_dewpoint(@room)
@@ -38,21 +37,19 @@
       %span.label Rating
     %ul.check
       - if @room.comfortable?
-        %li Comfortable 
-      
+        %li Comfortable
       - if @room.dry?
         %li Comfortable humidity
         %li Acceptable dewpoint
         %li Temp is well above dewpoint
         %a.i.tooltip{href: "#", title: ""}
-      
+
         %h6 Dewpoint #{display_dewpoint(@room)}
         %p When the temperature in this room falls below #{display_dewpoint(@room)} moisture begins to form on surfaces, leading to mould growth.
         -# %p
         -#   %a{href: "#"}
         -#     Click for more info
         -#     %img.svg{alt: "info", src: image_path("icon/i.svg")}/
-
 
 %section.card
   %header
