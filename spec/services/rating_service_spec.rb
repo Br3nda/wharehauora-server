@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.describe RatingService, type: :model do
   describe '#rating_text' do
-    it { expect(RatingService.rating_text('A')).to eq 'excellent' }
-    it { expect(RatingService.rating_text('B')).to eq 'good' }
-    it { expect(RatingService.rating_text('C')).to eq 'barely acceptable' }
-    it { expect(RatingService.rating_text('D')).to eq 'bad' }
-    it { expect(RatingService.rating_text('F')).to eq 'very bad' }
-    it { expect(RatingService.rating_text('Z')).to eq 'unknown' }
+    it { expect(RatingService.rating_text('A')).to eq 'Excellent' }
+    it { expect(RatingService.rating_text('B')).to eq 'Good' }
+    it { expect(RatingService.rating_text('C')).to eq 'Barely acceptable' }
+    it { expect(RatingService.rating_text('D')).to eq 'Bad' }
+    it { expect(RatingService.rating_text('F')).to eq 'Very bad' }
+    it { expect(RatingService.rating_text('Z')).to eq 'Unknown' }
   end
 end
