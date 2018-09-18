@@ -1,5 +1,5 @@
 !!!
-%html{lang: "en"}
+%html{lang: 'en'}
   %head
     %title WharehauoraServer
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
@@ -8,37 +8,34 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
 
-    -# %link{href: "./favicon.ico", rel: "shortcut icon"}/
-    -# / meta
-    -# %meta{charset: "utf-8"}/
-    -# %meta{content: "", name: "description"}/
-    %meta{content: "on", "http-equiv" => "cleartype"}/
+    %meta{content: 'on', 'http-equiv' => 'cleartype'}/
     / webfont
-    %link{href: "https://fonts.googleapis.com/css?family=Merriweather:700|Roboto:300,400,700&subset=latin-ext", rel: "stylesheet"}/
+    %link{href: 'https://fonts.googleapis.com/css?family=Merriweather:700|Roboto:300,400,700&subset=latin-ext', rel: 'stylesheet' }/
     / js
-    %script{src: javascript_path("modernizr-2.8.3.js") }
-    -# %script{src: javascript_path("detectizr-2.1.0.min.js") }
-    -# / mobile & iOS
-    -# %meta{content: "yes", name: "apple-mobile-web-app-capable"}/
-    -# %meta{content: "width=device-width, initial-scale=1.0, user-scalable=no", name: "viewport"}/
-    -# %link{href: "./app-icon.png", rel: "apple-touch-icon-precomposed"}/
+    %script{src: javascript_path('modernizr-2.8.3.js') }
+    %script{src: javascript_path('detectizr-2.1.0.min.js') }
+    / mobile & iOS
+    %meta{content: 'yes', name: 'apple-mobile-web-app-capable' }/
+    %meta{content: 'width=device-width, initial-scale=1.0, user-scalable=no', name: 'viewport'}/
+    %link{href: '/app-icon.png', rel: 'apple-touch-icon-precomposed'}/
 
   %body
     %header.header
       = link_to 'Whare Hauora', root_path, class: 'logo-sm'
         
     .overlay= render('layouts/menu')
+
     .content
       .center
         - flash.each do |name, msg|
-          %section= content_tag :div, msg, class: name
+          %p= content_tag :div, msg, class: name
+
         = yield
-        -# %h1 Kia ora!
-        -# %section.card
-    %script{src: javascript_path("jquery-2.1.3.min.js") }
-    %script{src: javascript_path("jquery-ui-widget.min.js") }
-    %script{src: javascript_path("jquery.selectBoxIt.min.js") }
-    %script{src: javascript_path("jquery.icheck.min.js") }
-    %script{src: javascript_path("jquery.magnific-popup.min.js") }
-    %script{src: javascript_path("tooltipster.bundle.min.js") }
-    %script{src: javascript_path("init.js") }
+
+    %script{src: javascript_path('jquery-2.1.3.min.js') }
+    %script{src: javascript_path('jquery-ui-widget.min.js') }
+    %script{src: javascript_path('jquery.selectBoxIt.min.js') }
+    %script{src: javascript_path('jquery.icheck.min.js') }
+    %script{src: javascript_path('jquery.magnific-popup.min.js') }
+    %script{src: javascript_path('tooltipster.bundle.min.js') }
+    %script{src: javascript_path('init.js') }
