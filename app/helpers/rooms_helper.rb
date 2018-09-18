@@ -13,7 +13,18 @@ module RoomsHelper
     display_metric room, 'dewpoint'
   end
 
+  def room_class(room)
+    if room.good?
+      'grade-high'
+    elsif room.below_dewpoint?
+      'grade-low'
+    else
+      'grade-mid'
+    end
+  end
+
   def temperature_reading_class(room)
+    return 'temp-high-2b' unless room.enough_info_to_perform_rating?
     if room.too_cold?
       'temp-low-2a'
     elsif room.too_hot?
@@ -24,6 +35,7 @@ module RoomsHelper
   end
 
   def humidity_reading_class(room)
+    return 'hum-high-2b' unless room.enough_info_to_perform_rating?
     if room.below_dewpoint?
       'hum-high-2a'
     elsif room.near_dewpoint?
