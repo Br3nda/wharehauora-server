@@ -3,7 +3,7 @@
     %h2= room.name
     %h4
       - if room.room_type.present?
-        = room.room_type.name 
+        = room.room_type.name
       - else
         Edit room type to get analysis
     = link_to edit_room_path(room), class: 'head-action' do
@@ -23,14 +23,20 @@
       %span.time= reading_age_in_words(room, 'temperature')
   %footer{class: room_class(room)}
     %p
-      - if room.comfortable?
-        Comfortable temperature.
-      - if room.too_hot?
-        Too hot.
-      - if room.too_cold?
-        Too cold for a #{room.room_type.name.downcase}
-      - if room.good?
-        Room is good.
+      - if room.enough_info_to_perform_rating?
+        - if room.comfortable?
+          Comfortable temperature.
+        - if room.too_hot?
+          Too hot.
+        - if room.too_cold?
+          Too cold for a #{room.room_type.name.downcase}
+        - if room.good?
+          Room is good.
+      - else
+        - if room.room_type.present?
+          Edit room type to get analysis
+        - else
+          Offline
     -#   = succeed "." do
     -#     %a.underline{href: "#"} Learn how to fix this
     = link_to room_path(room), class: 'btn' do

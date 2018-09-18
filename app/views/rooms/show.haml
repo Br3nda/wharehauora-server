@@ -1,4 +1,4 @@
--# = render 'homes/nav', home: @room.home
+- content_for :title, "Room detail - #{@room.name}"
 
 %h1.sm
   = link_to home_rooms_path(@room.home), class: 'back' do
@@ -9,7 +9,7 @@
   %header
     %h2= @room.name
     %h4= @room.room_type.name if @room.room_type.present?
-    %a.head-action{href: "#"}
+    = link_to edit_room_path(@room), class: 'head-action' do
       %img.svg{alt: "edit", src: image_path("icon/edit.svg")}/
   .readings
     .reading{class: temperature_reading_class(@room)}
@@ -17,20 +17,20 @@
         %span.loader
       %span.value= display_temperature(@room)
       %span.label Temperature
-      %span.time 5 minutes ago
+      %span.time= reading_age_in_words(@room, 'temperature')
     .reading{class: humidity_reading_class(@room)}
       %span.vis
         %span.loader
       %span.value= display_humidity(@room)
       %span.label Humidity
-      %span.time 5 minutes ago
+      %span.time= reading_age_in_words(@room, 'humidity')
     .reading{class: dewpoint_reading_class(@room)}
       %span.vis
         %span.loader
       %span.value= display_dewpoint(@room)
       %span.label Dewpoint
-      %span.time 5 minutes ago
-  .report-card.grade-high
+      %span.time= reading_age_in_words(@room, 'dewpoint')
+  .report-card{class: room_grade_class(@room)}
     .rating
       %span.grade= @room.rating
       %span.value=rating_text(@room)
@@ -43,6 +43,9 @@
         %li Acceptable dewpoint
         %li Temp is well above dewpoint
         %a.i.tooltip{href: "#", title: ""}
+
+      - if @room.below_dewpoint?
+        %li.bullet Risk for cold, damp, and mould
 
         %h6 Dewpoint #{display_dewpoint(@room)}
         %p When the temperature in this room falls below #{display_dewpoint(@room)} moisture begins to form on surfaces, leading to mould growth.

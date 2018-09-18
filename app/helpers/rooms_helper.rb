@@ -61,6 +61,18 @@ module RoomsHelper
     end
   end
 
+  def room_grade_class(room)
+    if room.rating == 'A'
+      'grade-high'
+    elsif room.rating == 'B'
+      'grade-high'
+    elsif room.rating == 'B'
+      'grade-mid'
+    elsif room.rating == 'D'
+      'grade-low'
+    end
+  end
+
   private
 
   def display_metric(room, key)
