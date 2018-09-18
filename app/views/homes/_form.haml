@@ -9,10 +9,7 @@
         %li
           = fa_icon 'warning'
           = message
-
 %ul.form-row
-
-
   %li 
     = f.label :name
     = f.text_field :name, type: 'text', placeholder: 'Name of home'
@@ -26,3 +23,8 @@
   %li
     = f.label :gateway_mac_address
     = f.text_field :gateway_mac_address
+
+  - if current_user.janitor? && @home.owner.blank?
+    %li
+      %label Owner's email
+      = text_field(:owner, :email)
