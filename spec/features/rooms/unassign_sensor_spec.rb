@@ -17,7 +17,7 @@ RSpec.describe 'Room', type: :feature do
     describe 'unassign sensor from a room' do
       before do
         visit room_path(room.id)
-        click_link 'remove from room'
+        click_link 'Disconnect from room'
       end
 
       it { is_expected.not_to have_text 'remove from room' }

@@ -1,0 +1,27 @@
+%section.card
+  %header
+    %h2
+      Sensor
+      %span.sensor
+        - if sensor.mac_address.present?
+          = sensor.mac_address
+        - else
+          = sensor.node_id
+
+  %dl.col4.restrict-width
+    %dt First Detected
+    %dd= sensor.created_at.localtime
+    %dt Last reading
+    %dd
+      - if sensor.messages.size.positive?
+        #{time_ago_in_words sensor.last_message} ago
+    %dt Battery
+    %dd 76%
+    %dt Software
+    %dd v2.1
+    - if policy(sensor).unassign? && sensor.room.present?
+      .right-action
+        = link_to sensor_unassign_path(sensor),
+          class: 'btn small', method: :delete,
+          data: { confirm: 'remove sensor from this room?' } do
+          Disconnect from room
