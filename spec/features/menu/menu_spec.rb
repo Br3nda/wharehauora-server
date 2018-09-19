@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Homes', type: :feature do
-  let(:user)       { FactoryBot.create :user                                          }
-  let(:janitor)    { FactoryBot.create :janitor                                       }
-  let(:admin_user) { FactoryBot.create :user, roles: [janitor]                        }
-  let(:home_type)  { FactoryBot.create :home_type                                     }
-  let!(:home)      { FactoryBot.create :home, owner_id: user.id, home_type: home_type }
-  let!(:room) { FactoryBot.create :room, home: home }
+  let(:user)       { FactoryBot.create :user                                               }
+  let(:janitor)    { FactoryBot.create :janitor                                            }
+  let(:admin_user) { FactoryBot.create :user, roles: [janitor]                             }
+  let(:home_type)  { FactoryBot.create :home_type                                          }
+  let!(:home)      { FactoryBot.create :home, owner_id: user.id, home_type: home_type      }
+  let!(:room)      { FactoryBot.create :room, home: home                                   }
 
   subject { page }
 
@@ -38,6 +38,7 @@ RSpec.describe 'Homes', type: :feature do
       login_as(admin_user)
       visit '/'
     end
+
     it { is_expected.to have_link('Whare') }
     it { is_expected.to have_link('Whare Types') }
     it { is_expected.to have_link('Room Types') }
