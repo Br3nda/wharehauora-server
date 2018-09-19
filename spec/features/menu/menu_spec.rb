@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Homes', type: :feature do
   subject { page }
+
   let(:user)       { FactoryBot.create :user                                               }
   let(:janitor)    { FactoryBot.create :janitor                                            }
   let(:admin_user) { FactoryBot.create :user, roles: [janitor]                             }

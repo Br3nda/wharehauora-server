@@ -32,6 +32,7 @@ RSpec.describe 'Homes', type: :feature do
       fill_in 'owner[email]', with: 'bob@bob.com'
       click_button('Create')
     end
+
     before { login_as(admin_user) }
 
 
