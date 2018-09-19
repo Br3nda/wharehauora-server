@@ -1,33 +1,36 @@
 
-%h2 MQTT Provisioning
+%section.card
+  %header
+    %h2 MQTT Provisioning
 
-%p
-  Sensors send readings to us over MQTT. This is an overview of provisioned
-  accounts and credentials on our Mqtt Server.
-%p
-  Each account has write-only access
+  %p
+    Sensors send readings to us over MQTT. This is an overview of provisioned
+    accounts and credentials on our Mqtt Server.
+  %p
+    Each account has write-only access
 
-%table.pure-table
-  %thead
-    %tr
-      %th Home
-      %th Owner
-      %th MQTT Username
-      %th MQTT Passcode
-      %th Provisioned
-      %th Actions
-  %tbody
-    - @homes.includes(:mqtt_user, :owner).each do |home|
+  %table.pure-table
+    %thead
       %tr
-        %td
-          = link_to home_path(home) do
-            = fa_icon 'home'
-            = home.name
-        %td= home&.owner&.email
-        %td= home&.mqtt_user&.username
-        %td= home&.mqtt_user&.password
-        %td= home&.mqtt_user&.provisioned_at
-        %td
-          - if home.gateway_mac_address.present?
-            = link_to 'Provision', admin_mqtt_users_path(home_id: home.id),
-              method: 'post', class: 'pure-button'
+        %th Home
+        %th Owner
+        %th MQTT Username
+        %th MQTT Passcode
+        %th Provisioned
+        %th Actions
+    %tbody
+      - @homes.includes(:mqtt_user, :owner).each do |home|
+        %tr
+          %td
+            = link_to home_path(home) do
+              = fa_icon 'home'
+              = home.name
+          %td= home&.owner&.email
+          %td= home&.mqtt_user&.username
+          %td= home&.mqtt_user&.password
+          %td= home&.mqtt_user&.provisioned_at
+          %td
+            - if home.gateway_mac_address.present?
+              = link_to 'Provision', admin_mqtt_users_path(home_id: home.id),
+                method: 'post', class: 'btn'
+

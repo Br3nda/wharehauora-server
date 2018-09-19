@@ -25,7 +25,6 @@ RSpec.describe 'analyse room', type: :feature do
         let(:room) { FactoryBot.create :room }
 
         include_examples 'can see room details'
-        it { is_expected.to have_text 'No recent readings' }
       end
 
       context 'room with temperature' do

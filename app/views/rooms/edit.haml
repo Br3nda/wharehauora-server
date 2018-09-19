@@ -1,8 +1,8 @@
 = form_for(@room, url: home_room_path(@home, @room,
                   html: { class: 'pure-form pure-form-aligned' })) do |f|
-  .pure-g
+  %h1 Room
+  %section.card
     .pure-u-1
-      %h2 Room
 
     .pure-u-1
       %h3= @home.name
@@ -17,4 +17,4 @@
           = f.radio_button :room_type_id, rt.id
           = f.label :room_type_id, rt.name
     .pure-u-1
-      %button.pure-button.pure-button-primary Save
+      %button.btn.btn-primary Save

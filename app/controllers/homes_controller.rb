@@ -15,9 +15,7 @@ class HomesController < ApplicationController
   end
 
   def show
-    parse_dates
-    @keys = %w[temperature humidity]
-    respond_with(@home)
+    redirect_to home_rooms_path(@home)
   end
 
   def new

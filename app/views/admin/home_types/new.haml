@@ -1,8 +1,7 @@
-.pure-g
-  .pure-u-1-2
-    %h3 New Home Type
-    .pure-form
-      = form_for @home_type, url: { action: 'create' } do |f|
-        = render 'form', f: f, home_type: @home_type
-        %fieldset
-          %button.pure-button.pure-button-primary Create
+= form_for :home_type, url: { action: 'create' } do |f|
+  %section.card
+    %header
+      %h2 New Whare Type
+    = render 'form', f: f, home_type: @home_type
+    %footer
+      = f.submit 'Create'

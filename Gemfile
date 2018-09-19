@@ -2,7 +2,6 @@
 
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.1.6'
 
 gem 'listen'
@@ -37,8 +36,6 @@ gem 'pundit'
 
 # templating
 gem 'haml-rails'
-
-gem 'purecss-rails'
 
 # icons
 gem 'font-awesome-rails'

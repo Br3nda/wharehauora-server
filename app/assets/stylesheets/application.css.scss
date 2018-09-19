@@ -10,18 +10,13 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
 
-  =require purecss/base
-  =require purecss/buttons
-  =require purecss/forms
-  =require purecss/grids
-  =require purecss/grids-responsive
-  =require purecss/menus
-  =require purecss/tables
   =require font-awesome
 */
 
 @import "variables";
-@import "buttons";
-@import "layout";
+// @import "buttons";
+// @import "layout";
 @import "modules/signin_grid";
-@import "font-awesome";
+
+// New UI
+@import "style"

@@ -1,12 +1,14 @@
-%fieldset
-  = f.label :name
-  = f.text_field :name, type: 'text', placeholder: 'room type name'
+%ul.form-row
+  %li
+    = f.label :name
+    = f.text_field :name, type: 'text', placeholder: 'room type name'
 
-%fieldset
-  = f.label :min_temperature
-  = f.text_field :min_temperature, type: 'text'
-%fieldset
-  = f.label :max_temperature
-  = f.text_field :max_temperature, type: 'text'
-%button.pure-button.pure-button-primary
-  = fa_icon 'save'
+  %li
+    = f.label :min_temperature
+    = f.text_field :min_temperature, type: 'text', placeholder: 'min temperature for ratings'
+    %legend Room is considered bad if below this
+  %li
+    = f.label :max_temperature
+    = f.text_field :max_temperature, type: 'text'
+  %li
+    = f.submit 'save'

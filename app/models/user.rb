@@ -8,6 +8,7 @@ class User < ApplicationRecord
          :confirmable
 
   validates :email, presence: true
+  validate :no_deleted_account_exists
 
   has_many :user_roles
   has_many :roles, through: :user_roles
@@ -19,6 +20,11 @@ class User < ApplicationRecord
   has_many :owned_homes, class_name: 'Home', foreign_key: :owner_id
 
   acts_as_paranoid # soft deletes, sets deleted_at column
+
+  def no_deleted_account_exists
+    return unless User.only_deleted.where(email: email).size.positive?
+    errors.add(:email, 'already exists as a deleted account')
+  end
 
   def homes
     owned_homes + viewable_homes

@@ -1,23 +1,59 @@
-.pure-menu.pure-menu-horizontal
-  %ul.pure-menu-list
+%nav.menu
+  %header
+    =link_to 'Whare Hauora', root_path, class: 'logo'
+    %h6 Menu
+    %a.x{href: "#"}
+      %img.svg{alt: "close", src: image_tag(image_url('icon/x.svg'))}/
+
+  .nav
     - if user_signed_in?
-      = render 'menus/homes', homes: homes if homes
-      = render 'menus/admin' if current_user.role?('janitor')
+      - current_user.homes.each do |home|
+        %h6= home.name
+        %ul.nav-links
+          %li
+            = link_to 'Dashboard', home_rooms_path(home), class: 'current'
+
+        %h6 Rooms
+        
+        %ul.nav-links
+          - home.rooms.order(:name).each do |room|
+            %li
+              = link_to room_path(room) do
+                = room.name
+        %h6 Setup
+        %ul.nav-links
+          -# %li
+          -#   %a{href: "./rooms.html"} Whare  Rooms
+          %li
+            = link_to home_home_viewers_path(home) do
+              Whānau
+      %h6 Account
+      %ul.nav-links
+        %li
+          = link_to 'Change password', edit_user_registration_path
+        -# %li
+        -#   %a{href: "./help.html"} Help
+        %li
+        = link_to 'Logout', destroy_user_session_path, method: :delete
+      - if current_user.janitor?
+        %h6 Admin
+        %ul.nav-links
+          %li= link_to 'Whare', homes_path
+          %li= link_to 'Whare Types', admin_home_types_path
+          %li=link_to 'Room Types', admin_room_types_path
+          %li=link_to 'Users', admin_users_path
+          %li=link_to 'MQTT', admin_mqtt_users_path
+          %li=link_to 'Messages', messages_path
+
     - else
-      %li.pure-menu-item
-        = link_to 'Sign up', new_user_registration_path, class: 'pure-menu-link'
-      %li.pure-menu-item
-        = link_to 'Sign in', new_user_session_path, class: 'pure-menu-link'
+      %ul.nav-links
+        %li
+          = link_to 'Sign up', new_user_registration_path
+        %li
+          = link_to 'Sign in', new_user_session_path
 
-
-    - if user_signed_in?
-      %li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover
-        %a.pure-menu-link
-          = current_user.email
-        %ul.pure-menu-children
-          %li.pure-menu-item
-            = link_to 'Change password', edit_user_registration_path,
-              class: 'pure-menu-link'
-          %li.pure-menu-item
-            = link_to 'Sign out', destroy_user_session_path,
-              class: 'pure-menu-link', method: :delete
+  %footer
+    %select.lang-picker
+      %option{"data-iconurl" => image_url('icon/lang-eng.svg'), value: "English"} English
+      %option{"data-iconurl" => image_url('icon/lang-mri.svg'), value: "Te Reo Māori"} Te Reo Māori
+      %option{"data-iconurl" => image_url('icon/lang-smo.svg'), value: "Samoan"} Samoan

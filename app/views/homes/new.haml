@@ -1,13 +1,7 @@
-%h2 New whare to monitor
-.pure-g
-  = form_for @home, url: { action: 'create' }, class: 'pure-form' do |f|
+= form_for @home, url: { action: 'create' }, class: 'pure-form' do |f|
+  %section.card
+    %headers
+      %h2 New whare to monitor
     = render 'form', f: f, home_types: @home_types
-
-    - if current_user.janitor?
-      .pure-u-1-3
-        %fieldset
-          %h4 Owner's email
-          = text_field(:owner, :email)
-
-    .pure-u-1
-      %button.pure-button.pure-button-primary{ type: 'submit' } Create
+    %footer
+      %button.btn.btn-primary{ type: 'submit' } Create

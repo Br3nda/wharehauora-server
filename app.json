@@ -1,7 +1,7 @@
 {
   "name": "wharehauora-server",
   "scripts": {
-    "postdeploy": "bundle exec rake db:migrate db:seed uat:testdata"
+    "postdeploy": "bundle exec rails db:migrate db:seed uat:testdata"
   },
   "env": {
     "CLOUDMQTT_URL": {

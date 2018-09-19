@@ -40,8 +40,8 @@ RSpec.describe 'Rooms', type: :feature do
 
       describe ' visit #index' do
         shared_examples 'show home and room' do
-          it { is_expected.to have_text(home.name, maximum: 1) }
-          it { is_expected.to have_text(room.name, maximum: 1) }
+          it { is_expected.to have_text(home.name, maximum: 2) }
+          it { is_expected.to have_text(room.name, maximum: 2) }
           it { is_expected.to have_text(room.room_type.name) }
         end
 

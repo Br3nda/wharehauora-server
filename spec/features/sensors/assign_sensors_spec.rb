@@ -13,7 +13,7 @@ RSpec.describe 'assign sensors', type: :feature do
 
   shared_examples 'new sensors detected and assignable' do
     describe 'sensor is displayed' do
-      it { is_expected.to have_text 'new sensors detected' }
+      it { is_expected.to have_text 'New sensors found' }
       it { is_expected.to have_link 'Assign to room' }
       it { is_expected.to have_text sensor.node_id }
     end

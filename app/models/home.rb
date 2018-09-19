@@ -37,6 +37,10 @@ class Home < ApplicationRecord
     end
   end
 
+  def gateway
+    Gateway.find_by(mac_address: gateway_mac_address)
+  end
+
   private
 
   def fix_gateway_address

@@ -1,10 +1,16 @@
-%h2 Whare
+- content_for(:title) do
+  Your Whare
+%h1 Whare
 
-- if policy(:home).new?
+- if policy(:home).new? && current_user.janitor?
   %p
-    = link_to new_home_path, class: 'pure-button' do
-      Add
-      = fa_icon 'plus'
+    = link_to new_home_path, class: 'btn' do
+      Add new whare
 
-- unless @homes.empty?
-  = render 'table', homes: @homes
+- if @homes.empty?
+  %p
+    Welcome to Whare Hauora.
+    %li Let's #{link_to 'add your whare', new_home_path, class: 'underline'}
+- else
+  %section.card
+    = render 'table', homes: @homes

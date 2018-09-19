@@ -1,26 +1,34 @@
-%h2 Sign up
-
 = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-  = devise_error_messages!
+  %section.card.pre-log
+    .img{style: "background-image: url(#{image_url('placeholder-illy2.jpg')})"}
+    .text
+      %h2.secondary Create an account
+      = devise_error_messages!
+      %ul.form-row
+        %li
+          = f.label :email
+          = f.email_field :email, autofocus: true
 
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
+        %li
+          = f.label :password
+          - if @minimum_password_length
+            %em (#{@minimum_password_length} characters minimum)
+          = f.password_field :password, autocomplete: 'off'
 
-  .field
-    = f.label :password
-    - if @minimum_password_length
-      %em (#{@minimum_password_length} characters minimum)
-    %br/
-    = f.password_field :password, autocomplete: 'off'
+        %li
+          = f.label :password_confirmation
+          = f.password_field :password_confirmation, autocomplete: 'off'
 
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: 'off'
+        %li
+          %ul.form-controls
+            %li
+              %label
+                %input{name: "terms", type: "checkbox", value: "accept"}>/
+                I accept Whare Hauora’s
+                %a.underline{href: "#"} terms and conditions
+        %li
+          -# %a.btn.submit{href: "#"} Sign Up
+          %li= f.submit 'Sign up'
 
-  .actions
-    = f.submit 'Sign up'
-
-= render 'devise/shared/links'
+    %footer
+      = render 'devise/shared/links'

@@ -1,4 +1,6 @@
-%h2 Users
+%section.card
+  %header
+    %h2 Users
 
-- unless @users.empty?
-  = render 'table', users: @users
+  - unless @users.empty?
+    = render 'table', users: @users

@@ -1,27 +1,44 @@
-.conditions-table{ id: "room-#{room.id}-table" }
-  .conditions-table-header
+%section.card.summary
+  %header
     %h2= room.name
-    %span.conditions-table-current
-      - %w[temperature humidity].each do |key|
-        %div{ id: "room-#{room.id}-#{key}-value" }
-          = render 'layouts/spinner'
-        %span
-          = key
-          %time.timeago{ datetime: '', id: "room-#{room.id}-#{key}-timestamp" }
-  %ul.conditions-table-list{ class: "room-#{room.id}-list" }
-    %li
-      = room.room_type.name if room.room_type.present?
-      - if policy(room).edit?
-        = link_to edit_room_path(room) do
-          = fa_icon 'edit'
-      %li{ id: "room-#{room.id}-too-cold" } Too cold #{fa_icon 'frown-o'}
-      %li{ id: "room-#{room.id}-too-hot" } Too hot #{fa_icon 'frown-o'}
-      %li{ id: "room-#{room.id}-no-sensors" } No sensors #{fa_icon 'warning'}
-      %li{ id: "room-#{room.id}-no-temperature" } No current temperature #{fa_icon 'warning'}
-      %li{ id: "room-#{room.id}-no-humidity" } No current humidity #{fa_icon 'warning'}
-  - if room.enough_info_to_perform_rating? || room.sensors.size.positive?
-    = link_to room_path(room), class: 'button-analyze pure-button' do
+    %h4
+      - if room.room_type.present?
+        = room.room_type.name
+      - else
+        Edit room type to get analysis
+    = link_to edit_room_path(room), class: 'head-action' do
+      %img.svg{alt: "edit", src: image_url("icon/edit.svg")}/
+  .readings
+    .reading.temp{class: temperature_reading_class(room)}
+      %span.vis
+        %span.loader
+      %span.value= display_temperature(room)
+      %span.label Temperature
+      %span.time= reading_age_in_words(room, 'temperature')
+    .reading{class: humidity_reading_class(room)}
+      %span.vis
+        %span.loader
+      %span.value= display_humidity(room)
+      %span.label Humidity
+      %span.time= reading_age_in_words(room, 'temperature')
+  %footer{class: room_class(room)}
+    %p
+      - if room.enough_info_to_perform_rating?
+        - if room.comfortable?
+          Comfortable temperature.
+        - if room.too_hot?
+          Too hot.
+        - if room.too_cold?
+          Too cold for a #{room.room_type.name.downcase}
+        - if room.good?
+          Room is good.
+      - else
+        - if room.room_type.present?
+          Edit room type to get analysis
+        - else
+          Offline
+    -#   = succeed "." do
+    -#     %a.underline{href: "#"} Learn how to fix this
+    = link_to room_path(room), class: 'btn' do
+      %img.svg{alt: "icon", src: image_path('icon/btn-analyse.svg')}>/
       Analyse
-
-:javascript
-  setupRoomDataReloader(#{room.id});

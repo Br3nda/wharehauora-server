@@ -1,34 +1,31 @@
 
-%h2 Whare types
+%h1 Whare types
 
 - if policy(:home_type).new?
   %p
-    = link_to new_admin_home_type_path, class: 'pure-button' do
+    = link_to new_admin_home_type_path, class: 'btn' do
       Add
       = fa_icon 'plus'
-.pure-g
-  .pure-u-1-4
-    %h3 New Whare Type
-    .pure-form
-      = form_for :home_type, url: { action: 'create' } do |f|
-        = render 'form', f: f, home_type: @home_type
-        %fieldset
-          %button.pure-button.pure-button-primary Create
-  .pure-u-3-4
-    %table.pure-table
-      %thead
-        %tr
-          %th Name
-          %th action
+
+%section.card
+  %header
+    %h2 Whare Types
+  %table
+    %thead
+      %tr
+        %th Name
+    %tbody
       - @home_types.each do |ht|
         %tr
-          %td
-            = ht.name
-            = link_to edit_admin_home_type_path(ht) do
-              = fa_icon 'edit'
-          %td
-            = link_to admin_home_type_path(ht),
-              method: :delete, data: { confirm: 'delete this home type?' },
-              class: 'pure-button xsmall' do
-              delete
-              = fa_icon 'trash'
+          %td= ht.name
+          - if policy(ht).edit?
+            %td
+              = link_to edit_admin_home_type_path(ht) do
+                edit
+                = fa_icon 'edit'
+          - if policy(ht).destroy?
+            %td
+              = link_to admin_home_type_path(ht),
+                method: :delete, data: { confirm: 'delete this home type?' } do
+                delete
+                = fa_icon 'trash'

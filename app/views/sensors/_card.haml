@@ -1,37 +1,28 @@
-.conditions-table
-  - if sensor.room.blank?
+%section.card
+  %header
     %h2
-      - if sensor.mac_address.present?
-        = sensor.mac_address
-      - else
-        = sensor.node_id
-    first detected
-    = time_ago_in_words sensor.created_at
-    ago
-    = link_to edit_sensor_path(sensor), class: 'button-analyze pure-button' do
-      Assign to room
-  - else
-    .conditions-table-header
-      %h2 Sensor NodeID
-      %span.conditions-table-current
+      Sensor
+      %span.sensor
         - if sensor.mac_address.present?
           = sensor.mac_address
         - else
           = sensor.node_id
 
-    %ul.conditions-table-list
-      %li
-        - if sensor.messages.size.positive?
-          last message
-          = time_ago_in_words sensor.last_message
-          ago
-        - else
-          No messages recieved
-
-    - if policy(sensor).unassign?
-      %p
+  %dl.col4.restrict-width
+    %dt First Detected
+    %dd= sensor.created_at.localtime
+    %dt Last reading
+    %dd
+      - if sensor.messages.size.positive?
+        #{time_ago_in_words sensor.last_message} ago
+    -# %dt Battery
+    -# %dd 76%
+    - if sensor.home.gateway.present?
+      %dt Software
+      %dd=sensor.home.gateway.version
+    - if policy(sensor).unassign? && sensor.room.present?
+      .right-action
         = link_to sensor_unassign_path(sensor),
-          class: 'pure-button button-warning xsmall', method: :delete,
+          class: 'btn small', method: :delete,
           data: { confirm: 'remove sensor from this room?' } do
-          remove from room
-          = fa_icon 'trash'
+          Disconnect from room

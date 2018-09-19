@@ -11,6 +11,7 @@ class Room < ApplicationRecord
   has_one :owner, through: :home
 
   validates :home, presence: true
+  validates :name, presence: true
 
   scope(:with_no_readings, -> { includes(:readings).where(readings: { id: nil }) })
   scope(:with_no_sensors, -> { includes(:sensors).where(sensors: { id: nil }) })
@@ -25,7 +26,8 @@ class Room < ApplicationRecord
     number = 100
     return '?' unless enough_info_to_perform_rating?
 
-    number -= 15 if too_cold?
+    number -= 20 if too_cold?
+    number -= 40 if way_too_cold?
     number -= 40 if below_dewpoint?
     rating_letter(number)
   end
@@ -56,6 +58,10 @@ class Room < ApplicationRecord
     (temperature - 2) < dewpoint
   end
 
+  def dry?
+    !below_dewpoint? && !near_dewpoint?
+  end
+
   def mould
     single_current_metric 'mould'
   end
@@ -73,8 +79,16 @@ class Room < ApplicationRecord
     (temperature < room_type.min_temperature) if enough_info_to_perform_rating?
   end
 
+  def way_too_cold?
+    (temperature < (room_type.min_temperature - 5)) if enough_info_to_perform_rating?
+  end
+
   def too_hot?
     (temperature > room_type.max_temperature) if enough_info_to_perform_rating?
+  end
+
+  def comfortable?
+    !too_hot? && !too_cold?
   end
 
   def sensor?

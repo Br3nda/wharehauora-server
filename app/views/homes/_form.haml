@@ -1,6 +1,6 @@
 
 - if @home.errors.any?
-  #error_explanation.pure-u-1
+  #error_explanation
     %h2
       = pluralize(@home.errors.count, 'error')
       prevented this data from being saved:
@@ -10,18 +10,23 @@
           = fa_icon 'warning'
           = message
 
-.pure-u-1-1
-  %fieldset
-    %h4= f.label :name
+%ul.form-row
+  %li 
+    %label Give your whare a great name
     = f.text_field :name, type: 'text', placeholder: 'Name of home'
 
-  %fieldset
-    %h4= f.label :home_type
+  %li
+    %label Which of these best describes your home?
+    = f.label :home_type
     - HomeType.all.each do |ht|
       %p
         = f.radio_button :home_type_id, ht.id
         = f.label :home_type_id, ht.name
-.pure-u-1-1
-  %fieldset
-    %h4= f.label :gateway_mac_address
+  %li
+    %label Do you have a Whare Gateway device? Enter the number written on it.
     = f.text_field :gateway_mac_address
+
+  - if current_user.janitor? && @home.owner.blank?
+    %li
+      %label Owner's email
+      = text_field(:owner, :email)

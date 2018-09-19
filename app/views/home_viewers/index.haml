@@ -1,23 +1,23 @@
-= render 'homes/nav', home: @home
-
-%h2= @home.name
-
-%h3 Whānau
-
-.pure-menu.pure-menu-horizontal
-  %ul.pure-menu-list
-    %li.pure-menu-item
-      = link_to 'add someone to whare', new_home_home_viewer_path(@home), class: 'pure-button'
-
-- if @home.users.present?
-  %h3 Users
-  %table.pure-table
-    %thead
-      %tr
-        %th.sortable Email
-        %th Actions
-    %tbody
-      = render partial: 'home_viewer', collection: @home.home_viewers
-
-- else
-  %p No whānau
+%h1.sm.narrow-down-only Whānau
+%section.card
+  %header.condensed
+    %h2= @home.name
+    %h4 Whānau
+  - if @home.users.present?
+    %table
+      %tbody
+        - @home.home_viewers.each do |home_viewer|
+          %tr{ 'data-home-viewer-id' => home_viewer.id }
+            %td.unbreak= home_viewer.user.email
+            %td.actions
+              = link_to home_home_viewer_path(home_viewer.home, home_viewer.user),
+        method: :delete, data: { confirm: 'Really remove this whānau member?' } do
+                %img.svg{alt: "remove", src: image_url("icon/del.svg")}/
+        %tr.spacer
+          %td{colspan: "100"}
+       
+  -# %a.btn-add.append-table.open-modal{"data-mfp-src" => "#add-whanau", href: "#"}
+  = link_to new_home_home_viewer_path(@home), class: 'btn-add append-table' do
+    %img.svg{alt: "icon", src: image_url("icon/btn-add.svg")}>/
+    Add whānau
+= link_to 'add someone to whare', new_home_home_viewer_path(@home), class: 'btn'

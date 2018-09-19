@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     skip_controllers :applications, :authorized_applications
   end
 
-  root 'welcome#index'
+  root 'homes#index'
 
   resources :homes do
     resources :rooms
