@@ -27,7 +27,7 @@
           = link_to home_path(home) do
             = fa_icon 'home'
             = home.name
-        %td= home.owner.email
+        %td= home&.owner&.email
         %td= home&.mqtt_user&.username
         %td= home&.mqtt_user&.password
         %td= home&.mqtt_user&.provisioned_at
