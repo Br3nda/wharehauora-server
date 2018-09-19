@@ -25,11 +25,13 @@ module RoomsHelper
 
   def reading_age_in_words(room, key)
     return unless room.readings.where(key: key).size.positive?
+
     "#{time_ago_in_words room.last_reading_timestamp(key)} ago"
   end
 
   def temperature_reading_class(room)
     return 'expired' unless room.enough_info_to_perform_rating?
+
     if room.too_cold?
       'temp-low-2a'
     elsif room.too_hot?
@@ -41,6 +43,7 @@ module RoomsHelper
 
   def humidity_reading_class(room)
     return 'expired' unless room.enough_info_to_perform_rating?
+
     if room.below_dewpoint?
       'hum-high-2a'
     elsif room.near_dewpoint?
@@ -52,6 +55,7 @@ module RoomsHelper
 
   def dewpoint_reading_class(room)
     return 'expired' unless room.enough_info_to_perform_rating?
+
     if room.below_dewpoint?
       'dew-high-2'
     elsif room.near_dewpoint?
