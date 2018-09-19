@@ -36,6 +36,10 @@
       %span.value=rating_text(@room)
       %span.label Rating
     %ul.check
+      - if @room.way_too_cold?
+        %li.bullet Very cold room
+      - elsif @room.too_cold?
+        %li Temperature below recommended levels
       - if @room.comfortable?
         %li Comfortable
       - if @room.dry?

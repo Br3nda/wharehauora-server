@@ -26,7 +26,8 @@ class Room < ApplicationRecord
     number = 100
     return '?' unless enough_info_to_perform_rating?
 
-    number -= 15 if too_cold?
+    number -= 20 if too_cold?
+    number -= 40 if way_too_cold?
     number -= 40 if below_dewpoint?
     rating_letter(number)
   end
@@ -76,6 +77,10 @@ class Room < ApplicationRecord
 
   def too_cold?
     (temperature < room_type.min_temperature) if enough_info_to_perform_rating?
+  end
+
+  def way_too_cold?
+    (temperature < (room_type.min_temperature - 5)) if enough_info_to_perform_rating?
   end
 
   def too_hot?
