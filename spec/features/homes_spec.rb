@@ -29,11 +29,17 @@ RSpec.describe 'Homes', type: :feature do
     subject do
       visit new_home_path
       fill_in :home_name, with: 'cool new home'
-      fill_in "home[gateway_mac_address]", with: 'ABCD99'
-      fill_in "owner[email]", with: 'bob@bob.com'
+      fill_in 'home[gateway_mac_address]', with: 'ABCD99'
+      fill_in 'owner[email]', with: 'bob@bob.com'
       click_button('Create')
     end
-    it { expect{subject}.to change(Home, :count).by(1) }
-    it { expect{subject}.to change(User, :count).by(1) }
+    it { expect { subject }.to change(Home, :count).by(1) }
+    it { expect { subject }.to change(User, :count).by(1) }
+    describe 'new data matches' do
+      before { subject }
+      it { expect(Home.last.name).to eq 'cool new home' }
+      it { expect(Home.last.owner.email).to eq 'bob@bob.com' }
+      it { expect(User.last.email).to eq 'bob@bob.com' }
+    end
   end
 end
