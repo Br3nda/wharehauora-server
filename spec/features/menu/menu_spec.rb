@@ -12,7 +12,6 @@ RSpec.describe 'Homes', type: :feature do
   let!(:home)      { FactoryBot.create :home, owner_id: user.id, home_type: home_type      }
   let!(:room)      { FactoryBot.create :room, home: home                                   }
 
-
   context 'Not logged in' do
     before { visit '/' }
 

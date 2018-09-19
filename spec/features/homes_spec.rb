@@ -35,7 +35,6 @@ RSpec.describe 'Homes', type: :feature do
 
     before { login_as(admin_user) }
 
-
     it { expect { subject }.to change(Home, :count).by(1) }
     it { expect { subject }.to change(User, :count).by(1) }
     describe 'new data matches' do
