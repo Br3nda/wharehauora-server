@@ -12,10 +12,4 @@ class Admin::MqttUsersController < Admin::AdminController
     @home.provision_mqtt!
     redirect_to admin_mqtt_users_path
   end
-
-  def sync
-    authorize :mqtt_user
-    Mqtt.sync_mqtt_users
-    redirect_to admin_mqtt_users_path
-  end
 end
