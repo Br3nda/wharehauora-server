@@ -21,7 +21,8 @@
     / mobile & iOS
     %meta{ content: 'yes', name: 'apple-mobile-web-app-capable' }/
     %meta{ content: 'width=device-width, initial-scale=1.0, user-scalable=no', name: 'viewport' }/
-    %link{ href: '/app-icon.png', rel: 'apple-touch-icon-precomposed' }/
+    %link{ href: image_url('app-icon.png'), rel: 'apple-touch-icon-precomposed' }/
+    = favicon_link_tag asset_path('favicon.ico'), rel: 'icon', type:  'image/png'
 
   %body
     %header.header
