@@ -25,8 +25,6 @@ RSpec.describe 'Homes', type: :feature do
   end
 
   context 'Admin users' do
-    before { login_as(admin_user) }
-
     subject do
       visit new_home_path
       fill_in :home_name, with: 'cool new home'
@@ -34,6 +32,8 @@ RSpec.describe 'Homes', type: :feature do
       fill_in 'owner[email]', with: 'bob@bob.com'
       click_button('Create')
     end
+    before { login_as(admin_user) }
+
 
     it { expect { subject }.to change(Home, :count).by(1) }
     it { expect { subject }.to change(User, :count).by(1) }

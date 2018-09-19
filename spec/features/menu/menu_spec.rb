@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Homes', type: :feature do
+  subject { page }
   let(:user)       { FactoryBot.create :user                                               }
   let(:janitor)    { FactoryBot.create :janitor                                            }
   let(:admin_user) { FactoryBot.create :user, roles: [janitor]                             }
@@ -10,7 +11,6 @@ RSpec.describe 'Homes', type: :feature do
   let!(:home)      { FactoryBot.create :home, owner_id: user.id, home_type: home_type      }
   let!(:room)      { FactoryBot.create :room, home: home                                   }
 
-  subject { page }
 
   context 'Not logged in' do
     before { visit '/' }
