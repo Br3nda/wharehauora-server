@@ -1,5 +1,3 @@
-%h1=@home.name
-
 - if @unassigned_sensors.size.positive?
   %section.card.alert
     %header
@@ -27,11 +25,13 @@
   .summary-grid
     - @rooms.order(:name).includes(:room_type).order(:name).each do |room|
       = render 'rooms/card', room: room
-
-  = paginate(@rooms)
+    = paginate(@rooms)
 - else
   %section.card
     %header
-      %h2 This whare has no monitored rooms.
+      %h2= @home.name
+      = link_to edit_home_path(@home), class: 'head-action' do
+        %img.svg{alt: "edit", src: image_url("icon/edit.svg")}/
+    %p This whare has no monitored rooms.
     %p Activate sensors in your home, and they will appear here.
 
