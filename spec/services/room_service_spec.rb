@@ -49,6 +49,7 @@ RSpec.describe RoomService, type: :model do
 
     describe 'too damp' do
       before { FactoryBot.create :reading, key: 'dewpoint', value: room.calculate_dewpoint, room: room }
+
       let(:room) { FactoryBot.create :room, temperature: 1.1, humidity: 109.1 }
 
       it { is_expected.to include(too_damp: true) }

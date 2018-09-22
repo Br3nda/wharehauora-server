@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe ReadingsController, type: :controller do
-  let(:user) { home.owner }
-  let(:home) { FactoryBot.create :home }
-  let(:room)         { FactoryBot.create :room, home: home }
-  let(:valid_params) { { room_id: room.id, key: 'temperature' } }
+  let(:user)         { home.owner                                       }
+  let(:home)         { FactoryBot.create :home                          }
+  let(:room)         { FactoryBot.create :room, home: home              }
+  let(:valid_params) { { room_id: room.id, key: 'temperature' }         }
 
   context 'Not signed in' do
     describe 'GET index' do
