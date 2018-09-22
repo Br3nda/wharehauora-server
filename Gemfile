@@ -113,6 +113,9 @@ group :development do
   gem 'spring'
 
   gem 'letter_opener'
+
+  # Counts data base queries on the page
+  gem 'sql_queries_count'
 end
 
 group :test do

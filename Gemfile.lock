@@ -325,6 +325,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sql_queries_count (0.0.1)
+      rails (> 3.0.0)
     sysexits (1.2.0)
     temple (0.8.0)
     term-ansicolor (1.6.0)
@@ -402,6 +404,7 @@ DEPENDENCIES
   scss_lint
   sendgrid-ruby
   spring
+  sql_queries_count
   timecop
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
