@@ -7,26 +7,7 @@
 
   .nav
     - if user_signed_in?
-      - current_user.homes.each do |home|
-        %h6= home.name
-        %ul.nav-links
-          %li
-            = link_to 'Dashboard', home_rooms_path(home), class: 'current'
-
-        %h6 Rooms
-        
-        %ul.nav-links
-          - home.rooms.order(:name).each do |room|
-            %li
-              = link_to room_path(room) do
-                = room.name
-        %h6 Setup
-        %ul.nav-links
-          -# %li
-          -#   %a{href: "./rooms.html"} Whare  Rooms
-          %li
-            = link_to home_home_viewers_path(home) do
-              Whānau
+      = render 'homes/menu'
       %h6 Account
       %ul.nav-links
         %li
