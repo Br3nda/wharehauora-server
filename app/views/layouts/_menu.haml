@@ -1,9 +1,9 @@
 %nav.menu
   %header
-    =link_to 'Whare Hauora', root_path, class: 'logo'
+    %a.logo{href: "./"} Whare Hauora
     %h6 Menu
     %a.x{href: "#"}
-      %img.svg{alt: "close", src: image_url('icon/x.svg')}/
+      %img.svg{alt: "close", src: image_url("icon/x.svg") }/
 
   .nav
     - if user_signed_in?
