@@ -7,6 +7,6 @@ module SensorsHelper
   end
 
   def sensor_first_detected(sensor)
-    sensor.created_at.localtime
+    sensor.created_at.localtime.strftime('%Y-%m-%d')
   end
 end
