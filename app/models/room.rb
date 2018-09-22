@@ -121,9 +121,7 @@ class Room < ApplicationRecord
   end
 
   def most_recent_reading(key)
-    Rails.cache.fetch("#{cache_key}/most_recent_reading", expires_in: 30.seconds) do
-      Reading.where(room_id: id, key: key)&.last
-    end
+    Reading.where(room_id: id, key: key)&.last
   end
 
   def last_reading_timestamp(key)
