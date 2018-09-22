@@ -30,7 +30,7 @@ class Room < ApplicationRecord
       number -= 20 if too_cold?
       number -= 40 if way_too_cold?
       number -= 40 if below_dewpoint?
-      rating_letter(number)
+      RoomService.rating_letter(number)
     end
   end
 
@@ -133,16 +133,6 @@ class Room < ApplicationRecord
 
   def single_current_metric(key)
     most_recent_reading(key)&.value
-  end
-
-  # TODO: move to service
-  def rating_letter(number)
-    return 'A' if number > 95
-    return 'B' if number > 75
-    return 'C' if number > 50
-    return 'D' if number > 25
-
-    'F'
   end
 
   def enough_info_to_perform_rating?
