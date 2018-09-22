@@ -24,11 +24,14 @@
     %link{ href: image_url('app-icon.png'), rel: 'apple-touch-icon-precomposed' }/
     = favicon_link_tag asset_path('favicon.ico'), rel: 'icon', type:  'image/png'
 
-  %body
+  %body.empty
     %header.header
       = link_to 'Whare Hauora', root_path, class: 'logo-sm'
+      %a.open-menu{href: "#"}
+        %span.label Menu
+        %img.svg{alt: "menu", src: image_path("icon/menu.svg") }/
 
-    .overlay= render('layouts/menu')
+    = render('layouts/menu')
 
     .content
       .center

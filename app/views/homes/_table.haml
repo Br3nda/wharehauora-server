@@ -26,8 +26,8 @@
         %td
           = home.owner&.email
         %td
-          - if home.rooms.count.positive?
-            = link_to("#{home.rooms.count} rooms", home_rooms_path(home))
+          - if home.rooms.size.positive?
+            = link_to("#{home.rooms.size} rooms", home_rooms_path(home))
         %td= home.users.size
         %td
           - if home.sensors.size.positive?
