@@ -32,4 +32,13 @@ class RoomService
       current: reading.current?
     }
   end
+
+  def self.rating_letter(number)
+    return 'A' if number > 95
+    return 'B' if number > 75
+    return 'C' if number > 50
+    return 'D' if number > 25
+
+    'F'
+  end
 end
