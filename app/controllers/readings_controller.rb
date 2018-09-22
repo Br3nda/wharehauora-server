@@ -3,7 +3,6 @@
 class ReadingsController < ApplicationController
   before_action :authenticate_user!
   respond_to :json
-  before_action :set_home
   before_action :set_room
 
   def index
@@ -13,13 +12,7 @@ class ReadingsController < ApplicationController
 
   private
 
-  def set_home
-    @home = policy_scope(Home).find(params[:home_id])
-    authorize @home, :show?
-  end
-
   def set_room
-    return if params[:room_id].nil?
     @room = policy_scope(Room).find(params[:room_id])
     authorize @room, :show?
   end
@@ -48,7 +41,7 @@ class ReadingsController < ApplicationController
     Rails.cache.fetch("#{@room.id}/#{key}/readings", expires_in: 5.minutes) do
       Reading
         .joins(:room)
-        .where("rooms.home_id": @room.home.id, key: key, room: @room)
+        .where(key: key, room: @room)
         .order('readings.created_at')
         .limit(1000)
         .pluck("date_trunc('minute', readings.created_at)",
