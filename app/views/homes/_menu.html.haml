@@ -1,4 +1,4 @@
-- if @home.present?
+- if @home.present? && @home.id.present?
   %h6= @home.name
   %ul.nav-links
     %li= link_to 'Dashboard', home_rooms_path(@home), class: 'current'
@@ -9,11 +9,8 @@
       %li= link_to room.name, room_path(room)
   %h6 Setup
   %ul.nav-links
-    -# %li
-    -#   %a{href: "./rooms.html"} Whare  Rooms
-    %li
-      = link_to home_home_viewers_path(@home) do
-        Whānau
+    %li= link_to 'Whānau', home_home_viewers_path(@home)
+  
 - else
   %h6 Whare
   %ul.nav-links
