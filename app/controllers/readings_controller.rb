@@ -19,7 +19,7 @@ class ReadingsController < ApplicationController
   end
 
   def set_room
-    return unless params[:room_id].present?
+    return if params[:room_id].nil?
     @room = policy_scope(Room).find(params[:room_id])
     authorize @room, :show?
   end
