@@ -19,6 +19,10 @@ FactoryBot.define do
     end
   end
 
+  factory :room_with_type, parent: :room do
+    room_type { FactoryBot.create(:room_type, min_temperature: 10, max_temperature: 30) }
+  end
+
   factory :public_room, parent: :room do
     home { FactoryBot.create(:public_home) }
   end

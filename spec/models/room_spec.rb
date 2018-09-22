@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Room, type: :model do
-  let(:room) { FactoryBot.create :room }
+  let(:room) { FactoryBot.create :room_with_type }
 
   describe 'finds current temperature' do
     before do
@@ -17,15 +17,14 @@ RSpec.describe Room, type: :model do
 
   describe 'finds current humidity' do
     before do
-      FactoryBot.create :reading, key: 'humidity', value: 100, room: room
-      FactoryBot.create :reading, key: 'humidity', value: 65, room: room
-      FactoryBot.create :reading, key: 'humidity', value: 71, room: room
+      FactoryBot.create :humidity_reading, value: 100, room: room
+      FactoryBot.create :humidity_reading, value: 65, room: room
+      FactoryBot.create :humidity_reading, value: 71, room: room
     end
 
     it { expect(room.humidity).to eq(71) }
   end
 
-  pending 'good?'
   describe 'no readings' do
     it { expect(room.good?).to eq(false) }
     it { expect(room.current?('temperature')).to eq(false) }
@@ -35,19 +34,24 @@ RSpec.describe Room, type: :model do
   end
 
   describe 'has old reading' do
-    before { FactoryBot.create :reading, key: 'humidity', value: 0, room: room, created_at: 3.hours.ago }
+    before { FactoryBot.create :humidity_reading, value: 0, room: room, created_at: 3.hours.ago }
 
     it { expect(room.current?('temperature')).to eq(false) }
     it { expect(room.current?('humidity')).to eq(false) }
-    pending 'good?'
+    it { expect(room.good?).to eq false }
+    it { expect(room.enough_info_to_perform_rating?).to eq false }
     pending 'age_of_last_reading'
   end
 
   describe 'has current readings' do
-    before { FactoryBot.create :reading, key: 'humidity', value: 0, room: room }
+    before do
+      FactoryBot.create :humidity_reading, value: 65, room: room
+      FactoryBot.create :temperature_reading, value: 21, room: room
+    end
 
     it { expect(room.current?('humidity')).to eq(true) }
-    pending 'good?'
+    it { expect(room.good?).to eq true }
+    it { expect(room.enough_info_to_perform_rating?).to eq true }
   end
 
   describe 'age_of_last_reading' do
@@ -76,7 +80,7 @@ RSpec.describe Room, type: :model do
 
       it { expect(room.good?).to eq(false) }
       it { expect(room.too_cold?).to eq(true) }
-      # it { expect(room.too_hot?).to eq(false) }
+      it { expect(room.too_hot?).to eq(false) }
     end
 
     describe 'temp is good' do
