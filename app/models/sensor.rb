@@ -18,7 +18,7 @@ class Sensor < ApplicationRecord
   scope(:with_no_messages, -> { includes(:messages).where(messages: { id: nil }) })
 
   def last_message
-    messages.order(created_at: :desc).first.created_at
+    messages.order(created_at: :desc).first&.created_at
   end
 
   def same_home_as_room
