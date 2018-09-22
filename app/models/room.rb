@@ -137,8 +137,7 @@ class Room < ApplicationRecord
     most_recent_reading(key)&.value
   end
 
-  # private
-
+  # TODO: move to service
   def rating_letter(number)
     return 'A' if number > 95
     return 'B' if number > 75
