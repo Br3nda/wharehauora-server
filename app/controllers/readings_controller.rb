@@ -42,14 +42,15 @@ class ReadingsController < ApplicationController
     data
   end
 
-
   def readings(key)
-    Reading
-      .joins(:room)
-      .where("rooms.home_id": @home.id, key: key, room: @room )
-      .order('readings.created_at')
-      .limit(1000)
-      .pluck("date_trunc('minute', readings.created_at)",
-             'rooms.id as room_id', 'rooms.name', :value)
+    Rails.cache.fetch("#{@room.id}/#{key}/readings", expires_in: 5.minutes) do
+      Reading
+        .joins(:room)
+        .where("rooms.home_id": @room.home.id, key: key, room: @room)
+        .order('readings.created_at')
+        .limit(1000)
+        .pluck("date_trunc('minute', readings.created_at)",
+               'rooms.id as room_id', 'rooms.name', :value)
+    end
   end
 end
