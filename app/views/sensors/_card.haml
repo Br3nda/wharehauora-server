@@ -10,19 +10,19 @@
 
   %dl.col4.restrict-width
     %dt First Detected
-    %dd= sensor.created_at.localtime
+    %dd=sensor_first_detected(sensor)
     %dt Last reading
+    %dd= sensor_last_message(sensor)
+    %dt Battery Level
+    %dd Not supported
+    %dt Software
     %dd
-      - if sensor.messages.size.positive?
-        #{time_ago_in_words sensor.last_message} ago
-    -# %dt Battery
-    -# %dd 76%
-    - if sensor.home.gateway.present?
-      %dt Software
-      %dd=sensor.home.gateway.version
-    - if policy(sensor).unassign? && sensor.room.present?
-      .right-action
-        = link_to sensor_unassign_path(sensor),
-          class: 'btn small', method: :delete,
-          data: { confirm: 'remove sensor from this room?' } do
-          Disconnect from room
+      - if sensor.home.gateway.present?
+        =sensor.home.gateway.version
+      - else
+        unknown
+  .right-action
+    = link_to sensor_unassign_path(sensor),
+      class: 'btn small', method: :delete,
+      data: { confirm: 'remove sensor from this room?' } do
+      Disconnect from room
