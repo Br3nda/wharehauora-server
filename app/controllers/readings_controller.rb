@@ -3,10 +3,10 @@
 class ReadingsController < ApplicationController
   before_action :authenticate_user!
   respond_to :json
+  before_action :set_home
+  before_action :set_room
 
   def index
-    set_home
-    set_room
     assemble_readings(params[:key])
     render json: @data
   end
@@ -15,11 +15,13 @@ class ReadingsController < ApplicationController
 
   def set_home
     @home = policy_scope(Home).find(params[:home_id])
-    authorize @home
+    authorize @home, :show?
   end
 
   def set_room
-    @room = policy_scope(Room).find(params[:room_id]) if params[:room_id]
+    return unless params[:room_id].present?
+    @room = policy_scope(Room).find(params[:room_id])
+    authorize @room, :show?
   end
 
   def assemble_readings(key)
