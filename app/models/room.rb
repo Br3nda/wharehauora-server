@@ -23,13 +23,15 @@ class Room < ApplicationRecord
   end
 
   def rating
-    number = 100
-    return '?' unless enough_info_to_perform_rating?
+    Rails.cache.fetch("#{cache_key}/rating", expires_in: 10.minutes) do
+      number = 100
+      return '?' unless enough_info_to_perform_rating?
 
-    number -= 20 if too_cold?
-    number -= 40 if way_too_cold?
-    number -= 40 if below_dewpoint?
-    rating_letter(number)
+      number -= 20 if too_cold?
+      number -= 40 if way_too_cold?
+      number -= 40 if below_dewpoint?
+      rating_letter(number)
+    end
   end
 
   def temperature
@@ -44,30 +46,32 @@ class Room < ApplicationRecord
     single_current_metric 'dewpoint'
   end
 
-  def below_dewpoint?
-    return false if temperature.nil? || dewpoint.nil?
+  def mould
+    single_current_metric 'mould'
+  end
 
+  def below_dewpoint?
     Rails.cache.fetch("#{cache_key}/below_dewpoint?", expires_in: 1.minute) do
+      return false if temperature.nil? || dewpoint.nil?
       temperature < dewpoint
     end
   end
 
   def near_dewpoint?
-    return false if temperature.nil? || dewpoint.nil?
-
-    (temperature - 2) < dewpoint
+    Rails.cache.fetch("#{cache_key}/near_dewpoint?", expires_in: 1.minute) do
+      return false if temperature.nil? || dewpoint.nil?
+      (temperature - 2) < dewpoint
+    end
   end
 
   def dry?
-    !below_dewpoint? && !near_dewpoint?
-  end
-
-  def mould
-    single_current_metric 'mould'
+    Rails.cache.fetch("#{cache_key}/dry?", expires_in: 1.minute) do
+      !below_dewpoint? && !near_dewpoint?
+    end
   end
 
   def good?
-    Rails.cache.fetch("#{cache_key}/good?", expires_in: 5.minutes) do
+    Rails.cache.fetch("#{cache_key}/good?", expires_in: 1.minute) do
       return false unless enough_info_to_perform_rating?
       return false if below_dewpoint? || too_cold? || too_hot?
 
@@ -76,19 +80,27 @@ class Room < ApplicationRecord
   end
 
   def too_cold?
-    (temperature < room_type.min_temperature) if enough_info_to_perform_rating?
+    Rails.cache.fetch("#{cache_key}/too_cold?", expires_in: 1.minute) do
+      (temperature < room_type.min_temperature) if enough_info_to_perform_rating?
+    end
   end
 
   def way_too_cold?
-    (temperature < (room_type.min_temperature - 5)) if enough_info_to_perform_rating?
+    Rails.cache.fetch("#{cache_key}/way_too_cold?", expires_in: 1.minute) do
+      (temperature < (room_type.min_temperature - 5)) if enough_info_to_perform_rating?
+    end
   end
 
   def too_hot?
-    (temperature > room_type.max_temperature) if enough_info_to_perform_rating?
+    Rails.cache.fetch("#{cache_key}/too_hot?", expires_in: 1.minute) do
+      (temperature > room_type.max_temperature) if enough_info_to_perform_rating?
+    end
   end
 
   def comfortable?
-    !too_hot? && !too_cold?
+    Rails.cache.fetch("#{cache_key}/comfortable?", expires_in: 1.minute) do
+      !too_hot? && !too_cold?
+    end
   end
 
   def sensor?
@@ -101,9 +113,17 @@ class Room < ApplicationRecord
   end
 
   def age_of_last_reading(key)
-    return unless readings.where(key: key).size.positive?
+    Rails.cache.fetch("#{cache_key}/age_of_last_readings", expires_in: 1.minute) do
+      return unless readings.where(key: key).size.positive?
 
-    Time.current - last_reading_timestamp(key)
+      Time.current - last_reading_timestamp(key)
+    end
+  end
+
+  def most_recent_reading(key)
+    Rails.cache.fetch("#{cache_key}/most_recent_reading", expires_in: 30.seconds) do
+      Reading.where(room_id: id, key: key)&.last
+    end
   end
 
   def last_reading_timestamp(key)
@@ -115,12 +135,6 @@ class Room < ApplicationRecord
 
   def single_current_metric(key)
     most_recent_reading(key)&.value
-  end
-
-  def most_recent_reading(key)
-    Rails.cache.fetch("#{cache_key}/reading/#{key}", expires_in: 10.seconds) do
-      Reading.where(room_id: id, key: key)&.last
-    end
   end
 
   # private

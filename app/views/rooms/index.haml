@@ -24,7 +24,7 @@
 - if @rooms.size.positive?
   .summary-grid
     - @rooms.order(:name).includes(:room_type).order(:name).each do |room|
-      = render 'rooms/card', room: room
+      = render "rooms/card", room: room, cached: true
     = paginate(@rooms)
 - else
   %section.card
