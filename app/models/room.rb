@@ -53,6 +53,7 @@ class Room < ApplicationRecord
   def below_dewpoint?
     Rails.cache.fetch("#{cache_key}/below_dewpoint?", expires_in: 1.minute) do
       return false if temperature.nil? || dewpoint.nil?
+
       temperature < dewpoint
     end
   end
@@ -60,6 +61,7 @@ class Room < ApplicationRecord
   def near_dewpoint?
     Rails.cache.fetch("#{cache_key}/near_dewpoint?", expires_in: 1.minute) do
       return false if temperature.nil? || dewpoint.nil?
+
       (temperature - 2) < dewpoint
     end
   end

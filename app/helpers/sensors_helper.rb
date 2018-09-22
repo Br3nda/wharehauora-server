@@ -3,6 +3,7 @@
 module SensorsHelper
   def sensor_last_message(sensor)
     return '' unless sensor.messages.size.positive?
+
     "#{time_ago_in_words sensor.last_message} ago"
   end
 
