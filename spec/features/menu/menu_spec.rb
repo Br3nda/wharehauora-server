@@ -30,12 +30,14 @@ RSpec.describe 'Homes', type: :feature do
 
     describe 'root path' do
       before { visit '/' }
+
       it { is_expected.to have_link(home.name) }
       include_examples 'password and logout links'
     end
 
     describe 'selected a home' do
       before { visit home_path(home) }
+
       it { is_expected.to have_text(home.name) }
       it { is_expected.to have_link(room.name, href: room_path(room)) }
       it { is_expected.to have_link('Whānau') }
