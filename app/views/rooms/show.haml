@@ -70,13 +70,12 @@
     = render 'sensors/card', sensor: sensor
 
 
-%section.card
-  %header
-    %h2 Readings
-  %table
-    - @readings.each do |reading|
-      %tr
-        %td= display_reading reading
-        %td= reading.key
-        %td= timeago_tag reading.created_at, nojs: true, limit: 100.days.ago
-
+-# %section.card
+-#   %header
+-#     %h2 Readings
+-#   %table
+-#     - @readings.each do |reading|
+-#       %tr
+-#         %td= display_reading reading
+-#         %td= reading.key
+-#         %td= timeago_tag reading.created_at, nojs: true, limit: 100.days.ago
