@@ -7,7 +7,7 @@ class ReadingsController < ApplicationController
   def index
     set_home
     set_room
-    assemble_readings(@home, @room, params[:key])
+    assemble_readings(params[:key])
     render json: @data
   end
 
@@ -22,8 +22,8 @@ class ReadingsController < ApplicationController
     @room = policy_scope(Room).find(params[:room_id]) if params[:room_id]
   end
 
-  def assemble_readings(home, room, key)
-    @readings = readings(home, room, key)
+  def assemble_readings(key)
+    @readings = readings(key)
     data_by_room = {}
     @readings.each do |reading|
       created_at, room_id, room_name, reading_value = reading
@@ -42,22 +42,14 @@ class ReadingsController < ApplicationController
     data
   end
 
-  def date_filter(query)
-    return query.where('readings.created_at >= ?', params[:start]) if params[:start]
-    return query.where('readings.created_at::date = ?', params[:day]) if params[:day]
 
-    query
-  end
-
-  def readings(home, room, key)
-    conditions = { "rooms.home_id": home.id, key: key }
-    conditions[:room_id] = room.id if room.present?
-    date_filter(Reading)
+  def readings(key)
+    Reading
       .joins(:room)
-      .where(conditions)
-      .normal_range
+      .where("rooms.home_id": @home.id, key: key, room: @room )
       .order('readings.created_at')
-      .pluck("date_trunc('second', readings.created_at)",
+      .limit(1000)
+      .pluck("date_trunc('minute', readings.created_at)",
              'rooms.id as room_id', 'rooms.name', :value)
   end
 end
