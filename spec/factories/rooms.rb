@@ -39,7 +39,7 @@ FactoryBot.define do
 
   factory :room_with_sensors, parent: :room do |_room|
     after(:create) do |room|
-      sensors = create_list(:sensor, 1, home: room.home, room: room)
+      create_list(:sensor, 1, home: room.home, room: room)
     end
   end
 end
