@@ -1,6 +1,5 @@
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  %header.header
-    =link_to 'Whare Hauora', root_path, class: 'logo'
+  %header.header=link_to 'Whare Hauora', root_path, class: 'logo'
   %section.card.pre-log
     .img{style: "background-image: url(\"#{image_path('placeholder-illy2.jpg')}\")"}
     .text
