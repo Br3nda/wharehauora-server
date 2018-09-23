@@ -1,20 +1,17 @@
+%h1 Edit Room  
 = form_for(@room, url: home_room_path(@home, @room,
                   html: { class: 'pure-form pure-form-aligned' })) do |f|
-  %h1 Room
   %section.card
-    .pure-u-1
-
-    .pure-u-1
+    %header
       %h3= @home.name
-    .pure-u-1.pure-u-md-1-2.pure-u-lg-1-2
-      %h4= f.label :name
-      = f.text_field :name, type: 'name', placeholder: 'room name'
-    .pure-u-1.pure-u-md-1-2.pure-u-lg-1-2
-      %h4
+    %ul.form-row
+      %li
+        = f.label :name
+        = f.text_field :name, type: 'name', placeholder: 'room name'
+      %li
         = f.label :room_type
-      - RoomType.all.each do |rt|
-        %p
+        - RoomType.all.each do |rt|
           = f.radio_button :room_type_id, rt.id
           = f.label :room_type_id, rt.name
-    .pure-u-1
-      %button.btn.btn-primary Save
+  %footer
+    %button.btn Save

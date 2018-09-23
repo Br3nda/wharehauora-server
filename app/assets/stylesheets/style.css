@@ -1272,7 +1272,7 @@ a.underline:after {
 /* /////////////////////////////////
   Buttons
 ///////////////////////////////// */
-a.btn {
+a.btn, button.btn {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   display: inline-block;
