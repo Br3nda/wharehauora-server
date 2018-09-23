@@ -1,3 +1,14 @@
+- if @room_type.errors.any?
+  #error_explanation
+    %h2
+      = pluralize(@room_type.errors.count, 'error')
+      prevented this data from being saved:
+    %ul
+      - @room_type.errors.full_messages.each do |message|
+        %li
+          = fa_icon 'warning'
+          = message
+
 %ul.form-row
   %li
     = f.label :name
@@ -5,10 +16,10 @@
 
   %li
     = f.label :min_temperature
-    = f.text_field :min_temperature, type: 'text', placeholder: 'min temperature for ratings'
-    %legend Room is considered bad if below this
+    = f.text_field :min_temperature, type: 'text', placeholder: 'min temperature'
+    %legend Room is considered too cold if below this
   %li
     = f.label :max_temperature
-    = f.text_field :max_temperature, type: 'text'
-  %li
-    = f.submit 'save'
+    = f.text_field :max_temperature, type: 'text', placeholder: 'max temperature'
+%footer
+  %button.btn Save

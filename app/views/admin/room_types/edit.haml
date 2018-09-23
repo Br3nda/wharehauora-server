@@ -1,4 +1,6 @@
-.pure-g
-  .pure-u-1-2
-    = form_for @room_type, url: { action: 'update' }, html: { class: 'pure-form' } do |f|
-      = render 'form', f: f, room_type: @room_type
+%section.card
+  %header
+    %h2 Room Type
+
+  = form_for @room_type, url: { action: 'update' }, html: { class: 'pure-form' } do |f|
+    = render 'form', f: f, room_type: @room_type

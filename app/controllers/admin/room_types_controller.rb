@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::RoomTypesController < Admin::AdminController
+  respond_to :html
   before_action :set_room_type, only: %i[show edit update destroy]
 
   def index
@@ -23,8 +24,8 @@ class Admin::RoomTypesController < Admin::AdminController
 
   def create
     authorize :room_type
-    RoomType.create(room_type_params)
-    redirect_to admin_room_types_path
+    @room_type = RoomType.create(room_type_params)
+    respond_with @room_type, location: admin_room_types_path
   end
 
   def destroy
