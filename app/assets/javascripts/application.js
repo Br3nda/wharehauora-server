@@ -14,5 +14,5 @@
 //= require jquery_ujs
 //= require rails-timeago
 //= require chartkick
-//= require_tree .
 //= require moment
+//= require_tree .
