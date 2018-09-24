@@ -1,23 +1,29 @@
+- content_for(:title) do
+  Admin - Room Types
+
 %section.card
   %header
-    %h2 Room types
-  %table.pure-table
+    %h2 Room Types
+  %table
     %thead
       %tr
         %th Name
         %th Min temp
         %th Max temp
-    - @room_types.order(:name).each do |ht|
-      %tr
-        %td= ht.name
-        %td= display_reading(Reading.new(value: ht.min_temperature, key: 'temperature'))
-        %td= display_reading(Reading.new(value: ht.max_temperature, key: 'temperature'))
-        %td.actions
-          = link_to edit_admin_room_type_path(ht), class: "table-action edit" do
-            %img.svg{alt: "edit", src: image_path("icon/edit.svg") }/
-          = link_to admin_room_type_path(ht),
-            method: :delete, class: 'table-action del',
-            data: { confirm: 'delete this room_type?' } do
-            %img.svg{alt: "remove", src: image_path("icon/del.svg") }/
+    %tbody
+      - @room_types.order(:name).each do |room_type|
+        %tr
+          %td= room_type.name
+          %td
+            = display_reading(Reading.new(value: room_type.min_temperature, key: 'temperature'))
+          %td
+            = display_reading(Reading.new(value: room_type.max_temperature, key: 'temperature'))
+          %td.actions
+            - if policy(room_type).edit?
+              = render 'common/buttons/edit', link_path: edit_admin_room_type_path(room_type)
+          %td.actions
+            - if policy(room_type).edit?
+              = render 'common/buttons/delete', link_path: admin_room_type_path(room_type)
 
-= link_to "Add", new_admin_room_type_path, class: 'btn'
+- if policy(:room_type).new?
+  = render 'common/buttons/add', link_path: new_admin_room_type_path

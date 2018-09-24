@@ -1,11 +1,5 @@
-
-%h1 Whare types
-
-- if policy(:home_type).new?
-  %p
-    = link_to new_admin_home_type_path, class: 'btn' do
-      Add
-      = fa_icon 'plus'
+- content_for(:title) do
+  Admin - Whare Types
 
 %section.card
   %header
@@ -15,17 +9,16 @@
       %tr
         %th Name
     %tbody
-      - @home_types.each do |ht|
+      - @home_types.each do |whare_type|
         %tr
-          %td= ht.name
-          - if policy(ht).edit?
-            %td
-              = link_to edit_admin_home_type_path(ht) do
-                edit
-                = fa_icon 'edit'
-          - if policy(ht).destroy?
-            %td
-              = link_to admin_home_type_path(ht),
-                method: :delete, data: { confirm: 'delete this home type?' } do
-                delete
-                = fa_icon 'trash'
+          %td= whare_type.name
+          %td.actions
+            - if policy(whare_type).edit?
+              = render 'common/buttons/edit', link_path: edit_admin_room_type_path(whare_type)
+          %td.actions
+            - if policy(whare_type).destroy?
+              = render 'common/buttons/delete', link_path: admin_home_type_path(whare_type)
+
+
+- if policy(:home_type).new?
+  = render 'common/buttons/add', link_path: new_admin_home_type_path
