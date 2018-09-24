@@ -1,19 +1,23 @@
 %h2 Editing User
-.pure-form.pure-form-aligned
-  = form_for @user, url: { action: 'update' } do |f|
-    = f.label :email
-    = f.text_field :email
+= form_for @user, url: { action: 'update' } do |f|
+  %section.card
+    %header
+      %h2= @user.email
+    %ul.form-row
+      %li
+        = f.label :email
+        = f.text_field :email
 
-    - @roles.each do |r|
-      %label
-        = check_box_tag 'user[role_ids][]', r.id, f.object.roles.include?(r)
-        = r.friendly_name
-    %button.btn.btn-primary
-      save
-
-%p
-  = link_to 'cancel', admin_users_path
-
-  = button_to admin_user_path(@user), method: :delete, class: 'btn button-warning' do
-    delete
-    = fa_icon 'trash'
+      %label Roles
+      - @roles.each do |r|
+        %li
+          = check_box_tag 'user[role_ids][]', r.id, f.object.roles.include?(r)
+          %label= r.friendly_name
+    %footer
+      %button.btn.btn-primary
+        Save
+        = fa_icon 'save'
+      = link_to 'cancel', admin_users_path, class: 'btn'
+      = button_to admin_user_path(@user), method: :delete, class: 'btn' do
+        delete
+        = fa_icon 'trash'

@@ -7,6 +7,7 @@
         %tr
           %th Email
           %th Last sign in
+          %th Deleted
           %th Homes
           %th Roles
       %tbody
@@ -14,6 +15,7 @@
           %tr
             %td= link_to user.email
             %td= user.last_sign_in_at&.localtime
+            %td= user.deleted_at&.localtime
             %td
               - user.owned_homes.each do |home|
                 = link_to home.name, home
