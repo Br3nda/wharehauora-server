@@ -5,7 +5,7 @@ class Admin::UsersController < Admin::AdminController
 
   def index
     authorize :user
-    @users = policy_scope User.all.order(:email).page(params[:page])
+    @users = policy_scope User.with_deleted.order(:email).page(params[:page])
   end
 
   def new
