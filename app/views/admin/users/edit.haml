@@ -15,10 +15,6 @@
             = r.friendly_name
             = check_box_tag 'user[role_ids][]', r.id, f.object.roles.include?(r)
     %footer
-      %button.btn
-        save
-        = fa_icon 'save'
-      = button_to 'cancel', admin_users_path, class: 'btn'
-      = button_to admin_user_path(@user), method: :delete, class: 'btn' do
-        delete
-        = fa_icon 'trash'
+      %button.btn save
+      = link_to admin_users_path, class: 'btn' do
+        cancel
