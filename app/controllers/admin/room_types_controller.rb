@@ -6,15 +6,17 @@ class Admin::RoomTypesController < Admin::AdminController
 
   def index
     authorize :room_type
-    @room_types = policy_scope RoomType.all.order(:name)
+    @room_types = policy_scope(RoomType.all).order(:name)
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
-    authorize :room_type
-    @room_type.update!(room_type_params)
-    redirect_to admin_room_types_path
+    @room_type.update(room_type_params)
+    respond_with @room_type do |format|
+      format.html {redirect_to admin_room_types_path, notice: "Room type updated"}
+    end
   end
 
   def new

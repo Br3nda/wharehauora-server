@@ -14,7 +14,7 @@
           %td= whare_type.name
           %td.actions
             - if policy(whare_type).edit?
-              = render 'common/buttons/edit', link_path: edit_admin_room_type_path(whare_type)
+              = render 'common/buttons/edit', link_path: edit_admin_home_type_path(whare_type)
           %td.actions
             - if policy(whare_type).destroy?
               = render 'common/buttons/delete', link_path: admin_home_type_path(whare_type)

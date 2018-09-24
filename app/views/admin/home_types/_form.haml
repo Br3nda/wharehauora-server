@@ -1,3 +1,16 @@
-%li
-  = f.label :name
-  = f.text_field :name, type: 'text', placeholder: 'name'
+- if @home_type.errors.any?
+  #error_explanation
+    %h2
+      = pluralize(@home_type.errors.count, 'error')
+      prevented this data from being saved:
+    %ul
+      - @home_type.errors.full_messages.each do |message|
+        %li
+          = fa_icon 'warning'
+          = message
+
+
+%ul.form-row
+  %li
+    = f.label :name
+    = f.text_field :name, type: 'text', placeholder: 'name'

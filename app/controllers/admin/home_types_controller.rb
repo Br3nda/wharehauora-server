@@ -2,6 +2,7 @@
 
 class Admin::HomeTypesController < Admin::AdminController
   before_action :set_home_type, only: %i[show edit update destroy]
+  respond_to :html
 
   def index
     authorize :home_type
@@ -9,12 +10,11 @@ class Admin::HomeTypesController < Admin::AdminController
   end
 
   def edit
-    @homes_count = @home_type.homes.size
   end
 
   def update
-    @home_type.update!(home_type_params)
-    redirect_to admin_home_types_path
+    @home_type.update(home_type_params)
+    respond_with(@home_type, location: admin_home_types_path, notice: 'Home type has been updated')  
   end
 
   def new
@@ -24,8 +24,8 @@ class Admin::HomeTypesController < Admin::AdminController
 
   def create
     authorize :home_type
-    HomeType.create(home_type_params)
-    redirect_to admin_home_types_path
+    @home_type = HomeType.create(home_type_params)
+    respond_with(@home_type, location: admin_home_types_path, notice: 'Home type has been created')  
   end
 
   def destroy
