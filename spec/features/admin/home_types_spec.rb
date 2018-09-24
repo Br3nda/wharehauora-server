@@ -43,7 +43,7 @@ RSpec.describe 'Whare Types', type: :feature do
     it 'deletes a home_type' do
       visit admin_home_types_path
       is_expected.to have_text existing.name
-      click_link 'delete'
+      click_link(alt: 'remove')
       is_expected.not_to have_text existing.name
     end
   end
