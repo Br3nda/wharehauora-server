@@ -1,6 +1,30 @@
 %section.card
   %header
     %h2 Users
-
   - unless @users.empty?
-    = render 'table', users: @users
+    %table.pure-table
+      %thead
+        %tr
+          %th Email
+          %th Last sign in
+          %th Homes
+          %th Roles
+      %tbody
+        - @users.includes(:roles, :owned_homes).each do |user|
+          %tr
+            %td= link_to user.email
+            %td= user.last_sign_in_at&.localtime
+            %td
+              - user.owned_homes.each do |home|
+                = link_to home.name, home
+            %td
+              - user.roles.map(&:friendly_name).each do |friendly_name|
+                = friendly_name
+            %td.actions
+              - if policy(user).edit?
+                = render 'common/buttons/edit', link_path: edit_admin_user_path(user)
+            %td.actions
+              - if policy(user).destroy?
+                = render 'common/buttons/delete', link_path: admin_user_path(user)
+= paginate @users
+
