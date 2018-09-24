@@ -1,6 +1,5 @@
 - content_for(:title) do
   Your Whare
-%h1 Whare
 
 - if policy(:home).new? && current_user.janitor?
   %p
@@ -13,4 +12,47 @@
     %li Let's #{link_to 'add your whare', new_home_path, class: 'underline'}
 - else
   %section.card
-    = render 'table', homes: @homes
+    %header
+      %h2 Whare
+    = paginate @homes
+
+    %table.pure-table
+      %thead
+        %tr
+          %th.sortable
+            Name
+          %th
+            Type
+          %th
+            Owner
+          %th
+            Rooms
+          %th
+            Whanau
+          %th
+            Sensors
+      %tbody
+        - @homes.each do |home|
+          %tr
+            %td
+              = link_to home.name, home_path(home)
+            %td
+              = home.home_type&.name
+            %td
+              = home.owner&.email
+            %td
+              - if home.rooms.size.positive?
+                = link_to("#{home.rooms.size} rooms", home_rooms_path(home))
+            %td
+              - if home.users.size.positive?
+                = home.users.size
+            %td
+              - if home.sensors.size.positive?
+                = link_to("#{home.sensors.size} sensors", home_sensors_path(home))
+            %td.actions
+              - if policy(home).edit?
+                = render 'common/buttons/edit', link_path: edit_home_path(home)
+              - if policy(home).destroy?
+                = render 'common/buttons/delete', link_path: home_path(home)
+
+    = paginate @homes
