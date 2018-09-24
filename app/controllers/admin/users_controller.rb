@@ -2,14 +2,15 @@
 
 class Admin::UsersController < Admin::AdminController
   before_action :set_user, only: %i[show edit update destroy]
+  respond_to :html, :csv
 
   def index
     authorize :user
-    @users = policy_scope User.with_deleted.order(:email).page(params[:page])
+    @users = policy_scope User.order(:email).page(params[:page])
+    respond_with @users
   end
 
   def new
-    authorize :user
     @user = User.new
     authorize @user
   end
@@ -19,16 +20,14 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def update
-    @user.update!(user_params)
+    @user.update(user_params)
     @user.confirm
-    redirect_to admin_users_path
-  rescue StandardError
-    render :edit, @user
+    respond_with @user, location: admin_users_path
   end
 
   def destroy
     @user.destroy
-    redirect_to admin_users_path
+    respond_with @user, location: admin_users_path
   end
 
   private

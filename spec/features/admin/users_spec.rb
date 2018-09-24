@@ -45,7 +45,7 @@ RSpec.describe 'Users', type: :feature do
     describe '#edit' do
       before do
         visit '/admin/users'
-        click_link user.email
+        click_link(href: edit_admin_user_path(user), alt: 'edit')
       end
 
       it { is_expected.to have_text('Editing User') }
@@ -54,19 +54,20 @@ RSpec.describe 'Users', type: :feature do
     describe '#update' do
       before do
         visit '/admin/users'
-        click_link user.email
-        fill_in :user_email, with: 'hiria@example.com'
+        click_link(href: edit_admin_user_path(user), alt: 'edit')
+        # fill_in :user_email, with: 'hiria@example.com'
+        check 'cleans up'
         click_button 'save'
       end
 
-      it { is_expected.to have_text 'hiria@example.com' }
+      it { is_expected.to have_text 'cleans up' }
     end
 
     describe '#destroy' do
       before do
         visit '/admin/users'
         click_link user.email
-        click_button 'delete'
+        click_link(href: admin_user_path(user), alt: 'remove')
       end
 
       it { is_expected.not_to have_text user.email }

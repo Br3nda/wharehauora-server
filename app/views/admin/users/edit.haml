@@ -11,13 +11,14 @@
       %label Roles
       - @roles.each do |r|
         %li
-          = check_box_tag 'user[role_ids][]', r.id, f.object.roles.include?(r)
-          %label= r.friendly_name
+          %label
+            = r.friendly_name
+            = check_box_tag 'user[role_ids][]', r.id, f.object.roles.include?(r)
     %footer
-      %button.btn.btn-primary
-        Save
+      %button.btn
+        save
         = fa_icon 'save'
-      = link_to 'cancel', admin_users_path, class: 'btn'
+      = button_to 'cancel', admin_users_path, class: 'btn'
       = button_to admin_user_path(@user), method: :delete, class: 'btn' do
         delete
         = fa_icon 'trash'
