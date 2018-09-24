@@ -35,3 +35,9 @@
     %p This whare has no monitored rooms.
     %p Activate sensors in your home, and they will appear here.
 
+    - if @home.gateway_mac_address.blank?
+      %p Cannot provision home with no mac address set
+    - elsif @home.gateway_mac_address.present? && policy(:mqtt_user).create?
+      %p= link_to 'Provision MQTT', admin_mqtt_users_path(home_id: @home.id), method: 'post', class: 'btn'
+      - unless @gateway.present?
+        %p No known successful connections from gateway
