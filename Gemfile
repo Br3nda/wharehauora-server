@@ -14,6 +14,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'rails-timeago', '~> 2.0'
+gem 'modernizr-rails'
 
 gem 'jsonapi-resources'
 gem 'pundit-resources', git: 'https://github.com/wharehauora/pundit-resources', branch: 'rails-5.1'
