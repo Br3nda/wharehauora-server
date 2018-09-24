@@ -28,7 +28,7 @@ RSpec.describe 'Whare Types', type: :feature do
 
     before { login_as(admin_user) }
 
-    it 'Admin sees home_types list' do
+    scenario 'Admin sees home_types list' do
       visit '/admin/home_types'
       expect(page).to have_text('Cake whare')
     end
@@ -40,7 +40,7 @@ RSpec.describe 'Whare Types', type: :feature do
       expect(page).to have_text('Marae')
     end
 
-    it 'deletes a home_type' do
+    scenario 'deletes a home_type' do
       visit admin_home_types_path
       is_expected.to have_text existing.name
       click_link(alt: 'remove')
