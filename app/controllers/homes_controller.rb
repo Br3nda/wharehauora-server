@@ -19,17 +19,17 @@ class HomesController < ApplicationController
   end
 
   def new
-    authorize :home
     @home = Home.new
+    authorize @home
     respond_with(@home)
   end
 
   def create
+    authorize :home
     @home = Home.new(home_params)
-    authorize @home
     invite_new_owner
     @home.save
-    respond_with(@home)
+    respond_with(@home, location: home_rooms_path(@home))
   end
 
   def edit
@@ -74,7 +74,7 @@ class HomesController < ApplicationController
   end
 
   def set_home
-    @home = policy_scope(Home).find(params[:id])
+    @home = Home.find(params[:id])
     authorize @home
   end
 end
