@@ -22,6 +22,7 @@ class Admin::UsersController < Admin::AdminController
   def update
     @user.update(user_params)
     @user.confirm
+    @user.save
     respond_with :admin, @user, location: admin_users_path
   end
 
