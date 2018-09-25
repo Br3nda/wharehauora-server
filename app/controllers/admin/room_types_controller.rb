@@ -33,7 +33,7 @@ class Admin::RoomTypesController < Admin::AdminController
       Room.where(room_type: @room_type).update_all(room_type_id: nil)
       @room_type.destroy
     end
-    respond_with(:admin, @room_type)
+    respond_with(:admin, @room_type, location: admin_room_types_path)
   end
 
   private
