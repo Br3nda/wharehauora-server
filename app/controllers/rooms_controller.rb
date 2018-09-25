@@ -35,7 +35,7 @@ class RoomsController < ApplicationController
         @room.destroy
       end
     end
-    redirect_to home_rooms_path(@room.home)
+    respond_with @room, location: home_rooms_path(@room.home)
   end
 
   private
