@@ -7,7 +7,7 @@ class Admin::UsersController < Admin::AdminController
   def index
     authorize :user
     @users = policy_scope User.order(:email).page(params[:page])
-    respond_with @users
+    respond_with :admin, @users
   end
 
   def new
@@ -27,7 +27,7 @@ class Admin::UsersController < Admin::AdminController
 
   def destroy
     @user.destroy
-    respond_with @user, location: admin_users_path
+    respond_with :admin, @user, location: admin_users_path
   end
 
   private
