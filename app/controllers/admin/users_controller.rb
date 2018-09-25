@@ -22,9 +22,7 @@ class Admin::UsersController < Admin::AdminController
   def update
     @user.update(user_params)
     @user.confirm
-    respond_with @user do |format|
-      format.html { redirect_to admin_users_path, notice: 'User updated' }
-    end
+    respond_with :admin, @user, location: admin_users_path
   end
 
   def destroy
