@@ -54,18 +54,6 @@ RSpec.describe HomesController, type: :controller do
       end
     end
 
-    describe 'GET show for a public home' do
-      before { get :show, params: { id: public_home.to_param } }
-
-      it { expect(response).to have_http_status(:redirect) }
-    end
-
-    describe 'GET show for a private home' do
-      before { get :show, params: { id: another_home.to_param } }
-
-      it { expect(response).to have_http_status(:not_found) }
-    end
-
     describe 'GET edit for a home' do
       before { get :edit, params: { id: home.to_param } }
 
@@ -130,36 +118,6 @@ RSpec.describe HomesController, type: :controller do
       end
     end
 
-    describe 'GET show' do
-      describe 'no sensors' do
-        before { get :show, params: { id: home.id } }
-
-        it { expect(response).to have_http_status(:redirect) }
-      end
-
-      describe 'lots of sensors' do
-        before do
-          FactoryBot.create_list(:room, 15, home: home)
-          get :show, params: { id: home.id }
-        end
-
-        it { expect(response).to have_http_status(:redirect) }
-      end
-
-      describe "someone else's home" do
-        before { get :show, params: { id: another_home.id } }
-
-        it { expect(response).to have_http_status(:not_found) }
-      end
-
-      describe 'public home' do
-        before { get :show, params: { id: public_home.to_param } }
-
-        it { expect(response).to have_http_status(:redirect) }
-        it { expect(assigns(:home).id).to eq public_home.id }
-      end
-    end
-
     describe '#update' do
       before { patch :update, params: { id: home.to_param, home: { name: 'New home name' } } }
 
@@ -211,36 +169,6 @@ RSpec.describe HomesController, type: :controller do
         before { delete :destroy, params: { id: public_home.id } }
 
         it { expect(response).to redirect_to(homes_path) }
-        it { expect(assigns(:home).id).to eq public_home.id }
-      end
-    end
-
-    describe 'GET show' do
-      describe 'my home no rooms' do
-        before { get :show, params: { id: home.id } }
-
-        it { expect(response).to have_http_status(:redirect) }
-      end
-
-      describe 'my home lots of rooms' do
-        before do
-          FactoryBot.create_list(:room, 15, home: home)
-          get :show, params: { id: home.id }
-        end
-
-        it { expect(response).to have_http_status(:redirect) }
-      end
-
-      describe "someone else's home" do
-        before { get :show, params: { id: another_home.id } }
-
-        it { expect(response).to have_http_status(:redirect) }
-      end
-
-      describe 'public home' do
-        before { get :show, params: { id: public_home.to_param } }
-
-        it { expect(response).to have_http_status(:redirect) }
         it { expect(assigns(:home).id).to eq public_home.id }
       end
     end
