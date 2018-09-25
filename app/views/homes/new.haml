@@ -1,7 +1,7 @@
 = form_for @home, url: { action: 'create' }, class: 'pure-form' do |f|
   %section.card
-    %headers
+    %header
       %h2 New whare to monitor
     = render 'form', f: f, home_types: @home_types
     %footer
-      %button.btn.btn-primary{ type: 'submit' } Create
+      = f.submit "Create"

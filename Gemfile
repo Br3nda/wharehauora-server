@@ -13,8 +13,8 @@ gem 'uglifier', '>= 1.3.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-gem 'rails-timeago', '~> 2.0'
 gem 'modernizr-rails'
+gem 'rails-timeago', '~> 2.0'
 
 gem 'jsonapi-resources'
 gem 'pundit-resources', git: 'https://github.com/wharehauora/pundit-resources', branch: 'rails-5.1'
@@ -37,6 +37,9 @@ gem 'pundit'
 
 # templating
 gem 'haml-rails'
+
+# flash notices for actions
+gem "responders"
 
 # icons
 gem 'font-awesome-rails'

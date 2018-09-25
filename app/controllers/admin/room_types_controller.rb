@@ -7,15 +7,14 @@ class Admin::RoomTypesController < Admin::AdminController
   def index
     authorize :room_type
     @room_types = policy_scope(RoomType.all).order(:name)
+    respond_with @room_types
   end
 
   def edit; end
 
   def update
     @room_type.update(room_type_params)
-    respond_with @room_type do |format|
-      format.html { redirect_to admin_room_types_path, notice: 'Room type updated' }
-    end
+    respond_with(:admin, @room_type, location: admin_room_types_path)
   end
 
   def new
@@ -26,7 +25,7 @@ class Admin::RoomTypesController < Admin::AdminController
   def create
     authorize :room_type
     @room_type = RoomType.create(room_type_params)
-    respond_with @room_type, location: admin_room_types_path
+    respond_with(:admin, @room_type, location: admin_room_types_path)
   end
 
   def destroy
@@ -34,7 +33,7 @@ class Admin::RoomTypesController < Admin::AdminController
       Room.where(room_type: @room_type).update_all(room_type_id: nil)
       @room_type.destroy
     end
-    redirect_to admin_room_types_path
+    respond_with(:admin, @room_type)
   end
 
   private

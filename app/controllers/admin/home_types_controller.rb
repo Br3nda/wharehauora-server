@@ -13,7 +13,7 @@ class Admin::HomeTypesController < Admin::AdminController
 
   def update
     @home_type.update(home_type_params)
-    respond_with(@home_type, location: admin_home_types_path, notice: 'Home type has been updated')
+    respond_with(:admin, @home_type, location: admin_home_types_path)
   end
 
   def new
@@ -24,7 +24,7 @@ class Admin::HomeTypesController < Admin::AdminController
   def create
     authorize :home_type
     @home_type = HomeType.create(home_type_params)
-    respond_with(@home_type, location: admin_home_types_path, notice: 'Home type has been created')
+    respond_with(:admin, @home_type, location: admin_home_types_path)
   end
 
   def destroy

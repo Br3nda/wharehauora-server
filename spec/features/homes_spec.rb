@@ -25,7 +25,7 @@ RSpec.describe 'Homes', type: :feature do
   end
 
   context 'Admin users' do
-    before "create a home" do
+    before 'create a home' do
       login_as(admin_user)
       visit new_home_path
       expect(page).to have_text 'New whare to monitor'
