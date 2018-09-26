@@ -20,7 +20,7 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def update
-    @user.confirm if @user.update(user_params)
+    @user.update(user_params)
     respond_with :admin, @user, location: admin_users_path
   end
 
