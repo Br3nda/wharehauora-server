@@ -2,7 +2,7 @@
 
 class Admin::UsersController < Admin::AdminController
   before_action :set_user, only: %i[show edit update destroy]
-  respond_to :html, :csv
+  respond_to :html
 
   def index
     authorize :user
@@ -20,9 +20,7 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def update
-    @user.update(user_params)
-    @user.confirm
-    @user.save
+    @user.confirm if @user.update(user_params)
     respond_with :admin, @user, location: admin_users_path
   end
 
