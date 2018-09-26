@@ -15,7 +15,7 @@ RSpec.describe 'Homes', type: :feature do
   context 'Not logged in' do
     before { visit '/' }
 
-    it { is_expected.to have_button('Log in') }
+    it { is_expected.to have_button('Login') }
     it { is_expected.to have_link('Sign up') }
     it { is_expected.not_to have_link('Logout') }
   end
