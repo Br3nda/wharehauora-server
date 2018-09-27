@@ -39,7 +39,7 @@ gem 'pundit'
 gem 'haml-rails'
 
 # flash notices for actions
-gem "responders"
+gem 'responders'
 
 # icons
 gem 'font-awesome-rails'
