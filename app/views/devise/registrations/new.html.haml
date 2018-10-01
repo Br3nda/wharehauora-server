@@ -26,9 +26,6 @@
                 %input{name: "terms", type: "checkbox", value: "accept"}>/
                 I accept Whare Hauora’s
                 %a.underline{href: "#"} terms and conditions
-        %li
-          -# %a.btn.submit{href: "#"} Sign Up
-          %li= f.submit 'Sign up'
 
-    %footer
-      = render 'devise/shared/links'
+      %button.btn Sign up
+= render 'devise/shared/links'
