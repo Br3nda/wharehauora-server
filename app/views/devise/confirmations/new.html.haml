@@ -10,6 +10,6 @@
         = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
 
     %footer
-      = f.submit 'Resend confirmation instructions'
+      %button.btn Resend confirmation instructions
 
 = render "devise/shared/links"

@@ -1,5 +1,5 @@
+%header.header=link_to 'Whare Hauora', root_path, class: 'logo'
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  %header.header=link_to 'Whare Hauora', root_path, class: 'logo'
   %section.card.pre-log
     .img{style: "background-image: url(\"#{image_path('placeholder-illy2.jpg')}\")"}
     .text
@@ -12,15 +12,17 @@
           = f.label :password
           %br/
           = f.password_field :password, autocomplete: 'off'
-        %li
-          - if devise_mapping.rememberable?
+        - if devise_mapping.rememberable?
+          %li
             = f.check_box :remember_me
             = f.label :remember_me
-          %button.btn.submit Login
+
       %footer
-        -# %p.right= render 'devise/shared/links'
-        %p.left
-          = link_to 'Forgot your password?', new_password_path(resource_name), class: 'underline'
-        %p.right
-          Don’t have an account?
-          = link_to 'Sign up', new_registration_path(resource_name), class: 'underline'
+        %button.btn.submit Login
+        -# %p.left
+        -#   = link_to 'Forgot your password?', new_password_path(resource_name), class: 'underline'
+        -# %p.right
+        -#   Don’t have an account?
+        -#   = link_to 'Sign up', new_registration_path(resource_name), class: 'underline'
+
+= render 'devise/shared/links'
