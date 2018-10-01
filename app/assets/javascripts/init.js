@@ -44,11 +44,11 @@ $(function () {
 
       // Add replaced image's ID to the new SVG
       if(typeof imgID !== 'undefined') {
-          $svg = $svg.attr('id', imgID);
+        $svg = $svg.attr('id', imgID);
       }
       // Add replaced image's classes to the new SVG
       if(typeof imgClass !== 'undefined') {
-          $svg = $svg.attr('class', imgClass+' replaced-svg');
+        $svg = $svg.attr('class', imgClass+' replaced-svg');
       }
 
       // Remove any invalid XML tags as per http://validator.w3.org
@@ -56,7 +56,7 @@ $(function () {
 
       // Check if the viewport is set, if the viewport is not set the SVG wont't scale.
       if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
-          $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
+        $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
       }
 
       // Replace image with new SVG
@@ -69,44 +69,44 @@ $(function () {
     Mobile Menu
   ///////////////////////////////// */
 
-	$("a.open-menu").on("touchstart click", function(e){
+  $("a.open-menu").on("touchstart click", function(e){
     e.stopPropagation();
     e.preventDefault();
-		$("body").addClass("menu-is-open");
-	});
+    $("body").addClass("menu-is-open");
+  });
 
-	$(".menu > header .x").on("touchstart click", function(e){
+  $(".menu > header .x").on("touchstart click", function(e){
     e.stopPropagation();
     e.preventDefault();
-		$("body").removeClass("menu-is-open").addClass("menu-is-closing");
+    $("body").removeClass("menu-is-open").addClass("menu-is-closing");
 
-		setTimeout(function(){
+    setTimeout(function(){
       $("body").removeClass("menu-is-closing");
     }, 290);
-	});
+  });
 
-	/* /////////////////////////////////
+  /* /////////////////////////////////
 		FORM
 	///////////////////////////////// */
 
-	// submit forms with links
+  // submit forms with links
 
-	$("a.submit").on("click", function(e){
+  $("a.submit").on("click", function(e){
     e.stopPropagation();
     e.preventDefault();
-		$(this).closest("form").submit();
-	});
+    $(this).closest("form").submit();
+  });
 
-	$('form input').keypress(function(e){
-		var c = e.which ? e.which : e.keyCode;
-		if(c == 13){
+  $('form input').keypress(function(e){
+    var c = e.which ? e.which : e.keyCode;
+    if(c == 13){
 		  $(this).closest('form').submit();
-		}
-	});
+    }
+  });
 
-	// replace select boxes
+  // replace select boxes
 
-	$("select").not(".lang-picker, .whare-picker").selectBoxIt({
+  $("select").not(".lang-picker, .whare-picker").selectBoxIt({
     showFirstOption: false
   });
 
@@ -116,13 +116,13 @@ $(function () {
 
   // replace radio buttons & checkboxes
 
-	$("input[type=radio], input[type=checkbox]").iCheck();
+  $("input[type=radio], input[type=checkbox]").iCheck();
 
-	/* /////////////////////////////////
+  /* /////////////////////////////////
 		Tooltips
 	///////////////////////////////// */
 
-	$(".tooltip").tooltipster({
+  $(".tooltip").tooltipster({
 	  animation: 'fade',
 	  animationDuration: 300,
 	  arrow: true,
@@ -130,23 +130,23 @@ $(function () {
 	  delay: 0,
 	  distance: 6,
 	  maxWidth: 240
-	});
+  });
 
-	/* /////////////////////////////////
+  /* /////////////////////////////////
 		Modals
 	///////////////////////////////// */
 
-	// open modal on special links
+  // open modal on special links
 
-	$(".open-modal").magnificPopup({
+  $(".open-modal").magnificPopup({
     type: "inline",
     fixedContentPos: true,
-		fixedBgPos: true,
-		focus: "",
-		overflowY: "scroll",
+    fixedBgPos: true,
+    focus: "",
+    overflowY: "scroll",
     preloader: false,
-		midClick: true,
-		removalDelay: 200,
+    midClick: true,
+    removalDelay: 200,
     closeBtnInside: false,
     modal: true,
   });
@@ -156,6 +156,6 @@ $(function () {
   $(".modal a.close").on("touchstart click", function(e){
     e.stopPropagation();
     e.preventDefault();
-		$.magnificPopup.close();
-	});
+    $.magnificPopup.close();
+  });
 });
