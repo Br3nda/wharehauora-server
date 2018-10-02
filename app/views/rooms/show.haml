@@ -65,9 +65,10 @@
   = line_chart readings_path(home_id: @room.home.id,
     room_id: @room.id, key: 'temperature', start: @start), legend: false, refresh: 60
 
-%section.card
-  - @room.sensors.each do |sensor|
-    = render 'sensors/card', sensor: sensor
+- if @room.sensors.size.positive?
+  %section.card
+    - @room.sensors.each do |sensor|
+      = render 'sensors/card', sensor: sensor
 
 
 -# %section.card

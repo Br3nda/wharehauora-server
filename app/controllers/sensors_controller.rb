@@ -10,7 +10,7 @@ class SensorsController < ApplicationController
   end
 
   def edit
-    @rooms = @sensor.home.rooms.order(:name)
+    @rooms = @sensor.home.rooms.with_no_sensors.order(:name)
   end
 
   def update
