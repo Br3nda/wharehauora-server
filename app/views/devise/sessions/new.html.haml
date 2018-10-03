@@ -1,3 +1,5 @@
+- content_for :title, 'Login to Whare Hauora'
+
 %header.header=link_to 'Whare Hauora', root_path, class: 'logo'
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
   %section.card.pre-log
