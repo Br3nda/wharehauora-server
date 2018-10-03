@@ -1,3 +1,5 @@
+- content_for :title, "Whare Dashboard - #{@home.name}"
+
 - if @unassigned_sensors.size.positive?
   %section.card.alert
     %header
@@ -19,7 +21,6 @@
     -#   %p
     -#     %a.underline{href: "#"} Dismiss alert
     -#     and don't show again.
-
 
 - if @rooms.size.positive?
   .summary-grid

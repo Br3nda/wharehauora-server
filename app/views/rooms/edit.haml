@@ -1,3 +1,5 @@
+- content_for :title, 'Edit Room'
+
 %h1 Edit Room  
 = form_for(@room, url: home_room_path(@home, @room,
                   html: { class: 'pure-form pure-form-aligned' })) do |f|
