@@ -73,7 +73,7 @@ GEM
     capybara-screenshot (1.0.21)
       capybara (>= 1.0, < 4)
       launchy
-    chartkick (3.0.1)
+    chartkick (3.4.0)
     codeclimate-test-reporter (1.0.8)
       simplecov (<= 0.13)
     concurrent-ruby (1.0.5)
